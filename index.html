@@ -131,6 +131,20 @@
   .trophy-card.locked{filter:grayscale(1);opacity:.5}
   #homeGreeting{font-weight:700;color:var(--deep)}
 
+  /* ---------- Meeresalbum ---------- */
+  #seaAlbum{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
+  .sea-grid{flex:1;min-height:0;overflow:auto;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:12px;align-content:start;padding:4px 2px}
+  .sea-card{background:var(--paper);border:3px solid var(--deep);border-radius:18px;box-shadow:0 4px 0 var(--deep);
+    padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;position:relative}
+  .sea-card em{font-size:36px;font-style:normal;line-height:1}
+  .sea-card b{font-size:13px}
+  .sea-card small{font-size:11px;font-weight:800;letter-spacing:.2px;opacity:.8}
+  .sea-card.found small{color:var(--sea)}
+  .sea-card.gold{border-color:#E3A008;box-shadow:0 4px 0 #E3A008;background:linear-gradient(180deg,#FFF6DC,var(--paper))}
+  .sea-card.gold small{color:#B9790A}
+  .sea-card.locked{background:#EEF3F5;border-color:#C6D2D8;box-shadow:0 4px 0 #C6D2D8;filter:grayscale(1);opacity:.6}
+
   /* ---------- Feuerwerk-Abschluss ---------- */
   .fireworks{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
   .fw-piece{position:absolute;top:-16px;border-radius:2px;opacity:.95;animation:fw-fall linear forwards}
@@ -315,6 +329,7 @@
       <h1>Was malen wir <span>heute</span>?</h1>
       <span style="margin-left:auto"></span>
       <button class="icon-btn" id="newMotif">✏️ Eigenes Motiv</button>
+      <button class="icon-btn" id="seaAlbumBtn">🌊 Meeresalbum</button>
       <button class="icon-btn" id="trophyBtn">🏆 Pokale</button>
       <button class="icon-btn" id="stickerBtn">🏅 Sticker</button>
       <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
@@ -348,6 +363,16 @@
     </div>
     <p class="hint" id="trophyHint"></p>
     <div class="trophies" id="trophyGrid"></div>
+  </section>
+
+  <!-- ============ MEERESALBUM ============ -->
+  <section id="seaAlbum" hidden>
+    <div class="row">
+      <button class="icon-btn" id="seaAlbumBack">◀︎ Zurück</button>
+      <h1>Mein Meeresalbum</h1>
+    </div>
+    <p class="hint" id="seaAlbumHint"></p>
+    <div class="sea-grid" id="seaAlbumGrid"></div>
   </section>
 
   <!-- ============ GALERIE ============ -->
@@ -1137,6 +1162,13 @@ const Voice=(function(){
       "Das sitzt sauber.",
       "Ordentlich hingezaubert.",
       "Schnurgerade!"
+    ],
+    colorStart:[
+      "{m} wartet auf Farbe! Leg einfach los.",
+      "Schnapp dir den Farbeimer und mach {m} richtig bunt!",
+      "Zeig mir deine Lieblingsfarben bei {m}!",
+      "Tauch ein und zauber Farbe in {m}!",
+      "Auf geht's! Mach {m} so bunt, wie du magst."
     ]
   };
   const last={};
@@ -1196,7 +1228,7 @@ const Voice=(function(){
    APP
    ============================================================ */
 const $=id=>document.getElementById(id);
-const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secAlbum=$('album'), secTrophy=$('trophy');
+const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secAlbum=$('album'), secTrophy=$('trophy'), secSeaAlbum=$('seaAlbum');
 const ref=$('ref'), ghost=$('ghost'), bubbles=$('bubbles');
 const sheet=$('sheet'), pad=$('pad'), ctx=pad.getContext('2d');
 const doneBar=$('doneBar'), helper=$('helper'), toastEl=$('toast');
@@ -1241,7 +1273,7 @@ function toast(msg){
   clearTimeout(toast._t); toast._t=setTimeout(()=>toastEl.classList.remove('on'),1800);
 }
 function showSection(s){
-  [secProfiles,secHome,secGallery,secDraw,secCreator,secAlbum,secTrophy].forEach(x=>x.hidden = x!==s);
+  [secProfiles,secHome,secGallery,secDraw,secCreator,secAlbum,secTrophy,secSeaAlbum].forEach(x=>x.hidden = x!==s);
   if(s!==secDraw) stopIdle();
   requestAnimationFrame(()=>{ if(typeof layout==='function') layout(); });
 }
@@ -1346,6 +1378,36 @@ function openTrophy(){
 $('trophyBtn').addEventListener('click',openTrophy);
 $('trophyBack').addEventListener('click',()=>showSection(secHome));
 
+/* ---------- Meeresalbum ---------- */
+const GOLD_REPEATS=3;
+function motifCounts(){ try{ return JSON.parse(profile.motifCounts||'{}'); }catch(e){ return {}; } }
+function seaAlbumStatus(name,counts){
+  const n=counts[name]||0;
+  if(n<=0) return 'locked';
+  if(n>=GOLD_REPEATS) return 'gold';
+  return 'found';
+}
+function openSeaAlbum(){
+  showSection(secSeaAlbum);
+  const counts=motifCounts();
+  const list=allMotifs();
+  const goldN=list.filter(m=>seaAlbumStatus(m.name,counts)==='gold').length;
+  const foundN=list.filter(m=>seaAlbumStatus(m.name,counts)!=='locked').length;
+  $('seaAlbumHint').textContent=foundN+' von '+list.length+' Motiven entdeckt · '+goldN+' davon in Gold';
+  const grid=$('seaAlbumGrid'); grid.textContent='';
+  list.forEach(m=>{
+    const st=seaAlbumStatus(m.name,counts);
+    const d=document.createElement('div');
+    d.className='sea-card '+st;
+    const label = st==='locked' ? 'Noch nicht entdeckt' : st==='gold' ? '🥇 Gold!' : '✓ Gefunden';
+    const emoji = st==='locked' ? '❓' : m.emoji;
+    d.innerHTML='<em>'+emoji+'</em><b>'+(st==='locked'?'':m.name)+'</b><small>'+label+'</small>';
+    grid.appendChild(d);
+  });
+}
+$('seaAlbumBtn').addEventListener('click',openSeaAlbum);
+$('seaAlbumBack').addEventListener('click',()=>showSection(secHome));
+
 /* ---------- Eigene Motive ---------- */
 async function loadCustoms(){
   customs=[];
@@ -1425,10 +1487,10 @@ function openMotif(i){
     // Ausmalen: kompletten Umriss vorzeichnen, Farbeimer aktiv, keine Schritte
     setTool('fill');
     $('taskEmoji').textContent='🎨';
-    $('taskTitle').textContent='Mal '+motif.name+' bunt aus!';
-    $('taskText').textContent='Tippe mit dem Farbeimer in die Flächen.';
+    $('taskTitle').textContent=motif.name+' wartet auf Farbe!';
+    $('taskText').textContent='Tippe mit dem Farbeimer in die Flächen – so bunt du magst.';
     [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
-    Voice.raw('Mal '+motif.name+' schön bunt aus! Tippe einfach in die Flächen.');
+    Voice.say('colorStart',{m:motif.name},true);
     requestAnimationFrame(()=>{ layout(); outlineToCanvas(); });
   }else{
     setTool('pen');
@@ -1922,7 +1984,6 @@ function thumb(){
   o.drawImage(art,0,0,c.width,c.height);
   return c.toDataURL('image/jpeg',0.82);
 }
-function doneMotifsList(){ try{ return JSON.parse(profile.doneMotifs||'[]'); }catch(e){ return []; } }
 async function keepPicture(){
   if(!profile) return;
   const motifName=motif?motif.name:'Bild', motifEmoji=motif?motif.emoji:'🎨';
@@ -1933,9 +1994,9 @@ async function keepPicture(){
   const prevCount=profile.count||0;
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
 
-  const done=doneMotifsList();
-  const firstTime = !!motif && done.indexOf(motifName)<0;
-  if(firstTime){ done.push(motifName); profile.doneMotifs=JSON.stringify(done); }
+  const counts=motifCounts();
+  const firstTime = !!motif && !counts[motifName];
+  if(motif){ counts[motifName]=(counts[motifName]||0)+1; profile.motifCounts=JSON.stringify(counts); }
 
   const prevTier=trophyTier(prevCount), newTier=trophyTier(profile.count);
   const trophyReached = !!newTier && (!prevTier || newTier.key!==prevTier.key);
