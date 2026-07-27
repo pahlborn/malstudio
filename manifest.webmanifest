@@ -1,0 +1,17 @@
+{
+  "name": "Sommer am Meer – Malstudio",
+  "short_name": "Malstudio",
+  "description": "Schritt-für-Schritt-Malen für Kinder mit Vorlage, Farben und Galerie.",
+  "lang": "de",
+  "start_url": "./malstudio-v5.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#E9F7FC",
+  "theme_color": "#118AB2",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-mask-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
