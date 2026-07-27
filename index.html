@@ -118,6 +118,31 @@
   .reward-card p{font-size:19px;font-weight:800;margin:12px 0 16px}
   .reward-card button{width:100%}
 
+  /* ---------- Pokalschrank ---------- */
+  #trophy{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
+  .trophies{flex:1;min-height:0;overflow:auto;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;align-content:start;padding:4px 2px}
+  .trophy-card{background:var(--paper);border:3px solid var(--deep);border-radius:20px;
+    box-shadow:0 4px 0 var(--deep);padding:16px 10px;display:flex;flex-direction:column;
+    align-items:center;gap:5px;text-align:center}
+  .trophy-card em{font-size:52px;font-style:normal;line-height:1}
+  .trophy-card b{font-size:15px}
+  .trophy-card small{opacity:.7;font-weight:600}
+  .trophy-card.locked{filter:grayscale(1);opacity:.5}
+  #homeGreeting{font-weight:700;color:var(--deep)}
+
+  /* ---------- Feuerwerk-Abschluss ---------- */
+  .fireworks{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
+  .fw-piece{position:absolute;top:-16px;border-radius:2px;opacity:.95;animation:fw-fall linear forwards}
+  .fw-balloon{position:absolute;bottom:-60px;font-size:32px;animation:fw-rise ease-in forwards}
+  .fw-star{position:absolute;font-size:22px;animation:fw-twinkle ease-out forwards}
+  @keyframes fw-fall{to{transform:translateY(112vh) rotate(360deg);opacity:0}}
+  @keyframes fw-rise{to{transform:translateY(-115vh);opacity:0}}
+  @keyframes fw-twinkle{0%{transform:scale(0);opacity:0}40%{transform:scale(1.3);opacity:1}100%{transform:scale(1) translateY(-40px);opacity:0}}
+  @media (prefers-reduced-motion:reduce){
+    .fw-piece,.fw-balloon,.fw-star{animation:none;display:none}
+  }
+
   .picker{
     flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;
     display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));
@@ -290,11 +315,13 @@
       <h1>Was malen wir <span>heute</span>?</h1>
       <span style="margin-left:auto"></span>
       <button class="icon-btn" id="newMotif">✏️ Eigenes Motiv</button>
+      <button class="icon-btn" id="trophyBtn">🏆 Pokale</button>
       <button class="icon-btn" id="stickerBtn">🏅 Sticker</button>
       <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
       <button class="icon-btn" id="fsBtn">⛶ Vollbild</button>
       <button class="icon-btn" id="voiceBtn">🔊 Stimme</button>
     </div>
+    <p class="hint" id="homeGreeting"></p>
     <div class="modes" id="modes">
       <button class="modebtn on" id="modeDraw" aria-pressed="true">✏️ Nachmalen</button>
       <button class="modebtn" id="modeColor" aria-pressed="false">🎨 Ausmalen</button>
@@ -311,6 +338,16 @@
     </div>
     <p class="hint" id="homeHint">Links steht die Vorlage – im weißen Feld malst du sie nach.</p>
     <div class="picker" id="picker"></div>
+  </section>
+
+  <!-- ============ POKALSCHRANK ============ -->
+  <section id="trophy" hidden>
+    <div class="row">
+      <button class="icon-btn" id="trophyBack">◀︎ Zurück</button>
+      <h1>Pokalschrank</h1>
+    </div>
+    <p class="hint" id="trophyHint"></p>
+    <div class="trophies" id="trophyGrid"></div>
   </section>
 
   <!-- ============ GALERIE ============ -->
@@ -377,6 +414,7 @@
       <strong>🎉 Fertig!</strong>
       <button class="icon-btn go" id="toGallery">🖼️ In die Galerie</button>
       <button class="icon-btn" id="again">↻ Noch einmal</button>
+      <button class="icon-btn" id="nextAdventure">🧭 Nächstes Abenteuer</button>
       <button class="icon-btn" id="other">🎨 Anderes Motiv</button>
     </div>
 
@@ -420,6 +458,7 @@
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="fireworks" id="fireworks"></div>
 <div class="reward" id="reward">
   <div class="reward-card">
     <p class="big" id="rewardEmoji">🏅</p>
@@ -1010,7 +1049,12 @@ const Music=(function(){
       if(timer) return; nextTime=ac.currentTime+0.1; slot=0; timer=setInterval(tick,25); },
     stop(){ if(timer){clearInterval(timer);timer=null;} },
     toggle(){ on=!on; on?this.start():this.stop(); return on; },
-    duck(d){ if(master&&ac) master.gain.linearRampToValueAtTime(d?0.028:duckLevel, ac.currentTime+0.3); }
+    duck(d){ if(master&&ac) master.gain.linearRampToValueAtTime(d?0.028:duckLevel, ac.currentTime+0.3); },
+    fanfare(){
+      if(!on) return; init(); if(ac.state==='suspended') ac.resume();
+      const t=ac.currentTime;
+      [60,64,67,72,76].forEach((n,i)=>pluck(t+i*0.09,f(n),0.5,0.15,'triangle',3200));
+    }
   };
 })();
 
@@ -1152,7 +1196,7 @@ const Voice=(function(){
    APP
    ============================================================ */
 const $=id=>document.getElementById(id);
-const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secAlbum=$('album');
+const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secAlbum=$('album'), secTrophy=$('trophy');
 const ref=$('ref'), ghost=$('ghost'), bubbles=$('bubbles');
 const sheet=$('sheet'), pad=$('pad'), ctx=pad.getContext('2d');
 const doneBar=$('doneBar'), helper=$('helper'), toastEl=$('toast');
@@ -1197,7 +1241,7 @@ function toast(msg){
   clearTimeout(toast._t); toast._t=setTimeout(()=>toastEl.classList.remove('on'),1800);
 }
 function showSection(s){
-  [secProfiles,secHome,secGallery,secDraw,secCreator,secAlbum].forEach(x=>x.hidden = x!==s);
+  [secProfiles,secHome,secGallery,secDraw,secCreator,secAlbum,secTrophy].forEach(x=>x.hidden = x!==s);
   if(s!==secDraw) stopIdle();
   requestAnimationFrame(()=>{ if(typeof layout==='function') layout(); });
 }
@@ -1263,10 +1307,44 @@ async function pickProfile(p){
   Store.set('lastProfile',p.id);
   await loadCustoms();
   renderPicker();
+  renderGreeting();
   showSection(secHome);
   Voice.say('hello',null,true);
 }
 $('profileChip').addEventListener('click',()=>{ renderProfiles(); showSection(secProfiles); });
+
+/* ---------- Sterne & Pokale ---------- */
+const TROPHIES=[
+  {key:'bronze', n:5,  emoji:'🥉', label:'Bronzepokal'},
+  {key:'silber', n:10, emoji:'🥈', label:'Silberpokal'},
+  {key:'gold',   n:20, emoji:'🥇', label:'Goldpokal'}
+];
+function trophyTier(count){ let t=null; for(const x of TROPHIES) if(count>=x.n) t=x; return t; }
+function nextTrophy(count){ return TROPHIES.find(x=>count<x.n)||null; }
+function renderGreeting(){
+  if(!profile) return;
+  const stars=profile.stars||0, count=profile.count||0, nt=nextTrophy(count);
+  const trophyLine = nt
+    ? '🏆 Noch '+(nt.n-count)+' bis zum '+nt.label+'.'
+    : '🏆 Du hast alle Pokale gewonnen!';
+  $('homeGreeting').textContent='Hallo '+profile.name+'! '+profile.emoji+' Heute wartet dein nächstes Abenteuer. '
+    +'⭐ Du hast '+stars+' '+(stars===1?'Stern':'Sterne')+'. '+trophyLine;
+}
+function openTrophy(){
+  showSection(secTrophy);
+  const count=profile?(profile.count||0):0, stars=profile?(profile.stars||0):0;
+  $('trophyHint').textContent=stars+' '+(stars===1?'Stern':'Sterne')+' gesammelt · '+count+' '+(count===1?'Bild':'Bilder')+' in der Galerie';
+  const grid=$('trophyGrid'); grid.textContent='';
+  TROPHIES.forEach(t=>{
+    const got=count>=t.n;
+    const d=document.createElement('div');
+    d.className='trophy-card'+(got?'':' locked');
+    d.innerHTML='<em>'+t.emoji+'</em><b>'+t.label+'</b><small>'+(got?'Geschafft!':'Noch '+(t.n-count)+' Bilder')+'</small>';
+    grid.appendChild(d);
+  });
+}
+$('trophyBtn').addEventListener('click',openTrophy);
+$('trophyBack').addEventListener('click',()=>showSection(secHome));
 
 /* ---------- Eigene Motive ---------- */
 async function loadCustoms(){
@@ -1326,9 +1404,17 @@ function buildBubbles(){
     bubbles.appendChild(b);
   });
 }
+let stepStarred=[];
+function awardStepStar(i){
+  if(!profile || stepStarred[i]) return;
+  stepStarred[i]=true;
+  profile.stars=(profile.stars||0)+1;
+  saveProfiles();
+}
 function openMotif(i){
   motif=allMotifs()[i];
   $('motifName').textContent=motif.emoji+' '+motif.name;
+  stepStarred=new Array(motif.steps.length).fill(false);
   buildArt(); buildBubbles(); undoStack=[];
   doneBar.classList.remove('on'); $('board').classList.remove('party');
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
@@ -1350,8 +1436,8 @@ function openMotif(i){
     requestAnimationFrame(()=>{ layout(); clearArt(); show(0,true); });
   }
 }
-$('home-btn').addEventListener('click',()=>showSection(secHome));
-$('other').addEventListener('click',()=>showSection(secHome));
+$('home-btn').addEventListener('click',()=>{ renderGreeting(); showSection(secHome); });
+$('other').addEventListener('click',()=>{ renderGreeting(); showSection(secHome); });
 
 function show(i,silent){
   step=i;
@@ -1381,13 +1467,39 @@ $('taskCard').addEventListener('click',()=>{
   Voice.raw('Schritt '+(step+1)+': '+s.title+'. '+s.text);
 });
 $('back').addEventListener('click',()=>{ doneBar.classList.remove('on'); if(step>0) show(step-1); });
-$('next').addEventListener('click',()=>{
-  if(step<motif.steps.length-1){
-    doneBar.classList.remove('on');
-    if(Math.random()<0.55) Voice.say('praise',null,true);
-    show(step+1);
-  } else finish();
-});
+
+/* ---------- Feuerwerk-Abschluss (max. 3 Sek.) ---------- */
+const REDUCE_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function celebrate(){
+  Music.fanfare();
+  if(REDUCE_MOTION) return;
+  const host=$('fireworks'); host.textContent='';
+  const colors=['#FF6B5B','#FFD166','#06D6A0','#118AB2','#9B5DE5'];
+  for(let i=0;i<26;i++){
+    const p=document.createElement('i');
+    p.className='fw-piece';
+    p.style.left=(Math.random()*100)+'%';
+    p.style.width=p.style.height=(6+Math.random()*6)+'px';
+    p.style.background=colors[i%colors.length];
+    p.style.animationDuration=(1.6+Math.random()*0.9)+'s';
+    p.style.animationDelay=(Math.random()*0.3)+'s';
+    host.appendChild(p);
+  }
+  for(let i=0;i<3;i++){
+    const b=document.createElement('span'); b.className='fw-balloon'; b.textContent='🎈';
+    b.style.left=(15+i*30+Math.random()*10)+'%';
+    b.style.animationDuration=(2+Math.random()*0.6)+'s';
+    b.style.animationDelay=(i*0.15)+'s';
+    host.appendChild(b);
+  }
+  for(let i=0;i<10;i++){
+    const s=document.createElement('span'); s.className='fw-star'; s.textContent='⭐';
+    s.style.left=(Math.random()*100)+'%'; s.style.top=(Math.random()*60)+'%';
+    s.style.animationDuration='1.1s'; s.style.animationDelay=(Math.random()*0.8)+'s';
+    host.appendChild(s);
+  }
+  setTimeout(()=>{ host.textContent=''; },2800);
+}
 function finish(){
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
@@ -1395,13 +1507,17 @@ function finish(){
   [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
   [...bubbles.children].forEach(x=>{x.classList.remove('now');x.classList.add('done');});
   Voice.say('finish',null,true);
+  celebrate();
   stopIdle();
 }
 $('again').addEventListener('click',()=>{
   doneBar.classList.remove('on'); $('board').classList.remove('party');
-  undoStack=[];
+  undoStack=[]; stepStarred=new Array(motif.steps.length).fill(false);
   if(mode==='color'){ outlineToCanvas(); } else { clearArt(); show(0); }
   pokeIdle();
+});
+$('nextAdventure').addEventListener('click',()=>{
+  doneBar.classList.remove('on'); renderGreeting(); showSection(secHome);
 });
 
 /* ---------- Modus-Umschalter ---------- */
@@ -1425,6 +1541,7 @@ $('modeColor').addEventListener('click',()=>setMode('color'));
   nextBtn.parentNode.replaceChild(orig,nextBtn);   // alte Listener entfernen
   orig.addEventListener('click',()=>{
     if(mode==='color'){ finishColor(); return; }
+    awardStepStar(step);
     if(step<motif.steps.length-1){
       doneBar.classList.remove('on');
       if(Math.random()<0.55) Voice.say('praise',null,true);
@@ -1432,10 +1549,13 @@ $('modeColor').addEventListener('click',()=>setMode('color'));
     } else finish();
   });
 })();
+const AUSMAL_STARS=3;
 function finishColor(){
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
   doneBar.classList.add('on');
+  if(profile){ profile.stars=(profile.stars||0)+AUSMAL_STARS; saveProfiles(); }
   Voice.say('finish',null,true);
+  celebrate();
   stopIdle();
 }
 
@@ -1458,11 +1578,20 @@ async function awardSticker(){
   await saveProfiles();
   return idx;
 }
-function showReward(idx){
+function showReward(idx,motifName){
   $('rewardEmoji').textContent=STICKERS[idx];
-  $('rewardText').textContent='Neuer Sticker für dein Album!';
+  $('rewardText').textContent = motifName
+    ? 'Neuer Sticker! Du hast „'+motifName+'“ entdeckt.'
+    : 'Neuer Sticker für dein Album!';
   $('reward').classList.add('on');
-  Voice.raw('Juhu! Du hast einen neuen Sticker bekommen!');
+  Voice.raw(motifName ? 'Juhu! Neuer Sticker für '+motifName+'!' : 'Juhu! Du hast einen neuen Sticker bekommen!');
+}
+function showTrophyPopup(tier){
+  $('rewardEmoji').textContent=tier.emoji;
+  $('rewardText').textContent=tier.label+' geschafft! Schau im Pokalschrank vorbei.';
+  $('reward').classList.add('on');
+  celebrate();
+  Voice.raw('Wow! Du hast den '+tier.label+' gewonnen!');
 }
 $('rewardOk').addEventListener('click',()=>$('reward').classList.remove('on'));
 
@@ -1471,7 +1600,7 @@ function openAlbum(){
   const grid=$('stickerGrid'); grid.textContent='';
   const have=earnedList();
   $('albTitle').textContent='Sticker von '+(profile?profile.name:'');
-  $('albHint').textContent='Du hast '+have.length+' von '+STICKERS.length+' Stickern. Male Bilder und leg sie in die Galerie – dann bekommst du mehr!';
+  $('albHint').textContent='Du hast '+have.length+' von '+STICKERS.length+' Stickern. Entdecke neue Motive oder gewinne einen Pokal – dann bekommst du mehr!';
   STICKERS.forEach((em,i)=>{
     const d=document.createElement('div');
     const got=have.indexOf(i)>=0;
@@ -1793,18 +1922,36 @@ function thumb(){
   o.drawImage(art,0,0,c.width,c.height);
   return c.toDataURL('image/jpeg',0.82);
 }
+function doneMotifsList(){ try{ return JSON.parse(profile.doneMotifs||'[]'); }catch(e){ return []; } }
 async function keepPicture(){
   if(!profile) return;
+  const motifName=motif?motif.name:'Bild', motifEmoji=motif?motif.emoji:'🎨';
   await Store.set('pic:'+profile.id+':'+Date.now(),
-    JSON.stringify({motif:motif?motif.name:'Bild',emoji:motif?motif.emoji:'🎨',img:thumb()}));
+    JSON.stringify({motif:motifName,emoji:motifEmoji,img:thumb()}));
   const ks=await Store.keys('pic:'+profile.id+':');
   if(ks.length>40){ ks.sort(); for(const k of ks.slice(0,ks.length-40)) await Store.del(k); }
+  const prevCount=profile.count||0;
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
+
+  const done=doneMotifsList();
+  const firstTime = !!motif && done.indexOf(motifName)<0;
+  if(firstTime){ done.push(motifName); profile.doneMotifs=JSON.stringify(done); }
+
+  const prevTier=trophyTier(prevCount), newTier=trophyTier(profile.count);
+  const trophyReached = !!newTier && (!prevTier || newTier.key!==prevTier.key);
+
   await saveProfiles();
   toast('🖼️ Bild in der Galerie gespeichert');
-  const idx=await awardSticker();
-  if(idx!=null){ setTimeout(()=>showReward(idx), 500); }
-  else Voice.say('gallery',null,true);
+
+  if(trophyReached){
+    setTimeout(()=>showTrophyPopup(newTier),400);
+  }else if(firstTime){
+    const idx=await awardSticker();
+    if(idx!=null) setTimeout(()=>showReward(idx,motifName),500);
+    else Voice.say('gallery',null,true);
+  }else{
+    Voice.say('gallery',null,true);
+  }
 }
 $('keep').addEventListener('click',keepPicture);
 $('toGallery').addEventListener('click',async()=>{ await keepPicture(); openGallery(); });
