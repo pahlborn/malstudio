@@ -123,25 +123,41 @@
   .trophies{flex:1;min-height:0;overflow:auto;display:grid;
     grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;align-content:start;padding:4px 2px}
   .trophy-card{background:var(--paper);border:3px solid var(--deep);border-radius:20px;
-    box-shadow:0 4px 0 var(--deep);padding:16px 10px;display:flex;flex-direction:column;
-    align-items:center;gap:5px;text-align:center}
-  .trophy-card em{font-size:52px;font-style:normal;line-height:1}
-  .trophy-card b{font-size:15px}
-  .trophy-card small{opacity:.7;font-weight:600}
+    box-shadow:0 4px 0 var(--deep);padding:20px 10px;display:flex;flex-direction:column;
+    align-items:center;gap:6px;text-align:center}
+  .trophy-card em{font-size:64px;font-style:normal;line-height:1}
+  .trophy-card b{font-size:16px}
+  .trophy-card small{opacity:.8;font-weight:700}
+  .trophy-card.bronze{border-color:#C97B3D;box-shadow:0 4px 0 #C97B3D;background:linear-gradient(160deg,#F6DEC6,var(--paper))}
+  .trophy-card.silber{border-color:#9AA7B0;box-shadow:0 4px 0 #9AA7B0;background:linear-gradient(160deg,#E7ECEF,var(--paper))}
+  .trophy-card.gold{border-color:#E3A008;box-shadow:0 4px 0 #E3A008;background:linear-gradient(160deg,#FFEBB0,var(--paper))}
   .trophy-card.locked{filter:grayscale(1);opacity:.5}
   #homeGreeting{font-weight:700;color:var(--deep)}
+
+  /* ---------- Fortschritts-Chip & -Balken ---------- */
+  .progress-chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;
+    border-radius:12px;border:3px solid var(--sand);background:#FFF7E0;color:var(--deep);
+    font-family:var(--font);font-weight:800;font-size:14px;white-space:nowrap}
+  .progress-chip:empty{display:none}
+  .progress-bar{height:16px;border-radius:8px;background:#E3EEF2;border:2px solid var(--deep);
+    overflow:hidden;flex:none}
+  .progress-bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--kelp),var(--sea));
+    border-radius:5px;transition:width .6s ease}
 
   /* ---------- Meeresalbum ---------- */
   #seaAlbum{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
   .sea-grid{flex:1;min-height:0;overflow:auto;display:grid;
     grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:12px;align-content:start;padding:4px 2px}
   .sea-card{background:var(--paper);border:3px solid var(--deep);border-radius:18px;box-shadow:0 4px 0 var(--deep);
-    padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;position:relative}
-  .sea-card em{font-size:36px;font-style:normal;line-height:1}
-  .sea-card b{font-size:13px}
-  .sea-card small{font-size:11px;font-weight:800;letter-spacing:.2px;opacity:.8}
+    padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;position:relative}
+  .sea-card em{font-size:48px;font-style:normal;line-height:1}
+  .sea-card b{font-size:14px}
+  .sea-card small{font-size:11px;font-weight:800;letter-spacing:.2px;opacity:.85}
+  .sea-card.found{border-color:var(--sea);box-shadow:0 4px 0 var(--sea);
+    background:linear-gradient(160deg,#DFF3FA,var(--paper))}
   .sea-card.found small{color:var(--sea)}
-  .sea-card.gold{border-color:#E3A008;box-shadow:0 4px 0 #E3A008;background:linear-gradient(180deg,#FFF6DC,var(--paper))}
+  .sea-card.gold{border-color:#E3A008;box-shadow:0 4px 0 #E3A008;
+    background:linear-gradient(160deg,#FFEBB0,var(--paper))}
   .sea-card.gold small{color:#B9790A}
   .sea-card.locked{background:#EEF3F5;border-color:#C6D2D8;box-shadow:0 4px 0 #C6D2D8;filter:grayscale(1);opacity:.6}
 
@@ -159,22 +175,25 @@
 
   .picker{
     flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));
-    gap:9px;align-content:start;padding:4px 2px 8px;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+    gap:10px;align-content:start;padding:4px 2px 8px;
   }
   .tile{
     position:relative;background:var(--paper);border:3px solid var(--deep);border-radius:18px;
-    box-shadow:0 4px 0 var(--deep);padding:11px 6px;cursor:pointer;
+    box-shadow:0 4px 0 var(--deep);padding:14px 6px;cursor:pointer;
     font-family:var(--font);font-weight:700;font-size:14px;color:var(--deep);
-    display:flex;flex-direction:column;align-items:center;gap:3px;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
   }
-  .tile em{font-size:32px;font-style:normal;line-height:1}
+  .tile em{font-size:42px;font-style:normal;line-height:1}
   .tile b{font-weight:700;font-size:11px;letter-spacing:.5px;color:var(--sea)}
   .tile.mine{border-color:var(--coral);box-shadow:0 4px 0 var(--coral)}
-  .tile.lv-leicht{background:#F3FBF6}
-  .tile.lv-mittel{background:#FFF9EC}
-  .tile.lv-schwer{background:#FDF2F4}
-  .tile.lv-Familie{background:#F1F6FF}
+  .tile.lv-leicht{border-color:var(--kelp);box-shadow:0 4px 0 var(--kelp);background:linear-gradient(160deg,#CDF3E4,var(--paper))}
+  .tile.lv-mittel{border-color:var(--sand);box-shadow:0 4px 0 var(--sand);background:linear-gradient(160deg,#FFE9B8,var(--paper))}
+  .tile.lv-schwer{border-color:#E85D8A;box-shadow:0 4px 0 #E85D8A;background:linear-gradient(160deg,#FBCBD9,var(--paper))}
+  .tile.lv-Familie{border-color:var(--sea);box-shadow:0 4px 0 var(--sea);background:linear-gradient(160deg,#CFE3FF,var(--paper))}
+  .tile.lv-leicht b{color:#06A57D}
+  .tile.lv-mittel b{color:#B98400}
+  .tile.lv-schwer b{color:#D1477B}
   .tile.mine b{color:var(--coral)}
   .tile:active{transform:translateY(3px)}
   .panel{background:var(--paper);border:3px solid var(--sea);border-radius:18px;padding:10px 12px;box-shadow:0 4px 0 var(--sea)}
@@ -327,6 +346,7 @@
     <div class="row">
       <button class="chip" id="profileChip"></button>
       <h1>Was malen wir <span>heute</span>?</h1>
+      <span class="progress-chip" data-chip></span>
       <span style="margin-left:auto"></span>
       <button class="icon-btn" id="newMotif">✏️ Eigenes Motiv</button>
       <button class="icon-btn" id="seaAlbumBtn">🌊 Meeresalbum</button>
@@ -337,6 +357,7 @@
       <button class="icon-btn" id="voiceBtn">🔊 Stimme</button>
     </div>
     <p class="hint" id="homeGreeting"></p>
+    <div class="progress-bar" id="homeBar"><div class="progress-bar-fill" id="homeBarFill"></div></div>
     <div class="modes" id="modes">
       <button class="modebtn on" id="modeDraw" aria-pressed="true">✏️ Nachmalen</button>
       <button class="modebtn" id="modeColor" aria-pressed="false">🎨 Ausmalen</button>
@@ -360,8 +381,11 @@
     <div class="row">
       <button class="icon-btn" id="trophyBack">◀︎ Zurück</button>
       <h1>Pokalschrank</h1>
+      <span class="progress-chip" data-chip></span>
     </div>
     <p class="hint" id="trophyHint"></p>
+    <div class="progress-bar"><div class="progress-bar-fill" id="trophyBarFill"></div></div>
+    <p class="hint" id="trophyBarLabel"></p>
     <div class="trophies" id="trophyGrid"></div>
   </section>
 
@@ -370,6 +394,7 @@
     <div class="row">
       <button class="icon-btn" id="seaAlbumBack">◀︎ Zurück</button>
       <h1>Mein Meeresalbum</h1>
+      <span class="progress-chip" data-chip></span>
     </div>
     <p class="hint" id="seaAlbumHint"></p>
     <div class="sea-grid" id="seaAlbumGrid"></div>
@@ -380,6 +405,7 @@
     <div class="row">
       <button class="icon-btn" id="galBack">◀︎ Zurück</button>
       <h1 id="galTitle">Galerie</h1>
+      <span class="progress-chip" data-chip></span>
     </div>
     <div class="gal" id="galGrid"></div>
   </section>
@@ -389,6 +415,7 @@
     <div class="row">
       <button class="icon-btn" id="albBack">◀︎ Zurück</button>
       <h1 id="albTitle">Meine Sticker</h1>
+      <span class="progress-chip" data-chip></span>
     </div>
     <p class="hint" id="albHint"></p>
     <div class="stickers" id="stickerGrid"></div>
@@ -1274,6 +1301,8 @@ function toast(msg){
 }
 function showSection(s){
   [secProfiles,secHome,secGallery,secDraw,secCreator,secAlbum,secTrophy,secSeaAlbum].forEach(x=>x.hidden = x!==s);
+  updateProgressChips();
+  if(s===secHome) renderGreeting();
   if(s!==secDraw) stopIdle();
   requestAnimationFrame(()=>{ if(typeof layout==='function') layout(); });
 }
@@ -1339,7 +1368,6 @@ async function pickProfile(p){
   Store.set('lastProfile',p.id);
   await loadCustoms();
   renderPicker();
-  renderGreeting();
   showSection(secHome);
   Voice.say('hello',null,true);
 }
@@ -1361,16 +1389,33 @@ function renderGreeting(){
     : '🏆 Du hast alle Pokale gewonnen!';
   $('homeGreeting').textContent='Hallo '+profile.name+'! '+profile.emoji+' Heute wartet dein nächstes Abenteuer. '
     +'⭐ Du hast '+stars+' '+(stars===1?'Stern':'Sterne')+'. '+trophyLine;
+  $('homeBarFill').style.width=trophyProgress(count).pct+'%';
+}
+function updateProgressChips(){
+  const stars=profile?(profile.stars||0):0;
+  const tier=trophyTier(profile?(profile.count||0):0);
+  const html='⭐ '+stars+(tier?' '+tier.emoji:'');
+  document.querySelectorAll('[data-chip]').forEach(el=>{ el.textContent=profile?html:''; });
+}
+function trophyProgress(count){
+  const nt=nextTrophy(count);
+  if(!nt) return {pct:100,label:'🏆 Alle Pokale gewonnen!'};
+  const prevN=TROPHIES[TROPHIES.indexOf(nt)-1]?TROPHIES[TROPHIES.indexOf(nt)-1].n:0;
+  const pct=Math.max(0,Math.min(100,Math.round((count-prevN)/(nt.n-prevN)*100)));
+  return {pct:pct,label:count+' von '+nt.n+' Bildern bis zum '+nt.label};
 }
 function openTrophy(){
   showSection(secTrophy);
   const count=profile?(profile.count||0):0, stars=profile?(profile.stars||0):0;
   $('trophyHint').textContent=stars+' '+(stars===1?'Stern':'Sterne')+' gesammelt · '+count+' '+(count===1?'Bild':'Bilder')+' in der Galerie';
+  const prog=trophyProgress(count);
+  $('trophyBarFill').style.width=prog.pct+'%';
+  $('trophyBarLabel').textContent=prog.label;
   const grid=$('trophyGrid'); grid.textContent='';
   TROPHIES.forEach(t=>{
     const got=count>=t.n;
     const d=document.createElement('div');
-    d.className='trophy-card'+(got?'':' locked');
+    d.className='trophy-card '+(got?t.key:'locked');
     d.innerHTML='<em>'+t.emoji+'</em><b>'+t.label+'</b><small>'+(got?'Geschafft!':'Noch '+(t.n-count)+' Bilder')+'</small>';
     grid.appendChild(d);
   });
@@ -1498,8 +1543,8 @@ function openMotif(i){
     requestAnimationFrame(()=>{ layout(); clearArt(); show(0,true); });
   }
 }
-$('home-btn').addEventListener('click',()=>{ renderGreeting(); showSection(secHome); });
-$('other').addEventListener('click',()=>{ renderGreeting(); showSection(secHome); });
+$('home-btn').addEventListener('click',()=>showSection(secHome));
+$('other').addEventListener('click',()=>showSection(secHome));
 
 function show(i,silent){
   step=i;
@@ -1579,7 +1624,7 @@ $('again').addEventListener('click',()=>{
   pokeIdle();
 });
 $('nextAdventure').addEventListener('click',()=>{
-  doneBar.classList.remove('on'); renderGreeting(); showSection(secHome);
+  doneBar.classList.remove('on'); showSection(secHome);
 });
 
 /* ---------- Modus-Umschalter ---------- */
