@@ -154,6 +154,36 @@
   #trophyCTA{align-self:center;padding:0 32px;min-width:220px;flex:none}
   #homeGreeting{font-weight:700;color:var(--deep)}
 
+  /* ---------- Schatzkarte ---------- */
+  #mapArea{flex:1;min-height:0;overflow:auto}
+  .treasure-map{position:relative;padding:22px 4px 34px;border-radius:20px;overflow:hidden;
+    background:linear-gradient(180deg,#BEE7F5 0%,#79CFE6 45%,#3FA8CB 100%)}
+  .treasure-map::before{content:"";position:absolute;left:50%;top:18px;bottom:18px;
+    border-left:5px dashed rgba(255,255,255,.65);transform:translateX(-50%)}
+  .treasure-map::after{content:"";position:absolute;width:170px;height:170px;border-radius:50%;
+    background:rgba(255,255,255,.12);top:-50px;right:-40px;pointer-events:none}
+  .map-row{display:flex;position:relative;z-index:1;margin:9px 0}
+  .map-row.pos-0{justify-content:flex-start;padding-left:9%}
+  .map-row.pos-1{justify-content:center}
+  .map-row.pos-2{justify-content:flex-end;padding-right:9%}
+  .map-stop{display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font)}
+  .map-node{position:relative;background:var(--paper);border:4px solid var(--deep);border-radius:50%;
+    width:76px;height:76px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 0 var(--deep)}
+  .map-node em{font-size:32px;font-style:normal;line-height:1}
+  .map-node .map-num{position:absolute;top:-8px;left:-8px;width:23px;height:23px;border-radius:50%;
+    background:var(--coral);color:#fff;font-weight:800;font-size:12px;
+    display:flex;align-items:center;justify-content:center;border:2px solid var(--paper)}
+  .map-node.found{border-color:var(--sea);background:linear-gradient(160deg,#DFF3FA,var(--paper))}
+  .map-node.found::after{content:"✓";position:absolute;bottom:-6px;right:-6px;width:23px;height:23px;
+    border-radius:50%;background:var(--kelp);color:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:13px;border:2px solid var(--paper)}
+  .map-node.gold{border-color:#E3A008;box-shadow:0 4px 0 #E3A008;background:linear-gradient(160deg,#FFEBB0,var(--paper))}
+  .map-node.gold::after{content:"🥇";position:absolute;bottom:-11px;right:-9px;font-size:20px}
+  .map-stop:active .map-node{transform:translateY(3px)}
+  .map-label{font-weight:800;font-size:12px;color:var(--deep);
+    background:var(--paper);padding:2px 9px;border-radius:8px;border:2px solid var(--deep);white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis}
+
   /* ---------- Fortschritts-Chip & -Balken ---------- */
   .progress-chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;
     border-radius:12px;border:3px solid var(--sand);background:#FFF7E0;color:var(--deep);
@@ -198,6 +228,7 @@
     display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
     gap:10px;align-content:start;padding:4px 2px 8px;
   }
+  .picker[hidden]{display:none}
   .tile{
     position:relative;background:var(--paper);border:3px solid var(--deep);border-radius:18px;
     box-shadow:0 4px 0 var(--deep);padding:14px 6px;cursor:pointer;
@@ -393,7 +424,18 @@
       <p class="hint" id="voiceHint" style="margin-top:8px"></p>
     </div>
     <p class="hint" id="homeHint">Links steht die Vorlage – im weißen Feld malst du sie nach.</p>
-    <div class="picker" id="picker"></div>
+    <div class="modes" id="viewModes">
+      <button class="modebtn on" id="viewMap" aria-pressed="true">🗺️ Schatzkarte</button>
+      <button class="modebtn" id="viewList" aria-pressed="false">📋 Liste</button>
+    </div>
+    <div id="mapArea">
+      <div class="treasure-map" id="treasureMap"></div>
+      <div id="customStrip" hidden>
+        <div class="ref-label" style="margin:12px 2px 6px">Meine eigenen Motive</div>
+        <div class="picker" id="customPicker" style="flex:none"></div>
+      </div>
+    </div>
+    <div class="picker" id="picker" hidden></div>
   </section>
 
   <!-- ============ POKALSCHRANK ============ -->
@@ -1347,7 +1389,7 @@ function toast(msg){
 function showSection(s){
   [secProfiles,secHome,secGallery,secDraw,secCreator,secAlbum,secTrophy,secSeaAlbum].forEach(x=>x.hidden = x!==s);
   updateProgressChips();
-  if(s===secHome) renderGreeting();
+  if(s===secHome){ renderGreeting(); renderMap(); }
   if(s!==secDraw) stopIdle();
   requestAnimationFrame(()=>{ if(typeof layout==='function') layout(); });
 }
@@ -1413,6 +1455,7 @@ async function pickProfile(p){
   Store.set('lastProfile',p.id);
   await loadCustoms();
   renderPicker();
+  renderMap();
   showSection(secHome);
   Voice.say('hello',null,true);
 }
@@ -1538,13 +1581,66 @@ function renderPicker(){
       const x=document.createElement('button'); x.className='x'; x.textContent='✕';
       x.addEventListener('click',async e=>{
         e.stopPropagation();
-        if(x.classList.contains('armed')){ await Store.del(m._key); await loadCustoms(); renderPicker(); }
+        if(x.classList.contains('armed')){ await Store.del(m._key); await loadCustoms(); renderPicker(); renderMap(); }
         else{ x.classList.add('armed'); x.textContent='Weg?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
       });
       b.appendChild(x);
     }
     picker.appendChild(b);
   });
+}
+
+let pickerView='map';
+function setPickerView(v){
+  pickerView=v;
+  $('viewMap').classList.toggle('on',v==='map'); $('viewMap').setAttribute('aria-pressed',v==='map'?'true':'false');
+  $('viewList').classList.toggle('on',v==='list'); $('viewList').setAttribute('aria-pressed',v==='list'?'true':'false');
+  $('mapArea').hidden = v!=='map';
+  $('picker').hidden = v!=='list';
+  Store.set('pickerView',v);
+}
+$('viewMap').addEventListener('click',()=>setPickerView('map'));
+$('viewList').addEventListener('click',()=>setPickerView('list'));
+
+function renderMap(){
+  const map=$('treasureMap'); map.textContent='';
+  const counts=profile?motifCounts():{};
+  MOTIFS.forEach((m,i)=>{
+    const st=seaAlbumStatus(m.name,counts);   // 'locked'=noch nicht gemalt (aber frei wählbar), 'found', 'gold'
+    const row=document.createElement('div');
+    row.className='map-row pos-'+(i%3);
+    const stop=document.createElement('button');
+    stop.className='map-stop';
+    const node=document.createElement('span');
+    node.className='map-node'+(st==='locked'?'':' '+st);
+    node.innerHTML='<span class="map-num">'+(i+1)+'</span><em>'+m.emoji+'</em>';
+    const label=document.createElement('span'); label.className='map-label'; label.textContent=m.name;
+    stop.appendChild(node); stop.appendChild(label);
+    stop.addEventListener('click',()=>openMotif(i));
+    row.appendChild(stop);
+    map.appendChild(row);
+  });
+  const cs=$('customStrip'), cp=$('customPicker');
+  if(customs.length){
+    cs.hidden=false; cp.textContent='';
+    customs.forEach((m,ci)=>{
+      const i=MOTIFS.length+ci;
+      const b=document.createElement('button');
+      b.className='tile mine';
+      b.innerHTML='<em>'+m.emoji+'</em>'+m.name+'<b>'+m.level+'</b>';
+      b.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; openMotif(i); });
+      const x=document.createElement('button'); x.className='x'; x.textContent='✕';
+      x.addEventListener('click',async e=>{
+        e.stopPropagation();
+        if(x.classList.contains('armed')){ await Store.del(m._key); await loadCustoms(); renderPicker(); renderMap(); }
+        else{ x.classList.add('armed'); x.textContent='Weg?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
+      });
+      b.appendChild(x);
+      cp.appendChild(b);
+    });
+  }else{
+    cs.hidden=true;
+  }
 }
 
 function shapeEl(sh){
@@ -2228,7 +2324,7 @@ $('cFinish').addEventListener('click',async()=>{
   const name=($('cName').value||'').trim()||'Mein Motiv';
   const m={name:name,emoji:cAvatar,level:'von mir',steps:cSteps};
   await Store.set('motif:'+profile.id+':'+Date.now(),JSON.stringify(m));
-  await loadCustoms(); renderPicker(); showSection(secHome);
+  await loadCustoms(); renderPicker(); renderMap(); showSection(secHome);
   toast('✏️ Motiv gespeichert'); Voice.raw('Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!');
 });
 $('newMotif').addEventListener('click',()=>{ cReset(); cNewLiveGroup(); showSection(secCreator); Voice.say('creator',null,true); });
@@ -2295,6 +2391,7 @@ layout();
   const vName=await Store.get('voiceName'); if(vName) setTimeout(()=>Voice.setVoice(vName),400);
   syncVoiceButtons();
   const savedMode=await Store.get('mode'); setMode(savedMode==='color'?'color':'draw');
+  const savedView=await Store.get('pickerView'); setPickerView(savedView==='list'?'list':'map');
   const last=await Store.get('lastProfile');
   const found=profiles.find(p=>p.id===last);
   if(found) pickProfile(found); else showSection(secProfiles);
