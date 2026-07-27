@@ -119,19 +119,39 @@
   .reward-card button{width:100%}
 
   /* ---------- Pokalschrank ---------- */
-  #trophy{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
-  .trophies{flex:1;min-height:0;overflow:auto;display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;align-content:start;padding:4px 2px}
-  .trophy-card{background:var(--paper);border:3px solid var(--deep);border-radius:20px;
-    box-shadow:0 4px 0 var(--deep);padding:20px 10px;display:flex;flex-direction:column;
-    align-items:center;gap:6px;text-align:center}
-  .trophy-card em{font-size:64px;font-style:normal;line-height:1}
-  .trophy-card b{font-size:16px}
-  .trophy-card small{opacity:.8;font-weight:700}
+  #trophy{display:flex;flex-direction:column;gap:12px;height:100%;min-height:0;overflow:auto;padding-bottom:6px}
+  .profile-card{flex:none;display:flex;align-items:center;gap:14px;background:var(--paper);
+    border:3px solid var(--deep);border-radius:20px;box-shadow:0 4px 0 var(--deep);padding:10px 18px 10px 10px}
+  .profile-avatar{width:60px;height:60px;border-radius:50%;background:#FFE8B8;border:4px solid var(--sand);
+    display:grid;place-items:center;font-size:32px;flex:none}
+  .profile-name{font-family:var(--font);font-weight:800;font-size:20px;color:var(--deep)}
+  .profile-level{font-weight:700;font-size:13px;color:var(--sea)}
+  .stat-card{flex:none;background:var(--paper);border:3px solid var(--deep);border-radius:20px;
+    box-shadow:0 4px 0 var(--deep);padding:16px 18px}
+  .stat-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .stat-card-head b{font-family:var(--font);font-weight:800;font-size:18px;color:var(--deep)}
+  .stat-card-head span{font-weight:700;font-size:13px;color:var(--coral)}
+  .stats3{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .stat-tile{background:var(--paper);border:3px solid var(--deep);border-radius:16px;
+    box-shadow:0 4px 0 var(--deep);padding:12px 6px;text-align:center}
+  .stat-tile em{font-size:26px;font-style:normal;display:block}
+  .stat-tile b{display:block;font-family:var(--font);font-weight:800;font-size:20px;color:var(--deep);margin-top:2px}
+  .stat-tile small{font-weight:700;font-size:11px;opacity:.75}
+  .awards-card{flex:none;background:var(--paper);border:3px solid var(--deep);border-radius:20px;
+    box-shadow:0 4px 0 var(--deep);padding:16px 18px}
+  .awards-card>b{display:block;font-family:var(--font);font-weight:800;font-size:16px;color:var(--deep);margin-bottom:10px}
+  .trophies{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .trophy-card{background:var(--paper);border:3px solid var(--deep);border-radius:16px;
+    box-shadow:0 4px 0 var(--deep);padding:14px 6px;display:flex;flex-direction:column;
+    align-items:center;gap:4px;text-align:center}
+  .trophy-card em{font-size:44px;font-style:normal;line-height:1}
+  .trophy-card b{font-size:14px}
+  .trophy-card small{opacity:.8;font-weight:700;font-size:11px}
   .trophy-card.bronze{border-color:#C97B3D;box-shadow:0 4px 0 #C97B3D;background:linear-gradient(160deg,#F6DEC6,var(--paper))}
   .trophy-card.silber{border-color:#9AA7B0;box-shadow:0 4px 0 #9AA7B0;background:linear-gradient(160deg,#E7ECEF,var(--paper))}
   .trophy-card.gold{border-color:#E3A008;box-shadow:0 4px 0 #E3A008;background:linear-gradient(160deg,#FFEBB0,var(--paper))}
   .trophy-card.locked{filter:grayscale(1);opacity:.5}
+  #trophyCTA{align-self:center;padding:0 32px;min-width:220px;flex:none}
   #homeGreeting{font-weight:700;color:var(--deep)}
 
   /* ---------- Fortschritts-Chip & -Balken ---------- */
@@ -383,10 +403,35 @@
       <h1>Pokalschrank</h1>
       <span class="progress-chip" data-chip></span>
     </div>
-    <p class="hint" id="trophyHint"></p>
-    <div class="progress-bar"><div class="progress-bar-fill" id="trophyBarFill"></div></div>
-    <p class="hint" id="trophyBarLabel"></p>
-    <div class="trophies" id="trophyGrid"></div>
+
+    <div class="profile-card">
+      <div class="profile-avatar" id="trophyAvatar"></div>
+      <div>
+        <div class="profile-name" id="trophyName"></div>
+        <div class="profile-level" id="trophyLevel"></div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-head">
+        <b id="trophyStarsLabel"></b>
+        <span id="trophyBarLabel"></span>
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" id="trophyBarFill"></div></div>
+    </div>
+
+    <div class="stats3">
+      <div class="stat-tile"><em>🖼️</em><b id="statPictures"></b><small>Bilder gemalt</small></div>
+      <div class="stat-tile"><em>🎯</em><b id="statSteps"></b><small>Schritte gemeistert</small></div>
+      <div class="stat-tile"><em>🎀</em><b id="statStickers"></b><small>Sticker gesammelt</small></div>
+    </div>
+
+    <div class="awards-card">
+      <b>Meine Auszeichnungen</b>
+      <div class="trophies" id="trophyGrid"></div>
+    </div>
+
+    <button class="nav-btn primary" id="trophyCTA">Weiter zum Abenteuer →</button>
   </section>
 
   <!-- ============ MEERESALBUM ============ -->
@@ -1381,6 +1426,11 @@ const TROPHIES=[
 ];
 function trophyTier(count){ let t=null; for(const x of TROPHIES) if(count>=x.n) t=x; return t; }
 function nextTrophy(count){ return TROPHIES.find(x=>count<x.n)||null; }
+const LEVEL_TITLES=['Strandkind','Muschelkind','Wellenkind','Sandburgkind','Inselkind','Riffkind','Tiefseekind','Ozeankind'];
+function levelInfo(count){
+  const level=Math.floor(count/5)+1;
+  return {level:level, title:LEVEL_TITLES[Math.min(level,LEVEL_TITLES.length)-1]};
+}
 function renderGreeting(){
   if(!profile) return;
   const stars=profile.stars||0, count=profile.count||0, nt=nextTrophy(count);
@@ -1406,11 +1456,19 @@ function trophyProgress(count){
 }
 function openTrophy(){
   showSection(secTrophy);
-  const count=profile?(profile.count||0):0, stars=profile?(profile.stars||0):0;
-  $('trophyHint').textContent=stars+' '+(stars===1?'Stern':'Sterne')+' gesammelt · '+count+' '+(count===1?'Bild':'Bilder')+' in der Galerie';
+  if(!profile) return;
+  const count=profile.count||0, stars=profile.stars||0, steps=profile.stepsDone||0;
+  const lvl=levelInfo(count);
+  $('trophyAvatar').textContent=profile.emoji;
+  $('trophyName').textContent=profile.name;
+  $('trophyLevel').textContent=lvl.title+' · Level '+lvl.level;
+  $('trophyStarsLabel').textContent='⭐ '+stars+' '+(stars===1?'Stern':'Sterne');
   const prog=trophyProgress(count);
   $('trophyBarFill').style.width=prog.pct+'%';
   $('trophyBarLabel').textContent=prog.label;
+  $('statPictures').textContent=count;
+  $('statSteps').textContent=steps;
+  $('statStickers').textContent=earnedList().length+' / '+STICKERS.length;
   const grid=$('trophyGrid'); grid.textContent='';
   TROPHIES.forEach(t=>{
     const got=count>=t.n;
@@ -1422,6 +1480,11 @@ function openTrophy(){
 }
 $('trophyBtn').addEventListener('click',openTrophy);
 $('trophyBack').addEventListener('click',()=>showSection(secHome));
+$('trophyCTA').addEventListener('click',()=>{
+  const list=allMotifs(), counts=motifCounts();
+  const idx=list.findIndex(m=>!counts[m.name]);
+  if(idx>=0) openMotif(idx); else showSection(secHome);
+});
 
 /* ---------- Meeresalbum ---------- */
 const GOLD_REPEATS=3;
@@ -1516,6 +1579,7 @@ function awardStepStar(i){
   if(!profile || stepStarred[i]) return;
   stepStarred[i]=true;
   profile.stars=(profile.stars||0)+1;
+  profile.stepsDone=(profile.stepsDone||0)+1;
   saveProfiles();
 }
 function openMotif(i){
