@@ -65,7 +65,11 @@
     cursor:pointer;padding:0 6px;line-height:1;font-family:var(--font);
   }
   .x.armed{background:var(--coral);color:#fff}
-  .maker{background:var(--paper);border:3px solid var(--deep);border-radius:20px;padding:12px;box-shadow:0 4px 0 var(--deep)}
+  .maker{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(8,36,48,.4);z-index:60;padding:16px}
+  .maker[hidden]{display:none}
+  .maker-card{background:var(--paper);border:3px solid var(--deep);border-radius:20px;padding:18px;
+    box-shadow:0 6px 0 var(--deep);max-width:92vw}
   .maker input{
     font-family:var(--font);font-size:18px;font-weight:700;color:var(--deep);
     border:3px solid var(--ghost);border-radius:12px;padding:8px 12px;width:180px;outline:none;
@@ -268,12 +272,14 @@
     <h1>Wer malt <span>heute</span>?</h1>
     <div class="plist" id="plist"></div>
     <div class="maker" id="maker" hidden>
-      <div class="row">
-        <input id="pname" type="text" placeholder="Name" maxlength="14" autocomplete="off">
-        <button class="icon-btn go" id="pcreate">Fertig</button>
-        <button class="icon-btn" id="pcancel">Abbrechen</button>
+      <div class="maker-card">
+        <div class="row">
+          <input id="pname" type="text" placeholder="Name" maxlength="14" autocomplete="off">
+          <button class="icon-btn go" id="pcreate">Fertig</button>
+          <button class="icon-btn" id="pcancel">Abbrechen</button>
+        </div>
+        <div class="avatars" id="avatars"></div>
       </div>
-      <div class="avatars" id="avatars"></div>
     </div>
   </section>
 
@@ -1080,6 +1086,13 @@ const Voice=(function(){
       "Schritt gespeichert. Was kommt als Nächstes?",
       "Gut! Und jetzt der nächste Teil.",
       "Notiert. Male weiter."
+    ],
+    magic:[
+      "Zauberei! Schön gerade.",
+      "Perfekt getroffen!",
+      "Das sitzt sauber.",
+      "Ordentlich hingezaubert.",
+      "Schnurgerade!"
     ]
   };
   const last={};
@@ -1092,7 +1105,7 @@ const Voice=(function(){
     return t;
   }
   let on=true, voice=null, lastSpoke=0;
-  const FEMALE=['anna','helena','petra','marlene','katja','vicki','yannick? nein','amelie','google deutsch','deutschland'];
+  const FEMALE=['anna','helena','petra','marlene','katja','vicki','amelie','google deutsch','deutschland'];
   function germanVoices(){
     if(!('speechSynthesis' in window)) return [];
     return speechSynthesis.getVoices().filter(v=>/^de/i.test(v.lang));
@@ -1574,7 +1587,7 @@ function commitStroke(){
   // Zauberpinsel: Form erkennen und begradigen
   if(strokeObj.magic){
     const shape=detectShape(pts);
-    if(shape){ drawShape(actx,shape); paint(); Voice.raw('Zauberei! Schau, wie schön das geworden ist.'); return; }
+    if(shape){ drawShape(actx,shape); paint(); Voice.say('magic'); return; }
   }
   strokePath(actx, smoothPoints(pts));
   actx.stroke();
