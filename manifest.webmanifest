@@ -3,7 +3,7 @@
   "short_name": "Malstudio",
   "description": "Schritt-für-Schritt-Malen für Kinder mit Vorlage, Farben und Galerie.",
   "lang": "de",
-  "start_url": "./malstudio-v5.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",

@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Malstudio">
+<meta name="theme-color" content="#118AB2">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>Sommer am Meer – Malstudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#073B4C; --sea:#118AB2; --foam:#E9F7FC; --sand:#FFD166;
+    --coral:#FF6B5B; --kelp:#06D6A0; --ghost:#C6E6F1; --paper:#FFFFFF;
+    --font:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;margin:0;overflow:hidden}
+  body{
+    font-family:var(--font);color:var(--deep);
+    background:radial-gradient(120% 70% at 50% 0%,#FFFFFF 0%,var(--foam) 45%,#CFEAF5 100%);
+    display:flex;justify-content:center;overscroll-behavior:none;
+    height:100svh;height:100dvh;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    -webkit-user-select:none;user-select:none;
+  }
+  .app{width:100%;max-width:1300px;height:100%;padding:10px;display:flex;flex-direction:column;gap:9px}
+  h1{font-size:clamp(17px,2.8vw,25px);font-weight:800;margin:0;letter-spacing:-.4px}
+  h1 span{color:var(--sea)}
+  section[hidden]{display:none!important}
+  .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .hint{margin:0;font-weight:500;opacity:.75;font-size:14px}
+
+  .icon-btn{
+    height:40px;padding:0 12px;border-radius:13px;border:3px solid var(--deep);
+    background:var(--paper);color:var(--deep);font-family:var(--font);font-weight:700;font-size:14px;
+    cursor:pointer;box-shadow:0 3px 0 var(--deep);white-space:nowrap;
+  }
+  .icon-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--deep)}
+  .icon-btn.go{background:var(--kelp)}
+  .icon-btn.off{background:#E7ECEF;opacity:.7}
+
+  /* ---------- Profile ---------- */
+  #profiles{display:flex;flex-direction:column;gap:10px;height:100%;min-height:0}
+  .plist{flex:1;min-height:0;overflow:auto;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;align-content:start;padding:4px 2px}
+  .pcard{
+    background:var(--paper);border:3px solid var(--deep);border-radius:20px;box-shadow:0 4px 0 var(--deep);
+    padding:16px 8px;cursor:pointer;font-family:var(--font);font-weight:700;font-size:17px;color:var(--deep);
+    display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;
+  }
+  .pcard em{font-size:44px;font-style:normal;line-height:1}
+  .pcard small{font-weight:500;font-size:12px;opacity:.6}
+  .pcard.new{border-style:dashed;box-shadow:none;background:transparent}
+  .x{
+    position:absolute;top:6px;right:6px;height:26px;min-width:26px;border-radius:13px;
+    border:2px solid var(--deep);background:var(--paper);font-size:13px;font-weight:800;
+    cursor:pointer;padding:0 6px;line-height:1;font-family:var(--font);
+  }
+  .x.armed{background:var(--coral);color:#fff}
+  .maker{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(8,36,48,.4);z-index:60;padding:16px}
+  .maker[hidden]{display:none}
+  .maker-card{background:var(--paper);border:3px solid var(--deep);border-radius:20px;padding:18px;
+    box-shadow:0 6px 0 var(--deep);max-width:92vw}
+  .maker input{
+    font-family:var(--font);font-size:18px;font-weight:700;color:var(--deep);
+    border:3px solid var(--ghost);border-radius:12px;padding:8px 12px;width:180px;outline:none;
+  }
+  .maker input:focus{border-color:var(--sea)}
+  .avatars{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0 0}
+  .av{width:44px;height:44px;border-radius:14px;border:3px solid var(--ghost);background:var(--paper);
+    font-size:24px;cursor:pointer;padding:0;line-height:1}
+  .av[aria-pressed="true"]{border-color:var(--coral);background:#FFF1EF;transform:scale(1.08)}
+
+  /* ---------- Motivauswahl ---------- */
+  #home{display:flex;flex-direction:column;gap:8px;height:100%;min-height:0}
+  .chip{
+    display:flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:20px;
+    border:3px solid var(--sea);background:var(--paper);font-family:var(--font);font-weight:700;
+    font-size:15px;color:var(--deep);cursor:pointer;
+  }
+  .modes{display:flex;gap:8px;margin:2px 0}
+  #draw.mode-color .bubbles{display:none}
+  #draw.mode-color #back{display:none}
+  #draw.mode-color #next{flex:none}  .modebtn{
+    height:40px;padding:0 16px;border-radius:20px;border:3px solid var(--deep);
+    background:var(--paper);color:var(--deep);font-family:var(--font);font-weight:800;font-size:15px;
+    cursor:pointer;box-shadow:0 3px 0 var(--deep)}
+  .modebtn.on{background:var(--sea);color:#fff;border-color:var(--sea);box-shadow:0 3px 0 #0B6E92}
+  .modebtn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--deep)}
+  .stickers{flex:1;min-height:0;overflow:auto;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:12px;align-content:start;padding:4px 2px}
+  .sticker{
+    aspect-ratio:1;border-radius:20px;border:3px solid var(--deep);background:var(--paper);
+    display:grid;place-items:center;font-size:44px;box-shadow:0 4px 0 var(--deep);position:relative}
+  .sticker.locked{background:#EEF3F5;border-color:#C6D2D8;box-shadow:0 4px 0 #C6D2D8;
+    filter:grayscale(1);opacity:.55;font-size:34px}
+  .sticker.locked::after{content:"?";position:absolute;font-size:28px;font-weight:800;color:#93A7B0}
+  .sticker.locked em{visibility:hidden}
+  .sticker em{font-style:normal}
+  .sticker.fresh{animation:pop .6s ease}
+  @keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+
+  /* Sticker-Jubel beim Verdienen */
+  .reward{position:fixed;inset:0;display:none;place-items:center;background:rgba(7,59,76,.72);z-index:30;padding:24px}
+  .reward.on{display:grid}
+  .reward-card{background:var(--paper);border:4px solid var(--deep);border-radius:28px;
+    padding:26px 30px;text-align:center;box-shadow:0 8px 0 var(--deep);max-width:340px}
+  .reward-card .big{font-size:96px;margin:0;animation:pop .6s ease}
+  .reward-card p{font-size:19px;font-weight:800;margin:12px 0 16px}
+  .reward-card button{width:100%}
+
+  /* ---------- Pokalschrank ---------- */
+  #trophy{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
+  .trophies{flex:1;min-height:0;overflow:auto;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;align-content:start;padding:4px 2px}
+  .trophy-card{background:var(--paper);border:3px solid var(--deep);border-radius:20px;
+    box-shadow:0 4px 0 var(--deep);padding:16px 10px;display:flex;flex-direction:column;
+    align-items:center;gap:5px;text-align:center}
+  .trophy-card em{font-size:52px;font-style:normal;line-height:1}
+  .trophy-card b{font-size:15px}
+  .trophy-card small{opacity:.7;font-weight:600}
+  .trophy-card.locked{filter:grayscale(1);opacity:.5}
+  #homeGreeting{font-weight:700;color:var(--deep)}
+
+  /* ---------- Feuerwerk-Abschluss ---------- */
+  .fireworks{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
+  .fw-piece{position:absolute;top:-16px;border-radius:2px;opacity:.95;animation:fw-fall linear forwards}
+  .fw-balloon{position:absolute;bottom:-60px;font-size:32px;animation:fw-rise ease-in forwards}
+  .fw-star{position:absolute;font-size:22px;animation:fw-twinkle ease-out forwards}
+  @keyframes fw-fall{to{transform:translateY(112vh) rotate(360deg);opacity:0}}
+  @keyframes fw-rise{to{transform:translateY(-115vh);opacity:0}}
+  @keyframes fw-twinkle{0%{transform:scale(0);opacity:0}40%{transform:scale(1.3);opacity:1}100%{transform:scale(1) translateY(-40px);opacity:0}}
+  @media (prefers-reduced-motion:reduce){
+    .fw-piece,.fw-balloon,.fw-star{animation:none;display:none}
+  }
+
+  .picker{
+    flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));
+    gap:9px;align-content:start;padding:4px 2px 8px;
+  }
+  .tile{
+    position:relative;background:var(--paper);border:3px solid var(--deep);border-radius:18px;
+    box-shadow:0 4px 0 var(--deep);padding:11px 6px;cursor:pointer;
+    font-family:var(--font);font-weight:700;font-size:14px;color:var(--deep);
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+  }
+  .tile em{font-size:32px;font-style:normal;line-height:1}
+  .tile b{font-weight:700;font-size:11px;letter-spacing:.5px;color:var(--sea)}
+  .tile.mine{border-color:var(--coral);box-shadow:0 4px 0 var(--coral)}
+  .tile.lv-leicht{background:#F3FBF6}
+  .tile.lv-mittel{background:#FFF9EC}
+  .tile.lv-schwer{background:#FDF2F4}
+  .tile.lv-Familie{background:#F1F6FF}
+  .tile.mine b{color:var(--coral)}
+  .tile:active{transform:translateY(3px)}
+  .panel{background:var(--paper);border:3px solid var(--sea);border-radius:18px;padding:10px 12px;box-shadow:0 4px 0 var(--sea)}
+  .panel select{
+    font-family:var(--font);font-weight:700;font-size:15px;color:var(--deep);
+    border:3px solid var(--ghost);border-radius:12px;padding:7px 10px;background:var(--paper);outline:none;max-width:260px;
+  }
+
+  /* ---------- Galerie ---------- */
+  #gallery{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
+  .gal{flex:1;min-height:0;overflow:auto;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;align-content:start;padding:4px 2px}
+  .pic{position:relative;background:var(--paper);border:3px solid var(--deep);border-radius:18px;
+    box-shadow:0 4px 0 var(--deep);overflow:hidden}
+  .pic img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+  .pic .cap{padding:6px 10px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;gap:6px}
+  .pic .cap small{font-weight:500;opacity:.6}
+  .empty{opacity:.6;font-weight:600;padding:20px 4px}
+
+  /* ---------- Werkstatt ---------- */
+  #creator{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
+  .cstage{flex:1;min-height:0;display:grid;place-items:center;
+    background:var(--foam);border:3px solid var(--coral);border-radius:20px;box-shadow:0 5px 0 var(--coral);padding:6px}
+  .csheet{position:relative;width:100%;height:100%;background:var(--paper);
+    border-radius:12px;overflow:hidden;touch-action:none;box-shadow:0 0 0 2px rgba(7,59,76,.12)}
+  .csheet svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+  #cart g path{fill:none;stroke:var(--deep);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+  #cart g.live path{stroke:var(--coral)}
+
+  /* ---------- Malansicht ---------- */
+  #draw{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
+  .bubbles{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+  .bub{width:27px;height:27px;border-radius:50%;border:3px solid var(--ghost);
+    background:var(--paper);color:var(--sea);font-family:var(--font);font-weight:700;font-size:13px;
+    display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .2s,background .2s,border-color .2s,color .2s}
+  .bub.done{background:var(--kelp);border-color:var(--kelp);color:#fff}
+  .bub.now{background:var(--coral);border-color:var(--coral);color:#fff;transform:translateY(-3px) scale(1.15)}
+
+  .task{background:var(--paper);border:3px solid var(--deep);border-radius:16px;
+    padding:7px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 0 var(--deep);flex:none;cursor:pointer}
+  .task .emoji{font-size:28px;line-height:1}
+  .task h2{margin:0;font-size:clamp(15px,2.2vw,20px);font-weight:800}
+  .task p{margin:1px 0 0;font-size:clamp(13px,1.9vw,16px);font-weight:500;opacity:.8}
+
+  .done-bar{display:none;align-items:center;gap:8px;flex-wrap:wrap;
+    background:var(--kelp);border:3px solid var(--deep);border-radius:16px;padding:7px 10px;box-shadow:0 4px 0 var(--deep)}
+  .done-bar.on{display:flex}
+  .done-bar strong{font-size:16px}
+  .done-bar .icon-btn{height:36px;font-size:14px}
+
+  .stage{flex:1;min-height:0;display:flex;gap:10px}
+  .ref{width:206px;flex:none;display:flex;flex-direction:column;gap:6px;min-height:0}
+  .ref-label{font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--sea);padding-left:4px}
+  .ref-frame{position:relative;background:var(--paper);border:3px solid var(--sea);
+    border-radius:18px;box-shadow:0 5px 0 var(--sea);aspect-ratio:4/3;overflow:hidden;flex:none}
+  .ref-frame svg{position:absolute;inset:0;width:100%;height:100%}
+  .ref-note{font-size:13px;font-weight:500;opacity:.75;line-height:1.25;padding:0 4px}
+  #ref g path,#ref g circle{fill:none;stroke:var(--ghost);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+  #ref g.done path,#ref g.done circle{stroke:var(--deep)}
+  #ref g.now path,#ref g.now circle{stroke:var(--coral);stroke-width:10;stroke-dasharray:100}
+  #ref g.now.draw path,#ref g.now.draw circle{animation:trace 1.2s ease forwards}
+  @keyframes trace{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+
+  .board{flex:1;min-width:0;min-height:0;display:grid;place-items:center;
+    background:var(--foam);border:3px solid var(--deep);border-radius:20px;
+    box-shadow:0 5px 0 var(--deep);overflow:hidden;padding:6px}
+  .board.party{animation:party 1.6s ease 2}
+  @keyframes party{
+    0%,100%{border-color:var(--deep);box-shadow:0 5px 0 var(--deep)}
+    50%{border-color:var(--kelp);box-shadow:0 5px 0 var(--kelp),0 0 0 8px rgba(6,214,160,.25)}
+  }
+  .sheet{position:relative;width:100%;height:100%;background:var(--paper);
+    border-radius:12px;overflow:hidden;touch-action:none;box-shadow:0 0 0 2px rgba(7,59,76,.12)}
+  .sheet canvas,.sheet svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+  #ghost{opacity:0;transition:opacity .3s;pointer-events:none;z-index:2}
+  .sheet canvas{z-index:1}
+  #ghost.on{opacity:.55}
+  #ghost path,#ghost circle{fill:none;stroke:var(--sea);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+  #ghost g{display:none}
+  #ghost g.show{display:block}
+  @media (prefers-reduced-motion:reduce){
+    #ref g.now.draw path,#ref g.now.draw circle{animation:none}
+    .bub{transition:none}.board.party{animation:none}
+  }
+
+  .side{width:202px;flex:none;display:flex;flex-direction:column;gap:7px}
+  .tools3{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .tool{height:44px;border-radius:13px;border:3px solid var(--deep);background:var(--paper);
+    font-family:var(--font);font-weight:700;font-size:20px;cursor:pointer;box-shadow:0 3px 0 var(--deep);padding:0}
+  .tool[aria-pressed="true"]{background:var(--sand)}
+  #tMagic[aria-pressed="true"]{background:#EAD9FF;border-color:#9B5DE5;box-shadow:0 3px 0 #7B4FC4}
+  .colors{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;justify-items:center;max-height:118px;overflow-y:auto;overflow-x:hidden;align-content:start;padding:2px 2px 2px 0;scrollbar-width:thin}
+  .swatch{width:30px;height:30px;border-radius:50%;border:3px solid var(--paper);
+    box-shadow:0 0 0 3px var(--deep);cursor:pointer;padding:0;transition:transform .15s}
+  .swatch[aria-pressed="true"]{transform:scale(1.22)}
+  .sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+  .size{height:38px;border-radius:13px;border:3px solid var(--deep);background:var(--paper);
+    cursor:pointer;padding:0;display:grid;place-items:center;box-shadow:0 3px 0 var(--deep)}
+  .size i{display:block;border-radius:50%;background:var(--deep)}
+  .size[aria-pressed="true"]{background:var(--sand)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .grid2 .icon-btn{height:38px;padding:0 5px;font-size:12.5px;letter-spacing:-.2px}
+  .nav-btn{height:50px;border-radius:16px;border:3px solid var(--deep);
+    font-family:var(--font);font-weight:800;font-size:17px;
+    background:var(--sand);color:var(--deep);cursor:pointer;box-shadow:0 4px 0 var(--deep)}
+  .nav-btn.primary{background:var(--kelp)}
+  .nav-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--deep)}
+  .nav-btn:disabled{opacity:.35;transform:none;cursor:default}
+  .spacer{flex:1}
+
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);
+    background:var(--deep);color:#fff;font-weight:700;font-size:15px;
+    padding:10px 18px;border-radius:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (orientation:portrait){
+    .stage{flex-wrap:wrap}
+    .ref{width:186px}
+    .ref-note{display:none}
+    .side{width:100%;order:3;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center}
+    .colors{grid-template-columns:repeat(10,auto);max-height:96px}
+    .sizes,.tools3{grid-template-columns:repeat(4,52px)}
+    .grid2{grid-template-columns:repeat(3,auto)}
+    .side .nav-btn{flex:1;min-width:130px;height:46px}
+    .spacer{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ PROFILE ============ -->
+  <section id="profiles">
+    <h1>Wer malt <span>heute</span>?</h1>
+    <div class="plist" id="plist"></div>
+    <div class="maker" id="maker" hidden>
+      <div class="maker-card">
+        <div class="row">
+          <input id="pname" type="text" placeholder="Name" maxlength="14" autocomplete="off">
+          <button class="icon-btn go" id="pcreate">Fertig</button>
+          <button class="icon-btn" id="pcancel">Abbrechen</button>
+        </div>
+        <div class="avatars" id="avatars"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MOTIVE ============ -->
+  <section id="home" hidden>
+    <div class="row">
+      <button class="chip" id="profileChip"></button>
+      <h1>Was malen wir <span>heute</span>?</h1>
+      <span style="margin-left:auto"></span>
+      <button class="icon-btn" id="newMotif">✏️ Eigenes Motiv</button>
+      <button class="icon-btn" id="trophyBtn">🏆 Pokale</button>
+      <button class="icon-btn" id="stickerBtn">🏅 Sticker</button>
+      <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
+      <button class="icon-btn" id="fsBtn">⛶ Vollbild</button>
+      <button class="icon-btn" id="voiceBtn">🔊 Stimme</button>
+    </div>
+    <p class="hint" id="homeGreeting"></p>
+    <div class="modes" id="modes">
+      <button class="modebtn on" id="modeDraw" aria-pressed="true">✏️ Nachmalen</button>
+      <button class="modebtn" id="modeColor" aria-pressed="false">🎨 Ausmalen</button>
+    </div>
+    <div class="panel" id="voicePanel" hidden>
+      <div class="row">
+        <strong style="font-size:15px">Stimme:</strong>
+        <select id="voiceSel"></select>
+        <button class="icon-btn" id="voiceTest">▶︎ Probe hören</button>
+        <button class="icon-btn go" id="voiceToggle">🔊 An</button>
+        <button class="icon-btn" id="voiceClose">Fertig</button>
+      </div>
+      <p class="hint" id="voiceHint" style="margin-top:8px"></p>
+    </div>
+    <p class="hint" id="homeHint">Links steht die Vorlage – im weißen Feld malst du sie nach.</p>
+    <div class="picker" id="picker"></div>
+  </section>
+
+  <!-- ============ POKALSCHRANK ============ -->
+  <section id="trophy" hidden>
+    <div class="row">
+      <button class="icon-btn" id="trophyBack">◀︎ Zurück</button>
+      <h1>Pokalschrank</h1>
+    </div>
+    <p class="hint" id="trophyHint"></p>
+    <div class="trophies" id="trophyGrid"></div>
+  </section>
+
+  <!-- ============ GALERIE ============ -->
+  <section id="gallery" hidden>
+    <div class="row">
+      <button class="icon-btn" id="galBack">◀︎ Zurück</button>
+      <h1 id="galTitle">Galerie</h1>
+    </div>
+    <div class="gal" id="galGrid"></div>
+  </section>
+
+  <!-- ============ STICKER-ALBUM ============ -->
+  <section id="album" hidden>
+    <div class="row">
+      <button class="icon-btn" id="albBack">◀︎ Zurück</button>
+      <h1 id="albTitle">Meine Sticker</h1>
+    </div>
+    <p class="hint" id="albHint"></p>
+    <div class="stickers" id="stickerGrid"></div>
+  </section>
+
+  <!-- ============ WERKSTATT ============ -->
+  <section id="creator" hidden>
+    <div class="row">
+      <button class="icon-btn" id="cBack">◀︎ Zurück</button>
+      <h1>Eigenes Motiv <span id="cStepLabel"></span></h1>
+      <span style="margin-left:auto"></span>
+      <button class="icon-btn" id="cUndo">↩︎ Strich weg</button>
+      <button class="icon-btn" id="cStep">✓ Schritt fertig</button>
+      <button class="icon-btn go" id="cSave">💾 Motiv speichern</button>
+    </div>
+    <p class="hint">Male einen Teil deines Bildes und tippe dann auf „Schritt fertig“. So entstehen die Schritte, die später nachgemalt werden.</p>
+    <div class="panel" id="cNaming" hidden>
+      <div class="row">
+        <input id="cName" type="text" placeholder="Name des Motivs" maxlength="16" autocomplete="off"
+               style="font-family:var(--font);font-size:17px;font-weight:700;color:var(--deep);border:3px solid var(--ghost);border-radius:12px;padding:8px 12px;width:200px;outline:none">
+        <button class="icon-btn go" id="cFinish">Speichern</button>
+        <button class="icon-btn" id="cCancel">Abbrechen</button>
+      </div>
+      <div class="avatars" id="cAvatars"></div>
+    </div>
+    <div class="cstage">
+      <div class="csheet" id="csheet"><svg id="cart" viewBox="0 0 800 600"></svg></div>
+    </div>
+  </section>
+
+  <!-- ============ MALEN ============ -->
+  <section id="draw" hidden>
+    <div class="row">
+      <button class="icon-btn" id="home-btn">◀︎ Motive</button>
+      <h1 id="motifName"></h1>
+      <div class="bubbles" id="bubbles"></div>
+    </div>
+
+    <div class="task" id="taskCard" title="Antippen zum Wiederholen">
+      <div class="emoji" id="taskEmoji">✏️</div>
+      <div>
+        <h2 id="taskTitle"></h2>
+        <p id="taskText"></p>
+      </div>
+    </div>
+
+    <div class="done-bar" id="doneBar">
+      <strong>🎉 Fertig!</strong>
+      <button class="icon-btn go" id="toGallery">🖼️ In die Galerie</button>
+      <button class="icon-btn" id="again">↻ Noch einmal</button>
+      <button class="icon-btn" id="nextAdventure">🧭 Nächstes Abenteuer</button>
+      <button class="icon-btn" id="other">🎨 Anderes Motiv</button>
+    </div>
+
+    <div class="stage">
+      <aside class="ref">
+        <div class="ref-label">Vorlage</div>
+        <div class="ref-frame"><svg id="ref" viewBox="0 0 800 600" aria-hidden="true"></svg></div>
+        <p class="ref-note">Rot ist der Strich, der jetzt dran ist. Male ihn rechts nach.</p>
+      </aside>
+
+      <div class="board" id="board">
+        <div class="sheet" id="sheet">
+          <svg id="ghost" viewBox="0 0 800 600" aria-hidden="true"></svg>
+          <canvas id="pad"></canvas>
+        </div>
+      </div>
+
+      <div class="side">
+        <div class="tools3" id="tools3">
+          <button class="tool" id="tPen"   aria-pressed="true"  title="Stift">✏️</button>
+          <button class="tool" id="tMagic" aria-pressed="false" title="Zauberpinsel">🪄</button>
+          <button class="tool" id="tFill"  aria-pressed="false" title="Farbeimer">🪣</button>
+          <button class="tool" id="tErase" aria-pressed="false" title="Radiergummi">🧽</button>
+        </div>
+        <div class="colors" id="colors"></div>
+        <div class="sizes" id="sizes"></div>
+        <div class="grid2">
+          <button class="icon-btn" id="undo">↩︎ Zurück</button>
+          <button class="icon-btn" id="clear">🗑️ Alles</button>
+          <button class="icon-btn" id="helper">🫥 Hilfslinien</button>
+          <button class="icon-btn go" id="keep">🖼️ Galerie</button>
+          <button class="icon-btn" id="musicBtn">🎵 Musik</button>
+          <button class="icon-btn" id="voiceBtn2">🔊 Stimme</button>
+        </div>
+        <div class="spacer"></div>
+        <button class="nav-btn" id="back">◀︎ Schritt zurück</button>
+        <button class="nav-btn primary" id="next">Weiter ▶︎</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="fireworks" id="fireworks"></div>
+<div class="reward" id="reward">
+  <div class="reward-card">
+    <p class="big" id="rewardEmoji">🏅</p>
+    <p id="rewardText">Neuer Sticker!</p>
+    <button class="nav-btn primary" id="rewardOk">Juhu!</button>
+  </div>
+</div>
+
+<script>
+(function(){
+/* ============================================================
+   MOTIVE
+   ============================================================ */
+const MOTIFS=[
+{name:"Herz",emoji:"❤️",level:"leicht",steps:[
+ {emoji:"↖️",title:"Die linke Hälfte",text:"Von unten in einem Bogen hoch und wieder zur Mitte.",
+  shapes:["M400,480 C330,420 220,340 200,270 C180,196 232,150 290,158 C334,164 372,196 400,238"]},
+ {emoji:"↗️",title:"Die rechte Hälfte",text:"Genauso auf der anderen Seite – jetzt ist es ein Herz.",
+  shapes:["M400,480 C470,420 580,340 600,270 C620,196 568,150 510,158 C466,164 428,196 400,238"]},
+ {emoji:"💫",title:"Der Glanz",text:"Zwei kleine Bögen oben links – da glänzt es.",
+  shapes:["M262,208 C246,230 246,258 258,278","M296,196 C282,210 278,224 280,238"]},
+ {emoji:"💕",title:"Die kleinen Herzen",text:"Links und rechts je ein Mini-Herz.",
+  shapes:["M180,470 C160,452 128,430 122,410 C116,388 132,374 150,378 C162,381 174,391 180,404 C186,391 198,381 210,378 C228,374 244,388 238,410 C232,430 200,452 180,470 Z",
+          "M620,470 C640,452 672,430 678,410 C684,388 668,374 650,378 C638,381 626,391 620,404 C614,391 602,381 590,378 C572,374 556,388 562,410 C568,430 600,452 620,470 Z"]},
+ {emoji:"✨",title:"Die Funkeln",text:"Zum Schluss zwei Sternchen zum Funkeln.",
+  shapes:["M660,180 L668,204 L692,212 L668,220 L660,244 L652,220 L628,212 L652,204 Z",
+          "M140,120 L146,140 L166,146 L146,152 L140,172 L134,152 L114,146 L134,140 Z"]}
+]},
+{name:"Muschel",emoji:"🐚",level:"leicht",steps:[
+ {emoji:"🥣",title:"Die Schale",text:"Zwei Bögen, die sich unten treffen.",
+  shapes:["M175,300 C230,400 300,462 400,470 C500,462 570,400 625,300"]},
+ {emoji:"🌊",title:"Der Wellenrand",text:"Oben herum lauter kleine Hügel.",
+  shapes:["M175,300 Q205,240 245,262 Q275,196 320,222 Q355,166 400,190 Q445,166 480,222 Q525,196 555,262 Q595,240 625,300"]},
+ {emoji:"📏",title:"Die Rillen",text:"Striche von unten wie ein Fächer nach oben.",
+  shapes:["M400,464 C360,400 300,320 246,266","M400,464 C385,390 350,290 321,226","M400,464 L400,192",
+          "M400,464 C415,390 450,290 479,226","M400,464 C440,400 500,320 554,266"]},
+ {emoji:"🔘",title:"Das Schloss",text:"Unten ein kleiner Bogen – da hängt die Muschel zusammen.",
+  shapes:["M372,470 C380,494 420,494 428,470"]},
+ {emoji:"🏖️",title:"Sandkörner",text:"Ein paar Punkte drumherum in den Sand.",
+  shapes:[[250,430,7],[560,430,7],[300,505,5],[500,508,6],[400,530,5]]}
+]},
+{name:"Seestern",emoji:"⭐",level:"leicht",steps:[
+ {emoji:"⭐",title:"Fünf Arme",text:"Ein Stern mit fünf dicken Armen.",
+  shapes:["M350,231 C370,180 385,140 400,100 C415,140 430,180 450,231 C505,236 545,237 590,238 C552,270 517,298 481,326 C500,375 510,420 518,462 C478,442 440,405 400,385 C360,405 322,442 282,462 C290,420 300,375 319,326 C283,298 248,270 210,238 C255,237 295,236 350,231 Z"]},
+ {emoji:"⭕",title:"Die Mitte",text:"Ein Kreis mitten in den Stern.",shapes:[[400,300,48]]},
+ {emoji:"🔵",title:"Die Punkte",text:"Auf jeden Arm zwei Punkte tupfen.",
+  shapes:[[400,190,10],[400,145,6],[495,269,10],[543,253,6],[459,381,10],[489,422,6],[341,381,10],[311,422,6],[305,269,10],[257,253,6]]},
+ {emoji:"👀",title:"Die Augen",text:"Zwei Augen in die Mitte.",shapes:[[371,286,13],[429,286,13]]},
+ {emoji:"😊",title:"Das Lächeln",text:"Ein Bogen darunter – fertig ist das Grinsen.",
+  shapes:["M372,318 C386,338 414,338 428,318"]}
+]},
+{name:"Eis",emoji:"🍦",level:"leicht",steps:[
+ {emoji:"🔺",title:"Die Waffel",text:"Ein großes Dreieck mit der Spitze nach unten.",shapes:["M310,340 L400,540 L490,340 Z"]},
+ {emoji:"🧇",title:"Waffelmuster",text:"Drei Striche quer über die Waffel.",
+  shapes:["M330,375 L470,375","M350,420 L450,420","M372,468 L428,468"]},
+ {emoji:"🍨",title:"Die erste Kugel",text:"Ein dicker Hügel oben auf die Waffel.",
+  shapes:["M312,342 C300,250 350,205 400,205 C450,205 500,250 488,342"]},
+ {emoji:"🍧",title:"Die zweite Kugel",text:"Noch ein kleinerer Hügel obendrauf.",
+  shapes:["M345,215 C340,150 370,125 400,125 C430,125 460,150 455,215"]},
+ {emoji:"🍒",title:"Die Kirsche",text:"Ein Kreis ganz oben und ein Stiel daran.",
+  shapes:[[400,105,22],"M400,83 C406,58 420,50 436,54"]},
+ {emoji:"✨",title:"Die Streusel",text:"Viele kleine Striche auf die Kugeln.",
+  shapes:["M350,250 L358,262","M420,232 L430,242","M375,300 L383,312","M440,288 L450,298","M398,170 L406,180"]}
+]},
+{name:"Wassermelone",emoji:"🍉",level:"leicht",steps:[
+ {emoji:"🌙",title:"Die runde Kante",text:"Ein großer Bogen wie ein Regenbogen.",shapes:["M140,420 A260,260 0 0 1 660,420"]},
+ {emoji:"➖",title:"Die gerade Kante",text:"Unten ein Strich von links nach rechts.",shapes:["M140,420 L660,420"]},
+ {emoji:"🟢",title:"Die Schale",text:"Ein zweiter Bogen knapp darunter.",shapes:["M172,420 A228,228 0 0 1 628,420"]},
+ {emoji:"🔴",title:"Das Fruchtfleisch",text:"Und noch ein Bogen – das ist das Rote.",shapes:["M198,420 A202,202 0 0 1 602,420"]},
+ {emoji:"⚫",title:"Die Kerne",text:"Viele kleine Punkte hineinmalen.",
+  shapes:[[300,336,12],[400,300,12],[500,336,12],[252,396,11],[400,396,11],[548,396,11],[350,376,11],[450,376,11]]},
+ {emoji:"✨",title:"Tropfen und Funkeln",text:"Ein Wassertropfen und ein Sternchen daneben.",
+  shapes:["M690,300 C700,318 700,336 688,344 C676,336 676,318 690,300 Z",
+          "M120,250 L126,268 L144,274 L126,280 L120,298 L114,280 L96,274 L114,268 Z"]}
+]},
+{name:"Fisch",emoji:"🐠",level:"leicht",steps:[
+ {emoji:"🥚",title:"Der Körper",text:"Ein dickes Ei – vorne spitz, hinten rund.",
+  shapes:["M180,300 C200,210 340,170 470,230 C510,250 545,275 570,300 C545,325 510,350 470,370 C340,430 200,390 180,300 Z"]},
+ {emoji:"🔱",title:"Der Schwanz",text:"Hinten dran zwei Zipfel wie ein großes V.",
+  shapes:["M182,300 C152,272 122,222 95,214 C106,254 116,286 119,300 C116,314 106,346 95,386 C122,378 152,328 182,300 Z"]},
+ {emoji:"🪁",title:"Die Flossen",text:"Eine Flosse aufs Dach, eine kleine an den Bauch.",
+  shapes:["M296,201 C330,142 392,126 428,148 C421,176 426,196 432,208",
+          "M300,399 C312,442 344,458 368,450 C352,434 346,420 343,407"]},
+ {emoji:"👁️",title:"Das Auge",text:"Ein Kreis vorne – und ein Punkt mitten hinein.",shapes:[[486,272,20],[490,274,8]]},
+ {emoji:"😗",title:"Mund und Kiemen",text:"Ein kleines Küsschen vorne, ein Bogen für die Kiemen.",
+  shapes:["M566,306 C550,313 546,324 553,335","M446,238 C424,268 424,332 446,362"]},
+ {emoji:"🫧",title:"Schuppen und Blubber",text:"Bögen als Schuppen und Blasen zum Blubbern.",
+  shapes:["M300,268 C316,282 316,318 300,332","M348,258 C366,276 366,324 348,342","M396,254 C416,274 416,326 396,346",
+          [622,238,12],[662,192,8]]}
+]},
+{name:"Krabbe",emoji:"🦀",level:"mittel",steps:[
+ {emoji:"🥚",title:"Der Panzer",text:"Ein breites Ei in die Mitte.",
+  shapes:["M250,330 C250,270 320,235 400,235 C480,235 550,270 550,330 C550,385 480,415 400,415 C320,415 250,385 250,330 Z"]},
+ {emoji:"👀",title:"Die Augen",text:"Zwei Stiele nach oben, oben je ein Kreis.",
+  shapes:["M350,240 L340,190","M450,240 L460,190",[338,168,23],[462,168,23]]},
+ {emoji:"😄",title:"Punkte und Mund",text:"In jedes Auge ein Punkt, dazu ein breites Grinsen.",
+  shapes:[[338,170,9],[462,170,9],"M368,368 C385,390 415,390 432,368"]},
+ {emoji:"🦞",title:"Die Scheren",text:"Links und rechts ein Arm mit einer dicken Zange.",
+  shapes:["M250,325 C210,318 175,305 152,285",
+          "M152,285 C128,262 96,268 92,292 C88,314 112,330 136,322 C120,306 128,286 152,285 Z",
+          "M550,325 C590,318 625,305 648,285",
+          "M648,285 C672,262 704,268 708,292 C712,314 688,330 664,322 C680,306 672,286 648,285 Z"]},
+ {emoji:"🦵",title:"Die Beine",text:"Drei Beine links, drei Beine rechts.",
+  shapes:["M268,375 C230,395 205,420 195,450","M300,400 C275,430 258,455 252,485","M340,412 C325,445 318,470 318,500",
+          "M532,375 C570,395 595,420 605,450","M500,400 C525,430 542,455 548,485","M460,412 C475,445 482,470 482,500"]},
+ {emoji:"🔵",title:"Die Tupfen",text:"Ein paar Punkte auf den Panzer.",
+  shapes:[[330,300,9],[400,286,9],[470,300,9],[365,342,7],[435,342,7]]}
+]},
+{name:"Segelboot",emoji:"⛵",level:"mittel",steps:[
+ {emoji:"🛶",title:"Der Rumpf",text:"Eine Schale wie ein großes Lächeln.",
+  shapes:["M190,430 L610,430 C570,505 500,520 400,520 C300,520 230,505 190,430 Z"]},
+ {emoji:"📏",title:"Der Mast",text:"Ein langer Strich nach oben.",shapes:["M400,428 L400,110"]},
+ {emoji:"⛵",title:"Das große Segel",text:"Rechts ein gebogenes Dreieck.",shapes:["M412,125 C490,220 520,330 525,405 L412,405 Z"]},
+ {emoji:"🔺",title:"Das kleine Segel",text:"Links noch ein Dreieck.",shapes:["M388,140 L388,405 L265,405 C300,320 345,215 388,140 Z"]},
+ {emoji:"🎏",title:"Der Wimpel",text:"Oben am Mast eine kleine Flagge.",shapes:["M400,112 L468,132 L400,152"]},
+ {emoji:"🌊",title:"Die Wellen",text:"Unten drunter Wellen – jetzt schwimmt es.",
+  shapes:["M90,545 C130,517 170,573 210,545 C250,517 290,573 330,545 C370,517 410,573 450,545 C490,517 530,573 570,545 C610,517 650,573 690,545"]}
+]},
+{name:"Sandburg",emoji:"🏰",level:"mittel",steps:[
+ {emoji:"⬛",title:"Die Mauer",text:"Ein breiter Kasten in der Mitte.",shapes:["M200,470 L200,360 L600,360 L600,470"]},
+ {emoji:"🪜",title:"Die Zacken",text:"Oben drauf Zacken wie bei einer Burg.",
+  shapes:["M200,360 L200,325 L245,325 L245,360","M290,360 L290,325 L335,325 L335,360",
+          "M378,360 L378,325 L423,325 L423,360","M466,360 L466,325 L511,325 L511,360",
+          "M555,360 L555,325 L600,325 L600,360"]},
+ {emoji:"🗼",title:"Die Türme",text:"Links und rechts je ein hoher Turm.",
+  shapes:["M152,470 L152,240 L232,240 L232,470","M568,470 L568,240 L648,240 L648,470"]},
+ {emoji:"👑",title:"Turmzacken",text:"Auch die Türme bekommen Zacken.",
+  shapes:["M152,240 L152,210 L180,210 L180,240 L204,240 L204,210 L232,210 L232,240",
+          "M568,240 L568,210 L596,210 L596,240 L620,240 L620,210 L648,210 L648,240"]},
+ {emoji:"🚪",title:"Tür und Fenster",text:"Ein Tor in die Mauer, ein Fenster in jeden Turm.",
+  shapes:["M370,470 L370,412 C370,386 430,386 430,412 L430,470",[192,300,18],[608,300,18]]},
+ {emoji:"🚩",title:"Die Fahne",text:"Eine Stange mit Fahne ganz nach oben.",
+  shapes:["M400,325 L400,232","M400,236 L462,254 L400,272"]}
+]},
+{name:"Luftballons",emoji:"🎈",level:"mittel",steps:[
+ {emoji:"🎈",title:"Der große Ballon",text:"Ein dickes Ei links oben.",
+  shapes:["M250,110 C310,110 350,160 350,222 C350,290 300,340 250,346 C200,340 150,290 150,222 C150,160 190,110 250,110 Z"]},
+ {emoji:"🎈",title:"Der mittlere Ballon",text:"Noch einer daneben, etwas höher.",
+  shapes:["M430,66 C482,66 516,110 516,164 C516,222 470,268 430,274 C390,268 344,222 344,164 C344,110 378,66 430,66 Z"]},
+ {emoji:"🎈",title:"Der dritte Ballon",text:"Und rechts der dritte.",
+  shapes:["M600,150 C650,150 682,192 682,244 C682,300 638,344 600,350 C562,344 518,300 518,244 C518,192 550,150 600,150 Z"]},
+ {emoji:"🔻",title:"Die Knoten",text:"Unter jeden Ballon ein kleines Dreieck.",
+  shapes:["M238,344 L250,368 L262,344 Z","M419,272 L430,294 L441,272 Z","M589,348 L600,370 L611,348 Z"]},
+ {emoji:"🧵",title:"Die Schnüre",text:"Drei Schnüre, die sich unten treffen.",
+  shapes:["M250,368 C258,440 340,500 400,556","M430,294 C428,380 404,470 400,556","M600,370 C588,440 452,500 400,556"]},
+ {emoji:"🎀",title:"Schleife und Glanz",text:"Eine Schleife ans Ende, dann Glanzstriche auf die Ballons.",
+  shapes:["M400,556 C378,540 350,548 356,568 C360,584 384,580 400,562 C416,580 440,584 444,568 C450,548 422,540 400,556 Z",
+          "M196,180 C186,200 186,220 194,236","M382,132 C374,148 374,166 380,180","M552,214 C544,230 544,246 550,258"]}
+]},
+{name:"Pizza",emoji:"🍕",level:"mittel",steps:[
+ {emoji:"⭕",title:"Der Rand",text:"Ein großer runder Kreis.",shapes:[[400,300,230]]},
+ {emoji:"🧀",title:"Der Käse",text:"Ein zweiter Kreis knapp innen drin.",shapes:[[400,300,196]]},
+ {emoji:"🔪",title:"Die Stücke",text:"Drei Striche durch die Mitte – jetzt sind es sechs Stücke.",
+  shapes:["M170,300 L630,300","M285,101 L515,499","M515,101 L285,499"]},
+ {emoji:"🔴",title:"Die Salami",text:"Fünf dicke Kreise als Salami.",
+  shapes:[[318,222,34],[472,206,30],[348,378,32],[494,368,34],[400,138,26]]},
+ {emoji:"⚫",title:"Die Oliven",text:"Ein paar kleinere Kreise dazwischen.",
+  shapes:[[255,296,15],[548,308,15],[398,452,15],[300,148,13],[520,452,13]]},
+ {emoji:"🌿",title:"Das Basilikum",text:"Zwei kleine Blätter obendrauf.",
+  shapes:["M232,378 C218,360 226,338 246,340 C262,342 268,362 254,378 C246,386 238,386 232,378 Z",
+          "M552,244 C538,226 546,204 566,206 C582,208 588,228 574,244 C566,252 558,252 552,244 Z"]}
+]},
+{name:"Sonnenschirm",emoji:"⛱️",level:"mittel",steps:[
+ {emoji:"🌂",title:"Das Schirmdach",text:"Ein großer Bogen wie ein Hügel.",
+  shapes:["M140,300 C180,180 290,110 400,110 C510,110 620,180 660,300"]},
+ {emoji:"🌊",title:"Der Wellenrand",text:"Unten am Rand vier kleine Bögen.",
+  shapes:["M140,300 Q205,346 270,300 Q335,346 400,300 Q465,346 530,300 Q595,346 660,300"]},
+ {emoji:"🎽",title:"Die Streifen",text:"Von der Spitze aus Striche nach unten.",
+  shapes:["M400,114 C330,150 220,220 142,296","M400,112 C378,180 328,252 270,298","M400,110 L400,300",
+          "M400,112 C422,180 472,252 530,298","M400,114 C470,150 580,220 658,296"]},
+ {emoji:"📏",title:"Die Stange",text:"Ein langer Stab nach unten, oben ein Knubbel.",
+  shapes:["M392,300 L392,520","M408,300 L408,520","M400,110 L400,66",[400,58,10]]},
+ {emoji:"🏖️",title:"Sand und Handtuch",text:"Eine Sandlinie und ein Handtuch daneben.",
+  shapes:["M110,520 C240,494 560,494 692,520","M470,470 L640,440 L660,520 L490,548 Z"]},
+ {emoji:"☀️",title:"Sonne und Muster",text:"Streifen aufs Handtuch und eine Sonne dazu.",
+  shapes:["M500,478 L522,540","M540,472 L562,534","M580,466 L602,528",[706,138,44]]}
+]},
+{name:"Schmetterling",emoji:"🦋",level:"mittel",steps:[
+ {emoji:"🥖",title:"Der Körper",text:"Ein schmaler länglicher Körper in die Mitte.",
+  shapes:["M400,180 C412,220 412,380 400,420 C388,380 388,220 400,180 Z"]},
+ {emoji:"📡",title:"Die Fühler",text:"Zwei Bögen nach oben, mit je einem Knubbel am Ende.",
+  shapes:["M394,182 C380,150 350,132 328,128","M406,182 C420,150 450,132 472,128",[326,124,8],[474,124,8]]},
+ {emoji:"⬆️",title:"Die großen Flügel",text:"Oben links und rechts je ein großer Flügel.",
+  shapes:["M392,215 C330,120 210,110 168,168 C132,218 200,282 300,300 C340,306 375,290 392,265",
+          "M408,215 C470,120 590,110 632,168 C668,218 600,282 500,300 C460,306 425,290 408,265"]},
+ {emoji:"⬇️",title:"Die kleinen Flügel",text:"Unten dran zwei kleinere Flügel.",
+  shapes:["M392,300 C340,318 268,340 258,400 C250,452 300,480 348,452 C382,432 394,380 396,332",
+          "M408,300 C460,318 532,340 542,400 C550,452 500,480 452,452 C418,432 406,380 404,332"]},
+ {emoji:"⭕",title:"Die großen Punkte",text:"In jeden großen Flügel ein dicker Kreis.",shapes:[[268,196,28],[532,196,28]]},
+ {emoji:"✨",title:"Das Muster",text:"Noch ein paar kleine Punkte auf die Flügel.",
+  shapes:[[318,238,12],[482,238,12],[318,404,14],[482,404,14],[222,166,10],[578,166,10]]}
+]},
+{name:"Palme",emoji:"🌴",level:"mittel",steps:[
+ {emoji:"🪵",title:"Der Stamm",text:"Zwei lange Bögen nach oben – der Stamm.",
+  shapes:["M360,540 C368,440 372,340 358,240","M420,540 C424,440 424,340 408,236"]},
+ {emoji:"➰",title:"Die Ringe",text:"Quer über den Stamm ein paar Bögen.",
+  shapes:["M362,480 C382,470 402,472 420,480","M360,420 C380,410 400,412 418,420",
+          "M362,360 C382,350 400,352 416,360","M360,300 C378,290 396,292 412,300"]},
+ {emoji:"⬅️",title:"Blätter nach links",text:"Zwei große Blätter fallen nach links.",
+  shapes:["M382,236 C320,190 240,182 180,208 C240,206 300,226 372,262",
+          "M382,240 C330,262 268,300 236,352 C288,312 336,282 380,268"]},
+ {emoji:"➡️",title:"Blätter nach rechts",text:"Und zwei nach rechts.",
+  shapes:["M388,232 C452,182 534,178 596,204 C534,204 472,224 396,258",
+          "M390,240 C444,258 508,294 542,346 C488,308 438,280 392,266"]},
+ {emoji:"⬆️",title:"Blätter nach oben",text:"Ein Blatt steht nach oben ab.",
+  shapes:["M384,232 C368,168 380,110 412,72 C420,130 414,186 396,238"]},
+ {emoji:"🥥",title:"Die Kokosnüsse",text:"Drei Kugeln unter die Blätter.",shapes:[[368,264,22],[412,270,20],[390,296,18]]},
+ {emoji:"🏝️",title:"Sand und Sonne",text:"Ein Sandhügel unten und eine Sonne dazu.",
+  shapes:["M110,545 C220,505 320,498 400,498 C480,498 590,505 690,545",[660,120,46]]}
+]},
+{name:"Haus am Meer",emoji:"🏖️",level:"mittel",steps:[
+ {emoji:"🧱",title:"Die Wände",text:"Ein großer Kasten – das ist das Haus.",shapes:["M230,470 L230,300 L570,300 L570,470"]},
+ {emoji:"🔺",title:"Das Dach",text:"Ein Dreieck oben drauf.",shapes:["M200,300 L400,170 L600,300 Z"]},
+ {emoji:"🚪",title:"Die Tür",text:"In die Mitte eine Tür mit rundem Bogen.",
+  shapes:["M370,470 L370,378 C370,356 430,356 430,378 L430,470",[419,420,6]]},
+ {emoji:"🪟",title:"Die Fenster",text:"Links und rechts ein Fenster mit Kreuz.",
+  shapes:["M262,340 L342,340 L342,410 L262,410 Z","M302,340 L302,410","M262,375 L342,375",
+          "M458,340 L538,340 L538,410 L458,410 Z","M498,340 L498,410","M458,375 L538,375"]},
+ {emoji:"🏭",title:"Der Schornstein",text:"Ein schmaler Kasten aufs Dach.",shapes:["M500,232 L500,168 L540,168 L540,254"]},
+ {emoji:"☀️",title:"Sonne und Möwen",text:"Eine Sonne und zwei Möwen an den Himmel.",
+  shapes:[[706,124,48],"M110,150 C126,134 142,134 158,150 C174,134 190,134 206,150",
+          "M250,108 C260,98 270,98 280,108 C290,98 300,98 310,108"]},
+ {emoji:"🌊",title:"Das Meer",text:"Zwei Wellenlinien davor – fertig ist der Strand.",
+  shapes:["M60,500 C100,478 140,522 180,500 C220,478 260,522 300,500 C340,478 380,522 420,500 C460,478 500,522 540,500 C580,478 620,522 660,500 C700,478 740,522 780,500",
+          "M60,548 C110,526 150,570 200,548 C250,526 290,570 340,548 C390,526 430,570 480,548 C530,526 570,570 620,548 C670,526 710,570 760,548"]}
+]},
+{name:"Leuchtturm",emoji:"🗼",level:"mittel",steps:[
+ {emoji:"🏛️",title:"Der Turm",text:"Ein Kasten, der nach oben schmaler wird.",shapes:["M300,520 L340,220 L460,220 L500,520 Z"]},
+ {emoji:"🎽",title:"Die Streifen",text:"Drei Striche quer über den Turm.",
+  shapes:["M330,300 L470,300","M319,380 L481,380","M308,460 L492,460"]},
+ {emoji:"➖",title:"Die Plattform",text:"Oben ein breites Brett zum Drumherumlaufen.",shapes:["M318,222 L482,222 L470,188 L330,188 Z"]},
+ {emoji:"💡",title:"Das Lampenhaus",text:"Ein Kasten mit Fensterkreuz für die Lampe.",
+  shapes:["M348,188 L348,110 L452,110 L452,188 Z","M400,110 L400,188","M348,150 L452,150"]},
+ {emoji:"🔺",title:"Dach und Spitze",text:"Ein spitzes Dach mit Kugel obendrauf.",
+  shapes:["M336,110 L400,52 L464,110 Z","M400,52 L400,30",[400,22,10]]},
+ {emoji:"🚪",title:"Tür und Fenster",text:"Unten eine Tür, daneben zwei runde Fenster.",
+  shapes:["M378,520 L378,452 C378,432 422,432 422,452 L422,520",[368,340,18],[432,340,18]]},
+ {emoji:"🔦",title:"Licht und Wellen",text:"Zwei Lichtkegel zur Seite und Wellen unten.",
+  shapes:["M452,132 L620,96 L620,176 Z","M348,132 L180,96 L180,176 Z",
+          "M100,556 C150,534 190,578 240,556 C290,534 330,578 380,556 C430,534 470,578 520,556 C570,534 610,578 660,556"]}
+]},
+{name:"Delfin",emoji:"🐬",level:"schwer",steps:[
+ {emoji:"🫘",title:"Der Körper",text:"Ein langer geschwungener Körper.",
+  shapes:["M150,400 C180,300 280,230 400,225 C500,221 570,258 610,310 C560,330 520,352 470,372 C400,398 280,412 190,430 C168,424 154,414 150,400 Z"]},
+ {emoji:"👄",title:"Die Schnauze",text:"Vorne rechts eine spitze Schnauze.",
+  shapes:["M604,300 C630,292 652,286 672,282 C654,300 640,312 612,314"]},
+ {emoji:"🔺",title:"Die Rückenflosse",text:"Oben eine Flosse wie ein Segel.",
+  shapes:["M360,232 C372,166 420,128 462,124 C444,164 438,208 442,236"]},
+ {emoji:"🪝",title:"Die Schwanzflosse",text:"Hinten links zwei Zipfel.",
+  shapes:["M156,406 C118,396 84,372 60,336 C98,344 132,358 160,376",
+          "M156,406 C126,432 108,466 100,502 C132,478 158,448 176,418"]},
+ {emoji:"🤚",title:"Die Seitenflosse",text:"Unten am Bauch eine kleine Flosse.",
+  shapes:["M340,372 C320,410 322,448 344,472 C368,456 386,424 390,394"]},
+ {emoji:"😊",title:"Auge und Lächeln",text:"Ein Auge mit Punkt und ein Lächeln.",
+  shapes:[[540,282,16],[544,284,7],"M560,318 C578,320 594,314 604,304"]},
+ {emoji:"💦",title:"Wasser und Fontäne",text:"Wellen unten und Tropfen über dem Kopf.",
+  shapes:["M100,520 C150,498 200,542 250,520 C300,498 350,542 400,520 C450,498 500,542 550,520 C600,498 650,542 700,520",
+          [430,180,10],[452,150,8],[476,122,6]]}
+]},
+{name:"Möwe",emoji:"🕊️",level:"schwer",steps:[
+ {emoji:"🥚",title:"Der Körper",text:"Ein liegendes Ei in die Mitte.",
+  shapes:["M330,300 C370,278 430,272 480,282 C520,290 548,306 560,326 C540,346 500,358 456,358 C410,358 360,340 330,320 Z"]},
+ {emoji:"🐦",title:"Kopf und Schnabel",text:"Links ein runder Kopf, davor ein spitzer Schnabel.",
+  shapes:["M330,300 C312,282 300,262 302,244 C304,226 322,214 344,216 C364,218 376,232 378,250",
+          "M302,244 C282,240 262,244 250,254 C264,264 284,268 302,262"]},
+ {emoji:"🪁",title:"Der obere Flügel",text:"Ein großer Bogen nach oben.",
+  shapes:["M420,286 C400,230 366,176 320,140 C368,142 424,168 466,208 C494,234 512,262 520,288"]},
+ {emoji:"🪁",title:"Der untere Flügel",text:"Und einer nach unten.",
+  shapes:["M440,352 C424,398 396,442 356,472 C404,470 456,446 494,410 C520,384 534,362 538,344"]},
+ {emoji:"🖋️",title:"Federn oben",text:"Drei Striche in den oberen Flügel.",
+  shapes:["M356,166 C378,196 400,232 414,268","M384,150 C404,184 424,220 436,254","M416,146 C436,180 456,212 468,240"]},
+ {emoji:"🖋️",title:"Federn unten",text:"Drei Striche in den unteren Flügel.",
+  shapes:["M382,442 C398,412 416,380 428,350","M414,458 C430,424 448,392 458,366","M448,442 C462,414 476,388 484,364"]},
+ {emoji:"🪶",title:"Die Schwanzfedern",text:"Rechts hinten zwei spitze Federn.",
+  shapes:["M556,330 C596,322 634,318 668,320 C640,336 606,348 566,352",
+          "M560,336 C594,344 628,354 656,368 C620,368 588,362 558,352"]},
+ {emoji:"👁️",title:"Auge und Füße",text:"Ein Auge in den Kopf, zwei Füße an den Bauch.",
+  shapes:[[336,242,12],[338,244,6],"M470,354 C476,376 486,392 500,402","M492,352 C500,372 512,386 526,394"]}
+]},
+{name:"Wal",emoji:"🐳",level:"schwer",steps:[
+ {emoji:"🫘",title:"Der Körper",text:"Ein riesiger runder Körper.",
+  shapes:["M110,320 C150,236 260,190 380,196 C500,202 590,250 632,320 C590,392 500,438 380,442 C260,446 150,404 110,320 Z"]},
+ {emoji:"🪝",title:"Die Schwanzflosse",text:"Rechts hinten zwei große Zipfel.",
+  shapes:["M628,326 C670,300 712,268 740,232 C742,282 730,316 716,340",
+          "M716,340 C734,362 748,396 752,436 C716,410 672,372 634,340"]},
+ {emoji:"😮",title:"Der Mund",text:"Ein langer Bogen vom Kopf nach hinten.",shapes:["M112,344 C150,368 200,378 250,378"]},
+ {emoji:"📏",title:"Die Bauchfalten",text:"Vier kurze Striche unter den Mund.",
+  shapes:["M160,368 C170,388 176,400 186,412","M200,392 C208,410 214,420 222,430",
+          "M244,404 C250,420 254,428 260,436","M290,412 C294,426 296,432 300,440"]},
+ {emoji:"🤚",title:"Die Flosse",text:"Am Bauch eine breite Flosse.",
+  shapes:["M290,412 C280,452 292,490 320,506 C346,486 358,450 352,418"]},
+ {emoji:"👁️",title:"Das Auge",text:"Ein Kreis mit Punkt über dem Mund.",shapes:[[186,300,16],[190,302,7]]},
+ {emoji:"💦",title:"Die Fontäne",text:"Zwei Bögen nach oben und Tropfen dazu.",
+  shapes:["M300,192 C298,150 312,110 340,84","M300,192 C282,152 278,110 288,76",[340,70,14],[286,62,12],[314,40,10]]},
+ {emoji:"🌊",title:"Das Meer",text:"Zwei Wellenlinien unter den Wal.",
+  shapes:["M80,500 C130,478 180,522 230,500 C280,478 330,522 380,500 C430,478 480,522 530,500 C580,478 630,522 680,500",
+          "M80,548 C140,526 190,570 250,548 C310,526 360,570 420,548 C480,526 530,570 590,548 C650,526 700,570 750,548"]}
+]},
+{name:"Schildkröte",emoji:"🐢",level:"schwer",steps:[
+ {emoji:"🛡️",title:"Der Panzer",text:"Ein großes rundes Ei in die Mitte.",
+  shapes:["M225,300 C225,214 303,150 400,150 C497,150 575,214 575,300 C575,386 497,450 400,450 C303,450 225,386 225,300 Z"]},
+ {emoji:"⭕",title:"Der Panzerrand",text:"Ein zweiter Ring knapp innen drin.",
+  shapes:["M262,300 C262,232 324,186 400,186 C476,186 538,232 538,300 C538,368 476,414 400,414 C324,414 262,368 262,300 Z"]},
+ {emoji:"🐢",title:"Der Kopf",text:"Rechts schaut der Kopf heraus.",
+  shapes:["M575,290 C610,282 646,290 660,312 C646,336 610,344 574,334"]},
+ {emoji:"🦶",title:"Die Vorderbeine",text:"Rechts oben und rechts unten je ein Bein.",
+  shapes:["M492,178 C520,140 566,124 590,142 C602,176 570,214 522,224",
+          "M492,422 C520,460 566,476 590,458 C602,424 570,386 522,376"]},
+ {emoji:"🦶",title:"Die Hinterbeine",text:"Links oben und links unten auch je eins.",
+  shapes:["M300,182 C270,148 226,134 204,152 C194,184 226,220 268,228",
+          "M300,418 C270,452 226,466 204,448 C194,416 226,380 268,372"]},
+ {emoji:"🪝",title:"Der Schwanz",text:"Links ein kleiner spitzer Schwanz.",
+  shapes:["M226,318 C202,326 186,338 178,352 C198,352 216,344 230,330"]},
+ {emoji:"⬡",title:"Die Panzerplatten",text:"Ein Kreis in die Mitte, sechs drumherum.",
+  shapes:[[400,300,54],[400,224,36],[466,262,36],[466,338,36],[400,376,36],[334,338,36],[334,262,36]]},
+ {emoji:"😊",title:"Auge und Lächeln",text:"Ein Auge in den Kopf und ein kleines Lächeln.",
+  shapes:[[632,300,12],[634,302,6],"M644,326 C652,332 662,330 668,322"]}
+]},
+{name:"Seepferdchen",emoji:"🐴",level:"schwer",steps:[
+ {emoji:"🐴",title:"Der Kopf",text:"Oben rechts ein runder Kopf.",
+  shapes:["M436,116 C478,104 520,122 528,156 C530,178 518,196 500,206"]},
+ {emoji:"👃",title:"Die Schnauze",text:"Eine lange Röhre nach rechts.",
+  shapes:["M528,156 C566,160 604,170 634,184 C606,200 570,206 532,202"]},
+ {emoji:"↘️",title:"Der Bauch",text:"Vom Kopf in einem großen Bogen nach unten.",
+  shapes:["M500,206 C512,240 522,278 516,318 C510,364 486,404 452,432 C424,456 396,472 374,500"]},
+ {emoji:"↙️",title:"Der Rücken",text:"Die zweite Linie auf der anderen Seite.",
+  shapes:["M436,116 C404,126 384,150 380,182 C374,232 386,278 380,326 C374,380 356,424 330,460 C310,488 300,512 306,532"]},
+ {emoji:"🌀",title:"Die Schwanzrolle",text:"Unten rollt sich der Schwanz ein.",
+  shapes:["M374,500 C356,522 322,536 300,528 C276,518 268,486 288,470 C304,458 324,468 322,486"]},
+ {emoji:"🔺",title:"Die Rückenzacken",text:"Kleine Spitzen den Rücken entlang.",
+  shapes:["M382,170 L358,158","M380,214 L354,206","M382,258 L356,252","M378,302 L352,298",
+          "M370,346 L344,344","M356,390 L332,390"]},
+ {emoji:"👁️",title:"Flosse und Auge",text:"Eine kleine Flosse am Bauch, dazu das Auge.",
+  shapes:["M508,240 C534,246 552,268 546,292 C538,314 516,318 506,306",[476,152,15],[479,154,7]]},
+ {emoji:"🫧",title:"Punkte und Blasen",text:"Tupfen auf den Bauch und Blasen daneben.",
+  shapes:[[478,268,10],[470,312,10],[452,354,9],[430,394,9],[660,120,12],[692,86,8]]}
+]},
+{name:"Krake",emoji:"🐙",level:"schwer",steps:[
+ {emoji:"🎈",title:"Der Kopf",text:"Eine große Kuppel oben.",
+  shapes:["M400,120 C480,120 540,180 540,260 C540,300 528,330 510,352 L290,352 C272,330 260,300 260,260 C260,180 320,120 400,120 Z"]},
+ {emoji:"👀",title:"Die Augen",text:"Zwei große Kreise in den Kopf.",shapes:[[352,240,34],[448,240,34]]},
+ {emoji:"😄",title:"Pupillen und Mund",text:"In jedes Auge ein Punkt, darunter ein Lächeln.",
+  shapes:[[356,246,15],[452,246,15],"M370,306 C388,326 412,326 430,306"]},
+ {emoji:"🦑",title:"Die mittleren Arme",text:"Zwei Arme, die sich unten einrollen.",
+  shapes:["M348,352 C336,410 320,460 330,510 C338,548 372,556 386,528 C396,506 384,486 366,490",
+          "M452,352 C464,410 480,460 470,510 C462,548 428,556 414,528 C404,506 416,486 434,490"]},
+ {emoji:"⬅️",title:"Die Arme links",text:"Zwei Arme schwingen nach links.",
+  shapes:["M330,352 C304,412 274,458 268,512 C264,548 300,562 316,536 C326,518 314,500 296,504",
+          "M282,340 C240,382 196,420 166,470 C148,500 168,530 196,520 C216,512 220,486 202,478"]},
+ {emoji:"➡️",title:"Die Arme rechts",text:"Und zwei nach rechts.",
+  shapes:["M470,352 C496,412 526,458 532,512 C536,548 500,562 484,536 C474,518 486,500 504,504",
+          "M518,340 C560,382 604,420 634,470 C652,500 632,530 604,520 C584,512 580,486 598,478"]},
+ {emoji:"🔵",title:"Die Saugnäpfe",text:"Kleine Kreise auf die Arme.",
+  shapes:[[340,420,8],[334,470,8],[460,420,8],[466,470,8],[250,436,8],[556,436,8],[204,478,7],[596,478,7]]},
+ {emoji:"🫧",title:"Muster und Blasen",text:"Tupfen auf den Kopf und Blasen daneben.",
+  shapes:[[340,160,12],[400,142,12],[460,160,12],[300,200,10],[500,200,10],[648,150,14],[688,110,9]]}
+]},
+{name:"Strandkorb",emoji:"🪑",level:"schwer",steps:[
+ {emoji:"🛖",title:"Die Haube",text:"Ein Kasten mit rundem Dach.",
+  shapes:["M220,470 L220,300 C220,200 300,140 400,140 C500,140 580,200 580,300 L580,470 Z"]},
+ {emoji:"➖",title:"Die Sitzfläche",text:"Ein Strich quer durch – da sitzt man.",shapes:["M220,400 L580,400"]},
+ {emoji:"🛏️",title:"Das Kissen",text:"Ein flacher Kasten auf die Sitzfläche.",shapes:["M240,400 L240,360 L560,360 L560,400"]},
+ {emoji:"🎽",title:"Die Streifen",text:"Fünf Striche von oben nach unten.",
+  shapes:["M280,160 C268,240 264,320 266,400","M340,144 C332,240 330,320 330,400","M400,140 L400,400",
+          "M460,144 C468,240 470,320 470,400","M520,160 C532,240 536,320 534,400"]},
+ {emoji:"🦵",title:"Die Fußstützen",text:"Unten zwei kleine Kästen davor.",
+  shapes:["M250,470 L250,510 L340,510 L340,470","M460,470 L460,510 L550,510 L550,470"]},
+ {emoji:"🧺",title:"Die Decke",text:"Ein Bogen als Decke über das Kissen.",
+  shapes:["M300,360 C300,336 340,326 380,330 C420,334 440,350 440,362"]},
+ {emoji:"🏖️",title:"Sand und Sonne",text:"Eine Sandlinie, eine Sonne und Muscheln.",
+  shapes:["M100,540 C240,512 560,512 700,540",[690,140,44],[160,528,12],[640,530,12]]}
+]},
+{name:"Vespa",emoji:"🛵",level:"schwer",steps:[
+ {emoji:"⭕",title:"Das Vorderrad",text:"Links ein großer Kreis und ein kleiner darin.",shapes:[[232,470,74],[232,470,32]]},
+ {emoji:"⭕",title:"Das Hinterrad",text:"Rechts genauso.",shapes:[[590,470,74],[590,470,32]]},
+ {emoji:"🛵",title:"Der Körper",text:"Die geschwungene Wanne zwischen den Rädern.",
+  shapes:["M300,462 C300,414 340,396 386,396 L470,396 C520,396 560,414 570,440 C578,460 574,478 560,486 L420,486 C400,486 386,478 380,466 Z"]},
+ {emoji:"🛡️",title:"Das Beinschild",text:"Vorne ein hoher Bogen nach oben.",
+  shapes:["M300,462 C286,404 274,344 268,300 C264,272 276,252 296,246 C316,240 334,252 338,276 C346,330 352,392 356,430"]},
+ {emoji:"💺",title:"Der Sitz",text:"Ein länglicher Bogen als Sitzbank.",
+  shapes:["M400,396 C400,368 428,352 466,352 C504,352 528,368 528,394"]},
+ {emoji:"🎮",title:"Der Lenker",text:"Eine Stange nach oben und quer der Griff.",
+  shapes:["M296,246 C300,222 316,208 336,206","M256,214 C286,200 330,196 366,206"]},
+ {emoji:"🪞",title:"Spiegel und Kotflügel",text:"Ein Spiegel oben, ein Bogen über dem Vorderrad.",
+  shapes:["M256,214 L244,186",[240,178,12],"M180,442 C184,382 216,344 262,342 C300,340 320,362 322,392"]},
+ {emoji:"💡",title:"Licht und Auspuff",text:"Ein Scheinwerfer vorne, hinten ein Rohr.",
+  shapes:[[300,268,26],"M540,392 C566,388 588,392 600,404","M556,486 C586,486 606,494 616,506"]}
+]},
+{name:"Piratenschiff",emoji:"🏴‍☠️",level:"schwer",steps:[
+ {emoji:"🛶",title:"Der Rumpf",text:"Eine große Schale unten.",
+  shapes:["M140,470 L660,470 C630,540 560,560 400,560 C240,560 170,540 140,470 Z"]},
+ {emoji:"🚧",title:"Das Deck",text:"Ein Kasten oben auf den Rumpf.",shapes:["M140,470 L140,420 L660,420 L660,470"]},
+ {emoji:"🪝",title:"Der Bugspriet",text:"Vorne links eine schräge Stange.",shapes:["M140,430 C110,420 84,412 60,404"]},
+ {emoji:"📏",title:"Der große Mast",text:"Ein hoher Mast mit Querbalken.",shapes:["M400,420 L400,110","M320,180 L480,180"]},
+ {emoji:"⛵",title:"Das große Segel",text:"Ein bauchiges Segel darunter.",
+  shapes:["M320,182 C330,240 330,300 320,352 C370,336 430,336 480,352 C470,300 470,240 480,182 Z"]},
+ {emoji:"⛵",title:"Der zweite Mast",text:"Rechts noch ein Mast mit Segel.",
+  shapes:["M560,420 L560,180","M500,236 L620,236",
+          "M500,238 C508,286 508,330 500,368 C540,356 580,356 620,368 C612,330 612,286 620,238 Z"]},
+ {emoji:"🏴",title:"Flagge und Ausguck",text:"Ganz oben eine Flagge und ein Korb.",
+  shapes:["M400,110 L490,132 L400,154","M382,168 L418,168 L424,196 L376,196 Z"]},
+ {emoji:"🪟",title:"Bullaugen",text:"Sechs runde Fenster in den Rumpf.",
+  shapes:[[200,500,18],[280,506,18],[360,510,18],[440,510,18],[520,506,18],[600,500,18]]},
+ {emoji:"🌊",title:"Die Wellen",text:"Wellen unter das Schiff.",
+  shapes:["M60,560 C110,538 160,582 210,560 C260,538 310,582 360,560 C410,538 460,582 510,560 C560,538 610,582 660,560 C700,542 730,556 760,566"]}
+]},
+{name:"Familie",emoji:"👨‍👩‍👧‍👧",level:"Familie",steps:[
+ {emoji:"👨",title:"Papa",text:"Ganz links der Papa: runder Kopf und ein breiter Körper.",
+  shapes:[[172,150,46],"M132,432 L132,244 C132,214 212,214 212,244 L212,432",
+          "M148,432 L148,516","M196,432 L196,516","M134,262 L104,344","M210,262 L240,344"]},
+ {emoji:"😀",title:"Papas Gesicht",text:"Augen, ein Lächeln und kurze Haare.",
+  shapes:[[158,146,6],[186,146,6],"M158,168 C168,180 176,180 186,168","M128,150 C128,112 216,112 216,150"]},
+ {emoji:"👩",title:"Mama",text:"Daneben die Mama: Kopf und ein Kleid wie ein Dreieck.",
+  shapes:[[332,164,44],"M296,436 L320,244 C320,230 344,230 344,244 L368,436 Z",
+          "M312,436 L312,510","M352,436 L352,510","M300,278 L272,352","M364,278 L392,352"]},
+ {emoji:"💇‍♀️",title:"Mamas Gesicht",text:"Augen, ein Lächeln und lange Haare.",
+  shapes:[[318,160,6],[346,160,6],"M318,182 C328,194 336,194 346,182",
+          "M290,158 C288,110 376,110 374,158 C374,210 366,240 360,262","M290,158 C290,210 298,240 304,262"]},
+ {emoji:"👧",title:"Das große Mädchen",text:"Das siebenjährige Mädchen: kleiner, mit Kleid und Zöpfen.",
+  shapes:[[480,244,36],"M450,436 L466,306 C466,294 494,294 494,306 L510,436 Z",
+          "M462,436 L462,500","M498,436 L498,500",
+          "M448,246 C430,242 420,262 428,282","M512,246 C530,242 540,262 532,282"]},
+ {emoji:"👧",title:"Das kleine Mädchen",text:"Das fünfjährige Mädchen ganz rechts: am kleinsten.",
+  shapes:[[600,300,32],"M574,436 L586,352 C586,342 614,342 614,352 L626,436 Z",
+          "M586,436 L586,494","M614,436 L614,494",
+          "M572,302 C556,300 548,318 556,334","M628,302 C644,300 652,318 644,334"]},
+ {emoji:"😊",title:"Die Gesichter der Mädchen",text:"Beide Mädchen bekommen Augen und ein Lächeln.",
+  shapes:[[470,240,5],[490,240,5],"M470,258 C478,268 486,268 494,258",
+          [592,296,5],[608,296,5],"M592,312 C599,320 607,320 614,312"]},
+ {emoji:"☀️",title:"Sonne und Wiese",text:"Eine Sonne an den Himmel und Gras unter die Familie.",
+  shapes:[[706,120,42],"M70,520 C240,506 560,506 740,520",
+          "M300,520 L300,504","M340,520 L340,500","M470,520 L470,504","M520,520 L520,500"]}
+]},
+{name:"Kätzchen",emoji:"🐱",level:"leicht",steps:[
+ {emoji:"⭕",title:"Der Kopf",text:"Ein runder Kopf in die Mitte.",
+  shapes:["M300,250 C300,188 348,158 400,158 C452,158 500,188 500,250 C500,312 452,340 400,340 C348,340 300,312 300,250 Z"]},
+ {emoji:"🔺",title:"Die Ohren",text:"Zwei spitze Dreiecke oben drauf.",
+  shapes:["M312,196 L302,124 L364,166 Z","M488,196 L498,124 L436,166 Z"]},
+ {emoji:"👀",title:"Die Augen",text:"Zwei große Augen mit Punkt.",
+  shapes:[[362,244,22],[438,244,22],[362,248,9],[438,248,9]]},
+ {emoji:"👃",title:"Nase und Mund",text:"Ein kleines Dreieck als Nase, darunter zwei Bögen.",
+  shapes:["M390,276 L410,276 L400,288 Z","M400,288 C400,302 384,306 376,298","M400,288 C400,302 416,306 424,298"]},
+ {emoji:"〰️",title:"Die Schnurrhaare",text:"Links und rechts drei feine Striche.",
+  shapes:["M330,268 L268,258","M330,282 L268,286","M470,268 L532,258","M470,282 L532,286"]},
+ {emoji:"🐾",title:"Der Körper",text:"Ein runder Körper mit Schwanz.",
+  shapes:["M336,340 C324,420 344,470 400,470 C456,470 476,420 464,340","M462,438 C516,450 540,404 516,372"]}
+]},
+{name:"Regenbogen",emoji:"🌈",level:"leicht",steps:[
+ {emoji:"🔴",title:"Der erste Bogen",text:"Ein großer Bogen von links nach rechts.",
+  shapes:["M120,440 A280,280 0 0 1 680,440"]},
+ {emoji:"🟠",title:"Der zweite Bogen",text:"Ein kleinerer Bogen knapp darunter.",
+  shapes:["M162,440 A238,238 0 0 1 638,440"]},
+ {emoji:"🟡",title:"Der dritte Bogen",text:"Und noch einer darunter.",
+  shapes:["M204,440 A196,196 0 0 1 596,440"]},
+ {emoji:"🟢",title:"Der vierte Bogen",text:"Immer kleiner werdende Bögen.",
+  shapes:["M246,440 A154,154 0 0 1 554,440"]},
+ {emoji:"☁️",title:"Die Wolken",text:"An jedem Ende eine dicke Wolke.",
+  shapes:["M90,440 Q120,400 160,422 Q200,398 224,440 Q170,470 90,440 Z",
+          "M576,440 Q606,400 646,422 Q690,398 712,440 Q656,470 576,440 Z"]},
+ {emoji:"☀️",title:"Die Sonne",text:"Oben in die Ecke eine kleine Sonne.",
+  shapes:[[706,120,40],"M706,58 L706,74","M760,120 L744,120","M668,82 L680,94"]}
+]},
+{name:"Rakete",emoji:"🚀",level:"mittel",steps:[
+ {emoji:"💊",title:"Der Rumpf",text:"Ein länglicher Körper, oben rund.",
+  shapes:["M340,470 L340,240 C340,160 460,160 460,240 L460,470 Z"]},
+ {emoji:"🔺",title:"Die Spitze",text:"Oben eine spitze Kappe.",
+  shapes:["M340,240 C340,160 400,90 400,90 C400,90 460,160 460,240"]},
+ {emoji:"🪟",title:"Das Fenster",text:"In die Mitte ein rundes Bullauge.",
+  shapes:[[400,270,42],[400,270,26]]},
+ {emoji:"📐",title:"Die Flügel",text:"Links und rechts unten je ein Flügel.",
+  shapes:["M340,360 L280,470 L340,440 Z","M460,360 L520,470 L460,440 Z"]},
+ {emoji:"🔥",title:"Das Feuer",text:"Unten schießen Flammen heraus.",
+  shapes:["M360,470 C360,520 380,540 400,560 C420,540 440,520 440,470",
+          "M384,470 C384,506 400,520 400,532 C400,520 416,506 416,470"]},
+ {emoji:"⭐",title:"Die Sterne",text:"Ein paar Sterne in den Weltraum.",
+  shapes:["M180,180 L186,200 L206,206 L186,212 L180,232 L174,212 L154,206 L174,200 Z",
+          "M620,160 L625,176 L641,181 L625,186 L620,202 L615,186 L599,181 L615,176 Z",
+          [560,300,7],[220,340,7]]}
+]},
+{name:"Blume",emoji:"🌸",level:"leicht",steps:[
+ {emoji:"🟡",title:"Die Mitte",text:"Ein Kreis in die Mitte.",
+  shapes:[[400,240,52]]},
+ {emoji:"🌸",title:"Die ersten Blätter",text:"Oben, unten, links und rechts je ein Blütenblatt.",
+  shapes:[[400,150,44],[400,330,44],[310,240,44],[490,240,44]]},
+ {emoji:"🌼",title:"Die Blätter dazwischen",text:"In jede Lücke noch ein Blatt.",
+  shapes:[[338,178,40],[462,178,40],[338,302,40],[462,302,40]]},
+ {emoji:"🟢",title:"Der Stängel",text:"Ein langer Strich nach unten.",
+  shapes:["M400,332 L400,520"]},
+ {emoji:"🍃",title:"Die Blätter",text:"Zwei Blätter an den Stängel.",
+  shapes:["M400,400 C356,382 320,392 316,424 C352,436 388,428 400,412",
+          "M400,450 C444,432 480,442 484,474 C448,486 412,478 400,462"]},
+ {emoji:"😊",title:"Das Gesicht",text:"Ein fröhliches Gesicht in die Mitte.",
+  shapes:[[382,232,7],[418,232,7],"M378,256 C388,270 412,270 422,256"]}
+]}
+];
+
+const COLORS=[
+  "#118AB2","#0B3C8C","#1B6CA8","#6ED3F5","#8ECae6",
+  "#06D6A0","#0E8A4F","#3DA35D","#9EE37D","#C7F9CC",
+  "#FFE08A","#FFD166","#FFB703","#FF9F1C","#FB8500",
+  "#FF6B5B","#EF476F","#D62246","#C1121F","#FF9FC4",
+  "#E85D9E","#9B5DE5","#7B4FC4","#5A3FA0","#B892FF",
+  "#FFDBAC","#F1C27D","#E0AC69","#C68642","#8D5524",
+  "#5C3A21","#8B5E34","#B0BEC5","#7A8B99","#2B2B2B","#073B4C"
+];
+const SIZES=[0.008,0.016,0.030,0.052];
+const AVATARS=["🐠","🦀","🐬","🦋","🐢","🐙","🦭","🐳","🌴","🍦","⭐","🏰"];
+const NS="http://www.w3.org/2000/svg";
+const PAPER="#FFFFFF";
+
+/* ============================================================
+   SPEICHER
+   ============================================================ */
+const Store=(function(){
+  const api=(typeof window!=='undefined' && window.storage && window.storage.get)?window.storage:null;
+  const mem={};
+  return {
+    async get(k){ try{ if(api){const r=await api.get(k,false);return r?r.value:null;} return localStorage.getItem(k);}catch(e){return (k in mem)?mem[k]:null;} },
+    async set(k,v){ try{ if(api){await api.set(k,v,false);} else localStorage.setItem(k,v);}catch(e){mem[k]=v;} },
+    async del(k){ try{ if(api){await api.delete(k,false);} else localStorage.removeItem(k);}catch(e){delete mem[k];} },
+    async keys(p){ try{ if(api){const r=await api.list(p,false);return r&&r.keys?r.keys:[];} return Object.keys(localStorage).filter(k=>k.indexOf(p)===0);}catch(e){return Object.keys(mem).filter(k=>k.indexOf(p)===0);} }
+  };
+})();
+
+/* ============================================================
+   MUSIK
+   ============================================================ */
+const Music=(function(){
+  let ac=null,master=null,timer=null,noiseBuf=null,bar=0,slot=0,nextTime=0,on=true,duckLevel=0.085;
+  const EIGHTH=60/88/2,LOOK=0.15;
+  const CHORDS=[{bass:41,notes:[57,60,64]},{bass:38,notes:[57,60,65]},
+                {bass:43,notes:[58,62,65]},{bass:36,notes:[58,64,67]}];
+  const MELODY=[72,74,77,69,81,76];
+  const f=m=>440*Math.pow(2,(m-69)/12);
+  function init(){
+    if(ac) return;
+    ac=new (window.AudioContext||window.webkitAudioContext)();
+    master=ac.createGain(); master.gain.value=duckLevel; master.connect(ac.destination);
+    const len=ac.sampleRate*2;
+    noiseBuf=ac.createBuffer(1,len,ac.sampleRate);
+    const d=noiseBuf.getChannelData(0);
+    for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
+    const surf=ac.createBufferSource(); surf.buffer=noiseBuf; surf.loop=true;
+    const sf=ac.createBiquadFilter(); sf.type='lowpass'; sf.frequency.value=420;
+    const sg=ac.createGain(); sg.gain.value=0.02;
+    const lfo=ac.createOscillator(); lfo.frequency.value=0.13;
+    const lg=ac.createGain(); lg.gain.value=0.012;
+    lfo.connect(lg); lg.connect(sg.gain);
+    surf.connect(sf); sf.connect(sg); sg.connect(master);
+    surf.start(); lfo.start();
+  }
+  function pluck(t,freq,dur,vol,type,cut){
+    const o=ac.createOscillator(),g=ac.createGain(),fl=ac.createBiquadFilter();
+    o.type=type||'triangle'; o.frequency.value=freq;
+    fl.type='lowpass'; fl.frequency.value=cut||2200;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(fl); fl.connect(g); g.connect(master);
+    o.start(t); o.stop(t+dur+0.05);
+  }
+  function shaker(t,vol){
+    const s=ac.createBufferSource(); s.buffer=noiseBuf;
+    const fl=ac.createBiquadFilter(); fl.type='highpass'; fl.frequency.value=6000;
+    const g=ac.createGain();
+    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.06);
+    s.connect(fl); fl.connect(g); g.connect(master);
+    s.start(t); s.stop(t+0.1);
+  }
+  function tick(){
+    while(nextTime<ac.currentTime+LOOK){
+      const ch=CHORDS[bar%CHORDS.length],t=nextTime;
+      if(slot===0) pluck(t,f(ch.bass),0.9,0.16,'sine',600);
+      if(slot===4) pluck(t,f(ch.bass+7),0.8,0.12,'sine',600);
+      if(slot===0||slot===3||slot===6){
+        const v=slot===0?0.075:0.055;
+        ch.notes.forEach((n,i)=>pluck(t+i*0.012,f(n),0.75,v,'triangle',1800));
+      }
+      shaker(t, slot%2?0.018:0.030);
+      if(bar%2===1 && slot===2 && Math.random()<0.7)
+        pluck(t,f(MELODY[Math.floor(Math.random()*MELODY.length)]),1.1,0.05,'sine',3000);
+      nextTime+=EIGHTH;
+      if(++slot>7){slot=0;bar++;}
+    }
+  }
+  return {
+    start(){ if(!on) return; init(); if(ac.state==='suspended') ac.resume();
+      if(timer) return; nextTime=ac.currentTime+0.1; slot=0; timer=setInterval(tick,25); },
+    stop(){ if(timer){clearInterval(timer);timer=null;} },
+    toggle(){ on=!on; on?this.start():this.stop(); return on; },
+    duck(d){ if(master&&ac) master.gain.linearRampToValueAtTime(d?0.028:duckLevel, ac.currentTime+0.3); },
+    fanfare(){
+      if(!on) return; init(); if(ac.state==='suspended') ac.resume();
+      const t=ac.currentTime;
+      [60,64,67,72,76].forEach((n,i)=>pluck(t+i*0.09,f(n),0.5,0.15,'triangle',3200));
+    }
+  };
+})();
+
+/* ============================================================
+   STIMME – große Schwester, viele Sätze, reagiert auf das Malen
+   ============================================================ */
+const Voice=(function(){
+  const P={
+    hello:[
+      "Hallo! Schön, dass du da bist. Such dir ein Motiv aus, ich helfe dir dabei.",
+      "Da bist du ja! Ich hab schon Stifte rausgelegt.",
+      "Hey! Heute wird richtig schön gemalt."
+    ],
+    start:[
+      "Oh, {m}! Den mag ich besonders gern.",
+      "{m}, super Wahl! Das schaffst du.",
+      "Ein {m} also. Schau links auf die Vorlage, ich sage dir Schritt für Schritt, was dran ist.",
+      "{m}! Nimm dir Zeit, wir haben es überhaupt nicht eilig.",
+      "Los geht's mit {m}. Der rote Strich zeigt dir immer, was jetzt kommt."
+    ],
+    step:[
+      "{t}","Jetzt kommt: {t}","Weiter mit: {t}","Und nun: {t}","Als Nächstes: {t}",
+      "Pass auf, jetzt wird's schön: {t}","Achtung, jetzt kommt mein Lieblingsteil: {t}"
+    ],
+    praise:[
+      "Das sieht richtig gut aus!","Wow, du bist gut darin.","Perfekt, weiter so!",
+      "Oh, das gefällt mir!","Genau so hab ich mir das vorgestellt.",
+      "Du hast eine ruhige Hand, weißt du das?","Klasse gemacht!",
+      "Das wird ein richtig schönes Bild.","Sehr schön, ich bin beeindruckt.",
+      "Ja! Genau so.","Toll, das war gar nicht so einfach.",
+      "Du machst das mit links.","Schau dir das an, das ist richtig gut geworden.",
+      "Super. Ich könnte das kaum besser.","Prima, du bist ein echter Künstler.",
+      "Das kann sich sehen lassen!","Weiter so, das macht Spaß beim Zuschauen."
+    ],
+    encourage:[
+      "Nur Mut, es muss nicht perfekt sein.",
+      "Krumme Striche sind auch schön, ehrlich.",
+      "Lass dir Zeit, ich warte hier.",
+      "Wenn was schiefgeht, drück einfach auf Zurück.",
+      "Trau dich, das Blatt beißt nicht.",
+      "Ich finde, du machst das schon ganz toll.",
+      "Soll ich dir die Hilfslinien einblenden? Der Knopf ist rechts.",
+      "Atme kurz durch und dann weiter – ganz gemütlich."
+    ],
+    fill:[
+      "Schöne Farbe!","Oh, bunt! Das mag ich.","Die Farbe passt super.",
+      "Mmh, wie ein Sonnenuntergang.","Kräftig! Sehr mutig.","Das leuchtet ja richtig."
+    ],
+    undo:[
+      "Kein Problem, das passiert jedem.","Weg damit, noch mal von vorn.",
+      "Ups! Aber dafür gibt's ja den Knopf.","Macht nichts, probier es einfach noch mal."
+    ],
+    clear:[
+      "Ein frisches Blatt. Los geht's!","Alles weg. Neuer Versuch!","Blitzeblank. Dann mal los."
+    ],
+    finish:[
+      "Fertig! Und das sieht wunderschön aus.",
+      "Wahnsinn, du hast es geschafft! Zeig es unbedingt jemandem.",
+      "Fertig! Ich bin richtig stolz auf dich.",
+      "Das ist dein Bild, und es ist toll geworden.",
+      "Geschafft! Willst du es in die Galerie legen?",
+      "Bravo! Das war gar nicht so leicht, und du hast es hinbekommen."
+    ],
+    gallery:[
+      "Ab in deine Galerie damit!","Gespeichert. Da kannst du es immer wieder anschauen.",
+      "In die Galerie, zu deinen anderen Bildern."
+    ],
+    creator:[
+      "Male dein eigenes Motiv! Wenn ein Teil fertig ist, tippe auf Schritt fertig.",
+      "Jetzt bist du die Lehrerin. Male vor, was andere nachmalen sollen."
+    ],
+    creatorStep:[
+      "Schritt gespeichert. Was kommt als Nächstes?",
+      "Gut! Und jetzt der nächste Teil.",
+      "Notiert. Male weiter."
+    ],
+    magic:[
+      "Zauberei! Schön gerade.",
+      "Perfekt getroffen!",
+      "Das sitzt sauber.",
+      "Ordentlich hingezaubert.",
+      "Schnurgerade!"
+    ]
+  };
+  const last={};
+  function pick(pool,vars){
+    const a=P[pool]; if(!a||!a.length) return '';
+    let t, tries=0;
+    do{ t=a[Math.floor(Math.random()*a.length)]; tries++; }while(a.length>1 && t===last[pool] && tries<8);
+    last[pool]=t;
+    if(vars) Object.keys(vars).forEach(k=>{ t=t.split('{'+k+'}').join(vars[k]); });
+    return t;
+  }
+  let on=true, voice=null, lastSpoke=0;
+  const FEMALE=['anna','helena','petra','marlene','katja','vicki','amelie','google deutsch','deutschland'];
+  function germanVoices(){
+    if(!('speechSynthesis' in window)) return [];
+    return speechSynthesis.getVoices().filter(v=>/^de/i.test(v.lang));
+  }
+  function autoPick(){
+    const vs=germanVoices(); if(!vs.length) return null;
+    const prem=vs.find(v=>/premium|enhanced|erweitert/i.test(v.name) && FEMALE.some(f=>v.name.toLowerCase().includes(f)));
+    if(prem) return prem;
+    for(const f of FEMALE){ const hit=vs.find(v=>v.name.toLowerCase().includes(f)); if(hit) return hit; }
+    return vs[0];
+  }
+  function refresh(){ if(!voice) voice=autoPick(); }
+  if('speechSynthesis' in window){
+    refresh();
+    speechSynthesis.onvoiceschanged=()=>{ refresh(); if(typeof window.__voiceListRefresh==='function') window.__voiceListRefresh(); };
+  }
+  function speak(text,force){
+    if(!on || !text || !('speechSynthesis' in window)) return;
+    const now=Date.now();
+    if(!force && now-lastSpoke<4000) return;
+    lastSpoke=now;
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    if(voice) u.voice=voice;
+    u.lang='de-DE'; u.pitch=1.25; u.rate=0.94; u.volume=1;
+    u.onstart=()=>Music.duck(true);
+    u.onend=()=>Music.duck(false);
+    u.onerror=()=>Music.duck(false);
+    speechSynthesis.speak(u);
+  }
+  return {
+    say(pool,vars,force){ speak(pick(pool,vars),force); },
+    raw(t){ speak(t,true); },
+    list:germanVoices,
+    setVoice(name){ const v=germanVoices().find(x=>x.name===name); if(v) voice=v; },
+    currentName(){ return voice?voice.name:''; },
+    isOn(){ return on; },
+    toggle(){ on=!on; if(!on && 'speechSynthesis' in window){ speechSynthesis.cancel(); Music.duck(false);} return on; },
+    setOn(v){ on=v; if(!on && 'speechSynthesis' in window){ speechSynthesis.cancel(); Music.duck(false);} }
+  };
+})();
+
+/* ============================================================
+   APP
+   ============================================================ */
+const $=id=>document.getElementById(id);
+const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secAlbum=$('album'), secTrophy=$('trophy');
+const ref=$('ref'), ghost=$('ghost'), bubbles=$('bubbles');
+const sheet=$('sheet'), pad=$('pad'), ctx=pad.getContext('2d');
+const doneBar=$('doneBar'), helper=$('helper'), toastEl=$('toast');
+
+let motif=null, step=0, color=COLORS[0], width=SIZES[1], tool='pen';
+let mode='draw';   // 'draw' = Schritt für Schritt, 'color' = Ausmalen
+let profiles=[], profile=null, customs=[];
+
+const art=document.createElement('canvas'); art.width=1200; art.height=900;
+const actx=art.getContext('2d',{willReadFrequently:true});
+let undoStack=[];
+
+function clearArt(){ actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height); paint(); }
+function paint(){ ctx.clearRect(0,0,pad.width,pad.height); ctx.drawImage(art,0,0,pad.width,pad.height); }
+
+/* Kompletten Umriss eines Motivs aufs Blatt zeichnen (für den Ausmal-Modus) */
+function outlineToCanvas(){
+  actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height);
+  actx.save();
+  actx.scale(art.width/800, art.height/600);   // 800x600-Koordinaten -> Blatt
+  actx.strokeStyle='#0C3A4A'; actx.lineWidth=6;
+  actx.lineJoin='round'; actx.lineCap='round';
+  motif.steps.forEach(st=>st.shapes.forEach(sh=>{
+    actx.beginPath();
+    if(Array.isArray(sh)){ actx.arc(sh[0],sh[1],sh[2],0,Math.PI*2); }
+    else{ try{ const pth=new Path2D(sh); actx.stroke(pth); return; }catch(e){} }
+    actx.stroke();
+  }));
+  actx.restore();
+  paint();
+}
+function snapshot(){ try{ undoStack.push(art.toDataURL('image/png')); if(undoStack.length>12) undoStack.shift(); }catch(e){} }
+function undoDraw(){
+  const d=undoStack.pop(); if(!d) return;
+  const img=new Image();
+  img.onload=()=>{ actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height); actx.drawImage(img,0,0); paint(); };
+  img.src=d;
+  Voice.say('undo');
+}
+function toast(msg){
+  toastEl.textContent=msg; toastEl.classList.add('on');
+  clearTimeout(toast._t); toast._t=setTimeout(()=>toastEl.classList.remove('on'),1800);
+}
+function showSection(s){
+  [secProfiles,secHome,secGallery,secDraw,secCreator,secAlbum,secTrophy].forEach(x=>x.hidden = x!==s);
+  if(s!==secDraw) stopIdle();
+  requestAnimationFrame(()=>{ if(typeof layout==='function') layout(); });
+}
+
+/* ---------- Leerlauf-Ermutigung ---------- */
+let idleTimer=null;
+function pokeIdle(){
+  clearTimeout(idleTimer);
+  idleTimer=setTimeout(()=>{ if(!secDraw.hidden) Voice.say('encourage'); pokeIdle(); }, 34000);
+}
+function stopIdle(){ clearTimeout(idleTimer); idleTimer=null; }
+
+/* ---------- Profile ---------- */
+async function loadProfiles(){
+  const raw=await Store.get('profiles');
+  try{ profiles=raw?JSON.parse(raw):[]; }catch(e){ profiles=[]; }
+}
+async function saveProfiles(){ await Store.set('profiles',JSON.stringify(profiles)); }
+function renderProfiles(){
+  const list=$('plist'); list.textContent='';
+  profiles.forEach(p=>{
+    const c=document.createElement('button');
+    c.className='pcard';
+    c.innerHTML='<em>'+p.emoji+'</em>'+p.name+'<small>'+(p.count||0)+' Bilder</small>';
+    c.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; pickProfile(p); });
+    const x=document.createElement('button'); x.className='x'; x.textContent='✕';
+    x.addEventListener('click',async e=>{
+      e.stopPropagation();
+      if(x.classList.contains('armed')){
+        for(const k of await Store.keys('pic:'+p.id+':')) await Store.del(k);
+        for(const k of await Store.keys('motif:'+p.id+':')) await Store.del(k);
+        profiles=profiles.filter(q=>q.id!==p.id); await saveProfiles(); renderProfiles();
+      }else{ x.classList.add('armed'); x.textContent='Löschen?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
+    });
+    c.appendChild(x); list.appendChild(c);
+  });
+  const add=document.createElement('button');
+  add.className='pcard new'; add.innerHTML='<em>＋</em>Neues Kind';
+  add.addEventListener('click',()=>{ $('maker').hidden=false; $('pname').focus(); });
+  list.appendChild(add);
+}
+let newAvatar=AVATARS[0];
+AVATARS.forEach((a,i)=>{
+  const b=document.createElement('button');
+  b.className='av'; b.textContent=a; b.setAttribute('aria-pressed',i===0?'true':'false');
+  b.addEventListener('click',()=>{
+    newAvatar=a;
+    $('avatars').querySelectorAll('.av').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+  });
+  $('avatars').appendChild(b);
+});
+$('pcreate').addEventListener('click',async()=>{
+  const name=($('pname').value||'').trim()||'Kind';
+  profiles.push({id:'p'+Date.now(),name:name,emoji:newAvatar,count:0});
+  await saveProfiles(); $('pname').value=''; $('maker').hidden=true; renderProfiles();
+});
+$('pcancel').addEventListener('click',()=>{ $('maker').hidden=true; $('pname').value=''; });
+
+async function pickProfile(p){
+  profile=p;
+  $('profileChip').textContent=p.emoji+' '+p.name;
+  Store.set('lastProfile',p.id);
+  await loadCustoms();
+  renderPicker();
+  renderGreeting();
+  showSection(secHome);
+  Voice.say('hello',null,true);
+}
+$('profileChip').addEventListener('click',()=>{ renderProfiles(); showSection(secProfiles); });
+
+/* ---------- Sterne & Pokale ---------- */
+const TROPHIES=[
+  {key:'bronze', n:5,  emoji:'🥉', label:'Bronzepokal'},
+  {key:'silber', n:10, emoji:'🥈', label:'Silberpokal'},
+  {key:'gold',   n:20, emoji:'🥇', label:'Goldpokal'}
+];
+function trophyTier(count){ let t=null; for(const x of TROPHIES) if(count>=x.n) t=x; return t; }
+function nextTrophy(count){ return TROPHIES.find(x=>count<x.n)||null; }
+function renderGreeting(){
+  if(!profile) return;
+  const stars=profile.stars||0, count=profile.count||0, nt=nextTrophy(count);
+  const trophyLine = nt
+    ? '🏆 Noch '+(nt.n-count)+' bis zum '+nt.label+'.'
+    : '🏆 Du hast alle Pokale gewonnen!';
+  $('homeGreeting').textContent='Hallo '+profile.name+'! '+profile.emoji+' Heute wartet dein nächstes Abenteuer. '
+    +'⭐ Du hast '+stars+' '+(stars===1?'Stern':'Sterne')+'. '+trophyLine;
+}
+function openTrophy(){
+  showSection(secTrophy);
+  const count=profile?(profile.count||0):0, stars=profile?(profile.stars||0):0;
+  $('trophyHint').textContent=stars+' '+(stars===1?'Stern':'Sterne')+' gesammelt · '+count+' '+(count===1?'Bild':'Bilder')+' in der Galerie';
+  const grid=$('trophyGrid'); grid.textContent='';
+  TROPHIES.forEach(t=>{
+    const got=count>=t.n;
+    const d=document.createElement('div');
+    d.className='trophy-card'+(got?'':' locked');
+    d.innerHTML='<em>'+t.emoji+'</em><b>'+t.label+'</b><small>'+(got?'Geschafft!':'Noch '+(t.n-count)+' Bilder')+'</small>';
+    grid.appendChild(d);
+  });
+}
+$('trophyBtn').addEventListener('click',openTrophy);
+$('trophyBack').addEventListener('click',()=>showSection(secHome));
+
+/* ---------- Eigene Motive ---------- */
+async function loadCustoms(){
+  customs=[];
+  const ks=(await Store.keys('motif:'+profile.id+':')).sort();
+  for(const k of ks){
+    try{ const m=JSON.parse(await Store.get(k)); if(m&&m.steps&&m.steps.length){ m._key=k; customs.push(m); } }catch(e){}
+  }
+}
+function allMotifs(){ return MOTIFS.concat(customs); }
+
+const picker=$('picker');
+function renderPicker(){
+  picker.textContent='';
+  allMotifs().forEach((m,i)=>{
+    const b=document.createElement('button');
+    b.className='tile'+(m._key?' mine':' lv-'+m.level);
+    b.innerHTML='<em>'+m.emoji+'</em>'+m.name+'<b>'+m.level+'</b>';
+    b.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; openMotif(i); });
+    if(m._key){
+      const x=document.createElement('button'); x.className='x'; x.textContent='✕';
+      x.addEventListener('click',async e=>{
+        e.stopPropagation();
+        if(x.classList.contains('armed')){ await Store.del(m._key); await loadCustoms(); renderPicker(); }
+        else{ x.classList.add('armed'); x.textContent='Weg?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
+      });
+      b.appendChild(x);
+    }
+    picker.appendChild(b);
+  });
+}
+
+function shapeEl(sh){
+  let el;
+  if(Array.isArray(sh)){
+    el=document.createElementNS(NS,'circle');
+    el.setAttribute('cx',sh[0]); el.setAttribute('cy',sh[1]); el.setAttribute('r',sh[2]);
+  }else{ el=document.createElementNS(NS,'path'); el.setAttribute('d',sh); }
+  el.setAttribute('pathLength','100');
+  return el;
+}
+function buildArt(){
+  ref.textContent=''; ghost.textContent='';
+  motif.steps.forEach(st=>{
+    const g1=document.createElementNS(NS,'g'), g2=document.createElementNS(NS,'g');
+    st.shapes.forEach(sh=>{ g1.appendChild(shapeEl(sh)); g2.appendChild(shapeEl(sh)); });
+    ref.appendChild(g1); ghost.appendChild(g2);
+  });
+}
+function buildBubbles(){
+  bubbles.textContent='';
+  motif.steps.forEach((s,i)=>{
+    const b=document.createElement('button');
+    b.className='bub'; b.textContent=i+1;
+    b.setAttribute('aria-label','Schritt '+(i+1)+': '+s.title);
+    b.addEventListener('click',()=>{ doneBar.classList.remove('on'); show(i); });
+    bubbles.appendChild(b);
+  });
+}
+let stepStarred=[];
+function awardStepStar(i){
+  if(!profile || stepStarred[i]) return;
+  stepStarred[i]=true;
+  profile.stars=(profile.stars||0)+1;
+  saveProfiles();
+}
+function openMotif(i){
+  motif=allMotifs()[i];
+  $('motifName').textContent=motif.emoji+' '+motif.name;
+  stepStarred=new Array(motif.steps.length).fill(false);
+  buildArt(); buildBubbles(); undoStack=[];
+  doneBar.classList.remove('on'); $('board').classList.remove('party');
+  ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
+  secDraw.classList.toggle('mode-color', mode==='color');
+  showSection(secDraw); Music.start();
+  pokeIdle();
+  if(mode==='color'){
+    // Ausmalen: kompletten Umriss vorzeichnen, Farbeimer aktiv, keine Schritte
+    setTool('fill');
+    $('taskEmoji').textContent='🎨';
+    $('taskTitle').textContent='Mal '+motif.name+' bunt aus!';
+    $('taskText').textContent='Tippe mit dem Farbeimer in die Flächen.';
+    [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
+    Voice.raw('Mal '+motif.name+' schön bunt aus! Tippe einfach in die Flächen.');
+    requestAnimationFrame(()=>{ layout(); outlineToCanvas(); });
+  }else{
+    setTool('pen');
+    Voice.say('start',{m:motif.name},true);
+    requestAnimationFrame(()=>{ layout(); clearArt(); show(0,true); });
+  }
+}
+$('home-btn').addEventListener('click',()=>{ renderGreeting(); showSection(secHome); });
+$('other').addEventListener('click',()=>{ renderGreeting(); showSection(secHome); });
+
+function show(i,silent){
+  step=i;
+  const s=motif.steps[i];
+  $('taskEmoji').textContent=s.emoji;
+  $('taskTitle').textContent='Schritt '+(i+1)+': '+s.title;
+  $('taskText').textContent=s.text;
+  [...ref.children].forEach((g,n)=>{
+    g.classList.remove('done','now','draw');
+    [...g.children].forEach(el=>el.style.animationDelay='');
+    if(n<i) g.classList.add('done');
+    if(n===i){
+      g.classList.add('now');
+      [...g.children].forEach((el,k)=>el.style.animationDelay=(k*0.3)+'s');
+      void g.getBoundingClientRect(); g.classList.add('draw');
+    }
+  });
+  [...ghost.children].forEach((g,n)=>g.classList.toggle('show',n<=i));
+  [...bubbles.children].forEach((b,n)=>{ b.classList.toggle('done',n<i); b.classList.toggle('now',n===i); });
+  $('back').disabled=i===0;
+  $('next').textContent = i===motif.steps.length-1 ? 'Fertig! 🎉' : 'Weiter ▶︎';
+  if(!silent) setTimeout(()=>Voice.say('step',{t:s.title+'. '+s.text},true), 900);
+  pokeIdle();
+}
+$('taskCard').addEventListener('click',()=>{
+  const s=motif.steps[step];
+  Voice.raw('Schritt '+(step+1)+': '+s.title+'. '+s.text);
+});
+$('back').addEventListener('click',()=>{ doneBar.classList.remove('on'); if(step>0) show(step-1); });
+
+/* ---------- Feuerwerk-Abschluss (max. 3 Sek.) ---------- */
+const REDUCE_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function celebrate(){
+  Music.fanfare();
+  if(REDUCE_MOTION) return;
+  const host=$('fireworks'); host.textContent='';
+  const colors=['#FF6B5B','#FFD166','#06D6A0','#118AB2','#9B5DE5'];
+  for(let i=0;i<26;i++){
+    const p=document.createElement('i');
+    p.className='fw-piece';
+    p.style.left=(Math.random()*100)+'%';
+    p.style.width=p.style.height=(6+Math.random()*6)+'px';
+    p.style.background=colors[i%colors.length];
+    p.style.animationDuration=(1.6+Math.random()*0.9)+'s';
+    p.style.animationDelay=(Math.random()*0.3)+'s';
+    host.appendChild(p);
+  }
+  for(let i=0;i<3;i++){
+    const b=document.createElement('span'); b.className='fw-balloon'; b.textContent='🎈';
+    b.style.left=(15+i*30+Math.random()*10)+'%';
+    b.style.animationDuration=(2+Math.random()*0.6)+'s';
+    b.style.animationDelay=(i*0.15)+'s';
+    host.appendChild(b);
+  }
+  for(let i=0;i<10;i++){
+    const s=document.createElement('span'); s.className='fw-star'; s.textContent='⭐';
+    s.style.left=(Math.random()*100)+'%'; s.style.top=(Math.random()*60)+'%';
+    s.style.animationDuration='1.1s'; s.style.animationDelay=(Math.random()*0.8)+'s';
+    host.appendChild(s);
+  }
+  setTimeout(()=>{ host.textContent=''; },2800);
+}
+function finish(){
+  ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
+  const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
+  doneBar.classList.add('on');
+  [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
+  [...bubbles.children].forEach(x=>{x.classList.remove('now');x.classList.add('done');});
+  Voice.say('finish',null,true);
+  celebrate();
+  stopIdle();
+}
+$('again').addEventListener('click',()=>{
+  doneBar.classList.remove('on'); $('board').classList.remove('party');
+  undoStack=[]; stepStarred=new Array(motif.steps.length).fill(false);
+  if(mode==='color'){ outlineToCanvas(); } else { clearArt(); show(0); }
+  pokeIdle();
+});
+$('nextAdventure').addEventListener('click',()=>{
+  doneBar.classList.remove('on'); renderGreeting(); showSection(secHome);
+});
+
+/* ---------- Modus-Umschalter ---------- */
+function setMode(m){
+  mode=m;
+  const d=m==='draw';
+  $('modeDraw').classList.toggle('on',d);  $('modeDraw').setAttribute('aria-pressed',d?'true':'false');
+  $('modeColor').classList.toggle('on',!d); $('modeColor').setAttribute('aria-pressed',!d?'true':'false');
+  $('homeHint').textContent = d
+    ? 'Links steht die Vorlage – im weißen Feld malst du sie nach.'
+    : 'Tippe ein Motiv an – dann kannst du es mit dem Farbeimer bunt ausmalen.';
+  Store.set('mode',m);
+}
+$('modeDraw').addEventListener('click',()=>setMode('draw'));
+$('modeColor').addEventListener('click',()=>setMode('color'));
+
+/* Next-Knopf: im Ausmal-Modus direkt „Fertig" */
+(function(){
+  const nextBtn=$('next');
+  const orig=nextBtn.cloneNode(true);
+  nextBtn.parentNode.replaceChild(orig,nextBtn);   // alte Listener entfernen
+  orig.addEventListener('click',()=>{
+    if(mode==='color'){ finishColor(); return; }
+    awardStepStar(step);
+    if(step<motif.steps.length-1){
+      doneBar.classList.remove('on');
+      if(Math.random()<0.55) Voice.say('praise',null,true);
+      show(step+1);
+    } else finish();
+  });
+})();
+const AUSMAL_STARS=3;
+function finishColor(){
+  const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
+  doneBar.classList.add('on');
+  if(profile){ profile.stars=(profile.stars||0)+AUSMAL_STARS; saveProfiles(); }
+  Voice.say('finish',null,true);
+  celebrate();
+  stopIdle();
+}
+
+/* ============================================================
+   STICKER & SAMMELALBUM
+   ============================================================ */
+const STICKERS=["🐠","🦀","🐬","🦋","🐢","🐙","🦭","🐳","🌴","🍦","⭐","🏰",
+                "⛵","🐚","🌈","🚀","🌸","🐱","🍉","☀️","⛱️","🍕","🦈","🪸"];
+function earnedList(){ try{ return JSON.parse(profile.stickers||'[]'); }catch(e){ return []; } }
+async function awardSticker(){
+  if(!profile) return null;
+  const have=earnedList();
+  if(have.length>=STICKERS.length) return null;      // alle gesammelt
+  // nächsten noch fehlenden vergeben
+  let idx=-1;
+  for(let i=0;i<STICKERS.length;i++){ if(have.indexOf(i)<0){ idx=i; break; } }
+  if(idx<0) return null;
+  have.push(idx);
+  profile.stickers=JSON.stringify(have);
+  await saveProfiles();
+  return idx;
+}
+function showReward(idx,motifName){
+  $('rewardEmoji').textContent=STICKERS[idx];
+  $('rewardText').textContent = motifName
+    ? 'Neuer Sticker! Du hast „'+motifName+'“ entdeckt.'
+    : 'Neuer Sticker für dein Album!';
+  $('reward').classList.add('on');
+  Voice.raw(motifName ? 'Juhu! Neuer Sticker für '+motifName+'!' : 'Juhu! Du hast einen neuen Sticker bekommen!');
+}
+function showTrophyPopup(tier){
+  $('rewardEmoji').textContent=tier.emoji;
+  $('rewardText').textContent=tier.label+' geschafft! Schau im Pokalschrank vorbei.';
+  $('reward').classList.add('on');
+  celebrate();
+  Voice.raw('Wow! Du hast den '+tier.label+' gewonnen!');
+}
+$('rewardOk').addEventListener('click',()=>$('reward').classList.remove('on'));
+
+function openAlbum(){
+  showSection(secAlbum);
+  const grid=$('stickerGrid'); grid.textContent='';
+  const have=earnedList();
+  $('albTitle').textContent='Sticker von '+(profile?profile.name:'');
+  $('albHint').textContent='Du hast '+have.length+' von '+STICKERS.length+' Stickern. Entdecke neue Motive oder gewinne einen Pokal – dann bekommst du mehr!';
+  STICKERS.forEach((em,i)=>{
+    const d=document.createElement('div');
+    const got=have.indexOf(i)>=0;
+    d.className='sticker'+(got?'':' locked');
+    d.innerHTML='<em>'+em+'</em>';
+    grid.appendChild(d);
+  });
+}
+$('stickerBtn').addEventListener('click',openAlbum);
+$('albBack').addEventListener('click',()=>showSection(secHome));
+
+
+/* ---------- Werkzeuge ---------- */
+const tools={pen:$('tPen'),magic:$('tMagic'),fill:$('tFill'),erase:$('tErase')};
+function setTool(k){
+  tool=k;
+  Object.keys(tools).forEach(j=>tools[j].setAttribute('aria-pressed', j===k?'true':'false'));
+}
+Object.keys(tools).forEach(k=>{
+  tools[k].addEventListener('click',()=>setTool(k));
+});
+const colorsBox=$('colors');
+COLORS.forEach((c,i)=>{
+  const b=document.createElement('button');
+  b.className='swatch'; b.style.background=c;
+  b.setAttribute('aria-label','Farbe '+(i+1));
+  b.setAttribute('aria-pressed',i===0?'true':'false');
+  b.addEventListener('click',()=>{
+    color=c;
+    if(tool==='erase'){ tool='pen'; Object.keys(tools).forEach(j=>tools[j].setAttribute('aria-pressed', j==='pen'?'true':'false')); }
+    colorsBox.querySelectorAll('.swatch').forEach(s=>s.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+  });
+  colorsBox.appendChild(b);
+});
+const sizesBox=$('sizes');
+SIZES.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.className='size';
+  b.setAttribute('aria-label','Stiftdicke '+(i+1));
+  b.setAttribute('aria-pressed',i===1?'true':'false');
+  const dot=document.createElement('i'); const px=8+i*7;
+  dot.style.width=px+'px'; dot.style.height=px+'px'; b.appendChild(dot);
+  b.addEventListener('click',()=>{
+    width=s;
+    sizesBox.querySelectorAll('.size').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+  });
+  sizesBox.appendChild(b);
+});
+
+/* ---------- Zeichnen ---------- */
+function resize(){
+  const r=pad.getBoundingClientRect();
+  if(!r.width||!r.height) return;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  pad.width=Math.round(r.width*dpr); pad.height=Math.round(r.height*dpr);
+  paint();
+}
+function artPos(e){
+  const r=pad.getBoundingClientRect();
+  return { x:(e.clientX-r.left)/r.width*art.width,
+           y:(e.clientY-r.top)/r.height*art.height, t:performance.now() };
+}
+const A2P=()=>pad.width/art.width;   // Skala Blatt -> Bildschirm
+
+let drawing=false, strokeObj=null, strokeCount=0;
+
+pad.addEventListener('pointerdown',e=>{
+  const p=artPos(e); pokeIdle();
+  if(tool==='fill'){ snapshot(); floodFill(Math.round(p.x),Math.round(p.y),color); paint(); if(Math.random()<0.4) Voice.say('fill'); return; }
+  snapshot();
+  drawing=true;
+  strokeObj={ pts:[p], w:width*art.height, erase:(tool==='erase'), magic:(tool==='magic') };
+  pad.setPointerCapture(e.pointerId);
+  previewStroke();
+});
+pad.addEventListener('pointermove',e=>{
+  if(!drawing) return;
+  const p=artPos(e), pts=strokeObj.pts, l=pts[pts.length-1];
+  if(Math.hypot(p.x-l.x,p.y-l.y) < 2) return;   // Mikro-Zittern verwerfen
+  pts.push(p);
+  previewStroke();
+});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>
+  pad.addEventListener(ev,()=>{
+    if(!drawing) return;
+    drawing=false;
+    commitStroke();
+    strokeCount++; if(strokeCount%7===0) Voice.say('praise');
+  }));
+
+/* ---- Live-Vorschau während des Zeichnens ---- */
+function previewStroke(){
+  paint();  // festes Bild
+  const sc=A2P(), col=strokeObj.erase?PAPER:color;
+  ctx.save(); ctx.scale(sc,sc);
+  ctx.strokeStyle=col; ctx.fillStyle=col;
+  ctx.lineWidth=strokeObj.w; ctx.lineCap='round'; ctx.lineJoin='round';
+  strokePath(ctx, smoothPoints(strokeObj.pts));
+  ctx.restore();
+}
+
+/* ---- Strich endgültig aufs Blatt bringen ---- */
+function commitStroke(){
+  const pts=strokeObj.pts, col=strokeObj.erase?PAPER:color;
+  actx.strokeStyle=col; actx.fillStyle=col;
+  actx.lineWidth=strokeObj.w; actx.lineCap='round'; actx.lineJoin='round';
+
+  if(pts.length<3){   // kurzer Tipp = Punkt
+    actx.beginPath(); actx.arc(pts[0].x,pts[0].y,strokeObj.w/2,0,Math.PI*2); actx.fill(); paint(); return;
+  }
+  // Zauberpinsel: Form erkennen und begradigen
+  if(strokeObj.magic){
+    const shape=detectShape(pts);
+    if(shape){ drawShape(actx,shape); paint(); Voice.say('magic'); return; }
+  }
+  strokePath(actx, smoothPoints(pts));
+  actx.stroke();
+  paint();
+}
+
+/* ---- Glättung: Ausdünnen + gleitender Mittelwert ---- */
+function smoothPoints(raw){
+  if(raw.length<3) return raw.slice();
+  const dec=[raw[0]];
+  for(let i=1;i<raw.length;i++){
+    const a=dec[dec.length-1], b=raw[i];
+    if(Math.hypot(b.x-a.x,b.y-a.y)>=3) dec.push(b);
+  }
+  if(dec[dec.length-1]!==raw[raw.length-1]) dec.push(raw[raw.length-1]);
+  if(dec.length<3) return dec;
+  const out=[dec[0]];
+  for(let i=1;i<dec.length-1;i++){
+    out.push({ x:(dec[i-1].x+dec[i].x*2+dec[i+1].x)/4,
+               y:(dec[i-1].y+dec[i].y*2+dec[i+1].y)/4 });
+  }
+  out.push(dec[dec.length-1]);
+  return out;
+}
+
+/* ---- weiche Kurve durch Punkte (Catmull-Rom -> Bézier) ---- */
+function strokePath(c, pts){
+  if(pts.length<2) return;
+  if(pts.length===2){ c.beginPath(); c.moveTo(pts[0].x,pts[0].y); c.lineTo(pts[1].x,pts[1].y); if(c===ctx) c.stroke(); return; }
+  c.beginPath(); c.moveTo(pts[0].x,pts[0].y);
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[i-1]||pts[i], p1=pts[i], p2=pts[i+1], p3=pts[i+2]||p2;
+    const c1x=p1.x+(p2.x-p0.x)/6, c1y=p1.y+(p2.y-p0.y)/6;
+    const c2x=p2.x-(p3.x-p1.x)/6, c2y=p2.y-(p3.y-p1.y)/6;
+    c.bezierCurveTo(c1x,c1y,c2x,c2y,p2.x,p2.y);
+  }
+  if(c===ctx) c.stroke();
+}
+
+/* ---- Zauberpinsel: einfache Formen erkennen ---- */
+function detectShape(pts){
+  let minX=1e9,minY=1e9,maxX=-1e9,maxY=-1e9,len=0,cx=0,cy=0;
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i]; minX=Math.min(minX,p.x); minY=Math.min(minY,p.y);
+    maxX=Math.max(maxX,p.x); maxY=Math.max(maxY,p.y); cx+=p.x; cy+=p.y;
+    if(i) len+=Math.hypot(p.x-pts[i-1].x, p.y-pts[i-1].y);
+  }
+  cx/=pts.length; cy/=pts.length;
+  const bw=maxX-minX, bh=maxY-minY, diag=Math.hypot(bw,bh);
+  if(diag < 40) return null;                       // zu klein
+  const a=pts[0], b=pts[pts.length-1];
+  const dSE=Math.hypot(b.x-a.x, b.y-a.y);
+  const straight=dSE/len;                          // 1 = perfekt gerade
+  const closed=dSE < 0.28*Math.max(bw,bh);
+
+  // Gerade Linie
+  if(!closed && straight>0.88 && len>50){
+    return {type:'line', a:a, b:b};
+  }
+  if(closed){
+    // Kreis: gleichmäßiger Radius um den Mittelpunkt?
+    let rm=0; const rs=[];
+    for(const p of pts){ const r=Math.hypot(p.x-cx,p.y-cy); rs.push(r); rm+=r; }
+    rm/=rs.length;
+    let sd=0; for(const r of rs) sd+=(r-rm)*(r-rm); sd=Math.sqrt(sd/rs.length);
+    const circleness=sd/rm;                        // klein = kreisrund
+    const aspect=Math.min(bw,bh)/Math.max(bw,bh);
+    if(circleness<0.16 && aspect>0.6){
+      return {type:'circle', cx:cx, cy:cy, r:rm};
+    }
+    // Rechteck: liegen die meisten Punkte am Rand der Bounding-Box?
+    const m=0.12*Math.min(bw,bh)+6;
+    let border=0;
+    for(const p of pts){
+      if(Math.abs(p.x-minX)<m||Math.abs(p.x-maxX)<m||Math.abs(p.y-minY)<m||Math.abs(p.y-maxY)<m) border++;
+    }
+    if(border/pts.length>0.82 && aspect>0.28){
+      return {type:'rect', x:minX, y:minY, w:bw, h:bh};
+    }
+  }
+  return null;   // nichts Klares -> normale Glättung
+}
+function drawShape(c,sh){
+  c.beginPath();
+  if(sh.type==='line'){ c.moveTo(sh.a.x,sh.a.y); c.lineTo(sh.b.x,sh.b.y); }
+  else if(sh.type==='circle'){ c.arc(sh.cx,sh.cy,sh.r,0,Math.PI*2); }
+  else if(sh.type==='rect'){
+    const r=Math.min(sh.w,sh.h)*0.12;             // leicht gerundete Ecken
+    const x=sh.x,y=sh.y,w=sh.w,h=sh.h;
+    c.moveTo(x+r,y);
+    c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r);
+    c.arcTo(x,y+h,x,y,r);     c.arcTo(x,y,x+w,y,r);
+    c.closePath();
+  }
+  c.stroke();
+}
+
+function hexToInt(hex){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return (255<<24)|(b<<16)|(g<<8)|r;
+}
+function floodFill(sx,sy,hex){
+  const w=art.width,h=art.height;
+  if(sx<0||sy<0||sx>=w||sy>=h) return;
+  const img=actx.getImageData(0,0,w,h);
+  const d=new Uint32Array(img.data.buffer);
+  const start=sy*w+sx,target=d[start],fill=hexToInt(hex);
+  const tr=target&255,tg=(target>>8)&255,tb=(target>>16)&255;
+  const fr=fill&255,fg=(fill>>8)&255,fb=(fill>>16)&255,tol=48;
+  if(Math.abs(fr-tr)<=tol&&Math.abs(fg-tg)<=tol&&Math.abs(fb-tb)<=tol) return;
+  const match=c=>Math.abs((c&255)-tr)<=tol&&Math.abs(((c>>8)&255)-tg)<=tol&&Math.abs(((c>>16)&255)-tb)<=tol;
+  const filled=new Uint8Array(w*h);
+  const stack=[start];
+  while(stack.length){
+    const i=stack.pop();
+    if(filled[i]||!match(d[i])) continue;
+    let left=i,right=i;
+    while(left%w>0&&match(d[left-1])&&!filled[left-1]) left--;
+    while(right%w<w-1&&match(d[right+1])&&!filled[right+1]) right++;
+    for(let p=left;p<=right;p++){
+      d[p]=fill; filled[p]=1;
+      if(p-w>=0&&match(d[p-w])&&!filled[p-w]) stack.push(p-w);
+      if(p+w<d.length&&match(d[p+w])&&!filled[p+w]) stack.push(p+w);
+    }
+  }
+  // Randglättung: helle Anti-Aliasing-Pixel am Füllrand mitfärben,
+  // damit kein weißer Saum zur Umrisslinie bleibt (2 Durchgänge)
+  const lum=c=>{ const r=c&255,g=(c>>8)&255,b=(c>>16)&255; return (r*77+g*150+b*29)>>8; };
+  for(let pass=0;pass<2;pass++){
+    const add=[];
+    for(let i=0;i<d.length;i++){
+      if(filled[i]) continue;
+      if(lum(d[i])<150) continue;                 // dunkle Linie nicht überschreiben
+      const x=i%w;
+      if((x>0&&filled[i-1])||(x<w-1&&filled[i+1])||(i-w>=0&&filled[i-w])||(i+w<d.length&&filled[i+w]))
+        add.push(i);
+    }
+    for(const i of add){ d[i]=fill; filled[i]=1; }
+  }
+  actx.putImageData(img,0,0);
+}
+$('undo').addEventListener('click',undoDraw);
+$('clear').addEventListener('click',()=>{ snapshot(); clearArt(); Voice.say('clear',null,true); });
+helper.addEventListener('click',()=>{
+  const on=ghost.classList.toggle('on');
+  helper.textContent = on ? '👁️ Linien aus' : '🫥 Hilfslinien';
+});
+$('musicBtn').addEventListener('click',e=>{
+  const on=Music.toggle();
+  e.currentTarget.textContent = on ? '🎵 Musik' : '🔇 Musik';
+  e.currentTarget.classList.toggle('off',!on);
+});
+function syncVoiceButtons(){
+  const on=Voice.isOn();
+  [$('voiceBtn'),$('voiceBtn2')].forEach(b=>{
+    if(!b) return;
+    b.textContent = on ? '🔊 Stimme' : '🔇 Stimme';
+    b.classList.toggle('off',!on);
+  });
+  $('voiceToggle').textContent = on ? '🔊 An' : '🔇 Aus';
+  $('voiceToggle').classList.toggle('go',on);
+}
+$('voiceBtn2').addEventListener('click',()=>{ Voice.toggle(); syncVoiceButtons(); Store.set('voiceOn',Voice.isOn()?'1':'0'); });
+
+/* ---------- Stimm-Einstellungen ---------- */
+function fillVoiceList(){
+  const sel=$('voiceSel'); const vs=Voice.list();
+  sel.textContent='';
+  if(!vs.length){
+    const o=document.createElement('option'); o.textContent='Keine deutsche Stimme gefunden'; sel.appendChild(o);
+    $('voiceHint').textContent='Auf dem iPad: Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Deutsch. Dort eine Stimme mit dem Zusatz „Premium" oder „Erweitert" laden – die klingt deutlich natürlicher.';
+    return;
+  }
+  vs.forEach(v=>{
+    const o=document.createElement('option'); o.value=v.name; o.textContent=v.name;
+    if(v.name===Voice.currentName()) o.selected=true;
+    sel.appendChild(o);
+  });
+  $('voiceHint').textContent='Tipp: Stimmen mit „Premium" oder „Erweitert" klingen am freundlichsten. Fehlt so eine, lässt sie sich unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen kostenlos nachladen.';
+}
+window.__voiceListRefresh=fillVoiceList;
+$('voiceBtn').addEventListener('click',()=>{
+  const p=$('voicePanel'); p.hidden=!p.hidden;
+  if(!p.hidden){ fillVoiceList(); syncVoiceButtons(); }
+});
+$('voiceClose').addEventListener('click',()=>{ $('voicePanel').hidden=true; });
+$('voiceSel').addEventListener('change',e=>{
+  Voice.setVoice(e.target.value); Store.set('voiceName',e.target.value);
+  Voice.raw('Hallo, ich bin es. So klinge ich.');
+});
+$('voiceTest').addEventListener('click',()=>{
+  Voice.raw('Hallo! Ich male heute mit dir. Das wird richtig schön.');
+});
+$('voiceToggle').addEventListener('click',()=>{
+  Voice.toggle(); syncVoiceButtons(); Store.set('voiceOn',Voice.isOn()?'1':'0');
+  if(Voice.isOn()) Voice.raw('Da bin ich wieder!');
+});
+
+/* ---------- Galerie ---------- */
+function thumb(){
+  const c=document.createElement('canvas'); c.width=640; c.height=480;
+  const o=c.getContext('2d'); o.fillStyle=PAPER; o.fillRect(0,0,c.width,c.height);
+  o.drawImage(art,0,0,c.width,c.height);
+  return c.toDataURL('image/jpeg',0.82);
+}
+function doneMotifsList(){ try{ return JSON.parse(profile.doneMotifs||'[]'); }catch(e){ return []; } }
+async function keepPicture(){
+  if(!profile) return;
+  const motifName=motif?motif.name:'Bild', motifEmoji=motif?motif.emoji:'🎨';
+  await Store.set('pic:'+profile.id+':'+Date.now(),
+    JSON.stringify({motif:motifName,emoji:motifEmoji,img:thumb()}));
+  const ks=await Store.keys('pic:'+profile.id+':');
+  if(ks.length>40){ ks.sort(); for(const k of ks.slice(0,ks.length-40)) await Store.del(k); }
+  const prevCount=profile.count||0;
+  profile.count=(await Store.keys('pic:'+profile.id+':')).length;
+
+  const done=doneMotifsList();
+  const firstTime = !!motif && done.indexOf(motifName)<0;
+  if(firstTime){ done.push(motifName); profile.doneMotifs=JSON.stringify(done); }
+
+  const prevTier=trophyTier(prevCount), newTier=trophyTier(profile.count);
+  const trophyReached = !!newTier && (!prevTier || newTier.key!==prevTier.key);
+
+  await saveProfiles();
+  toast('🖼️ Bild in der Galerie gespeichert');
+
+  if(trophyReached){
+    setTimeout(()=>showTrophyPopup(newTier),400);
+  }else if(firstTime){
+    const idx=await awardSticker();
+    if(idx!=null) setTimeout(()=>showReward(idx,motifName),500);
+    else Voice.say('gallery',null,true);
+  }else{
+    Voice.say('gallery',null,true);
+  }
+}
+$('keep').addEventListener('click',keepPicture);
+$('toGallery').addEventListener('click',async()=>{ await keepPicture(); openGallery(); });
+$('galBtn').addEventListener('click',openGallery);
+$('galBack').addEventListener('click',()=>showSection(secHome));
+
+async function openGallery(){
+  showSection(secGallery);
+  const grid=$('galGrid'); grid.textContent='';
+  $('galTitle').textContent='Galerie von '+(profile?profile.name:'');
+  const ks=(await Store.keys('pic:'+profile.id+':')).sort().reverse();
+  if(!ks.length){ grid.innerHTML='<p class="empty">Noch keine Bilder. Male eins und tippe auf „In die Galerie".</p>'; return; }
+  for(const k of ks){
+    let rec; try{ rec=JSON.parse(await Store.get(k)); }catch(e){ continue; }
+    if(!rec) continue;
+    const card=document.createElement('div'); card.className='pic';
+    const im=document.createElement('img'); im.src=rec.img; im.alt=rec.motif;
+    const cap=document.createElement('div'); cap.className='cap';
+    const when=new Date(Number(k.split(':')[2])||Date.now());
+    cap.innerHTML='<span>'+(rec.emoji||'')+' '+rec.motif+'</span><small>'+when.toLocaleDateString('de-DE')+'</small>';
+    const x=document.createElement('button'); x.className='x'; x.textContent='✕';
+    x.addEventListener('click',async()=>{
+      if(x.classList.contains('armed')){
+        await Store.del(k);
+        profile.count=(await Store.keys('pic:'+profile.id+':')).length;
+        await saveProfiles(); openGallery();
+      }else{ x.classList.add('armed'); x.textContent='Löschen?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2600); }
+    });
+    card.appendChild(im); card.appendChild(cap); card.appendChild(x);
+    grid.appendChild(card);
+  }
+}
+
+/* ============================================================
+   WERKSTATT – Kind malt ein eigenes Motiv Schritt für Schritt
+   ============================================================ */
+const cart=$('cart'), csheet=$('csheet');
+let cSteps=[], cCurrent=[], cLiveG=null, cPath=null, cPts=[], cAvatar=AVATARS[0];
+
+AVATARS.forEach((a,i)=>{
+  const b=document.createElement('button');
+  b.className='av'; b.textContent=a; b.setAttribute('aria-pressed',i===0?'true':'false');
+  b.addEventListener('click',()=>{
+    cAvatar=a;
+    $('cAvatars').querySelectorAll('.av').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+  });
+  $('cAvatars').appendChild(b);
+});
+function cLabel(){ $('cStepLabel').textContent='– Schritt '+(cSteps.length+1); }
+function cReset(){
+  cSteps=[]; cCurrent=[]; cart.textContent=''; cLiveG=null; cLabel();
+  $('cNaming').hidden=true; $('cName').value='';
+}
+function cNewLiveGroup(){
+  cLiveG=document.createElementNS(NS,'g'); cLiveG.setAttribute('class','live'); cart.appendChild(cLiveG);
+}
+function cPos(e){
+  const r=csheet.getBoundingClientRect();
+  return { x:Math.round((e.clientX-r.left)/r.width*800), y:Math.round((e.clientY-r.top)/r.height*600) };
+}
+let cDrawing=false;
+csheet.addEventListener('pointerdown',e=>{
+  if(!cLiveG) cNewLiveGroup();
+  cDrawing=true; csheet.setPointerCapture(e.pointerId);
+  const p=cPos(e); cPts=[p];
+  cPath=document.createElementNS(NS,'path');
+  cPath.setAttribute('d','M'+p.x+','+p.y);
+  cPath.setAttribute('pathLength','100');
+  cLiveG.appendChild(cPath);
+});
+csheet.addEventListener('pointermove',e=>{
+  if(!cDrawing) return;
+  const p=cPos(e), l=cPts[cPts.length-1];
+  if(Math.abs(p.x-l.x)+Math.abs(p.y-l.y)<9) return;
+  cPts.push(p);
+  cPath.setAttribute('d',cPath.getAttribute('d')+' L'+p.x+','+p.y);
+});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>csheet.addEventListener(ev,()=>{
+  if(!cDrawing) return;
+  cDrawing=false;
+  if(cPts.length>1) cCurrent.push(cPath.getAttribute('d'));
+  else if(cPath&&cPath.parentNode) cPath.parentNode.removeChild(cPath);
+}));
+$('cUndo').addEventListener('click',()=>{
+  if(cCurrent.length && cLiveG && cLiveG.lastChild){
+    cLiveG.removeChild(cLiveG.lastChild); cCurrent.pop();
+  }
+});
+$('cStep').addEventListener('click',()=>{
+  if(!cCurrent.length){ toast('Erst etwas malen 🙂'); return; }
+  cSteps.push({emoji:'✏️',title:'Schritt '+(cSteps.length+1),text:'Male den roten Strich nach.',shapes:cCurrent.slice()});
+  if(cLiveG) cLiveG.setAttribute('class','');
+  cCurrent=[]; cNewLiveGroup(); cLabel();
+  Voice.say('creatorStep',null,true);
+});
+$('cSave').addEventListener('click',()=>{
+  if(cCurrent.length) $('cStep').click();
+  if(!cSteps.length){ toast('Noch nichts zu speichern'); return; }
+  $('cNaming').hidden=false; $('cName').focus();
+});
+$('cCancel').addEventListener('click',()=>{ $('cNaming').hidden=true; });
+$('cFinish').addEventListener('click',async()=>{
+  const name=($('cName').value||'').trim()||'Mein Motiv';
+  const m={name:name,emoji:cAvatar,level:'von mir',steps:cSteps};
+  await Store.set('motif:'+profile.id+':'+Date.now(),JSON.stringify(m));
+  await loadCustoms(); renderPicker(); showSection(secHome);
+  toast('✏️ Motiv gespeichert'); Voice.raw('Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!');
+});
+$('newMotif').addEventListener('click',()=>{ cReset(); cNewLiveGroup(); showSection(secCreator); Voice.say('creator',null,true); });
+$('cBack').addEventListener('click',()=>showSection(secHome));
+
+/* ---------- Vollbild ---------- */
+(function(){
+  const btn=$('fsBtn'); if(!btn) return;
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
+  const el=document.documentElement;
+  const canFS = el.requestFullscreen || el.webkitRequestFullscreen;
+  if(standalone){ btn.style.display='none'; return; }
+  if(!canFS){
+    btn.textContent='⛶ Vollbild?';
+    btn.addEventListener('click',()=>{
+      toast('Tipp: Teilen ▸ „Zum Home-Bildschirm" – dann startet die App randlos.');
+      Voice.raw('Für echtes Vollbild tippe unten auf Teilen und dann auf Zum Home-Bildschirm.');
+    });
+    return;
+  }
+  const isFS=()=>document.fullscreenElement||document.webkitFullscreenElement;
+  btn.addEventListener('click',()=>{
+    if(isFS()){ (document.exitFullscreen||document.webkitExitFullscreen).call(document); }
+    else{ (el.requestFullscreen||el.webkitRequestFullscreen).call(el); }
+  });
+  const sync=()=>{ btn.textContent = isFS() ? '⛶ Vollbild aus' : '⛶ Vollbild'; setTimeout(()=>{ if(typeof layout==='function') layout(); },150); };
+  document.addEventListener('fullscreenchange',sync);
+  document.addEventListener('webkitfullscreenchange',sync);
+})();
+
+/* ---------- Layout: Blatt im Verhältnis 4:3 einpassen ---------- */
+function fit(container,el){
+  if(!container||!el) return false;
+  const r=container.getBoundingClientRect();
+  if(r.width<40||r.height<30) return false;
+  const w=r.width-14, h=r.height-14;
+  let sw=w, sh=w*3/4;
+  if(sh>h){ sh=h; sw=h*4/3; }
+  el.style.width=Math.floor(sw)+'px';
+  el.style.height=Math.floor(sh)+'px';
+  return true;
+}
+function layout(){
+  if(fit($('board'),sheet)) resize();
+  fit(document.querySelector('.cstage'),csheet);
+}
+if(window.ResizeObserver){
+  const ro=new ResizeObserver(layout);
+  ro.observe($('board'));
+  const cs=document.querySelector('.cstage'); if(cs) ro.observe(cs);
+}
+window.addEventListener('resize',layout);
+window.addEventListener('orientationchange',()=>setTimeout(layout,300));
+layout();
+
+(async function(){
+  if('serviceWorker' in navigator){
+    try{ await navigator.serviceWorker.register('sw.js'); }catch(e){}
+  }
+  await loadProfiles();
+  for(const p of profiles){ p.count=(await Store.keys('pic:'+p.id+':')).length; }
+  renderProfiles();
+  const vOn=await Store.get('voiceOn'); if(vOn==='0') Voice.setOn(false);
+  const vName=await Store.get('voiceName'); if(vName) setTimeout(()=>Voice.setVoice(vName),400);
+  syncVoiceButtons();
+  const savedMode=await Store.get('mode'); setMode(savedMode==='color'?'color':'draw');
+  const last=await Store.get('lastProfile');
+  const found=profiles.find(p=>p.id===last);
+  if(found) pickProfile(found); else showSection(secProfiles);
+})();
+})();
+</script>
+</body>
+</html>

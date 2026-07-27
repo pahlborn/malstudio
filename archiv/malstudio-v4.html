@@ -3,14 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Malstudio">
-<meta name="theme-color" content="#118AB2">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" href="icon-192.png">
 <title>Sommer am Meer – Malstudio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,16 +19,13 @@
     font-family:var(--font);color:var(--deep);
     background:radial-gradient(120% 70% at 50% 0%,#FFFFFF 0%,var(--foam) 45%,#CFEAF5 100%);
     display:flex;justify-content:center;overscroll-behavior:none;
-    height:100svh;height:100dvh;
-    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-    -webkit-user-select:none;user-select:none;
   }
   .app{width:100%;max-width:1300px;height:100%;padding:10px;display:flex;flex-direction:column;gap:9px}
-  h1{font-size:clamp(17px,2.8vw,25px);font-weight:800;margin:0;letter-spacing:-.4px}
+  h1{font-size:clamp(18px,3vw,26px);font-weight:800;margin:0;letter-spacing:-.4px}
   h1 span{color:var(--sea)}
   section[hidden]{display:none!important}
-  .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .hint{margin:0;font-weight:500;opacity:.75;font-size:14px}
+  .row{display:flex;align-items:center;gap:9px}
+  .hint{margin:0;font-weight:500;opacity:.75;font-size:15px}
 
   .icon-btn{
     height:40px;padding:0 12px;border-radius:13px;border:3px solid var(--deep);
@@ -45,12 +34,13 @@
   }
   .icon-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--deep)}
   .icon-btn.go{background:var(--kelp)}
-  .icon-btn.off{background:#E7ECEF;opacity:.7}
 
   /* ---------- Profile ---------- */
   #profiles{display:flex;flex-direction:column;gap:10px;height:100%;min-height:0}
-  .plist{flex:1;min-height:0;overflow:auto;display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;align-content:start;padding:4px 2px}
+  .plist{
+    flex:1;min-height:0;overflow:auto;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;align-content:start;padding:4px 2px;
+  }
   .pcard{
     background:var(--paper);border:3px solid var(--deep);border-radius:20px;box-shadow:0 4px 0 var(--deep);
     padding:16px 8px;cursor:pointer;font-family:var(--font);font-weight:700;font-size:17px;color:var(--deep);
@@ -58,22 +48,23 @@
   }
   .pcard em{font-size:44px;font-style:normal;line-height:1}
   .pcard small{font-weight:500;font-size:12px;opacity:.6}
-  .pcard.new{border-style:dashed;box-shadow:none;background:transparent}
-  .x{
-    position:absolute;top:6px;right:6px;height:26px;min-width:26px;border-radius:13px;
+  .pcard .x{
+    position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;
     border:2px solid var(--deep);background:var(--paper);font-size:13px;font-weight:800;
-    cursor:pointer;padding:0 6px;line-height:1;font-family:var(--font);
+    cursor:pointer;padding:0;line-height:1;
   }
-  .x.armed{background:var(--coral);color:#fff}
+  .pcard.new{border-style:dashed;box-shadow:none;background:transparent}
   .maker{background:var(--paper);border:3px solid var(--deep);border-radius:20px;padding:12px;box-shadow:0 4px 0 var(--deep)}
   .maker input{
     font-family:var(--font);font-size:18px;font-weight:700;color:var(--deep);
-    border:3px solid var(--ghost);border-radius:12px;padding:8px 12px;width:180px;outline:none;
+    border:3px solid var(--ghost);border-radius:12px;padding:8px 12px;width:190px;outline:none;
   }
   .maker input:focus{border-color:var(--sea)}
-  .avatars{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0 0}
-  .av{width:44px;height:44px;border-radius:14px;border:3px solid var(--ghost);background:var(--paper);
-    font-size:24px;cursor:pointer;padding:0;line-height:1}
+  .avatars{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}
+  .av{
+    width:44px;height:44px;border-radius:14px;border:3px solid var(--ghost);background:var(--paper);
+    font-size:24px;cursor:pointer;padding:0;line-height:1;
+  }
   .av[aria-pressed="true"]{border-color:var(--coral);background:#FFF1EF;transform:scale(1.08)}
 
   /* ---------- Motivauswahl ---------- */
@@ -89,69 +80,71 @@
     gap:9px;align-content:start;padding:4px 2px 8px;
   }
   .tile{
-    position:relative;background:var(--paper);border:3px solid var(--deep);border-radius:18px;
+    background:var(--paper);border:3px solid var(--deep);border-radius:18px;
     box-shadow:0 4px 0 var(--deep);padding:11px 6px;cursor:pointer;
     font-family:var(--font);font-weight:700;font-size:14px;color:var(--deep);
     display:flex;flex-direction:column;align-items:center;gap:3px;
   }
   .tile em{font-size:32px;font-style:normal;line-height:1}
   .tile b{font-weight:700;font-size:11px;letter-spacing:.5px;color:var(--sea)}
-  .tile.mine{border-color:var(--coral);box-shadow:0 4px 0 var(--coral)}
-  .tile.mine b{color:var(--coral)}
-  .tile:active{transform:translateY(3px)}
-  .panel{background:var(--paper);border:3px solid var(--sea);border-radius:18px;padding:10px 12px;box-shadow:0 4px 0 var(--sea)}
-  .panel select{
-    font-family:var(--font);font-weight:700;font-size:15px;color:var(--deep);
-    border:3px solid var(--ghost);border-radius:12px;padding:7px 10px;background:var(--paper);outline:none;max-width:260px;
-  }
+  .tile:active{transform:translateY(3px);box-shadow:0 1px 0 var(--deep)}
 
   /* ---------- Galerie ---------- */
   #gallery{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
-  .gal{flex:1;min-height:0;overflow:auto;display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;align-content:start;padding:4px 2px}
-  .pic{position:relative;background:var(--paper);border:3px solid var(--deep);border-radius:18px;
-    box-shadow:0 4px 0 var(--deep);overflow:hidden}
+  .gal{
+    flex:1;min-height:0;overflow:auto;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;align-content:start;padding:4px 2px;
+  }
+  .pic{
+    position:relative;background:var(--paper);border:3px solid var(--deep);border-radius:18px;
+    box-shadow:0 4px 0 var(--deep);overflow:hidden;
+  }
   .pic img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
   .pic .cap{padding:6px 10px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;gap:6px}
   .pic .cap small{font-weight:500;opacity:.6}
+  .pic .x{
+    position:absolute;top:7px;right:7px;width:30px;height:30px;border-radius:50%;
+    border:3px solid var(--deep);background:var(--paper);font-size:14px;font-weight:800;cursor:pointer;padding:0;
+  }
+  .pic .x.armed{background:var(--coral);color:#fff;width:auto;padding:0 10px;border-radius:15px}
   .empty{opacity:.6;font-weight:600;padding:20px 4px}
-
-  /* ---------- Werkstatt ---------- */
-  #creator{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
-  .cstage{flex:1;min-height:0;display:grid;place-items:center;
-    background:var(--foam);border:3px solid var(--coral);border-radius:20px;box-shadow:0 5px 0 var(--coral);padding:6px}
-  .csheet{position:relative;width:100%;height:100%;background:var(--paper);
-    border-radius:12px;overflow:hidden;touch-action:none;box-shadow:0 0 0 2px rgba(7,59,76,.12)}
-  .csheet svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
-  #cart g path{fill:none;stroke:var(--deep);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
-  #cart g.live path{stroke:var(--coral)}
 
   /* ---------- Malansicht ---------- */
   #draw{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
   .bubbles{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
-  .bub{width:27px;height:27px;border-radius:50%;border:3px solid var(--ghost);
+  .bub{
+    width:27px;height:27px;border-radius:50%;border:3px solid var(--ghost);
     background:var(--paper);color:var(--sea);font-family:var(--font);font-weight:700;font-size:13px;
-    display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .2s,background .2s,border-color .2s,color .2s}
+    display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .2s,background .2s,border-color .2s,color .2s;
+  }
   .bub.done{background:var(--kelp);border-color:var(--kelp);color:#fff}
   .bub.now{background:var(--coral);border-color:var(--coral);color:#fff;transform:translateY(-3px) scale(1.15)}
 
-  .task{background:var(--paper);border:3px solid var(--deep);border-radius:16px;
-    padding:7px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 0 var(--deep);flex:none;cursor:pointer}
+  .task{
+    background:var(--paper);border:3px solid var(--deep);border-radius:16px;
+    padding:7px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 0 var(--deep);flex:none;
+  }
   .task .emoji{font-size:28px;line-height:1}
   .task h2{margin:0;font-size:clamp(15px,2.2vw,20px);font-weight:800}
   .task p{margin:1px 0 0;font-size:clamp(13px,1.9vw,16px);font-weight:500;opacity:.8}
 
-  .done-bar{display:none;align-items:center;gap:8px;flex-wrap:wrap;
-    background:var(--kelp);border:3px solid var(--deep);border-radius:16px;padding:7px 10px;box-shadow:0 4px 0 var(--deep)}
+  .done-bar{
+    display:none;align-items:center;gap:8px;flex-wrap:wrap;
+    background:var(--kelp);border:3px solid var(--deep);border-radius:16px;
+    padding:7px 10px;box-shadow:0 4px 0 var(--deep);
+  }
   .done-bar.on{display:flex}
   .done-bar strong{font-size:16px}
   .done-bar .icon-btn{height:36px;font-size:14px}
 
   .stage{flex:1;min-height:0;display:flex;gap:10px}
-  .ref{width:206px;flex:none;display:flex;flex-direction:column;gap:6px;min-height:0}
+
+  .ref{width:250px;flex:none;display:flex;flex-direction:column;gap:6px;min-height:0}
   .ref-label{font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--sea);padding-left:4px}
-  .ref-frame{position:relative;background:var(--paper);border:3px solid var(--sea);
-    border-radius:18px;box-shadow:0 5px 0 var(--sea);aspect-ratio:4/3;overflow:hidden;flex:none}
+  .ref-frame{
+    position:relative;background:var(--paper);border:3px solid var(--sea);
+    border-radius:18px;box-shadow:0 5px 0 var(--sea);aspect-ratio:4/3;overflow:hidden;flex:none;
+  }
   .ref-frame svg{position:absolute;inset:0;width:100%;height:100%}
   .ref-note{font-size:13px;font-weight:500;opacity:.75;line-height:1.25;padding:0 4px}
   #ref g path,#ref g circle{fill:none;stroke:var(--ghost);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
@@ -160,16 +153,21 @@
   #ref g.now.draw path,#ref g.now.draw circle{animation:trace 1.2s ease forwards}
   @keyframes trace{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
 
-  .board{flex:1;min-width:0;min-height:0;display:grid;place-items:center;
+  .board{
+    flex:1;min-width:0;min-height:0;display:grid;place-items:center;
     background:var(--foam);border:3px solid var(--deep);border-radius:20px;
-    box-shadow:0 5px 0 var(--deep);overflow:hidden;padding:6px}
+    box-shadow:0 5px 0 var(--deep);overflow:hidden;padding:6px;
+  }
   .board.party{animation:party 1.6s ease 2}
   @keyframes party{
     0%,100%{border-color:var(--deep);box-shadow:0 5px 0 var(--deep)}
     50%{border-color:var(--kelp);box-shadow:0 5px 0 var(--kelp),0 0 0 8px rgba(6,214,160,.25)}
   }
-  .sheet{position:relative;width:100%;height:100%;background:var(--paper);
-    border-radius:12px;overflow:hidden;touch-action:none;box-shadow:0 0 0 2px rgba(7,59,76,.12)}
+  .sheet{
+    position:relative;width:100%;height:100%;
+    background:var(--paper);border-radius:12px;overflow:hidden;touch-action:none;
+    box-shadow:0 0 0 2px rgba(7,59,76,.12);
+  }
   .sheet canvas,.sheet svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
   #ghost{opacity:0;transition:opacity .3s;pointer-events:none;z-index:2}
   .sheet canvas{z-index:1}
@@ -182,44 +180,54 @@
     .bub{transition:none}.board.party{animation:none}
   }
 
-  .side{width:202px;flex:none;display:flex;flex-direction:column;gap:7px}
+  .side{width:232px;flex:none;display:flex;flex-direction:column;gap:7px}
   .tools3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-  .tool{height:44px;border-radius:13px;border:3px solid var(--deep);background:var(--paper);
-    font-family:var(--font);font-weight:700;font-size:20px;cursor:pointer;box-shadow:0 3px 0 var(--deep);padding:0}
+  .tool{
+    height:44px;border-radius:13px;border:3px solid var(--deep);background:var(--paper);
+    font-family:var(--font);font-weight:700;font-size:20px;cursor:pointer;box-shadow:0 3px 0 var(--deep);padding:0;
+  }
   .tool[aria-pressed="true"]{background:var(--sand)}
-  .colors{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;justify-items:center;max-height:118px;overflow-y:auto;overflow-x:hidden;align-content:start;padding:2px 2px 2px 0;scrollbar-width:thin}
-  .swatch{width:30px;height:30px;border-radius:50%;border:3px solid var(--paper);
-    box-shadow:0 0 0 3px var(--deep);cursor:pointer;padding:0;transition:transform .15s}
+  .tool:active{transform:translateY(2px);box-shadow:0 1px 0 var(--deep)}
+  .colors{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;justify-items:center}
+  .swatch{
+    width:35px;height:35px;border-radius:50%;border:3px solid var(--paper);
+    box-shadow:0 0 0 3px var(--deep);cursor:pointer;padding:0;transition:transform .15s;
+  }
   .swatch[aria-pressed="true"]{transform:scale(1.22)}
   .sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
-  .size{height:38px;border-radius:13px;border:3px solid var(--deep);background:var(--paper);
-    cursor:pointer;padding:0;display:grid;place-items:center;box-shadow:0 3px 0 var(--deep)}
+  .size{
+    height:40px;border-radius:13px;border:3px solid var(--deep);background:var(--paper);
+    cursor:pointer;padding:0;display:grid;place-items:center;box-shadow:0 3px 0 var(--deep);
+  }
   .size i{display:block;border-radius:50%;background:var(--deep)}
   .size[aria-pressed="true"]{background:var(--sand)}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-  .grid2 .icon-btn{height:38px;padding:0 5px;font-size:12.5px;letter-spacing:-.2px}
-  .nav-btn{height:50px;border-radius:16px;border:3px solid var(--deep);
+  .nav-btn{
+    height:52px;border-radius:16px;border:3px solid var(--deep);
     font-family:var(--font);font-weight:800;font-size:17px;
-    background:var(--sand);color:var(--deep);cursor:pointer;box-shadow:0 4px 0 var(--deep)}
+    background:var(--sand);color:var(--deep);cursor:pointer;box-shadow:0 4px 0 var(--deep);
+  }
   .nav-btn.primary{background:var(--kelp)}
   .nav-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--deep)}
   .nav-btn:disabled{opacity:.35;transform:none;cursor:default}
   .spacer{flex:1}
 
-  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);
+  .toast{
+    position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);
     background:var(--deep);color:#fff;font-weight:700;font-size:15px;
-    padding:10px 18px;border-radius:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+    padding:10px 18px;border-radius:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20;
+  }
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
   @media (orientation:portrait){
     .stage{flex-wrap:wrap}
-    .ref{width:186px}
+    .ref{width:190px}
     .ref-note{display:none}
     .side{width:100%;order:3;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center}
-    .colors{grid-template-columns:repeat(10,auto);max-height:96px}
-    .sizes,.tools3{grid-template-columns:repeat(4,52px)}
-    .grid2{grid-template-columns:repeat(3,auto)}
-    .side .nav-btn{flex:1;min-width:130px;height:46px}
+    .colors{grid-template-columns:repeat(8,auto)}
+    .sizes,.tools3{grid-template-columns:repeat(4,54px)}
+    .grid2{grid-template-columns:repeat(4,auto)}
+    .side .nav-btn{flex:1;min-width:130px;height:48px}
     .spacer{display:none}
   }
 </style>
@@ -246,21 +254,7 @@
     <div class="row">
       <button class="chip" id="profileChip"></button>
       <h1>Was malen wir <span>heute</span>?</h1>
-      <span style="margin-left:auto"></span>
-      <button class="icon-btn" id="newMotif">✏️ Eigenes Motiv</button>
-      <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
-      <button class="icon-btn" id="fsBtn">⛶ Vollbild</button>
-      <button class="icon-btn" id="voiceBtn">🔊 Stimme</button>
-    </div>
-    <div class="panel" id="voicePanel" hidden>
-      <div class="row">
-        <strong style="font-size:15px">Stimme:</strong>
-        <select id="voiceSel"></select>
-        <button class="icon-btn" id="voiceTest">▶︎ Probe hören</button>
-        <button class="icon-btn go" id="voiceToggle">🔊 An</button>
-        <button class="icon-btn" id="voiceClose">Fertig</button>
-      </div>
-      <p class="hint" id="voiceHint" style="margin-top:8px"></p>
+      <button class="icon-btn" id="galBtn" style="margin-left:auto">🖼️ Galerie</button>
     </div>
     <p class="hint">Links steht die Vorlage – im weißen Feld malst du sie nach.</p>
     <div class="picker" id="picker"></div>
@@ -275,31 +269,6 @@
     <div class="gal" id="galGrid"></div>
   </section>
 
-  <!-- ============ WERKSTATT ============ -->
-  <section id="creator" hidden>
-    <div class="row">
-      <button class="icon-btn" id="cBack">◀︎ Zurück</button>
-      <h1>Eigenes Motiv <span id="cStepLabel"></span></h1>
-      <span style="margin-left:auto"></span>
-      <button class="icon-btn" id="cUndo">↩︎ Strich weg</button>
-      <button class="icon-btn" id="cStep">✓ Schritt fertig</button>
-      <button class="icon-btn go" id="cSave">💾 Motiv speichern</button>
-    </div>
-    <p class="hint">Male einen Teil deines Bildes und tippe dann auf „Schritt fertig“. So entstehen die Schritte, die später nachgemalt werden.</p>
-    <div class="panel" id="cNaming" hidden>
-      <div class="row">
-        <input id="cName" type="text" placeholder="Name des Motivs" maxlength="16" autocomplete="off"
-               style="font-family:var(--font);font-size:17px;font-weight:700;color:var(--deep);border:3px solid var(--ghost);border-radius:12px;padding:8px 12px;width:200px;outline:none">
-        <button class="icon-btn go" id="cFinish">Speichern</button>
-        <button class="icon-btn" id="cCancel">Abbrechen</button>
-      </div>
-      <div class="avatars" id="cAvatars"></div>
-    </div>
-    <div class="cstage">
-      <div class="csheet" id="csheet"><svg id="cart" viewBox="0 0 800 600"></svg></div>
-    </div>
-  </section>
-
   <!-- ============ MALEN ============ -->
   <section id="draw" hidden>
     <div class="row">
@@ -308,7 +277,7 @@
       <div class="bubbles" id="bubbles"></div>
     </div>
 
-    <div class="task" id="taskCard" title="Antippen zum Wiederholen">
+    <div class="task">
       <div class="emoji" id="taskEmoji">✏️</div>
       <div>
         <h2 id="taskTitle"></h2>
@@ -319,6 +288,7 @@
     <div class="done-bar" id="doneBar">
       <strong>🎉 Fertig!</strong>
       <button class="icon-btn go" id="toGallery">🖼️ In die Galerie</button>
+      <button class="icon-btn" id="saveDone">💾 Speichern</button>
       <button class="icon-btn" id="again">↻ Noch einmal</button>
       <button class="icon-btn" id="other">🎨 Anderes Motiv</button>
     </div>
@@ -349,10 +319,9 @@
           <button class="icon-btn" id="undo">↩︎ Zurück</button>
           <button class="icon-btn" id="clear">🗑️ Alles</button>
           <button class="icon-btn" id="helper">🫥 Hilfslinien</button>
-          <button class="icon-btn go" id="keep">🖼️ Galerie</button>
           <button class="icon-btn" id="musicBtn">🎵 Musik</button>
-          <button class="icon-btn" id="voiceBtn2">🔊 Stimme</button>
         </div>
+        <button class="icon-btn go" id="keep">🖼️ In die Galerie</button>
         <div class="spacer"></div>
         <button class="nav-btn" id="back">◀︎ Schritt zurück</button>
         <button class="nav-btn primary" id="next">Weiter ▶︎</button>
@@ -366,7 +335,7 @@
 <script>
 (function(){
 /* ============================================================
-   MOTIVE
+   MOTIVE   "M…" = Linie · [cx,cy,r] = Kreis
    ============================================================ */
 const MOTIFS=[
 {name:"Herz",emoji:"❤️",level:"leicht",steps:[
@@ -760,122 +729,44 @@ const MOTIFS=[
   shapes:[[200,500,18],[280,506,18],[360,510,18],[440,510,18],[520,506,18],[600,500,18]]},
  {emoji:"🌊",title:"Die Wellen",text:"Wellen unter das Schiff.",
   shapes:["M60,560 C110,538 160,582 210,560 C260,538 310,582 360,560 C410,538 460,582 510,560 C560,538 610,582 660,560 C700,542 730,556 760,566"]}
-]},
-{name:"Familie",emoji:"👨‍👩‍👧‍👧",level:"Familie",steps:[
- {emoji:"👨",title:"Papa",text:"Ganz links der Papa: runder Kopf und ein breiter Körper.",
-  shapes:[[172,150,46],"M132,432 L132,244 C132,214 212,214 212,244 L212,432",
-          "M148,432 L148,516","M196,432 L196,516","M134,262 L104,344","M210,262 L240,344"]},
- {emoji:"😀",title:"Papas Gesicht",text:"Augen, ein Lächeln und kurze Haare.",
-  shapes:[[158,146,6],[186,146,6],"M158,168 C168,180 176,180 186,168","M128,150 C128,112 216,112 216,150"]},
- {emoji:"👩",title:"Mama",text:"Daneben die Mama: Kopf und ein Kleid wie ein Dreieck.",
-  shapes:[[332,164,44],"M296,436 L320,244 C320,230 344,230 344,244 L368,436 Z",
-          "M312,436 L312,510","M352,436 L352,510","M300,278 L272,352","M364,278 L392,352"]},
- {emoji:"💇‍♀️",title:"Mamas Gesicht",text:"Augen, ein Lächeln und lange Haare.",
-  shapes:[[318,160,6],[346,160,6],"M318,182 C328,194 336,194 346,182",
-          "M290,158 C288,110 376,110 374,158 C374,210 366,240 360,262","M290,158 C290,210 298,240 304,262"]},
- {emoji:"👧",title:"Das große Mädchen",text:"Das siebenjährige Mädchen: kleiner, mit Kleid und Zöpfen.",
-  shapes:[[480,244,36],"M450,436 L466,306 C466,294 494,294 494,306 L510,436 Z",
-          "M462,436 L462,500","M498,436 L498,500",
-          "M448,246 C430,242 420,262 428,282","M512,246 C530,242 540,262 532,282"]},
- {emoji:"👧",title:"Das kleine Mädchen",text:"Das fünfjährige Mädchen ganz rechts: am kleinsten.",
-  shapes:[[600,300,32],"M574,436 L586,352 C586,342 614,342 614,352 L626,436 Z",
-          "M586,436 L586,494","M614,436 L614,494",
-          "M572,302 C556,300 548,318 556,334","M628,302 C644,300 652,318 644,334"]},
- {emoji:"😊",title:"Die Gesichter der Mädchen",text:"Beide Mädchen bekommen Augen und ein Lächeln.",
-  shapes:[[470,240,5],[490,240,5],"M470,258 C478,268 486,268 494,258",
-          [592,296,5],[608,296,5],"M592,312 C599,320 607,320 614,312"]},
- {emoji:"☀️",title:"Sonne und Wiese",text:"Eine Sonne an den Himmel und Gras unter die Familie.",
-  shapes:[[706,120,42],"M70,520 C240,506 560,506 740,520",
-          "M300,520 L300,504","M340,520 L340,500","M470,520 L470,504","M520,520 L520,500"]}
-]},
-{name:"Kätzchen",emoji:"🐱",level:"leicht",steps:[
- {emoji:"⭕",title:"Der Kopf",text:"Ein runder Kopf in die Mitte.",
-  shapes:["M300,250 C300,188 348,158 400,158 C452,158 500,188 500,250 C500,312 452,340 400,340 C348,340 300,312 300,250 Z"]},
- {emoji:"🔺",title:"Die Ohren",text:"Zwei spitze Dreiecke oben drauf.",
-  shapes:["M312,196 L302,124 L364,166 Z","M488,196 L498,124 L436,166 Z"]},
- {emoji:"👀",title:"Die Augen",text:"Zwei große Augen mit Punkt.",
-  shapes:[[362,244,22],[438,244,22],[362,248,9],[438,248,9]]},
- {emoji:"👃",title:"Nase und Mund",text:"Ein kleines Dreieck als Nase, darunter zwei Bögen.",
-  shapes:["M390,276 L410,276 L400,288 Z","M400,288 C400,302 384,306 376,298","M400,288 C400,302 416,306 424,298"]},
- {emoji:"〰️",title:"Die Schnurrhaare",text:"Links und rechts drei feine Striche.",
-  shapes:["M330,268 L268,258","M330,282 L268,286","M470,268 L532,258","M470,282 L532,286"]},
- {emoji:"🐾",title:"Der Körper",text:"Ein runder Körper mit Schwanz.",
-  shapes:["M336,340 C324,420 344,470 400,470 C456,470 476,420 464,340","M462,438 C516,450 540,404 516,372"]}
-]},
-{name:"Regenbogen",emoji:"🌈",level:"leicht",steps:[
- {emoji:"🔴",title:"Der erste Bogen",text:"Ein großer Bogen von links nach rechts.",
-  shapes:["M120,440 A280,280 0 0 1 680,440"]},
- {emoji:"🟠",title:"Der zweite Bogen",text:"Ein kleinerer Bogen knapp darunter.",
-  shapes:["M162,440 A238,238 0 0 1 638,440"]},
- {emoji:"🟡",title:"Der dritte Bogen",text:"Und noch einer darunter.",
-  shapes:["M204,440 A196,196 0 0 1 596,440"]},
- {emoji:"🟢",title:"Der vierte Bogen",text:"Immer kleiner werdende Bögen.",
-  shapes:["M246,440 A154,154 0 0 1 554,440"]},
- {emoji:"☁️",title:"Die Wolken",text:"An jedem Ende eine dicke Wolke.",
-  shapes:["M90,440 Q120,400 160,422 Q200,398 224,440 Q170,470 90,440 Z",
-          "M576,440 Q606,400 646,422 Q690,398 712,440 Q656,470 576,440 Z"]},
- {emoji:"☀️",title:"Die Sonne",text:"Oben in die Ecke eine kleine Sonne.",
-  shapes:[[706,120,40],"M706,58 L706,74","M760,120 L744,120","M668,82 L680,94"]}
-]},
-{name:"Rakete",emoji:"🚀",level:"mittel",steps:[
- {emoji:"💊",title:"Der Rumpf",text:"Ein länglicher Körper, oben rund.",
-  shapes:["M340,470 L340,240 C340,160 460,160 460,240 L460,470 Z"]},
- {emoji:"🔺",title:"Die Spitze",text:"Oben eine spitze Kappe.",
-  shapes:["M340,240 C340,160 400,90 400,90 C400,90 460,160 460,240"]},
- {emoji:"🪟",title:"Das Fenster",text:"In die Mitte ein rundes Bullauge.",
-  shapes:[[400,270,42],[400,270,26]]},
- {emoji:"📐",title:"Die Flügel",text:"Links und rechts unten je ein Flügel.",
-  shapes:["M340,360 L280,470 L340,440 Z","M460,360 L520,470 L460,440 Z"]},
- {emoji:"🔥",title:"Das Feuer",text:"Unten schießen Flammen heraus.",
-  shapes:["M360,470 C360,520 380,540 400,560 C420,540 440,520 440,470",
-          "M384,470 C384,506 400,520 400,532 C400,520 416,506 416,470"]},
- {emoji:"⭐",title:"Die Sterne",text:"Ein paar Sterne in den Weltraum.",
-  shapes:["M180,180 L186,200 L206,206 L186,212 L180,232 L174,212 L154,206 L174,200 Z",
-          "M620,160 L625,176 L641,181 L625,186 L620,202 L615,186 L599,181 L615,176 Z",
-          [560,300,7],[220,340,7]]}
-]},
-{name:"Blume",emoji:"🌸",level:"leicht",steps:[
- {emoji:"🟡",title:"Die Mitte",text:"Ein Kreis in die Mitte.",
-  shapes:[[400,240,52]]},
- {emoji:"🌸",title:"Die ersten Blätter",text:"Oben, unten, links und rechts je ein Blütenblatt.",
-  shapes:[[400,150,44],[400,330,44],[310,240,44],[490,240,44]]},
- {emoji:"🌼",title:"Die Blätter dazwischen",text:"In jede Lücke noch ein Blatt.",
-  shapes:[[338,178,40],[462,178,40],[338,302,40],[462,302,40]]},
- {emoji:"🟢",title:"Der Stängel",text:"Ein langer Strich nach unten.",
-  shapes:["M400,332 L400,520"]},
- {emoji:"🍃",title:"Die Blätter",text:"Zwei Blätter an den Stängel.",
-  shapes:["M400,400 C356,382 320,392 316,424 C352,436 388,428 400,412",
-          "M400,450 C444,432 480,442 484,474 C448,486 412,478 400,462"]},
- {emoji:"😊",title:"Das Gesicht",text:"Ein fröhliches Gesicht in die Mitte.",
-  shapes:[[382,232,7],[418,232,7],"M378,256 C388,270 412,270 422,256"]}
 ]}
 ];
 
-const COLORS=[
-  "#118AB2","#0B3C8C","#1B6CA8","#6ED3F5","#8ECae6",
-  "#06D6A0","#0E8A4F","#3DA35D","#9EE37D","#C7F9CC",
-  "#FFE08A","#FFD166","#FFB703","#FF9F1C","#FB8500",
-  "#FF6B5B","#EF476F","#D62246","#C1121F","#FF9FC4",
-  "#E85D9E","#9B5DE5","#7B4FC4","#5A3FA0","#B892FF",
-  "#FFDBAC","#F1C27D","#E0AC69","#C68642","#8D5524",
-  "#5C3A21","#8B5E34","#B0BEC5","#7A8B99","#2B2B2B","#073B4C"
-];
+const COLORS=["#118AB2","#0B3C8C","#6ED3F5","#06D6A0","#0E8A4F",
+              "#FFD166","#FF9F1C","#FF6B5B","#D62246","#FF9FC4",
+              "#9B5DE5","#5A3FA0","#8B5E34","#7A8B99","#073B4C"];
 const SIZES=[0.008,0.016,0.030,0.052];
 const AVATARS=["🐠","🦀","🐬","🦋","🐢","🐙","🦭","🐳","🌴","🍦","⭐","🏰"];
 const NS="http://www.w3.org/2000/svg";
 const PAPER="#FFFFFF";
 
 /* ============================================================
-   SPEICHER
+   SPEICHER – nutzt window.storage, sonst localStorage
    ============================================================ */
 const Store=(function(){
-  const api=(typeof window!=='undefined' && window.storage && window.storage.get)?window.storage:null;
-  const mem={};
+  const api = (typeof window!=='undefined' && window.storage && window.storage.get) ? window.storage : null;
+  const mem = {};
   return {
-    async get(k){ try{ if(api){const r=await api.get(k,false);return r?r.value:null;} return localStorage.getItem(k);}catch(e){return (k in mem)?mem[k]:null;} },
-    async set(k,v){ try{ if(api){await api.set(k,v,false);} else localStorage.setItem(k,v);}catch(e){mem[k]=v;} },
-    async del(k){ try{ if(api){await api.delete(k,false);} else localStorage.removeItem(k);}catch(e){delete mem[k];} },
-    async keys(p){ try{ if(api){const r=await api.list(p,false);return r&&r.keys?r.keys:[];} return Object.keys(localStorage).filter(k=>k.indexOf(p)===0);}catch(e){return Object.keys(mem).filter(k=>k.indexOf(p)===0);} }
+    async get(k){
+      try{
+        if(api){ const r=await api.get(k,false); return r?r.value:null; }
+        return localStorage.getItem(k);
+      }catch(e){ return (k in mem)?mem[k]:null; }
+    },
+    async set(k,v){
+      try{ if(api){ await api.set(k,v,false); } else { localStorage.setItem(k,v); } }
+      catch(e){ mem[k]=v; }
+    },
+    async del(k){
+      try{ if(api){ await api.delete(k,false); } else { localStorage.removeItem(k); } }
+      catch(e){ delete mem[k]; }
+    },
+    async keys(prefix){
+      try{
+        if(api){ const r=await api.list(prefix,false); return r&&r.keys?r.keys:[]; }
+        return Object.keys(localStorage).filter(k=>k.indexOf(prefix)===0);
+      }catch(e){ return Object.keys(mem).filter(k=>k.indexOf(prefix)===0); }
+    }
   };
 })();
 
@@ -883,7 +774,7 @@ const Store=(function(){
    MUSIK
    ============================================================ */
 const Music=(function(){
-  let ac=null,master=null,timer=null,noiseBuf=null,bar=0,slot=0,nextTime=0,on=true,duckLevel=0.085;
+  let ac=null,master=null,timer=null,noiseBuf=null,bar=0,slot=0,nextTime=0,on=true;
   const EIGHTH=60/88/2,LOOK=0.15;
   const CHORDS=[{bass:41,notes:[57,60,64]},{bass:38,notes:[57,60,65]},
                 {bass:43,notes:[58,62,65]},{bass:36,notes:[58,64,67]}];
@@ -892,7 +783,7 @@ const Music=(function(){
   function init(){
     if(ac) return;
     ac=new (window.AudioContext||window.webkitAudioContext)();
-    master=ac.createGain(); master.gain.value=duckLevel; master.connect(ac.destination);
+    master=ac.createGain(); master.gain.value=0.085; master.connect(ac.destination);
     const len=ac.sampleRate*2;
     noiseBuf=ac.createBuffer(1,len,ac.sampleRate);
     const d=noiseBuf.getChannelData(0);
@@ -920,7 +811,8 @@ const Music=(function(){
     const s=ac.createBufferSource(); s.buffer=noiseBuf;
     const fl=ac.createBiquadFilter(); fl.type='highpass'; fl.frequency.value=6000;
     const g=ac.createGain();
-    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.06);
+    g.gain.setValueAtTime(vol,t);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.06);
     s.connect(fl); fl.connect(g); g.connect(master);
     s.start(t); s.stop(t+0.1);
   }
@@ -944,135 +836,7 @@ const Music=(function(){
     start(){ if(!on) return; init(); if(ac.state==='suspended') ac.resume();
       if(timer) return; nextTime=ac.currentTime+0.1; slot=0; timer=setInterval(tick,25); },
     stop(){ if(timer){clearInterval(timer);timer=null;} },
-    toggle(){ on=!on; on?this.start():this.stop(); return on; },
-    duck(d){ if(master&&ac) master.gain.linearRampToValueAtTime(d?0.028:duckLevel, ac.currentTime+0.3); }
-  };
-})();
-
-/* ============================================================
-   STIMME – große Schwester, viele Sätze, reagiert auf das Malen
-   ============================================================ */
-const Voice=(function(){
-  const P={
-    hello:[
-      "Hallo! Schön, dass du da bist. Such dir ein Motiv aus, ich helfe dir dabei.",
-      "Da bist du ja! Ich hab schon Stifte rausgelegt.",
-      "Hey! Heute wird richtig schön gemalt."
-    ],
-    start:[
-      "Oh, {m}! Den mag ich besonders gern.",
-      "{m}, super Wahl! Das schaffst du.",
-      "Ein {m} also. Schau links auf die Vorlage, ich sage dir Schritt für Schritt, was dran ist.",
-      "{m}! Nimm dir Zeit, wir haben es überhaupt nicht eilig.",
-      "Los geht's mit {m}. Der rote Strich zeigt dir immer, was jetzt kommt."
-    ],
-    step:[
-      "{t}","Jetzt kommt: {t}","Weiter mit: {t}","Und nun: {t}","Als Nächstes: {t}",
-      "Pass auf, jetzt wird's schön: {t}","Achtung, jetzt kommt mein Lieblingsteil: {t}"
-    ],
-    praise:[
-      "Das sieht richtig gut aus!","Wow, du bist gut darin.","Perfekt, weiter so!",
-      "Oh, das gefällt mir!","Genau so hab ich mir das vorgestellt.",
-      "Du hast eine ruhige Hand, weißt du das?","Klasse gemacht!",
-      "Das wird ein richtig schönes Bild.","Sehr schön, ich bin beeindruckt.",
-      "Ja! Genau so.","Toll, das war gar nicht so einfach.",
-      "Du machst das mit links.","Schau dir das an, das ist richtig gut geworden.",
-      "Super. Ich könnte das kaum besser.","Prima, du bist ein echter Künstler.",
-      "Das kann sich sehen lassen!","Weiter so, das macht Spaß beim Zuschauen."
-    ],
-    encourage:[
-      "Nur Mut, es muss nicht perfekt sein.",
-      "Krumme Striche sind auch schön, ehrlich.",
-      "Lass dir Zeit, ich warte hier.",
-      "Wenn was schiefgeht, drück einfach auf Zurück.",
-      "Trau dich, das Blatt beißt nicht.",
-      "Ich finde, du machst das schon ganz toll.",
-      "Soll ich dir die Hilfslinien einblenden? Der Knopf ist rechts.",
-      "Atme kurz durch und dann weiter – ganz gemütlich."
-    ],
-    fill:[
-      "Schöne Farbe!","Oh, bunt! Das mag ich.","Die Farbe passt super.",
-      "Mmh, wie ein Sonnenuntergang.","Kräftig! Sehr mutig.","Das leuchtet ja richtig."
-    ],
-    undo:[
-      "Kein Problem, das passiert jedem.","Weg damit, noch mal von vorn.",
-      "Ups! Aber dafür gibt's ja den Knopf.","Macht nichts, probier es einfach noch mal."
-    ],
-    clear:[
-      "Ein frisches Blatt. Los geht's!","Alles weg. Neuer Versuch!","Blitzeblank. Dann mal los."
-    ],
-    finish:[
-      "Fertig! Und das sieht wunderschön aus.",
-      "Wahnsinn, du hast es geschafft! Zeig es unbedingt jemandem.",
-      "Fertig! Ich bin richtig stolz auf dich.",
-      "Das ist dein Bild, und es ist toll geworden.",
-      "Geschafft! Willst du es in die Galerie legen?",
-      "Bravo! Das war gar nicht so leicht, und du hast es hinbekommen."
-    ],
-    gallery:[
-      "Ab in deine Galerie damit!","Gespeichert. Da kannst du es immer wieder anschauen.",
-      "In die Galerie, zu deinen anderen Bildern."
-    ],
-    creator:[
-      "Male dein eigenes Motiv! Wenn ein Teil fertig ist, tippe auf Schritt fertig.",
-      "Jetzt bist du die Lehrerin. Male vor, was andere nachmalen sollen."
-    ],
-    creatorStep:[
-      "Schritt gespeichert. Was kommt als Nächstes?",
-      "Gut! Und jetzt der nächste Teil.",
-      "Notiert. Male weiter."
-    ]
-  };
-  const last={};
-  function pick(pool,vars){
-    const a=P[pool]; if(!a||!a.length) return '';
-    let t, tries=0;
-    do{ t=a[Math.floor(Math.random()*a.length)]; tries++; }while(a.length>1 && t===last[pool] && tries<8);
-    last[pool]=t;
-    if(vars) Object.keys(vars).forEach(k=>{ t=t.split('{'+k+'}').join(vars[k]); });
-    return t;
-  }
-  let on=true, voice=null, lastSpoke=0;
-  const FEMALE=['anna','helena','petra','marlene','katja','vicki','yannick? nein','amelie','google deutsch','deutschland'];
-  function germanVoices(){
-    if(!('speechSynthesis' in window)) return [];
-    return speechSynthesis.getVoices().filter(v=>/^de/i.test(v.lang));
-  }
-  function autoPick(){
-    const vs=germanVoices(); if(!vs.length) return null;
-    const prem=vs.find(v=>/premium|enhanced|erweitert/i.test(v.name) && FEMALE.some(f=>v.name.toLowerCase().includes(f)));
-    if(prem) return prem;
-    for(const f of FEMALE){ const hit=vs.find(v=>v.name.toLowerCase().includes(f)); if(hit) return hit; }
-    return vs[0];
-  }
-  function refresh(){ if(!voice) voice=autoPick(); }
-  if('speechSynthesis' in window){
-    refresh();
-    speechSynthesis.onvoiceschanged=()=>{ refresh(); if(typeof window.__voiceListRefresh==='function') window.__voiceListRefresh(); };
-  }
-  function speak(text,force){
-    if(!on || !text || !('speechSynthesis' in window)) return;
-    const now=Date.now();
-    if(!force && now-lastSpoke<4000) return;
-    lastSpoke=now;
-    speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(text);
-    if(voice) u.voice=voice;
-    u.lang='de-DE'; u.pitch=1.25; u.rate=0.94; u.volume=1;
-    u.onstart=()=>Music.duck(true);
-    u.onend=()=>Music.duck(false);
-    u.onerror=()=>Music.duck(false);
-    speechSynthesis.speak(u);
-  }
-  return {
-    say(pool,vars,force){ speak(pick(pool,vars),force); },
-    raw(t){ speak(t,true); },
-    list:germanVoices,
-    setVoice(name){ const v=germanVoices().find(x=>x.name===name); if(v) voice=v; },
-    currentName(){ return voice?voice.name:''; },
-    isOn(){ return on; },
-    toggle(){ on=!on; if(!on && 'speechSynthesis' in window){ speechSynthesis.cancel(); Music.duck(false);} return on; },
-    setOn(v){ on=v; if(!on && 'speechSynthesis' in window){ speechSynthesis.cancel(); Music.duck(false);} }
+    toggle(){ on=!on; on?this.start():this.stop(); return on; }
   };
 })();
 
@@ -1080,45 +844,37 @@ const Voice=(function(){
    APP
    ============================================================ */
 const $=id=>document.getElementById(id);
-const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator');
+const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw');
 const ref=$('ref'), ghost=$('ghost'), bubbles=$('bubbles');
 const sheet=$('sheet'), pad=$('pad'), ctx=pad.getContext('2d');
 const doneBar=$('doneBar'), helper=$('helper'), toastEl=$('toast');
 
 let motif=null, step=0, color=COLORS[0], width=SIZES[1], tool='pen';
-let profiles=[], profile=null, customs=[];
+let profiles=[], profile=null;
 
+/* Bild liegt in fester Auflösung, damit Drehen nichts zerstört */
 const art=document.createElement('canvas'); art.width=1200; art.height=900;
 const actx=art.getContext('2d',{willReadFrequently:true});
 let undoStack=[];
 
 function clearArt(){ actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height); paint(); }
-function paint(){ ctx.clearRect(0,0,pad.width,pad.height); ctx.drawImage(art,0,0,pad.width,pad.height); }
-function snapshot(){ try{ undoStack.push(art.toDataURL('image/png')); if(undoStack.length>12) undoStack.shift(); }catch(e){} }
-function undoDraw(){
+function paint(){
+  ctx.clearRect(0,0,pad.width,pad.height);
+  ctx.drawImage(art,0,0,pad.width,pad.height);
+}
+function snapshot(){
+  try{ undoStack.push(art.toDataURL('image/png')); if(undoStack.length>12) undoStack.shift(); }catch(e){}
+}
+function undo(){
   const d=undoStack.pop(); if(!d) return;
   const img=new Image();
   img.onload=()=>{ actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height); actx.drawImage(img,0,0); paint(); };
   img.src=d;
-  Voice.say('undo');
 }
 function toast(msg){
   toastEl.textContent=msg; toastEl.classList.add('on');
   clearTimeout(toast._t); toast._t=setTimeout(()=>toastEl.classList.remove('on'),1800);
 }
-function showSection(s){
-  [secProfiles,secHome,secGallery,secDraw,secCreator].forEach(x=>x.hidden = x!==s);
-  if(s!==secDraw) stopIdle();
-  requestAnimationFrame(()=>{ if(typeof layout==='function') layout(); });
-}
-
-/* ---------- Leerlauf-Ermutigung ---------- */
-let idleTimer=null;
-function pokeIdle(){
-  clearTimeout(idleTimer);
-  idleTimer=setTimeout(()=>{ if(!secDraw.hidden) Voice.say('encourage'); pokeIdle(); }, 34000);
-}
-function stopIdle(){ clearTimeout(idleTimer); idleTimer=null; }
 
 /* ---------- Profile ---------- */
 async function loadProfiles(){
@@ -1126,6 +882,7 @@ async function loadProfiles(){
   try{ profiles=raw?JSON.parse(raw):[]; }catch(e){ profiles=[]; }
 }
 async function saveProfiles(){ await Store.set('profiles',JSON.stringify(profiles)); }
+
 function renderProfiles(){
   const list=$('plist'); list.textContent='';
   profiles.forEach(p=>{
@@ -1133,26 +890,31 @@ function renderProfiles(){
     c.className='pcard';
     c.innerHTML='<em>'+p.emoji+'</em>'+p.name+'<small>'+(p.count||0)+' Bilder</small>';
     c.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; pickProfile(p); });
-    const x=document.createElement('button'); x.className='x'; x.textContent='✕';
+    const x=document.createElement('button');
+    x.className='x'; x.textContent='✕'; x.title='Profil löschen';
     x.addEventListener('click',async e=>{
       e.stopPropagation();
-      if(x.classList.contains('armed')){
-        for(const k of await Store.keys('pic:'+p.id+':')) await Store.del(k);
-        for(const k of await Store.keys('motif:'+p.id+':')) await Store.del(k);
-        profiles=profiles.filter(q=>q.id!==p.id); await saveProfiles(); renderProfiles();
-      }else{ x.classList.add('armed'); x.textContent='Löschen?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
+      if(x.dataset.armed){
+        const ks=await Store.keys('pic:'+p.id+':');
+        for(const k of ks) await Store.del(k);
+        profiles=profiles.filter(q=>q.id!==p.id);
+        await saveProfiles(); renderProfiles();
+      }else{ x.dataset.armed='1'; x.textContent='?'; setTimeout(()=>{x.dataset.armed='';x.textContent='✕';},2500); }
     });
-    c.appendChild(x); list.appendChild(c);
+    c.appendChild(x);
+    list.appendChild(c);
   });
   const add=document.createElement('button');
-  add.className='pcard new'; add.innerHTML='<em>＋</em>Neues Kind';
+  add.className='pcard new';
+  add.innerHTML='<em>＋</em>Neues Kind';
   add.addEventListener('click',()=>{ $('maker').hidden=false; $('pname').focus(); });
   list.appendChild(add);
 }
 let newAvatar=AVATARS[0];
 AVATARS.forEach((a,i)=>{
   const b=document.createElement('button');
-  b.className='av'; b.textContent=a; b.setAttribute('aria-pressed',i===0?'true':'false');
+  b.className='av'; b.textContent=a;
+  b.setAttribute('aria-pressed',i===0?'true':'false');
   b.addEventListener('click',()=>{
     newAvatar=a;
     $('avatars').querySelectorAll('.av').forEach(x=>x.setAttribute('aria-pressed','false'));
@@ -1163,58 +925,42 @@ AVATARS.forEach((a,i)=>{
 $('pcreate').addEventListener('click',async()=>{
   const name=($('pname').value||'').trim()||'Kind';
   profiles.push({id:'p'+Date.now(),name:name,emoji:newAvatar,count:0});
-  await saveProfiles(); $('pname').value=''; $('maker').hidden=true; renderProfiles();
+  await saveProfiles();
+  $('pname').value=''; $('maker').hidden=true;
+  renderProfiles();
 });
 $('pcancel').addEventListener('click',()=>{ $('maker').hidden=true; $('pname').value=''; });
 
-async function pickProfile(p){
+function pickProfile(p){
   profile=p;
   $('profileChip').textContent=p.emoji+' '+p.name;
   Store.set('lastProfile',p.id);
-  await loadCustoms();
-  renderPicker();
   showSection(secHome);
-  Voice.say('hello',null,true);
 }
 $('profileChip').addEventListener('click',()=>{ renderProfiles(); showSection(secProfiles); });
 
-/* ---------- Eigene Motive ---------- */
-async function loadCustoms(){
-  customs=[];
-  const ks=(await Store.keys('motif:'+profile.id+':')).sort();
-  for(const k of ks){
-    try{ const m=JSON.parse(await Store.get(k)); if(m&&m.steps&&m.steps.length){ m._key=k; customs.push(m); } }catch(e){}
-  }
+function showSection(s){
+  [secProfiles,secHome,secGallery,secDraw].forEach(x=>x.hidden = x!==s);
 }
-function allMotifs(){ return MOTIFS.concat(customs); }
 
+/* ---------- Motivauswahl ---------- */
 const picker=$('picker');
-function renderPicker(){
-  picker.textContent='';
-  allMotifs().forEach((m,i)=>{
-    const b=document.createElement('button');
-    b.className='tile'+(m._key?' mine':'');
-    b.innerHTML='<em>'+m.emoji+'</em>'+m.name+'<b>'+m.level+'</b>';
-    b.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; openMotif(i); });
-    if(m._key){
-      const x=document.createElement('button'); x.className='x'; x.textContent='✕';
-      x.addEventListener('click',async e=>{
-        e.stopPropagation();
-        if(x.classList.contains('armed')){ await Store.del(m._key); await loadCustoms(); renderPicker(); }
-        else{ x.classList.add('armed'); x.textContent='Weg?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
-      });
-      b.appendChild(x);
-    }
-    picker.appendChild(b);
-  });
-}
+MOTIFS.forEach((m,i)=>{
+  const b=document.createElement('button');
+  b.className='tile';
+  b.innerHTML='<em>'+m.emoji+'</em>'+m.name+'<b>'+m.level+'</b>';
+  b.addEventListener('click',()=>openMotif(i));
+  picker.appendChild(b);
+});
 
 function shapeEl(sh){
   let el;
   if(Array.isArray(sh)){
     el=document.createElementNS(NS,'circle');
     el.setAttribute('cx',sh[0]); el.setAttribute('cy',sh[1]); el.setAttribute('r',sh[2]);
-  }else{ el=document.createElementNS(NS,'path'); el.setAttribute('d',sh); }
+  }else{
+    el=document.createElementNS(NS,'path'); el.setAttribute('d',sh);
+  }
   el.setAttribute('pathLength','100');
   return el;
 }
@@ -1237,20 +983,20 @@ function buildBubbles(){
   });
 }
 function openMotif(i){
-  motif=allMotifs()[i];
+  motif=MOTIFS[i];
   $('motifName').textContent=motif.emoji+' '+motif.name;
-  buildArt(); buildBubbles(); undoStack=[];
+  buildArt(); buildBubbles();
+  undoStack=[];
   doneBar.classList.remove('on'); $('board').classList.remove('party');
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
-  showSection(secDraw); Music.start();
-  Voice.say('start',{m:motif.name},true);
-  pokeIdle();
-  requestAnimationFrame(()=>{ layout(); clearArt(); show(0,true); });
+  showSection(secDraw);
+  Music.start();
+  requestAnimationFrame(()=>{ layout(); clearArt(); show(0); });
 }
 $('home-btn').addEventListener('click',()=>showSection(secHome));
 $('other').addEventListener('click',()=>showSection(secHome));
 
-function show(i,silent){
+function show(i){
   step=i;
   const s=motif.steps[i];
   $('taskEmoji').textContent=s.emoji;
@@ -1263,27 +1009,22 @@ function show(i,silent){
     if(n===i){
       g.classList.add('now');
       [...g.children].forEach((el,k)=>el.style.animationDelay=(k*0.3)+'s');
-      void g.getBoundingClientRect(); g.classList.add('draw');
+      void g.getBoundingClientRect();
+      g.classList.add('draw');
     }
   });
   [...ghost.children].forEach((g,n)=>g.classList.toggle('show',n<=i));
-  [...bubbles.children].forEach((b,n)=>{ b.classList.toggle('done',n<i); b.classList.toggle('now',n===i); });
+  [...bubbles.children].forEach((b,n)=>{
+    b.classList.toggle('done',n<i);
+    b.classList.toggle('now',n===i);
+  });
   $('back').disabled=i===0;
   $('next').textContent = i===motif.steps.length-1 ? 'Fertig! 🎉' : 'Weiter ▶︎';
-  if(!silent) setTimeout(()=>Voice.say('step',{t:s.title+'. '+s.text},true), 900);
-  pokeIdle();
 }
-$('taskCard').addEventListener('click',()=>{
-  const s=motif.steps[step];
-  Voice.raw('Schritt '+(step+1)+': '+s.title+'. '+s.text);
-});
 $('back').addEventListener('click',()=>{ doneBar.classList.remove('on'); if(step>0) show(step-1); });
 $('next').addEventListener('click',()=>{
-  if(step<motif.steps.length-1){
-    doneBar.classList.remove('on');
-    if(Math.random()<0.55) Voice.say('praise',null,true);
-    show(step+1);
-  } else finish();
+  if(step<motif.steps.length-1){ doneBar.classList.remove('on'); show(step+1); }
+  else finish();
 });
 function finish(){
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
@@ -1291,12 +1032,10 @@ function finish(){
   doneBar.classList.add('on');
   [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
   [...bubbles.children].forEach(x=>{x.classList.remove('now');x.classList.add('done');});
-  Voice.say('finish',null,true);
-  stopIdle();
 }
 $('again').addEventListener('click',()=>{
   doneBar.classList.remove('on'); $('board').classList.remove('party');
-  undoStack=[]; clearArt(); show(0); pokeIdle();
+  undoStack=[]; clearArt(); show(0);
 });
 
 /* ---------- Werkzeuge ---------- */
@@ -1327,8 +1066,9 @@ SIZES.forEach((s,i)=>{
   b.className='size';
   b.setAttribute('aria-label','Stiftdicke '+(i+1));
   b.setAttribute('aria-pressed',i===1?'true':'false');
-  const dot=document.createElement('i'); const px=8+i*7;
-  dot.style.width=px+'px'; dot.style.height=px+'px'; b.appendChild(dot);
+  const dot=document.createElement('i');
+  const px=8+i*7; dot.style.width=px+'px'; dot.style.height=px+'px';
+  b.appendChild(dot);
   b.addEventListener('click',()=>{
     width=s;
     sizesBox.querySelectorAll('.size').forEach(x=>x.setAttribute('aria-pressed','false'));
@@ -1350,15 +1090,20 @@ function artPos(e){
   return { x:Math.round((e.clientX-r.left)/r.width*art.width),
            y:Math.round((e.clientY-r.top)/r.height*art.height) };
 }
-let drawing=false,last=null,strokeCount=0;
+let drawing=false, last=null;
 pad.addEventListener('pointerdown',e=>{
-  const p=artPos(e); snapshot(); pokeIdle();
-  if(tool==='fill'){ floodFill(p.x,p.y,color); paint(); if(Math.random()<0.4) Voice.say('fill'); return; }
-  drawing=true; last=p; pad.setPointerCapture(e.pointerId);
+  const p=artPos(e);
+  snapshot();
+  if(tool==='fill'){ floodFill(p.x,p.y,color); paint(); return; }
+  drawing=true; last=p;
+  pad.setPointerCapture(e.pointerId);
   actx.strokeStyle = tool==='erase'?PAPER:color;
-  actx.fillStyle=actx.strokeStyle; actx.lineWidth=width*art.height;
+  actx.fillStyle   = actx.strokeStyle;
+  actx.lineWidth   = width*art.height;
   actx.lineCap='round'; actx.lineJoin='round';
-  actx.beginPath(); actx.arc(p.x,p.y,actx.lineWidth/2,0,Math.PI*2); actx.fill(); paint();
+  actx.beginPath();
+  actx.arc(p.x,p.y,actx.lineWidth/2,0,Math.PI*2); actx.fill();
+  paint();
 });
 pad.addEventListener('pointermove',e=>{
   if(!drawing) return;
@@ -1367,13 +1112,10 @@ pad.addEventListener('pointermove',e=>{
   last=p; paint();
 });
 ['pointerup','pointercancel','pointerleave'].forEach(ev=>
-  pad.addEventListener(ev,()=>{
-    if(drawing){ strokeCount++; if(strokeCount%7===0) Voice.say('praise'); }
-    drawing=false;
-  }));
+  pad.addEventListener(ev,()=>{ drawing=false; }));
 
 function hexToInt(hex){
-  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  const r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
   return (255<<24)|(b<<16)|(g<<8)|r;
 }
 function floodFill(sx,sy,hex){
@@ -1381,100 +1123,59 @@ function floodFill(sx,sy,hex){
   if(sx<0||sy<0||sx>=w||sy>=h) return;
   const img=actx.getImageData(0,0,w,h);
   const d=new Uint32Array(img.data.buffer);
-  const start=sy*w+sx,target=d[start],fill=hexToInt(hex);
-  const tr=target&255,tg=(target>>8)&255,tb=(target>>16)&255;
-  const fr=fill&255,fg=(fill>>8)&255,fb=(fill>>16)&255,tol=42;
-  if(Math.abs(fr-tr)<=tol&&Math.abs(fg-tg)<=tol&&Math.abs(fb-tb)<=tol) return;
-  const match=c=>Math.abs((c&255)-tr)<=tol&&Math.abs(((c>>8)&255)-tg)<=tol&&Math.abs(((c>>16)&255)-tb)<=tol;
+  const start=sy*w+sx, target=d[start], fill=hexToInt(hex);
+  const tr=target&255, tg=(target>>8)&255, tb=(target>>16)&255;
+  const fr=fill&255, fg=(fill>>8)&255, fb=(fill>>16)&255;
+  const tol=42;
+  if(Math.abs(fr-tr)<=tol && Math.abs(fg-tg)<=tol && Math.abs(fb-tb)<=tol) return;
+  const match=c=>Math.abs((c&255)-tr)<=tol && Math.abs(((c>>8)&255)-tg)<=tol && Math.abs(((c>>16)&255)-tb)<=tol;
   const stack=[start];
   while(stack.length){
     const i=stack.pop();
     if(!match(d[i])) continue;
-    let left=i,right=i;
-    while(left%w>0&&match(d[left-1])) left--;
-    while(right%w<w-1&&match(d[right+1])) right++;
+    let left=i, right=i;
+    while(left%w>0 && match(d[left-1])) left--;
+    while(right%w<w-1 && match(d[right+1])) right++;
     for(let p=left;p<=right;p++){
       d[p]=fill;
-      if(p-w>=0&&match(d[p-w])) stack.push(p-w);
-      if(p+w<d.length&&match(d[p+w])) stack.push(p+w);
+      if(p-w>=0 && match(d[p-w])) stack.push(p-w);
+      if(p+w<d.length && match(d[p+w])) stack.push(p+w);
     }
   }
   actx.putImageData(img,0,0);
 }
-$('undo').addEventListener('click',undoDraw);
-$('clear').addEventListener('click',()=>{ snapshot(); clearArt(); Voice.say('clear',null,true); });
+
+$('undo').addEventListener('click',undo);
+$('clear').addEventListener('click',()=>{ snapshot(); clearArt(); });
 helper.addEventListener('click',()=>{
   const on=ghost.classList.toggle('on');
-  helper.textContent = on ? '👁️ Linien aus' : '🫥 Hilfslinien';
+  helper.textContent = on ? '🫥 Hilfslinien aus' : '🫥 Hilfslinien';
 });
-$('musicBtn').addEventListener('click',e=>{
-  const on=Music.toggle();
-  e.currentTarget.textContent = on ? '🎵 Musik' : '🔇 Musik';
-  e.currentTarget.classList.toggle('off',!on);
-});
-function syncVoiceButtons(){
-  const on=Voice.isOn();
-  [$('voiceBtn'),$('voiceBtn2')].forEach(b=>{
-    if(!b) return;
-    b.textContent = on ? '🔊 Stimme' : '🔇 Stimme';
-    b.classList.toggle('off',!on);
-  });
-  $('voiceToggle').textContent = on ? '🔊 An' : '🔇 Aus';
-  $('voiceToggle').classList.toggle('go',on);
-}
-$('voiceBtn2').addEventListener('click',()=>{ Voice.toggle(); syncVoiceButtons(); Store.set('voiceOn',Voice.isOn()?'1':'0'); });
+$('musicBtn').addEventListener('click',e=>{ e.target.textContent = Music.toggle() ? '🎵 Musik' : '🔇 Musik aus'; });
 
-/* ---------- Stimm-Einstellungen ---------- */
-function fillVoiceList(){
-  const sel=$('voiceSel'); const vs=Voice.list();
-  sel.textContent='';
-  if(!vs.length){
-    const o=document.createElement('option'); o.textContent='Keine deutsche Stimme gefunden'; sel.appendChild(o);
-    $('voiceHint').textContent='Auf dem iPad: Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Deutsch. Dort eine Stimme mit dem Zusatz „Premium" oder „Erweitert" laden – die klingt deutlich natürlicher.';
-    return;
-  }
-  vs.forEach(v=>{
-    const o=document.createElement('option'); o.value=v.name; o.textContent=v.name;
-    if(v.name===Voice.currentName()) o.selected=true;
-    sel.appendChild(o);
-  });
-  $('voiceHint').textContent='Tipp: Stimmen mit „Premium" oder „Erweitert" klingen am freundlichsten. Fehlt so eine, lässt sie sich unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen kostenlos nachladen.';
+function download(){
+  const a=document.createElement('a');
+  a.download=(motif?motif.name:'bild')+'.png'; a.href=art.toDataURL('image/png'); a.click();
 }
-window.__voiceListRefresh=fillVoiceList;
-$('voiceBtn').addEventListener('click',()=>{
-  const p=$('voicePanel'); p.hidden=!p.hidden;
-  if(!p.hidden){ fillVoiceList(); syncVoiceButtons(); }
-});
-$('voiceClose').addEventListener('click',()=>{ $('voicePanel').hidden=true; });
-$('voiceSel').addEventListener('change',e=>{
-  Voice.setVoice(e.target.value); Store.set('voiceName',e.target.value);
-  Voice.raw('Hallo, ich bin es. So klinge ich.');
-});
-$('voiceTest').addEventListener('click',()=>{
-  Voice.raw('Hallo! Ich male heute mit dir. Das wird richtig schön.');
-});
-$('voiceToggle').addEventListener('click',()=>{
-  Voice.toggle(); syncVoiceButtons(); Store.set('voiceOn',Voice.isOn()?'1':'0');
-  if(Voice.isOn()) Voice.raw('Da bin ich wieder!');
-});
+$('saveDone').addEventListener('click',download);
 
 /* ---------- Galerie ---------- */
 function thumb(){
   const c=document.createElement('canvas'); c.width=640; c.height=480;
-  const o=c.getContext('2d'); o.fillStyle=PAPER; o.fillRect(0,0,c.width,c.height);
+  const o=c.getContext('2d');
+  o.fillStyle=PAPER; o.fillRect(0,0,c.width,c.height);
   o.drawImage(art,0,0,c.width,c.height);
   return c.toDataURL('image/jpeg',0.82);
 }
 async function keepPicture(){
   if(!profile) return;
-  await Store.set('pic:'+profile.id+':'+Date.now(),
-    JSON.stringify({motif:motif?motif.name:'Bild',emoji:motif?motif.emoji:'🎨',img:thumb()}));
+  const key='pic:'+profile.id+':'+Date.now();
+  await Store.set(key, JSON.stringify({motif:motif?motif.name:'Bild', emoji:motif?motif.emoji:'🎨', img:thumb()}));
   const ks=await Store.keys('pic:'+profile.id+':');
   if(ks.length>40){ ks.sort(); for(const k of ks.slice(0,ks.length-40)) await Store.del(k); }
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
   await saveProfiles();
   toast('🖼️ Bild in der Galerie gespeichert');
-  Voice.say('gallery',null,true);
 }
 $('keep').addEventListener('click',keepPicture);
 $('toGallery').addEventListener('click',async()=>{ await keepPicture(); openGallery(); });
@@ -1501,152 +1202,36 @@ async function openGallery(){
         await Store.del(k);
         profile.count=(await Store.keys('pic:'+profile.id+':')).length;
         await saveProfiles(); openGallery();
-      }else{ x.classList.add('armed'); x.textContent='Löschen?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2600); }
+      }else{
+        x.classList.add('armed'); x.textContent='Löschen?';
+        setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2600);
+      }
     });
     card.appendChild(im); card.appendChild(cap); card.appendChild(x);
     grid.appendChild(card);
   }
 }
 
-/* ============================================================
-   WERKSTATT – Kind malt ein eigenes Motiv Schritt für Schritt
-   ============================================================ */
-const cart=$('cart'), csheet=$('csheet');
-let cSteps=[], cCurrent=[], cLiveG=null, cPath=null, cPts=[], cAvatar=AVATARS[0];
-
-AVATARS.forEach((a,i)=>{
-  const b=document.createElement('button');
-  b.className='av'; b.textContent=a; b.setAttribute('aria-pressed',i===0?'true':'false');
-  b.addEventListener('click',()=>{
-    cAvatar=a;
-    $('cAvatars').querySelectorAll('.av').forEach(x=>x.setAttribute('aria-pressed','false'));
-    b.setAttribute('aria-pressed','true');
-  });
-  $('cAvatars').appendChild(b);
-});
-function cLabel(){ $('cStepLabel').textContent='– Schritt '+(cSteps.length+1); }
-function cReset(){
-  cSteps=[]; cCurrent=[]; cart.textContent=''; cLiveG=null; cLabel();
-  $('cNaming').hidden=true; $('cName').value='';
-}
-function cNewLiveGroup(){
-  cLiveG=document.createElementNS(NS,'g'); cLiveG.setAttribute('class','live'); cart.appendChild(cLiveG);
-}
-function cPos(e){
-  const r=csheet.getBoundingClientRect();
-  return { x:Math.round((e.clientX-r.left)/r.width*800), y:Math.round((e.clientY-r.top)/r.height*600) };
-}
-let cDrawing=false;
-csheet.addEventListener('pointerdown',e=>{
-  if(!cLiveG) cNewLiveGroup();
-  cDrawing=true; csheet.setPointerCapture(e.pointerId);
-  const p=cPos(e); cPts=[p];
-  cPath=document.createElementNS(NS,'path');
-  cPath.setAttribute('d','M'+p.x+','+p.y);
-  cPath.setAttribute('pathLength','100');
-  cLiveG.appendChild(cPath);
-});
-csheet.addEventListener('pointermove',e=>{
-  if(!cDrawing) return;
-  const p=cPos(e), l=cPts[cPts.length-1];
-  if(Math.abs(p.x-l.x)+Math.abs(p.y-l.y)<9) return;
-  cPts.push(p);
-  cPath.setAttribute('d',cPath.getAttribute('d')+' L'+p.x+','+p.y);
-});
-['pointerup','pointercancel','pointerleave'].forEach(ev=>csheet.addEventListener(ev,()=>{
-  if(!cDrawing) return;
-  cDrawing=false;
-  if(cPts.length>1) cCurrent.push(cPath.getAttribute('d'));
-  else if(cPath&&cPath.parentNode) cPath.parentNode.removeChild(cPath);
-}));
-$('cUndo').addEventListener('click',()=>{
-  if(cCurrent.length && cLiveG && cLiveG.lastChild){
-    cLiveG.removeChild(cLiveG.lastChild); cCurrent.pop();
-  }
-});
-$('cStep').addEventListener('click',()=>{
-  if(!cCurrent.length){ toast('Erst etwas malen 🙂'); return; }
-  cSteps.push({emoji:'✏️',title:'Schritt '+(cSteps.length+1),text:'Male den roten Strich nach.',shapes:cCurrent.slice()});
-  if(cLiveG) cLiveG.setAttribute('class','');
-  cCurrent=[]; cNewLiveGroup(); cLabel();
-  Voice.say('creatorStep',null,true);
-});
-$('cSave').addEventListener('click',()=>{
-  if(cCurrent.length) $('cStep').click();
-  if(!cSteps.length){ toast('Noch nichts zu speichern'); return; }
-  $('cNaming').hidden=false; $('cName').focus();
-});
-$('cCancel').addEventListener('click',()=>{ $('cNaming').hidden=true; });
-$('cFinish').addEventListener('click',async()=>{
-  const name=($('cName').value||'').trim()||'Mein Motiv';
-  const m={name:name,emoji:cAvatar,level:'von mir',steps:cSteps};
-  await Store.set('motif:'+profile.id+':'+Date.now(),JSON.stringify(m));
-  await loadCustoms(); renderPicker(); showSection(secHome);
-  toast('✏️ Motiv gespeichert'); Voice.raw('Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!');
-});
-$('newMotif').addEventListener('click',()=>{ cReset(); cNewLiveGroup(); showSection(secCreator); Voice.say('creator',null,true); });
-$('cBack').addEventListener('click',()=>showSection(secHome));
-
-/* ---------- Vollbild ---------- */
-(function(){
-  const btn=$('fsBtn'); if(!btn) return;
-  const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
-  const el=document.documentElement;
-  const canFS = el.requestFullscreen || el.webkitRequestFullscreen;
-  if(standalone){ btn.style.display='none'; return; }
-  if(!canFS){
-    btn.textContent='⛶ Vollbild?';
-    btn.addEventListener('click',()=>{
-      toast('Tipp: Teilen ▸ „Zum Home-Bildschirm" – dann startet die App randlos.');
-      Voice.raw('Für echtes Vollbild tippe unten auf Teilen und dann auf Zum Home-Bildschirm.');
-    });
-    return;
-  }
-  const isFS=()=>document.fullscreenElement||document.webkitFullscreenElement;
-  btn.addEventListener('click',()=>{
-    if(isFS()){ (document.exitFullscreen||document.webkitExitFullscreen).call(document); }
-    else{ (el.requestFullscreen||el.webkitRequestFullscreen).call(el); }
-  });
-  const sync=()=>{ btn.textContent = isFS() ? '⛶ Vollbild aus' : '⛶ Vollbild'; setTimeout(()=>{ if(typeof layout==='function') layout(); },150); };
-  document.addEventListener('fullscreenchange',sync);
-  document.addEventListener('webkitfullscreenchange',sync);
-})();
-
-/* ---------- Layout: Blatt im Verhältnis 4:3 einpassen ---------- */
-function fit(container,el){
-  if(!container||!el) return false;
-  const r=container.getBoundingClientRect();
-  if(r.width<40||r.height<30) return false;
-  const w=r.width-14, h=r.height-14;
-  let sw=w, sh=w*3/4;
-  if(sh>h){ sh=h; sw=h*4/3; }
-  el.style.width=Math.floor(sw)+'px';
-  el.style.height=Math.floor(sh)+'px';
-  return true;
-}
+/* ---------- Start ---------- */
 function layout(){
-  if(fit($('board'),sheet)) resize();
-  fit(document.querySelector('.cstage'),csheet);
+  const c=$('board'); if(!c) return;
+  const r=c.getBoundingClientRect();
+  if(r.width<40||r.height<30) return;
+  const w=r.width-14,h=r.height-14;
+  let sw=w,sh=w*3/4;
+  if(sh>h){ sh=h; sw=h*4/3; }
+  sheet.style.width=Math.floor(sw)+'px'; sheet.style.height=Math.floor(sh)+'px';
+  resize();
 }
-if(window.ResizeObserver){
-  const ro=new ResizeObserver(layout);
-  ro.observe($('board'));
-  const cs=document.querySelector('.cstage'); if(cs) ro.observe(cs);
-}
+if(window.ResizeObserver) new ResizeObserver(layout).observe($('board'));
 window.addEventListener('resize',layout);
 window.addEventListener('orientationchange',()=>setTimeout(layout,300));
 layout();
 
 (async function(){
-  if('serviceWorker' in navigator){
-    try{ await navigator.serviceWorker.register('sw.js'); }catch(e){}
-  }
   await loadProfiles();
   for(const p of profiles){ p.count=(await Store.keys('pic:'+p.id+':')).length; }
   renderProfiles();
-  const vOn=await Store.get('voiceOn'); if(vOn==='0') Voice.setOn(false);
-  const vName=await Store.get('voiceName'); if(vName) setTimeout(()=>Voice.setVoice(vName),400);
-  syncVoiceButtons();
   const last=await Store.get('lastProfile');
   const found=profiles.find(p=>p.id===last);
   if(found) pickProfile(found); else showSection(secProfiles);
