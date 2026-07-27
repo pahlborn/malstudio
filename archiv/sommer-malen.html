@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Sommer am Meer – Schritt für Schritt malen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#073B4C;
+    --sea:#118AB2;
+    --foam:#E9F7FC;
+    --sand:#FFD166;
+    --coral:#FF6B5B;
+    --kelp:#06D6A0;
+    --ghost:#C6E6F1;
+    --paper:#FFFFFF;
+    --font:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    margin:0;font-family:var(--font);color:var(--deep);
+    background:radial-gradient(120% 70% at 50% 0%, #FFFFFF 0%, var(--foam) 45%, #CFEAF5 100%);
+    display:flex;justify-content:center;min-height:100vh;overscroll-behavior:none;
+  }
+  .app{width:100%;max-width:820px;padding:14px 14px 22px;display:flex;flex-direction:column;gap:12px}
+  h1{font-size:clamp(22px,6vw,32px);font-weight:800;margin:0;letter-spacing:-.5px}
+  h1 span{color:var(--sea)}
+
+  /* ---------- Motivauswahl ---------- */
+  .picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+  .tile{
+    background:var(--paper);border:3px solid var(--deep);border-radius:20px;
+    box-shadow:0 5px 0 var(--deep);padding:18px 10px;cursor:pointer;
+    font-family:var(--font);font-weight:700;font-size:17px;color:var(--deep);
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+  }
+  .tile em{font-size:44px;font-style:normal;line-height:1}
+  .tile:active{transform:translateY(4px);box-shadow:0 1px 0 var(--deep)}
+  .tile:focus-visible{outline:3px solid var(--sea);outline-offset:3px}
+  .hint{margin:0;font-weight:500;opacity:.75;font-size:15px}
+
+  /* ---------- Malansicht ---------- */
+  #draw[hidden],#home[hidden]{display:none}
+  #draw{display:flex;flex-direction:column;gap:12px}
+  header{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .bubbles{display:flex;gap:7px;margin-left:auto}
+  .bub{
+    width:30px;height:30px;border-radius:50%;border:3px solid var(--ghost);
+    background:var(--paper);color:var(--sea);font-family:var(--font);font-weight:700;font-size:14px;
+    display:grid;place-items:center;cursor:pointer;padding:0;
+    transition:transform .2s,background .2s,border-color .2s,color .2s;
+  }
+  .bub.done{background:var(--kelp);border-color:var(--kelp);color:#fff}
+  .bub.now{background:var(--coral);border-color:var(--coral);color:#fff;transform:translateY(-4px) scale(1.15)}
+  .bub:focus-visible{outline:3px solid var(--deep);outline-offset:2px}
+
+  .task{
+    background:var(--paper);border:3px solid var(--deep);border-radius:18px;
+    padding:12px 16px;display:flex;align-items:center;gap:14px;box-shadow:0 5px 0 var(--deep);
+    cursor:pointer;user-select:none;
+  }
+  .task:active{transform:translateY(3px);box-shadow:0 2px 0 var(--deep)}
+  .task .emoji{font-size:34px;line-height:1}
+  .task h2{margin:0;font-size:clamp(17px,4.4vw,23px);font-weight:800}
+  .task p{margin:2px 0 0;font-size:clamp(14px,3.6vw,17px);font-weight:500;opacity:.8}
+
+  .board{
+    position:relative;width:100%;aspect-ratio:4/3;background:var(--paper);
+    border:3px solid var(--deep);border-radius:22px;box-shadow:0 6px 0 var(--deep);
+    overflow:hidden;touch-action:none;
+  }
+  .board svg,.board canvas{position:absolute;inset:0;width:100%;height:100%}
+  #guide{transition:opacity .25s}
+  #guide.hidden{opacity:0}
+  #guide g{display:none}
+  #guide g.show{display:block}
+  #guide path,#guide circle{fill:none;stroke:var(--ghost);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+  #guide g.active path,#guide g.active circle{stroke:var(--coral);stroke-width:7;stroke-dasharray:100}
+  #guide g.active.draw path,#guide g.active.draw circle{animation:trace 1.3s ease forwards}
+  @keyframes trace{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+  @media (prefers-reduced-motion:reduce){
+    #guide g.active.draw path,#guide g.active.draw circle{animation:none}
+    .bub{transition:none}
+  }
+
+  .tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:center}
+  .swatch{
+    width:42px;height:42px;border-radius:50%;border:4px solid var(--paper);
+    box-shadow:0 0 0 3px var(--deep);cursor:pointer;padding:0;transition:transform .15s;
+  }
+  .swatch[aria-pressed="true"]{transform:scale(1.22)}
+  .swatch:focus-visible{outline:3px solid var(--deep);outline-offset:6px}
+  .icon-btn{
+    height:44px;padding:0 14px;border-radius:14px;border:3px solid var(--deep);
+    background:var(--paper);color:var(--deep);font-family:var(--font);font-weight:700;font-size:15px;
+    cursor:pointer;box-shadow:0 4px 0 var(--deep);
+  }
+  .icon-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--deep)}
+
+  nav{display:flex;gap:10px}
+  .nav-btn{
+    flex:1;height:60px;border-radius:18px;border:3px solid var(--deep);
+    font-family:var(--font);font-weight:800;font-size:clamp(16px,4.4vw,21px);
+    background:var(--sand);color:var(--deep);cursor:pointer;box-shadow:0 5px 0 var(--deep);
+  }
+  .nav-btn.primary{background:var(--kelp);flex:2}
+  .nav-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--deep)}
+  .nav-btn:disabled{opacity:.35;transform:none;cursor:default}
+  .nav-btn:focus-visible{outline:3px solid var(--sea);outline-offset:3px}
+
+  .cheer{position:fixed;inset:0;display:none;place-items:center;background:rgba(7,59,76,.75);z-index:9;padding:20px}
+  .cheer.on{display:grid}
+  .cheer-card{background:var(--paper);border:4px solid var(--deep);border-radius:26px;padding:26px;text-align:center;max-width:340px;box-shadow:0 8px 0 var(--deep)}
+  .cheer-card p{font-size:20px;font-weight:700;margin:8px 0 16px}
+  .cheer-card .big{font-size:60px;margin:0}
+  .cheer-card .nav-btn{width:100%;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ---------- Startseite ---------- -->
+  <section id="home">
+    <h1>Was malen wir <span>heute</span>?</h1>
+    <p class="hint">Motiv antippen – dann geht es Schritt für Schritt los.</p>
+    <div class="picker" id="picker"></div>
+  </section>
+
+  <!-- ---------- Malansicht ---------- -->
+  <section id="draw" hidden>
+    <header>
+      <button class="icon-btn" id="home-btn">◀︎ Motive</button>
+      <h1 id="motifName" style="font-size:clamp(18px,4.8vw,26px)"></h1>
+      <div class="bubbles" id="bubbles"></div>
+    </header>
+
+    <div class="task" id="taskCard" title="Antippen zum Wiederholen">
+      <div class="emoji" id="taskEmoji">✏️</div>
+      <div>
+        <h2 id="taskTitle"></h2>
+        <p id="taskText"></p>
+      </div>
+    </div>
+
+    <div class="board">
+      <svg id="guide" viewBox="0 0 800 600" aria-hidden="true"></svg>
+      <canvas id="pad"></canvas>
+    </div>
+
+    <div class="tools" id="tools">
+      <button class="icon-btn" id="voiceBtn">🔊 Stimme an</button>
+      <button class="icon-btn" id="musicBtn">🎵 Musik an</button>
+      <button class="icon-btn" id="undo">↩︎ Zurück­nehmen</button>
+      <button class="icon-btn" id="clear">🧽 Alles weg</button>
+      <button class="icon-btn" id="toggleGuide">👀 Vorlage aus</button>
+      <button class="icon-btn" id="save">💾 Speichern</button>
+    </div>
+
+    <nav>
+      <button class="nav-btn" id="back">◀︎ Schritt zurück</button>
+      <button class="nav-btn primary" id="next">Weiter ▶︎</button>
+    </nav>
+  </section>
+</div>
+
+<div class="cheer" id="cheer">
+  <div class="cheer-card">
+    <p class="big" id="cheerEmoji">🎉</p>
+    <p>Fertig! Das sieht toll aus.</p>
+    <button class="nav-btn primary" id="again">Noch einmal malen</button>
+    <button class="nav-btn" id="other">Anderes Motiv</button>
+  </div>
+</div>
+
+<script>
+(function(){
+/* ============================================================
+   MOTIVE
+   Jeder Schritt: emoji, title, text (zum Vorlesen), shapes
+   shapes: "M…" = Linie,  [cx,cy,r] = Kreis
+   ============================================================ */
+const MOTIFS = [
+{ name:"Eis", emoji:"🍦", steps:[
+  {emoji:"🔺",title:"Die Waffel",text:"Ein großes Dreieck mit der Spitze nach unten.",
+   shapes:["M310,340 L400,540 L490,340 Z"]},
+  {emoji:"🧇",title:"Waffelmuster",text:"Drei Striche quer über die Waffel.",
+   shapes:["M330,375 L470,375","M350,420 L450,420","M372,468 L428,468"]},
+  {emoji:"🍨",title:"Die erste Kugel",text:"Ein dicker Hügel oben auf die Waffel.",
+   shapes:["M312,342 C300,250 350,205 400,205 C450,205 500,250 488,342"]},
+  {emoji:"🍧",title:"Die zweite Kugel",text:"Noch ein kleinerer Hügel obendrauf.",
+   shapes:["M345,215 C340,150 370,125 400,125 C430,125 460,150 455,215"]},
+  {emoji:"🍒",title:"Die Kirsche",text:"Ein Kreis ganz oben und ein Stiel daran.",
+   shapes:[[400,105,22],"M400,83 C406,58 420,50 436,54"]},
+  {emoji:"✨",title:"Die Streusel",text:"Viele kleine Striche auf die Kugeln.",
+   shapes:["M350,250 L358,262","M420,232 L430,242","M375,300 L383,312","M440,288 L450,298","M398,170 L406,180"]}
+]},
+
+{ name:"Seestern", emoji:"⭐", steps:[
+  {emoji:"⭐",title:"Fünf Arme",text:"Ein Stern mit fünf dicken Armen.",
+   shapes:["M350,231 C370,180 385,140 400,100 C415,140 430,180 450,231 C505,236 545,237 590,238 C552,270 517,298 481,326 C500,375 510,420 518,462 C478,442 440,405 400,385 C360,405 322,442 282,462 C290,420 300,375 319,326 C283,298 248,270 210,238 C255,237 295,236 350,231 Z"]},
+  {emoji:"⭕",title:"Die Mitte",text:"Ein Kreis mitten in den Stern.",
+   shapes:[[400,300,48]]},
+  {emoji:"🔵",title:"Die Punkte",text:"Auf jeden Arm zwei Punkte tupfen.",
+   shapes:[[400,190,10],[400,145,6],[495,269,10],[543,253,6],[459,381,10],[489,422,6],[341,381,10],[311,422,6],[305,269,10],[257,253,6]]},
+  {emoji:"👀",title:"Die Augen",text:"Zwei Augen in die Mitte.",
+   shapes:[[371,286,13],[429,286,13]]},
+  {emoji:"😊",title:"Das Lächeln",text:"Ein Bogen darunter – fertig ist das Grinsen.",
+   shapes:["M372,318 C386,338 414,338 428,318"]}
+]},
+
+{ name:"Muschel", emoji:"🐚", steps:[
+  {emoji:"🥣",title:"Die Schale",text:"Zwei Bögen, die sich unten treffen.",
+   shapes:["M175,300 C230,400 300,462 400,470 C500,462 570,400 625,300"]},
+  {emoji:"🌊",title:"Der Wellenrand",text:"Oben herum lauter kleine Hügel.",
+   shapes:["M175,300 Q205,240 245,262 Q275,196 320,222 Q355,166 400,190 Q445,166 480,222 Q525,196 555,262 Q595,240 625,300"]},
+  {emoji:"📏",title:"Die Rillen",text:"Striche von unten wie ein Fächer nach oben.",
+   shapes:["M400,464 C360,400 300,320 246,266","M400,464 C385,390 350,290 321,226","M400,464 L400,192","M400,464 C415,390 450,290 479,226","M400,464 C440,400 500,320 554,266"]},
+  {emoji:"🔘",title:"Das Schloss",text:"Unten ein kleiner Bogen – da hängt die Muschel zusammen.",
+   shapes:["M372,470 C380,494 420,494 428,470"]},
+  {emoji:"🏖️",title:"Sandkörner",text:"Ein paar Punkte drumherum in den Sand.",
+   shapes:[[250,430,7],[560,430,7],[300,505,5],[500,508,6],[400,530,5]]}
+]},
+
+{ name:"Sandburg", emoji:"🏰", steps:[
+  {emoji:"⬛",title:"Die Mauer",text:"Ein breiter Kasten in der Mitte.",
+   shapes:["M200,470 L200,360 L600,360 L600,470"]},
+  {emoji:"🪜",title:"Die Zacken",text:"Oben drauf Zacken wie bei einer Burg.",
+   shapes:["M200,360 L200,325 L245,325 L245,360","M290,360 L290,325 L335,325 L335,360","M378,360 L378,325 L423,325 L423,360","M466,360 L466,325 L511,325 L511,360","M555,360 L555,325 L600,325 L600,360"]},
+  {emoji:"🗼",title:"Die Türme",text:"Links und rechts je ein hoher Turm.",
+   shapes:["M152,470 L152,240 L232,240 L232,470","M568,470 L568,240 L648,240 L648,470"]},
+  {emoji:"👑",title:"Turmzacken",text:"Auch die Türme bekommen Zacken.",
+   shapes:["M152,240 L152,210 L180,210 L180,240 L204,240 L204,210 L232,210 L232,240","M568,240 L568,210 L596,210 L596,240 L620,240 L620,210 L648,210 L648,240"]},
+  {emoji:"🚪",title:"Tür und Fenster",text:"Ein Tor in die Mauer, ein Fenster in jeden Turm.",
+   shapes:["M370,470 L370,412 C370,386 430,386 430,412 L430,470",[192,300,18],[608,300,18]]},
+  {emoji:"🚩",title:"Die Fahne",text:"Eine Stange mit Fahne ganz nach oben.",
+   shapes:["M400,325 L400,232","M400,236 L462,254 L400,272"]}
+]},
+
+{ name:"Segelboot", emoji:"⛵", steps:[
+  {emoji:"🛶",title:"Der Rumpf",text:"Eine Schale wie ein großes Lächeln.",
+   shapes:["M190,430 L610,430 C570,505 500,520 400,520 C300,520 230,505 190,430 Z"]},
+  {emoji:"📏",title:"Der Mast",text:"Ein langer Strich nach oben.",
+   shapes:["M400,428 L400,110"]},
+  {emoji:"⛵",title:"Das große Segel",text:"Rechts ein gebogenes Dreieck.",
+   shapes:["M412,125 C490,220 520,330 525,405 L412,405 Z"]},
+  {emoji:"🔺",title:"Das kleine Segel",text:"Links noch ein Dreieck.",
+   shapes:["M388,140 L388,405 L265,405 C300,320 345,215 388,140 Z"]},
+  {emoji:"🎏",title:"Der Wimpel",text:"Oben am Mast eine kleine Flagge.",
+   shapes:["M400,112 L468,132 L400,152"]},
+  {emoji:"🌊",title:"Die Wellen",text:"Unten drunter Wellen – jetzt schwimmt es.",
+   shapes:["M90,545 C130,517 170,573 210,545 C250,517 290,573 330,545 C370,517 410,573 450,545 C490,517 530,573 570,545 C610,517 650,573 690,545"]}
+]},
+
+{ name:"Krabbe", emoji:"🦀", steps:[
+  {emoji:"🥚",title:"Der Panzer",text:"Ein breites Ei in die Mitte.",
+   shapes:["M250,330 C250,270 320,235 400,235 C480,235 550,270 550,330 C550,385 480,415 400,415 C320,415 250,385 250,330 Z"]},
+  {emoji:"👀",title:"Die Augen",text:"Zwei Stiele nach oben, oben je ein Kreis.",
+   shapes:["M350,240 L340,190","M450,240 L460,190",[338,168,23],[462,168,23]]},
+  {emoji:"😄",title:"Punkte und Mund",text:"In jedes Auge ein Punkt, dazu ein breites Grinsen.",
+   shapes:[[338,170,9],[462,170,9],"M368,368 C385,390 415,390 432,368"]},
+  {emoji:"🦞",title:"Die Scheren",text:"Links und rechts ein Arm mit einer dicken Zange.",
+   shapes:["M250,325 C210,318 175,305 152,285","M152,285 C128,262 96,268 92,292 C88,314 112,330 136,322 C120,306 128,286 152,285 Z","M550,325 C590,318 625,305 648,285","M648,285 C672,262 704,268 708,292 C712,314 688,330 664,322 C680,306 672,286 648,285 Z"]},
+  {emoji:"🦵",title:"Die Beine",text:"Drei Beine links, drei Beine rechts.",
+   shapes:["M268,375 C230,395 205,420 195,450","M300,400 C275,430 258,455 252,485","M340,412 C325,445 318,470 318,500","M532,375 C570,395 595,420 605,450","M500,400 C525,430 542,455 548,485","M460,412 C475,445 482,470 482,500"]},
+  {emoji:"🔵",title:"Die Tupfen",text:"Ein paar Punkte auf den Panzer.",
+   shapes:[[330,300,9],[400,286,9],[470,300,9],[365,342,7],[435,342,7]]}
+]},
+
+{ name:"Fisch", emoji:"🐠", steps:[
+  {emoji:"🥚",title:"Der Körper",text:"Ein dickes Ei – vorne spitz, hinten rund.",
+   shapes:["M180,300 C200,210 340,170 470,230 C510,250 545,275 570,300 C545,325 510,350 470,370 C340,430 200,390 180,300 Z"]},
+  {emoji:"🔱",title:"Der Schwanz",text:"Hinten dran zwei Zipfel wie ein großes V.",
+   shapes:["M182,300 C152,272 122,222 95,214 C106,254 116,286 119,300 C116,314 106,346 95,386 C122,378 152,328 182,300 Z"]},
+  {emoji:"🪁",title:"Die Flossen",text:"Eine Flosse aufs Dach, eine kleine an den Bauch.",
+   shapes:["M296,201 C330,142 392,126 428,148 C421,176 426,196 432,208","M300,399 C312,442 344,458 368,450 C352,434 346,420 343,407"]},
+  {emoji:"👁️",title:"Das Auge",text:"Ein Kreis vorne – und ein Punkt mitten hinein.",
+   shapes:[[486,272,20],[490,274,8]]},
+  {emoji:"😗",title:"Mund und Kiemen",text:"Ein kleines Küsschen vorne, ein Bogen für die Kiemen.",
+   shapes:["M566,306 C550,313 546,324 553,335","M446,238 C424,268 424,332 446,362"]},
+  {emoji:"🫧",title:"Schuppen und Blubber",text:"Bögen als Schuppen und Blasen zum Blubbern.",
+   shapes:["M300,268 C316,282 316,318 300,332","M348,258 C366,276 366,324 348,342","M396,254 C416,274 416,326 396,346",[622,238,12],[662,192,8]]}
+]}
+];
+
+const COLORS = ["#118AB2","#FF6B5B","#FFD166","#06D6A0","#9B5DE5","#073B4C"];
+const NS = "http://www.w3.org/2000/svg";
+
+const home=document.getElementById('home'), draw=document.getElementById('draw');
+const guide=document.getElementById('guide'), bubbles=document.getElementById('bubbles');
+const pad=document.getElementById('pad'), ctx=pad.getContext('2d');
+const cheer=document.getElementById('cheer'), tools=document.getElementById('tools');
+
+let motif=null, step=0, color=COLORS[0], strokes=[], current=null;
+
+/* ============================================================
+   MUSIK – leichte Bossa am Strand, komplett im Browser erzeugt
+   ============================================================ */
+const Music=(function(){
+  let ac=null, master=null, timer=null, noiseBuf=null;
+  let bar=0, slot=0, nextTime=0, on=true;
+  const BPM=88, EIGHTH=60/BPM/2, LOOK=0.15;
+
+  const CHORDS=[
+    {bass:41, notes:[57,60,64]},   // Fmaj7
+    {bass:38, notes:[57,60,65]},   // Dm7
+    {bass:43, notes:[58,62,65]},   // Gm7
+    {bass:36, notes:[58,64,67]}    // C7
+  ];
+  const MELODY=[72,74,77,69,81,76];
+
+  const f=m=>440*Math.pow(2,(m-69)/12);
+
+  function init(){
+    if(ac) return;
+    ac=new (window.AudioContext||window.webkitAudioContext)();
+    master=ac.createGain(); master.gain.value=0.085; master.connect(ac.destination);
+
+    // Rauschpuffer für Shaker und Meeresrauschen
+    const len=ac.sampleRate*2;
+    noiseBuf=ac.createBuffer(1,len,ac.sampleRate);
+    const d=noiseBuf.getChannelData(0);
+    for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
+
+    // sanftes Meeresrauschen im Hintergrund
+    const surf=ac.createBufferSource(); surf.buffer=noiseBuf; surf.loop=true;
+    const sf=ac.createBiquadFilter(); sf.type='lowpass'; sf.frequency.value=420;
+    const sg=ac.createGain(); sg.gain.value=0.02;
+    const lfo=ac.createOscillator(); lfo.frequency.value=0.13;
+    const lfoG=ac.createGain(); lfoG.gain.value=0.012;
+    lfo.connect(lfoG); lfoG.connect(sg.gain);
+    surf.connect(sf); sf.connect(sg); sg.connect(master);
+    surf.start(); lfo.start();
+  }
+
+  function pluck(t,freq,dur,vol,type,cut){
+    const o=ac.createOscillator(), g=ac.createGain(), fl=ac.createBiquadFilter();
+    o.type=type||'triangle'; o.frequency.value=freq;
+    fl.type='lowpass'; fl.frequency.value=cut||2200;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(vol,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(fl); fl.connect(g); g.connect(master);
+    o.start(t); o.stop(t+dur+0.05);
+  }
+  function shaker(t,vol){
+    const s=ac.createBufferSource(); s.buffer=noiseBuf;
+    const fl=ac.createBiquadFilter(); fl.type='highpass'; fl.frequency.value=6000;
+    const g=ac.createGain();
+    g.gain.setValueAtTime(vol,t);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.06);
+    s.connect(fl); fl.connect(g); g.connect(master);
+    s.start(t); s.stop(t+0.1);
+  }
+
+  function tick(){
+    while(nextTime < ac.currentTime + LOOK){
+      const ch=CHORDS[bar%CHORDS.length], t=nextTime;
+      // Bass auf 1 und 3
+      if(slot===0) pluck(t,f(ch.bass),0.9,0.16,'sine',600);
+      if(slot===4) pluck(t,f(ch.bass+7),0.8,0.12,'sine',600);
+      // Gitarrenakkord in Bossa-Lage
+      if(slot===0||slot===3||slot===6){
+        const v = slot===0?0.075:0.055;
+        ch.notes.forEach((n,i)=>pluck(t+i*0.012,f(n),0.75,v,'triangle',1800));
+      }
+      // Shaker, sehr leise
+      shaker(t, slot%2 ? 0.018 : 0.030);
+      // sparsame Melodie, alle zwei Takte ein Ton
+      if(bar%2===1 && slot===2 && Math.random()<0.7){
+        pluck(t,f(MELODY[Math.floor(Math.random()*MELODY.length)]),1.1,0.05,'sine',3000);
+      }
+      nextTime+=EIGHTH;
+      if(++slot>7){slot=0;bar++;}
+    }
+  }
+
+  return {
+    start(){
+      if(!on) return;
+      init();
+      if(ac.state==='suspended') ac.resume();
+      if(timer) return;
+      nextTime=ac.currentTime+0.1; slot=0;
+      timer=setInterval(tick,25);
+    },
+    stop(){ if(timer){clearInterval(timer);timer=null;} },
+    toggle(){
+      on=!on;
+      on ? this.start() : this.stop();
+      return on;
+    },
+    duck(d){ if(master) master.gain.linearRampToValueAtTime(d?0.03:0.085, (ac?ac.currentTime:0)+0.25); }
+  };
+})();
+
+/* ============================================================
+   STIMME – freundlich, hell, auf Deutsch
+   ============================================================ */
+const Voice=(function(){
+  let on=true, voice=null;
+  const WANTED=['anna','petra','marlene','helena','katja','vicki','google deutsch','deutsch'];
+
+  function pick(){
+    const vs=speechSynthesis.getVoices().filter(v=>/^de/i.test(v.lang));
+    if(!vs.length) return null;
+    for(const w of WANTED){
+      const hit=vs.find(v=>v.name.toLowerCase().includes(w));
+      if(hit) return hit;
+    }
+    return vs[0];
+  }
+  if('speechSynthesis' in window){
+    voice=pick();
+    speechSynthesis.onvoiceschanged=()=>{ voice=pick(); };
+  }
+  return {
+    say(text){
+      if(!on || !('speechSynthesis' in window)) return;
+      speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(text);
+      if(voice) u.voice=voice;
+      u.lang='de-DE'; u.pitch=1.4; u.rate=0.92; u.volume=1;
+      u.onstart=()=>Music.duck(true);
+      u.onend=()=>Music.duck(false);
+      u.onerror=()=>Music.duck(false);
+      speechSynthesis.speak(u);
+    },
+    toggle(){
+      on=!on;
+      if(!on && 'speechSynthesis' in window){ speechSynthesis.cancel(); Music.duck(false); }
+      return on;
+    }
+  };
+})();
+
+const ARTICLE={"Eis":"ein ","Seestern":"einen ","Muschel":"eine ","Sandburg":"eine ",
+               "Segelboot":"ein ","Krabbe":"eine ","Fisch":"einen "};
+const PRAISE=["Super gemacht!","Das sieht schon klasse aus!","Weiter so!","Toll!","Das machst du prima!"];
+
+/* ---------- Startseite ---------- */
+const picker=document.getElementById('picker');
+MOTIFS.forEach((m,i)=>{
+  const b=document.createElement('button');
+  b.className='tile';
+  b.innerHTML='<em>'+m.emoji+'</em>'+m.name;
+  b.addEventListener('click',()=>openMotif(i));
+  picker.appendChild(b);
+});
+
+function openMotif(i){
+  motif=MOTIFS[i];
+  document.getElementById('motifName').textContent=motif.emoji+' '+motif.name;
+  document.getElementById('cheerEmoji').textContent='🎉 '+motif.emoji+' 🎉';
+  strokes=[]; buildGuide(); buildBubbles();
+  home.hidden=true; draw.hidden=false;
+  Music.start();
+  requestAnimationFrame(()=>{ resize(); show(0, 'Wir malen '+(ARTICLE[motif.name]||'ein ')+motif.name+'. '); });
+}
+function goHome(){
+  draw.hidden=true; home.hidden=false; cheer.classList.remove('on');
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  Music.duck(false);
+}
+document.getElementById('home-btn').addEventListener('click',goHome);
+document.getElementById('other').addEventListener('click',goHome);
+
+/* ---------- Vorlage aufbauen ---------- */
+function buildGuide(){
+  guide.textContent='';
+  motif.steps.forEach(st=>{
+    const g=document.createElementNS(NS,'g');
+    st.shapes.forEach(sh=>{
+      let el;
+      if(Array.isArray(sh)){
+        el=document.createElementNS(NS,'circle');
+        el.setAttribute('cx',sh[0]); el.setAttribute('cy',sh[1]); el.setAttribute('r',sh[2]);
+      }else{
+        el=document.createElementNS(NS,'path');
+        el.setAttribute('d',sh);
+      }
+      el.setAttribute('pathLength','100');
+      g.appendChild(el);
+    });
+    guide.appendChild(g);
+  });
+}
+function buildBubbles(){
+  bubbles.textContent='';
+  motif.steps.forEach((s,i)=>{
+    const b=document.createElement('button');
+    b.className='bub'; b.textContent=i+1;
+    b.setAttribute('aria-label','Schritt '+(i+1)+': '+s.title);
+    b.addEventListener('click',()=>show(i));
+    bubbles.appendChild(b);
+  });
+}
+
+/* ---------- Schritt anzeigen ---------- */
+function show(i, prefix){
+  step=i;
+  const s=motif.steps[i];
+  Voice.say((prefix||'')+'Schritt '+(i+1)+': '+s.title+'. '+s.text);
+  document.getElementById('taskEmoji').textContent=s.emoji;
+  document.getElementById('taskTitle').textContent='Schritt '+(i+1)+': '+s.title;
+  document.getElementById('taskText').textContent=s.text;
+
+  [...guide.children].forEach((g,n)=>{
+    g.classList.toggle('show', n<=i);
+    g.classList.remove('active','draw');
+    [...g.children].forEach(el=>el.style.animationDelay='');
+    if(n===i){
+      g.classList.add('active');
+      [...g.children].forEach((el,k)=>el.style.animationDelay=(k*0.32)+'s');
+      void g.getBoundingClientRect();
+      g.classList.add('draw');
+    }
+  });
+
+  [...bubbles.children].forEach((b,n)=>{
+    b.classList.toggle('done',n<i);
+    b.classList.toggle('now',n===i);
+  });
+
+  document.getElementById('back').disabled = i===0;
+  document.getElementById('next').textContent = i===motif.steps.length-1 ? 'Fertig! 🎉' : 'Weiter ▶︎';
+}
+document.getElementById('back').addEventListener('click',()=>{ if(step>0) show(step-1); });
+document.getElementById('next').addEventListener('click',()=>{
+  if(step<motif.steps.length-1){
+    const p = Math.random()<0.6 ? PRAISE[Math.floor(Math.random()*PRAISE.length)]+' ' : '';
+    show(step+1, p);
+  }else{
+    cheer.classList.add('on');
+    Voice.say('Fertig! Dein Bild ist wunderschön geworden.');
+  }
+});
+document.getElementById('again').addEventListener('click',()=>{
+  cheer.classList.remove('on'); strokes=[]; redraw(); show(0);
+});
+document.getElementById('taskCard').addEventListener('click',()=>{
+  const s=motif.steps[step];
+  Voice.say('Schritt '+(step+1)+': '+s.title+'. '+s.text);
+});
+
+/* ---------- Farben ---------- */
+COLORS.forEach((c,i)=>{
+  const b=document.createElement('button');
+  b.className='swatch'; b.style.background=c;
+  b.setAttribute('aria-label','Farbe '+(i+1));
+  b.setAttribute('aria-pressed', i===0?'true':'false');
+  b.addEventListener('click',()=>{
+    color=c;
+    tools.querySelectorAll('.swatch').forEach(s=>s.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+  });
+  tools.insertBefore(b,tools.firstChild);
+});
+
+/* ---------- Zeichnen ---------- */
+function resize(){
+  const r=pad.getBoundingClientRect();
+  if(!r.width) return;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  pad.width=Math.round(r.width*dpr); pad.height=Math.round(r.height*dpr);
+  redraw();
+}
+function redraw(){
+  ctx.clearRect(0,0,pad.width,pad.height);
+  strokes.forEach(drawStroke);
+}
+function drawStroke(s){
+  if(s.pts.length<2){
+    ctx.beginPath(); ctx.fillStyle=s.color;
+    ctx.arc(s.pts[0].x*pad.width,s.pts[0].y*pad.height,s.w*pad.width/2,0,Math.PI*2); ctx.fill();
+    return;
+  }
+  ctx.beginPath(); ctx.strokeStyle=s.color;
+  ctx.lineWidth=s.w*pad.width; ctx.lineCap='round'; ctx.lineJoin='round';
+  s.pts.forEach((p,i)=>{
+    const x=p.x*pad.width,y=p.y*pad.height;
+    i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+  });
+  ctx.stroke();
+}
+function pos(e){
+  const r=pad.getBoundingClientRect();
+  return {x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height};
+}
+pad.addEventListener('pointerdown',e=>{
+  pad.setPointerCapture(e.pointerId);
+  current={color:color,w:0.012,pts:[pos(e)]};
+  strokes.push(current); redraw();
+});
+pad.addEventListener('pointermove',e=>{
+  if(!current) return;
+  current.pts.push(pos(e)); redraw();
+});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>
+  pad.addEventListener(ev,()=>{current=null;}));
+
+document.getElementById('undo').addEventListener('click',()=>{strokes.pop();redraw();});
+document.getElementById('clear').addEventListener('click',()=>{strokes=[];redraw();});
+
+const vb=document.getElementById('voiceBtn');
+vb.addEventListener('click',()=>{
+  const on=Voice.toggle();
+  vb.textContent = on ? '🔊 Stimme an' : '🔇 Stimme aus';
+  if(on) Voice.say('Ich bin wieder da.');
+});
+const mb=document.getElementById('musicBtn');
+mb.addEventListener('click',()=>{
+  const on=Music.toggle();
+  mb.textContent = on ? '🎵 Musik an' : '🎵 Musik aus';
+});
+
+const tg=document.getElementById('toggleGuide');
+tg.addEventListener('click',()=>{
+  const off=guide.classList.toggle('hidden');
+  tg.textContent = off ? '👀 Vorlage an' : '👀 Vorlage aus';
+});
+
+document.getElementById('save').addEventListener('click',()=>{
+  const out=document.createElement('canvas');
+  out.width=pad.width; out.height=pad.height;
+  const o=out.getContext('2d');
+  o.fillStyle='#fff'; o.fillRect(0,0,out.width,out.height);
+  o.drawImage(pad,0,0);
+  const a=document.createElement('a');
+  a.download='mein-bild.png'; a.href=out.toDataURL('image/png'); a.click();
+});
+
+window.addEventListener('resize',resize);
+})();
+</script>
+</body>
+</html>
