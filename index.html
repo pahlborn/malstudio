@@ -284,16 +284,20 @@
 
   /* ---------- Malansicht ---------- */
   #draw{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
-  .bubbles{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
-  .bub{width:27px;height:27px;border-radius:50%;border:3px solid var(--ghost);
-    background:var(--paper);color:var(--sea);font-family:var(--font);font-weight:700;font-size:13px;
-    display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .2s,background .2s,border-color .2s,color .2s}
+  .bubbles{display:flex;align-items:center;gap:0;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+  .bub{width:26px;height:26px;border-radius:50%;border:3px solid var(--ghost);
+    background:var(--paper);color:var(--sea);font-family:var(--font);font-weight:700;font-size:12px;
+    display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .2s,background .2s,border-color .2s,color .2s,box-shadow .2s}
+  .bub:not(:last-child)::after{content:"";display:inline-block;width:12px;height:3px;background:var(--ghost);
+    margin:0 1px;border-radius:2px}
   .bub.done{background:var(--kelp);border-color:var(--kelp);color:#fff}
-  .bub.now{background:var(--coral);border-color:var(--coral);color:#fff;transform:translateY(-3px) scale(1.15)}
+  .bub.now{background:var(--coral);border-color:var(--coral);color:#fff;transform:scale(1.2);
+    box-shadow:0 0 0 4px rgba(239,71,111,.22)}
 
-  .task{background:var(--paper);border:3px solid var(--deep);border-radius:16px;
-    padding:7px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 16px rgba(7,59,76,.13);flex:none;cursor:pointer}
-  .task .emoji{font-size:28px;line-height:1}
+  .task{background:linear-gradient(135deg,#FFE8B8,#FFD9A0);border:3px solid var(--deep);border-radius:16px;
+    padding:10px 16px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 16px rgba(7,59,76,.13);flex:none;cursor:pointer}
+  .task .emoji{font-size:26px;line-height:1;background:var(--paper);border-radius:14px;width:48px;height:48px;
+    flex:none;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.08)}
   .task h2{font-family:var(--font);margin:0;font-size:clamp(15px,2.2vw,20px);font-weight:800}
   .task p{margin:1px 0 0;font-size:clamp(13px,1.9vw,16px);font-weight:500;opacity:.8}
 
@@ -303,9 +307,10 @@
   .done-bar strong{font-size:16px}
   .done-bar .icon-btn{height:36px;font-size:14px}
 
-  .stage{flex:1;min-height:0;display:flex;gap:10px}
-  .ref{width:206px;flex:none;display:flex;flex-direction:column;gap:6px;min-height:0}
-  .ref-label{font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--sea);padding-left:4px}
+  .stage{flex:1;min-height:0;display:flex;gap:14px}
+  .ref{width:206px;flex:none;display:flex;flex-direction:column;gap:8px;min-height:0}
+  .ref-label{display:inline-block;font-family:var(--font);font-weight:700;font-size:12px;letter-spacing:.04em;
+    text-transform:uppercase;color:#fff;background:var(--sea);padding:5px 14px;border-radius:999px;width:fit-content}
   .ref-frame{position:relative;background:var(--paper);border:3px solid var(--sea);
     border-radius:18px;box-shadow:0 8px 18px rgba(7,59,76,.14);aspect-ratio:4/3;overflow:hidden;flex:none}
   .ref-frame svg{position:absolute;inset:0;width:100%;height:100%}
@@ -338,13 +343,17 @@
     .bub{transition:none}.board.party{animation:none}
   }
 
-  .side{width:202px;flex:none;display:flex;flex-direction:column;gap:7px}
-  .tools3{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-  .tool{height:44px;border-radius:13px;border:3px solid var(--deep);background:var(--paper);
-    font-family:var(--font);font-weight:700;font-size:20px;cursor:pointer;box-shadow:0 6px 14px rgba(7,59,76,.12);padding:0}
+  .side{width:202px;flex:none;display:flex;flex-direction:column;gap:7px;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+  .tools3{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;flex:none}
+  .tool{height:60px;border-radius:16px;border:3px solid var(--deep);background:var(--paper);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    cursor:pointer;box-shadow:0 6px 14px rgba(7,59,76,.12);padding:0}
+  .tool em{font-size:22px;font-style:normal;line-height:1}
+  .tool b{font-family:var(--font-body);font-weight:800;font-size:10px;color:var(--deep);letter-spacing:.01em}
   .tool[aria-pressed="true"]{background:var(--sand)}
   #tMagic[aria-pressed="true"]{background:#EAD9FF;border-color:#9B5DE5;box-shadow:0 6px 14px rgba(7,59,76,.12)}
-  .colors{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;justify-items:center;max-height:118px;overflow-y:auto;overflow-x:hidden;align-content:start;padding:2px 2px 2px 0;scrollbar-width:thin}
+  .colors{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;justify-items:center;
+    align-content:start;padding:2px 2px 2px 0;flex:none}
   .swatch{width:30px;height:30px;border-radius:50%;border:3px solid var(--paper);
     box-shadow:0 0 0 3px var(--deep);cursor:pointer;padding:0;transition:transform .15s}
   .swatch[aria-pressed="true"]{transform:scale(1.22)}
@@ -373,7 +382,7 @@
     .ref{width:186px}
     .ref-note{display:none}
     .side{width:100%;order:3;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center}
-    .colors{grid-template-columns:repeat(10,auto);max-height:96px}
+    .colors{grid-template-columns:repeat(10,auto)}
     .sizes,.tools3{grid-template-columns:repeat(4,52px)}
     .grid2{grid-template-columns:repeat(3,auto)}
     .side .nav-btn{flex:1;min-width:130px;height:46px}
@@ -582,10 +591,10 @@
 
       <div class="side">
         <div class="tools3" id="tools3">
-          <button class="tool" id="tPen"   aria-pressed="true"  title="Stift">✏️</button>
-          <button class="tool" id="tMagic" aria-pressed="false" title="Zauberpinsel">🪄</button>
-          <button class="tool" id="tFill"  aria-pressed="false" title="Farbeimer">🪣</button>
-          <button class="tool" id="tErase" aria-pressed="false" title="Radiergummi">🧽</button>
+          <button class="tool" id="tPen"   aria-pressed="true"  title="Stift"><em>✏️</em><b>Stift</b></button>
+          <button class="tool" id="tMagic" aria-pressed="false" title="Zauberpinsel"><em>🪄</em><b>Zauber</b></button>
+          <button class="tool" id="tFill"  aria-pressed="false" title="Farbeimer"><em>🪣</em><b>Eimer</b></button>
+          <button class="tool" id="tErase" aria-pressed="false" title="Radiergummi"><em>🧽</em><b>Radierer</b></button>
         </div>
         <div class="colors" id="colors"></div>
         <div class="sizes" id="sizes"></div>
