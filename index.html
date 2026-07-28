@@ -1007,6 +1007,266 @@ const MOTIFS=[
 ]}
 ];
 
+/* ---- Englische Übersetzungen für die Sprachausgabe (nur Vorlesen, UI bleibt Deutsch) ---- */
+const MOTIF_EN={
+  "Herz":{name:"Heart",steps:[
+    {title:"The left half",text:"From the bottom, curve up and back to the middle."},
+    {title:"The right half",text:"Same again on the other side – now it's a heart."},
+    {title:"The shine",text:"Two little curves top left – that's where it shines."},
+    {title:"The little hearts",text:"One mini heart on the left, one on the right."},
+    {title:"The sparkles",text:"Finish with two little stars for sparkle."}
+  ]},
+  "Muschel":{name:"Shell",steps:[
+    {title:"The shell",text:"Two curves meeting at the bottom."},
+    {title:"The wavy edge",text:"Little bumps all along the top."},
+    {title:"The ridges",text:"Lines fanning out from the bottom to the top."},
+    {title:"The hinge",text:"A small curve at the bottom – that's where the shell holds together."},
+    {title:"Grains of sand",text:"A few dots around it in the sand."}
+  ]},
+  "Seestern":{name:"Starfish",steps:[
+    {title:"Five arms",text:"A star with five thick arms."},
+    {title:"The middle",text:"A circle in the middle of the star."},
+    {title:"The dots",text:"Dot two spots onto each arm."},
+    {title:"The eyes",text:"Two eyes in the middle."},
+    {title:"The smile",text:"A curve underneath – the grin is done."}
+  ]},
+  "Eis":{name:"Ice Cream",steps:[
+    {title:"The cone",text:"A big triangle pointing down."},
+    {title:"Cone pattern",text:"Three lines across the cone."},
+    {title:"The first scoop",text:"A big bump on top of the cone."},
+    {title:"The second scoop",text:"Another, smaller bump on top."},
+    {title:"The cherry",text:"A circle right on top with a little stem."},
+    {title:"The sprinkles",text:"Lots of little marks on the scoops."}
+  ]},
+  "Wassermelone":{name:"Watermelon",steps:[
+    {title:"The round edge",text:"A big curve like a rainbow."},
+    {title:"The straight edge",text:"A line at the bottom, left to right."},
+    {title:"The rind",text:"A second curve just underneath."},
+    {title:"The flesh",text:"One more curve – that's the red part."},
+    {title:"The seeds",text:"Paint lots of little dots inside."},
+    {title:"Drop and sparkle",text:"A drop of juice and a little star beside it."}
+  ]},
+  "Fisch":{name:"Fish",steps:[
+    {title:"The body",text:"A plump egg shape – pointed at the front, round at the back."},
+    {title:"The tail",text:"Two points at the back like a big V."},
+    {title:"The fins",text:"One fin on top, a small one on the belly."},
+    {title:"The eye",text:"A circle at the front – with a dot right in the middle."},
+    {title:"Mouth and gills",text:"A little kiss shape at the front, a curve for the gills."},
+    {title:"Scales and bubbles",text:"Curves for scales and bubbles for blowing."}
+  ]},
+  "Krabbe":{name:"Crab",steps:[
+    {title:"The shell",text:"A wide egg shape in the middle."},
+    {title:"The eyes",text:"Two stalks going up, with a circle on top of each."},
+    {title:"Dots and mouth",text:"A dot in each eye, plus a wide grin."},
+    {title:"The claws",text:"An arm on each side with a big pincer."},
+    {title:"The legs",text:"Three legs on the left, three on the right."},
+    {title:"The spots",text:"A few dots on the shell."}
+  ]},
+  "Segelboot":{name:"Sailboat",steps:[
+    {title:"The hull",text:"A curve like a big smile."},
+    {title:"The mast",text:"A long line going up."},
+    {title:"The big sail",text:"A curved triangle on the right."},
+    {title:"The small sail",text:"Another triangle on the left."},
+    {title:"The pennant",text:"A little flag at the top of the mast."},
+    {title:"The waves",text:"Waves underneath – now it's floating."}
+  ]},
+  "Sandburg":{name:"Sandcastle",steps:[
+    {title:"The wall",text:"A wide box in the middle."},
+    {title:"The battlements",text:"Notches on top, like a castle."},
+    {title:"The towers",text:"A tall tower on the left and on the right."},
+    {title:"Tower battlements",text:"The towers get notches too."},
+    {title:"Door and windows",text:"A gate in the wall, a window in each tower."},
+    {title:"The flag",text:"A pole with a flag right at the top."}
+  ]},
+  "Luftballons":{name:"Balloons",steps:[
+    {title:"The big balloon",text:"A plump egg shape, top left."},
+    {title:"The middle balloon",text:"Another one next to it, a bit higher."},
+    {title:"The third balloon",text:"And the third one on the right."},
+    {title:"The knots",text:"A little triangle under each balloon."},
+    {title:"The strings",text:"Three strings meeting at the bottom."},
+    {title:"Bow and shine",text:"A bow at the end, then a few shine lines on the balloons."}
+  ]},
+  "Pizza":{name:"Pizza",steps:[
+    {title:"The crust",text:"One big round circle."},
+    {title:"The cheese",text:"A second circle just inside."},
+    {title:"The slices",text:"Three lines through the middle – now there are six slices."},
+    {title:"The pepperoni",text:"Five thick circles for pepperoni."},
+    {title:"The olives",text:"A few smaller circles in between."},
+    {title:"The basil",text:"Two little leaves on top."}
+  ]},
+  "Sonnenschirm":{name:"Beach Umbrella",steps:[
+    {title:"The canopy",text:"A big curve like a hill."},
+    {title:"The scalloped edge",text:"Four little curves along the bottom edge."},
+    {title:"The stripes",text:"Lines running down from the tip."},
+    {title:"The pole",text:"A long pole going down, with a little knob on top."},
+    {title:"Sand and towel",text:"A line of sand and a towel beside it."},
+    {title:"Sun and pattern",text:"Stripes on the towel and a sun beside it."}
+  ]},
+  "Schmetterling":{name:"Butterfly",steps:[
+    {title:"The body",text:"A slim, long body in the middle."},
+    {title:"The antennae",text:"Two curves going up, each with a little knob at the end."},
+    {title:"The big wings",text:"A big wing on the top left and top right."},
+    {title:"The small wings",text:"Two smaller wings underneath."},
+    {title:"The big dots",text:"A big circle in each large wing."},
+    {title:"The pattern",text:"A few more little dots on the wings."}
+  ]},
+  "Palme":{name:"Palm Tree",steps:[
+    {title:"The trunk",text:"Two long curves going up – the trunk."},
+    {title:"The rings",text:"A few curves across the trunk."},
+    {title:"Leaves to the left",text:"Two big leaves falling to the left."},
+    {title:"Leaves to the right",text:"And two to the right."},
+    {title:"A leaf on top",text:"One leaf sticking straight up."},
+    {title:"The coconuts",text:"Three circles under the leaves."},
+    {title:"Sand and sun",text:"A mound of sand below and a sun beside it."}
+  ]},
+  "Haus am Meer":{name:"Beach House",steps:[
+    {title:"The walls",text:"A big box – that's the house."},
+    {title:"The roof",text:"A triangle on top."},
+    {title:"The door",text:"A door with a rounded top in the middle."},
+    {title:"The windows",text:"A window with a cross on each side."},
+    {title:"The chimney",text:"A narrow box on the roof."},
+    {title:"Sun and seagulls",text:"A sun and two seagulls in the sky."},
+    {title:"The sea",text:"Two wavy lines in front – the beach is done."}
+  ]},
+  "Leuchtturm":{name:"Lighthouse",steps:[
+    {title:"The tower",text:"A box that gets narrower toward the top."},
+    {title:"The stripes",text:"Three lines across the tower."},
+    {title:"The platform",text:"A wide ledge on top to walk around."},
+    {title:"The lamp room",text:"A box with a window cross for the lamp."},
+    {title:"Roof and tip",text:"A pointed roof with a ball on top."},
+    {title:"Door and windows",text:"A door below, with two round windows beside it."},
+    {title:"Light and waves",text:"Two beams of light to the sides and waves below."}
+  ]},
+  "Delfin":{name:"Dolphin",steps:[
+    {title:"The body",text:"A long, curved body."},
+    {title:"The snout",text:"A pointed snout at the front right."},
+    {title:"The dorsal fin",text:"A fin on top like a little sail."},
+    {title:"The tail fin",text:"Two points at the back left."},
+    {title:"The side fin",text:"A small fin on the belly."},
+    {title:"Eye and smile",text:"An eye with a dot, and a smile."},
+    {title:"Water and splash",text:"Waves below and drops above its head."}
+  ]},
+  "Möwe":{name:"Seagull",steps:[
+    {title:"The body",text:"An egg shape lying on its side, in the middle."},
+    {title:"Head and beak",text:"A round head on the left, with a pointed beak in front."},
+    {title:"The upper wing",text:"A big curve going up."},
+    {title:"The lower wing",text:"And one going down."},
+    {title:"Feathers on top",text:"Three lines on the upper wing."},
+    {title:"Feathers below",text:"Three lines on the lower wing."},
+    {title:"The tail feathers",text:"Two pointed feathers at the back right."},
+    {title:"Eye and feet",text:"An eye in the head, two feet on the belly."}
+  ]},
+  "Wal":{name:"Whale",steps:[
+    {title:"The body",text:"A huge, round body."},
+    {title:"The tail fin",text:"Two big points at the back right."},
+    {title:"The mouth",text:"A long curve from the head backward."},
+    {title:"The belly grooves",text:"Four short lines under the mouth."},
+    {title:"The fin",text:"A wide fin on the belly."},
+    {title:"The eye",text:"A circle with a dot above the mouth."},
+    {title:"The spout",text:"Two curves going up, with a few drops."},
+    {title:"The sea",text:"Two wavy lines under the whale."}
+  ]},
+  "Schildkröte":{name:"Turtle",steps:[
+    {title:"The shell",text:"A big round egg shape in the middle."},
+    {title:"The shell rim",text:"A second ring just inside."},
+    {title:"The head",text:"The head peeks out on the right."},
+    {title:"The front legs",text:"One leg top right, one bottom right."},
+    {title:"The back legs",text:"One leg top left, one bottom left too."},
+    {title:"The tail",text:"A small pointed tail on the left."},
+    {title:"The shell plates",text:"One circle in the middle, six around it."},
+    {title:"Eye and smile",text:"An eye in the head and a little smile."}
+  ]},
+  "Seepferdchen":{name:"Seahorse",steps:[
+    {title:"The head",text:"A round head, top right."},
+    {title:"The snout",text:"A long tube pointing right."},
+    {title:"The belly",text:"A big curve from the head down."},
+    {title:"The back",text:"The second line on the other side."},
+    {title:"The curled tail",text:"The tail curls up at the bottom."},
+    {title:"The back spikes",text:"Little spikes along the back."},
+    {title:"Fin and eye",text:"A small fin on the belly, plus the eye."},
+    {title:"Dots and bubbles",text:"Dots on the belly and bubbles beside it."}
+  ]},
+  "Krake":{name:"Octopus",steps:[
+    {title:"The head",text:"A big dome on top."},
+    {title:"The eyes",text:"Two big circles in the head."},
+    {title:"Pupils and mouth",text:"A dot in each eye, with a smile below."},
+    {title:"The middle arms",text:"Two arms that curl up at the bottom."},
+    {title:"The arms on the left",text:"Two arms swing out to the left."},
+    {title:"The arms on the right",text:"And two to the right."},
+    {title:"The suckers",text:"Little circles on the arms."},
+    {title:"Pattern and bubbles",text:"Dots on the head and bubbles beside it."}
+  ]},
+  "Strandkorb":{name:"Beach Chair",steps:[
+    {title:"The hood",text:"A box with a rounded roof."},
+    {title:"The seat",text:"A line across – that's where you sit."},
+    {title:"The cushion",text:"A flat box on the seat."},
+    {title:"The stripes",text:"Five lines from top to bottom."},
+    {title:"The footrests",text:"Two small boxes below, in front."},
+    {title:"The blanket",text:"A curve for a blanket over the cushion."},
+    {title:"Sand and sun",text:"A line of sand, a sun and some shells."}
+  ]},
+  "Vespa":{name:"Vespa",steps:[
+    {title:"The front wheel",text:"A big circle on the left with a small one inside."},
+    {title:"The back wheel",text:"The same on the right."},
+    {title:"The body",text:"The curved shape between the wheels."},
+    {title:"The leg shield",text:"A tall curve at the front."},
+    {title:"The seat",text:"A long curve for the seat."},
+    {title:"The handlebar",text:"A pole going up with a bar across it."},
+    {title:"Mirror and fender",text:"A mirror on top, a curve over the front wheel."},
+    {title:"Light and exhaust",text:"A headlight at the front, a pipe at the back."}
+  ]},
+  "Piratenschiff":{name:"Pirate Ship",steps:[
+    {title:"The hull",text:"A big curved shape at the bottom."},
+    {title:"The deck",text:"A box on top of the hull."},
+    {title:"The bowsprit",text:"A slanted pole at the front left."},
+    {title:"The main mast",text:"A tall mast with a crossbar."},
+    {title:"The main sail",text:"A billowing sail underneath."},
+    {title:"The second mast",text:"Another mast with a sail on the right."},
+    {title:"Flag and crow's nest",text:"A flag and a lookout basket right at the top."},
+    {title:"Portholes",text:"Six round windows in the hull."},
+    {title:"The waves",text:"Waves under the ship."}
+  ]},
+  "Kätzchen":{name:"Kitten",steps:[
+    {title:"The head",text:"A round head in the middle."},
+    {title:"The ears",text:"Two pointed triangles on top."},
+    {title:"The eyes",text:"Two big eyes with a dot."},
+    {title:"Nose and mouth",text:"A little triangle for a nose, with two curves below."},
+    {title:"The whiskers",text:"Three fine lines on each side."},
+    {title:"The body",text:"A round body with a tail."}
+  ]},
+  "Regenbogen":{name:"Rainbow",steps:[
+    {title:"The first arc",text:"One big arc from left to right."},
+    {title:"The second arc",text:"A smaller arc just underneath."},
+    {title:"The third arc",text:"And another one below that."},
+    {title:"The fourth arc",text:"Each arc gets a little smaller."},
+    {title:"The clouds",text:"A fluffy cloud at each end."},
+    {title:"The sun",text:"A little sun up in the corner."}
+  ]},
+  "Rakete":{name:"Rocket",steps:[
+    {title:"The body",text:"A long body, rounded at the top."},
+    {title:"The nose cone",text:"A pointed cap on top."},
+    {title:"The window",text:"A round porthole in the middle."},
+    {title:"The fins",text:"A fin at the bottom on each side."},
+    {title:"The flames",text:"Flames shoot out at the bottom."},
+    {title:"The stars",text:"A few stars out in space."}
+  ]},
+  "Blume":{name:"Flower",steps:[
+    {title:"The center",text:"A circle in the middle."},
+    {title:"The first petals",text:"One petal each: top, bottom, left and right."},
+    {title:"The petals in between",text:"One more petal in each gap."},
+    {title:"The stem",text:"A long line going down."},
+    {title:"The leaves",text:"Two leaves on the stem."},
+    {title:"The face",text:"A happy face in the middle."}
+  ]}
+};
+(function applyMotifTranslations(){
+  MOTIFS.forEach(m=>{
+    const t=MOTIF_EN[m.name]; if(!t) return;
+    m.nameEn=t.name;
+    m.steps.forEach((s,i)=>{ if(t.steps[i]){ s.titleEn=t.steps[i].title; s.textEn=t.steps[i].text; } });
+  });
+})();
+
 const COLORS=[
   "#118AB2","#0B3C8C","#1B6CA8","#6ED3F5","#8ECae6",
   "#06D6A0","#0E8A4F","#3DA35D","#9EE37D","#C7F9CC",
@@ -1115,103 +1375,194 @@ const Music=(function(){
    ============================================================ */
 const Voice=(function(){
   const P={
-    hello:[
-      "Hallo! Schön, dass du da bist. Such dir ein Motiv aus, ich helfe dir dabei.",
-      "Da bist du ja! Ich hab schon Stifte rausgelegt.",
-      "Hey! Heute wird richtig schön gemalt."
-    ],
-    start:[
-      "Oh, {m}! Den mag ich besonders gern.",
-      "{m}, super Wahl! Das schaffst du.",
-      "Ein {m} also. Schau links auf die Vorlage, ich sage dir Schritt für Schritt, was dran ist.",
-      "{m}! Nimm dir Zeit, wir haben es überhaupt nicht eilig.",
-      "Los geht's mit {m}. Der rote Strich zeigt dir immer, was jetzt kommt."
-    ],
-    step:[
-      "{t}","Jetzt kommt: {t}","Weiter mit: {t}","Und nun: {t}","Als Nächstes: {t}",
-      "Pass auf, jetzt wird's schön: {t}","Achtung, jetzt kommt mein Lieblingsteil: {t}"
-    ],
-    praise:[
-      "Das sieht richtig gut aus!","Wow, du bist gut darin.","Perfekt, weiter so!",
-      "Oh, das gefällt mir!","Genau so hab ich mir das vorgestellt.",
-      "Du hast eine ruhige Hand, weißt du das?","Klasse gemacht!",
-      "Das wird ein richtig schönes Bild.","Sehr schön, ich bin beeindruckt.",
-      "Ja! Genau so.","Toll, das war gar nicht so einfach.",
-      "Du machst das mit links.","Schau dir das an, das ist richtig gut geworden.",
-      "Super. Ich könnte das kaum besser.","Prima, du bist ein echter Künstler.",
-      "Das kann sich sehen lassen!","Weiter so, das macht Spaß beim Zuschauen."
-    ],
-    encourage:[
-      "Nur Mut, es muss nicht perfekt sein.",
-      "Krumme Striche sind auch schön, ehrlich.",
-      "Lass dir Zeit, ich warte hier.",
-      "Wenn was schiefgeht, drück einfach auf Zurück.",
-      "Trau dich, das Blatt beißt nicht.",
-      "Ich finde, du machst das schon ganz toll.",
-      "Soll ich dir die Hilfslinien einblenden? Der Knopf ist rechts.",
-      "Atme kurz durch und dann weiter – ganz gemütlich."
-    ],
-    fill:[
-      "Schöne Farbe!","Oh, bunt! Das mag ich.","Die Farbe passt super.",
-      "Mmh, wie ein Sonnenuntergang.","Kräftig! Sehr mutig.","Das leuchtet ja richtig."
-    ],
-    undo:[
-      "Kein Problem, das passiert jedem.","Weg damit, noch mal von vorn.",
-      "Ups! Aber dafür gibt's ja den Knopf.","Macht nichts, probier es einfach noch mal."
-    ],
-    clear:[
-      "Ein frisches Blatt. Los geht's!","Alles weg. Neuer Versuch!","Blitzeblank. Dann mal los."
-    ],
-    finish:[
-      "Fertig! Und das sieht wunderschön aus.",
-      "Wahnsinn, du hast es geschafft! Zeig es unbedingt jemandem.",
-      "Fertig! Ich bin richtig stolz auf dich.",
-      "Das ist dein Bild, und es ist toll geworden.",
-      "Geschafft! Willst du es in die Galerie legen?",
-      "Bravo! Das war gar nicht so leicht, und du hast es hinbekommen."
-    ],
-    gallery:[
-      "Ab in deine Galerie damit!","Gespeichert. Da kannst du es immer wieder anschauen.",
-      "In die Galerie, zu deinen anderen Bildern."
-    ],
-    creator:[
-      "Male dein eigenes Motiv! Wenn ein Teil fertig ist, tippe auf Schritt fertig.",
-      "Jetzt bist du die Lehrerin. Male vor, was andere nachmalen sollen."
-    ],
-    creatorStep:[
-      "Schritt gespeichert. Was kommt als Nächstes?",
-      "Gut! Und jetzt der nächste Teil.",
-      "Notiert. Male weiter."
-    ],
-    magic:[
-      "Zauberei! Schön gerade.",
-      "Perfekt getroffen!",
-      "Das sitzt sauber.",
-      "Ordentlich hingezaubert.",
-      "Schnurgerade!"
-    ],
-    colorStart:[
-      "{m} wartet auf Farbe! Leg einfach los.",
-      "Schnapp dir den Farbeimer und mach {m} richtig bunt!",
-      "Zeig mir deine Lieblingsfarben bei {m}!",
-      "Tauch ein und zauber Farbe in {m}!",
-      "Auf geht's! Mach {m} so bunt, wie du magst."
-    ]
+    de:{
+      hello:[
+        "Hallo! Schön, dass du da bist. Such dir ein Motiv aus, ich helfe dir dabei.",
+        "Da bist du ja! Ich hab schon Stifte rausgelegt.",
+        "Hey! Heute wird richtig schön gemalt."
+      ],
+      start:[
+        "Oh, {m}! Den mag ich besonders gern.",
+        "{m}, super Wahl! Das schaffst du.",
+        "Ein {m} also. Schau links auf die Vorlage, ich sage dir Schritt für Schritt, was dran ist.",
+        "{m}! Nimm dir Zeit, wir haben es überhaupt nicht eilig.",
+        "Los geht's mit {m}. Der rote Strich zeigt dir immer, was jetzt kommt."
+      ],
+      step:[
+        "{t}","Jetzt kommt: {t}","Weiter mit: {t}","Und nun: {t}","Als Nächstes: {t}",
+        "Pass auf, jetzt wird's schön: {t}","Achtung, jetzt kommt mein Lieblingsteil: {t}"
+      ],
+      praise:[
+        "Das sieht richtig gut aus!","Wow, du bist gut darin.","Perfekt, weiter so!",
+        "Oh, das gefällt mir!","Genau so hab ich mir das vorgestellt.",
+        "Du hast eine ruhige Hand, weißt du das?","Klasse gemacht!",
+        "Das wird ein richtig schönes Bild.","Sehr schön, ich bin beeindruckt.",
+        "Ja! Genau so.","Toll, das war gar nicht so einfach.",
+        "Du machst das mit links.","Schau dir das an, das ist richtig gut geworden.",
+        "Super. Ich könnte das kaum besser.","Prima, du bist ein echter Künstler.",
+        "Das kann sich sehen lassen!","Weiter so, das macht Spaß beim Zuschauen."
+      ],
+      encourage:[
+        "Nur Mut, es muss nicht perfekt sein.",
+        "Krumme Striche sind auch schön, ehrlich.",
+        "Lass dir Zeit, ich warte hier.",
+        "Wenn was schiefgeht, drück einfach auf Zurück.",
+        "Trau dich, das Blatt beißt nicht.",
+        "Ich finde, du machst das schon ganz toll.",
+        "Soll ich dir die Hilfslinien einblenden? Der Knopf ist rechts.",
+        "Atme kurz durch und dann weiter – ganz gemütlich."
+      ],
+      fill:[
+        "Schöne Farbe!","Oh, bunt! Das mag ich.","Die Farbe passt super.",
+        "Mmh, wie ein Sonnenuntergang.","Kräftig! Sehr mutig.","Das leuchtet ja richtig."
+      ],
+      undo:[
+        "Kein Problem, das passiert jedem.","Weg damit, noch mal von vorn.",
+        "Ups! Aber dafür gibt's ja den Knopf.","Macht nichts, probier es einfach noch mal."
+      ],
+      clear:[
+        "Ein frisches Blatt. Los geht's!","Alles weg. Neuer Versuch!","Blitzeblank. Dann mal los."
+      ],
+      finish:[
+        "Fertig! Und das sieht wunderschön aus.",
+        "Wahnsinn, du hast es geschafft! Zeig es unbedingt jemandem.",
+        "Fertig! Ich bin richtig stolz auf dich.",
+        "Das ist dein Bild, und es ist toll geworden.",
+        "Geschafft! Willst du es in die Galerie legen?",
+        "Bravo! Das war gar nicht so leicht, und du hast es hinbekommen."
+      ],
+      gallery:[
+        "Ab in deine Galerie damit!","Gespeichert. Da kannst du es immer wieder anschauen.",
+        "In die Galerie, zu deinen anderen Bildern."
+      ],
+      creator:[
+        "Male dein eigenes Motiv! Wenn ein Teil fertig ist, tippe auf Schritt fertig.",
+        "Jetzt bist du die Lehrerin. Male vor, was andere nachmalen sollen."
+      ],
+      creatorStep:[
+        "Schritt gespeichert. Was kommt als Nächstes?",
+        "Gut! Und jetzt der nächste Teil.",
+        "Notiert. Male weiter."
+      ],
+      magic:[
+        "Zauberei! Schön gerade.",
+        "Perfekt getroffen!",
+        "Das sitzt sauber.",
+        "Ordentlich hingezaubert.",
+        "Schnurgerade!"
+      ],
+      colorStart:[
+        "{m} wartet auf Farbe! Leg einfach los.",
+        "Schnapp dir den Farbeimer und mach {m} richtig bunt!",
+        "Zeig mir deine Lieblingsfarben bei {m}!",
+        "Tauch ein und zauber Farbe in {m}!",
+        "Auf geht's! Mach {m} so bunt, wie du magst."
+      ]
+    },
+    en:{
+      hello:[
+        "Hello! So glad you're here. Pick a picture and I'll help you along the way.",
+        "There you are! I've already got the pens ready.",
+        "Hey! Today we're going to draw something lovely."
+      ],
+      start:[
+        "Oh, {m}! I like that one a lot.",
+        "{m}, great choice! You've got this.",
+        "A {m}, then. Look at the guide on the left, I'll tell you step by step what's next.",
+        "{m}! Take your time, we're in no hurry at all.",
+        "Let's start with {m}. The red line always shows you what's next."
+      ],
+      step:[
+        "{t}","Now comes: {t}","Next up: {t}","And now: {t}","Here's what's next: {t}",
+        "Watch closely, this part is lovely: {t}","Here comes my favorite part: {t}"
+      ],
+      praise:[
+        "That looks really good!","Wow, you're good at this.","Perfect, keep going!",
+        "Oh, I like that!","That's exactly how I imagined it.",
+        "You have a steady hand, you know that?","Wonderfully done!",
+        "This is turning into a really lovely picture.","Very nice, I'm impressed.",
+        "Yes! Just like that.","Great, that wasn't so easy at all.",
+        "You're making that look easy.","Look at that, that turned out really well.",
+        "Great job. I could hardly do it better.","Wonderful, you're a real artist.",
+        "That's something to be proud of!","Keep going, it's fun to watch."
+      ],
+      encourage:[
+        "Go on, it doesn't have to be perfect.",
+        "Wobbly lines are lovely too, honestly.",
+        "Take your time, I'll wait right here.",
+        "If something goes wrong, just tap Undo.",
+        "Go for it, the paper doesn't bite.",
+        "I think you're doing really great.",
+        "Want me to show the guide lines? The button is on the right.",
+        "Take a breath, then carry on – nice and easy."
+      ],
+      fill:[
+        "Lovely color!","Oh, colorful! I like that.","That color fits perfectly.",
+        "Mmh, like a sunset.","Bold! Very brave.","That really glows."
+      ],
+      undo:[
+        "No problem, that happens to everyone.","Away it goes, let's start that bit again.",
+        "Oops! That's what the button is for.","No worries, just give it another try."
+      ],
+      clear:[
+        "A fresh sheet. Here we go!","All gone. New try!","Squeaky clean. Off we go."
+      ],
+      finish:[
+        "Done! And it looks wonderful.",
+        "Amazing, you did it! You should definitely show someone.",
+        "Done! I'm really proud of you.",
+        "This is your picture, and it turned out great.",
+        "You did it! Want to put it in your gallery?",
+        "Bravo! That wasn't easy at all, and you managed it."
+      ],
+      gallery:[
+        "Off it goes into your gallery!","Saved. You can look at it anytime.",
+        "Into the gallery, with your other pictures."
+      ],
+      creator:[
+        "Draw your very own picture! When a part is done, tap Step done.",
+        "Now you're the teacher. Draw what others should trace."
+      ],
+      creatorStep:[
+        "Step saved. What comes next?",
+        "Good! Now the next part.",
+        "Noted. Keep drawing."
+      ],
+      magic:[
+        "Magic! Nice and straight.",
+        "Perfectly done!",
+        "That sits just right.",
+        "Neatly conjured up.",
+        "Straight as an arrow!"
+      ],
+      colorStart:[
+        "{m} is waiting for color! Just dive right in.",
+        "Grab the paint bucket and make {m} really colorful!",
+        "Show me your favorite colors on {m}!",
+        "Dive in and add some color to {m}!",
+        "Here we go! Make {m} as colorful as you like."
+      ]
+    }
   };
   const last={};
+  let on=true, voice=null, lastSpoke=0;
+  function currentLang(){ return (voice && /^en/i.test(voice.lang)) ? 'en' : 'de'; }
   function pick(pool,vars){
-    const a=P[pool]; if(!a||!a.length) return '';
+    const a=(P[currentLang()]||P.de)[pool]; if(!a||!a.length) return '';
     let t, tries=0;
     do{ t=a[Math.floor(Math.random()*a.length)]; tries++; }while(a.length>1 && t===last[pool] && tries<8);
     last[pool]=t;
     if(vars) Object.keys(vars).forEach(k=>{ t=t.split('{'+k+'}').join(vars[k]); });
     return t;
   }
-  let on=true, voice=null, lastSpoke=0;
   const FEMALE=['anna','helena','petra','marlene','katja','vicki','amelie','google deutsch','deutschland'];
   function germanVoices(){
     if(!('speechSynthesis' in window)) return [];
     return speechSynthesis.getVoices().filter(v=>/^de/i.test(v.lang));
+  }
+  function usableVoices(){
+    if(!('speechSynthesis' in window)) return [];
+    return speechSynthesis.getVoices().filter(v=>/^(de|en)/i.test(v.lang));
   }
   function autoPick(){
     const vs=germanVoices(); if(!vs.length) return null;
@@ -1233,7 +1584,7 @@ const Voice=(function(){
     speechSynthesis.cancel();
     const u=new SpeechSynthesisUtterance(text);
     if(voice) u.voice=voice;
-    u.lang='de-DE'; u.pitch=1.25; u.rate=0.94; u.volume=1;
+    u.lang = voice ? voice.lang : 'de-DE'; u.pitch=1.25; u.rate=0.94; u.volume=1;
     u.onstart=()=>Music.duck(true);
     u.onend=()=>Music.duck(false);
     u.onerror=()=>Music.duck(false);
@@ -1242,8 +1593,10 @@ const Voice=(function(){
   return {
     say(pool,vars,force){ speak(pick(pool,vars),force); },
     raw(t){ speak(t,true); },
-    list:germanVoices,
-    setVoice(name){ const v=germanVoices().find(x=>x.name===name); if(v) voice=v; },
+    rawBoth(de,en){ speak(currentLang()==='en'?en:de, true); },
+    lang:currentLang,
+    list:usableVoices,
+    setVoice(name){ const v=usableVoices().find(x=>x.name===name); if(v) voice=v; },
     currentName(){ return voice?voice.name:''; },
     isOn(){ return on; },
     toggle(){ on=!on; if(!on && 'speechSynthesis' in window){ speechSynthesis.cancel(); Music.duck(false);} return on; },
@@ -1376,9 +1729,9 @@ $('profileChip').addEventListener('click',()=>{ renderProfiles(); showSection(se
 
 /* ---------- Sterne & Pokale ---------- */
 const TROPHIES=[
-  {key:'bronze', n:5,  emoji:'🥉', label:'Bronzepokal'},
-  {key:'silber', n:10, emoji:'🥈', label:'Silberpokal'},
-  {key:'gold',   n:20, emoji:'🥇', label:'Goldpokal'}
+  {key:'bronze', n:5,  emoji:'🥉', label:'Bronzepokal', labelEn:'Bronze Cup'},
+  {key:'silber', n:10, emoji:'🥈', label:'Silberpokal', labelEn:'Silver Cup'},
+  {key:'gold',   n:20, emoji:'🥇', label:'Goldpokal',   labelEn:'Gold Cup'}
 ];
 function trophyTier(count){ let t=null; for(const x of TROPHIES) if(count>=x.n) t=x; return t; }
 function nextTrophy(count){ return TROPHIES.find(x=>count<x.n)||null; }
@@ -1546,15 +1899,31 @@ function openMotif(i){
     $('taskTitle').textContent=motif.name+' wartet auf Farbe!';
     $('taskText').textContent='Tippe mit dem Farbeimer in die Flächen – so bunt du magst.';
     [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
-    Voice.say('colorStart',{m:motif.name},true);
+    Voice.say('colorStart',{m:motifSpokenName(motif)},true);
     requestAnimationFrame(()=>{ layout(); outlineToCanvas(); });
   }else{
     setTool('pen');
-    Voice.say('start',{m:motif.name},true);
+    Voice.say('start',{m:motifSpokenName(motif)},true);
     requestAnimationFrame(()=>{ layout(); clearArt(); show(0,true); });
   }
 }
 $('home-btn').addEventListener('click',()=>showSection(secHome));
+
+/* ---- Sprachausgabe: Motiv-/Schritt-Texte je nach gewählter Stimme (DE/EN) ---- */
+function motifSpokenName(m){ return Voice.lang()==='en' ? (m.nameEn||m.name) : m.name; }
+function stepSpokenBody(s){
+  return Voice.lang()==='en' ? (s.titleEn||s.title)+'. '+(s.textEn||s.text) : s.title+'. '+s.text;
+}
+function stepSpokenFull(s,i){
+  return Voice.lang()==='en'
+    ? 'Step '+(i+1)+': '+(s.titleEn||s.title)+'. '+(s.textEn||s.text)
+    : 'Schritt '+(i+1)+': '+s.title+'. '+s.text;
+}
+function colorTaskSpokenFull(m){
+  return Voice.lang()==='en'
+    ? (m.nameEn||m.name)+' is waiting for color! Tap inside the shapes with the paint bucket – as colorful as you like.'
+    : m.name+' wartet auf Farbe! Tippe mit dem Farbeimer in die Flächen – so bunt du magst.';
+}
 
 function show(i,silent){
   step=i;
@@ -1576,11 +1945,11 @@ function show(i,silent){
   [...bubbles.children].forEach((b,n)=>{ b.classList.toggle('done',n<i); b.classList.toggle('now',n===i); });
   $('back').disabled=i===0;
   $('next').textContent = i===motif.steps.length-1 ? 'Fertig! 🎉' : 'Weiter ▶︎';
-  if(!silent) setTimeout(()=>Voice.say('step',{t:s.title+'. '+s.text},true), 900);
+  if(!silent) setTimeout(()=>Voice.say('step',{t:stepSpokenBody(s)},true), 900);
   pokeIdle();
 }
 $('taskCard').addEventListener('click',()=>{
-  Voice.raw($('taskTitle').textContent+'. '+$('taskText').textContent);
+  Voice.raw(mode==='color' ? colorTaskSpokenFull(motif) : stepSpokenFull(motif.steps[step], step));
 });
 $('back').addEventListener('click',()=>{ if(step>0) show(step-1); });
 
@@ -1663,7 +2032,7 @@ function showTrophyPopup(tier){
   $('rewardText').textContent=tier.label+' geschafft! Schau in deiner Galerie vorbei.';
   $('reward').classList.add('on');
   celebrate();
-  Voice.raw('Wow! Du hast den '+tier.label+' gewonnen!');
+  Voice.rawBoth('Wow! Du hast den '+tier.label+' gewonnen!', 'Wow! You won the '+tier.labelEn+'!');
 }
 $('rewardOk').addEventListener('click',()=>$('reward').classList.remove('on'));
 
@@ -1938,16 +2307,24 @@ function fillVoiceList(){
   const sel=$('voiceSel'); const vs=Voice.list();
   sel.textContent='';
   if(!vs.length){
-    const o=document.createElement('option'); o.textContent='Keine deutsche Stimme gefunden'; sel.appendChild(o);
-    $('voiceHint').textContent='Auf dem iPad: Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Deutsch. Dort eine Stimme mit dem Zusatz „Premium" oder „Erweitert" laden – die klingt deutlich natürlicher.';
+    const o=document.createElement('option'); o.textContent='Keine deutsche oder englische Stimme gefunden'; sel.appendChild(o);
+    $('voiceHint').textContent='Auf dem iPad: Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Deutsch (oder Englisch). Dort eine Stimme mit dem Zusatz „Premium" oder „Erweitert" laden – die klingt deutlich natürlicher.';
     return;
   }
-  vs.forEach(v=>{
-    const o=document.createElement('option'); o.value=v.name; o.textContent=v.name;
-    if(v.name===Voice.currentName()) o.selected=true;
-    sel.appendChild(o);
-  });
-  $('voiceHint').textContent='Tipp: Stimmen mit „Premium" oder „Erweitert" klingen am freundlichsten. Fehlt so eine, lässt sie sich unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen kostenlos nachladen.';
+  const de=vs.filter(v=>/^de/i.test(v.lang)), en=vs.filter(v=>/^en/i.test(v.lang));
+  const addGroup=(label,arr)=>{
+    if(!arr.length) return;
+    const g=document.createElement('optgroup'); g.label=label;
+    arr.forEach(v=>{
+      const o=document.createElement('option'); o.value=v.name; o.textContent=v.name;
+      if(v.name===Voice.currentName()) o.selected=true;
+      g.appendChild(o);
+    });
+    sel.appendChild(g);
+  };
+  addGroup('Deutsch',de);
+  addGroup('English',en);
+  $('voiceHint').textContent='Tipp: Stimmen mit „Premium" oder „Erweitert" klingen am freundlichsten. Wähle eine englische Stimme, damit Malstudio Anleitungen und Ansagen auf Englisch vorliest. Fehlt eine Stimme, lässt sie sich unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen kostenlos nachladen.';
 }
 window.__voiceListRefresh=fillVoiceList;
 $('voiceBtn').addEventListener('click',()=>{
@@ -1957,14 +2334,14 @@ $('voiceBtn').addEventListener('click',()=>{
 $('voiceClose').addEventListener('click',()=>{ $('voicePanel').hidden=true; });
 $('voiceSel').addEventListener('change',e=>{
   Voice.setVoice(e.target.value); Store.set('voiceName',e.target.value);
-  Voice.raw('Hallo, ich bin es. So klinge ich.');
+  Voice.rawBoth('Hallo, ich bin es. So klinge ich.', 'Hello, it\'s me. This is what I sound like.');
 });
 $('voiceTest').addEventListener('click',()=>{
-  Voice.raw('Hallo! Ich male heute mit dir. Das wird richtig schön.');
+  Voice.rawBoth('Hallo! Ich male heute mit dir. Das wird richtig schön.', 'Hello! I\'m drawing with you today. This is going to be lovely.');
 });
 $('voiceToggle').addEventListener('click',()=>{
   Voice.toggle(); syncVoiceButtons(); Store.set('voiceOn',Voice.isOn()?'1':'0');
-  if(Voice.isOn()) Voice.raw('Da bin ich wieder!');
+  if(Voice.isOn()) Voice.rawBoth('Da bin ich wieder!', 'I\'m back!');
 });
 
 /* ---------- Galerie ---------- */
@@ -2081,7 +2458,8 @@ $('cFinish').addEventListener('click',async()=>{
   const m={name:name,emoji:cAvatar,level:'von mir',steps:cSteps};
   await Store.set('motif:'+profile.id+':'+Date.now(),JSON.stringify(m));
   await loadCustoms(); renderPicker(); showSection(secHome);
-  toast('✏️ Motiv gespeichert'); Voice.raw('Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!');
+  toast('✏️ Motiv gespeichert');
+  Voice.rawBoth('Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!', 'Your picture is saved. Now everyone can trace it!');
 });
 $('newMotif').addEventListener('click',()=>{ cReset(); cNewLiveGroup(); showSection(secCreator); Voice.say('creator',null,true); });
 $('cBack').addEventListener('click',()=>showSection(secHome));
@@ -2097,7 +2475,8 @@ $('cBack').addEventListener('click',()=>showSection(secHome));
     btn.textContent='⛶ Vollbild?';
     btn.addEventListener('click',()=>{
       toast('Tipp: Teilen ▸ „Zum Home-Bildschirm" – dann startet die App randlos.');
-      Voice.raw('Für echtes Vollbild tippe unten auf Teilen und dann auf Zum Home-Bildschirm.');
+      Voice.rawBoth('Für echtes Vollbild tippe unten auf Teilen und dann auf Zum Home-Bildschirm.',
+        'For real fullscreen, tap Share and then Add to Home Screen.');
     });
     return;
   }
