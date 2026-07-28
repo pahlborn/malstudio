@@ -498,7 +498,7 @@
 
       <div class="board" id="board">
         <div class="sheet" id="sheet">
-          <svg id="ghost" viewBox="0 0 800 600" aria-hidden="true"></svg>
+          <svg id="ghost" viewBox="0 0 800 600" preserveAspectRatio="none" aria-hidden="true"></svg>
           <canvas id="pad"></canvas>
         </div>
       </div>
@@ -515,7 +515,6 @@
           <div class="colors" id="colors"></div>
         </div>
         <div class="tool-card">
-          <div class="tool-card-label">Dicke</div>
           <div class="sizes" id="sizes"></div>
         </div>
         <div class="grid2">
@@ -1257,7 +1256,7 @@ const Voice=(function(){
 const $=id=>document.getElementById(id);
 const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator');
 const ref=$('ref'), ghost=$('ghost'), bubbles=$('bubbles');
-const sheet=$('sheet'), pad=$('pad'), ctx=pad.getContext('2d');
+const pad=$('pad'), ctx=pad.getContext('2d');
 const helper=$('helper'), toastEl=$('toast');
 
 let motif=null, step=0, color=COLORS[0], width=SIZES[1], tool='pen';
@@ -1711,8 +1710,6 @@ function artPos(e){
   return { x:(e.clientX-r.left)/r.width*art.width,
            y:(e.clientY-r.top)/r.height*art.height, t:performance.now() };
 }
-const A2P=()=>pad.width/art.width;   // Skala Blatt -> Bildschirm
-
 let drawing=false, strokeObj=null, strokeCount=0;
 
 pad.addEventListener('pointerdown',e=>{
@@ -1742,8 +1739,8 @@ pad.addEventListener('pointermove',e=>{
 /* ---- Live-Vorschau während des Zeichnens ---- */
 function previewStroke(){
   paint();  // festes Bild
-  const sc=A2P(), col=strokeObj.erase?PAPER:color;
-  ctx.save(); ctx.scale(sc,sc);
+  const col=strokeObj.erase?PAPER:color;
+  ctx.save(); ctx.scale(pad.width/art.width, pad.height/art.height);
   ctx.strokeStyle=col; ctx.fillStyle=col;
   ctx.lineWidth=strokeObj.w; ctx.lineCap='round'; ctx.lineJoin='round';
   strokePath(ctx, smoothPoints(strokeObj.pts));
@@ -2098,7 +2095,7 @@ $('cBack').addEventListener('click',()=>showSection(secHome));
   document.addEventListener('webkitfullscreenchange',sync);
 })();
 
-/* ---------- Layout: Blatt im Verhältnis 4:3 einpassen ---------- */
+/* ---------- Layout: Werkstatt-Blatt im Verhältnis 4:3 einpassen ---------- */
 function fit(container,el){
   if(!container||!el) return false;
   const r=container.getBoundingClientRect();
@@ -2111,7 +2108,7 @@ function fit(container,el){
   return true;
 }
 function layout(){
-  if(fit($('board'),sheet)) resize();
+  resize();
   fit(document.querySelector('.cstage'),csheet);
 }
 if(window.ResizeObserver){
