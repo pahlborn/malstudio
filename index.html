@@ -118,15 +118,15 @@
   .motif-card-head b{font-family:var(--font);font-weight:800;font-size:18px;color:var(--deep)}
   .motif-card-head span{font-weight:700;font-size:13px;color:var(--coral)}
   .motif-grid{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:12px;align-content:center;padding:2px}
-  .motif-tile{aspect-ratio:1/1;border-radius:16px;border:none;display:flex;align-items:center;justify-content:center;
-    font-size:30px;position:relative;cursor:pointer;padding:0;overflow:hidden}
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));grid-auto-rows:135px;gap:14px;align-content:start;padding:2px}
+  .motif-tile{border-radius:18px;border:none;display:flex;align-items:center;justify-content:center;
+    font-size:44px;position:relative;cursor:pointer;padding:0;overflow:hidden}
   .motif-tile img{width:100%;height:100%;object-fit:cover;display:block}
   .motif-tile.got{background:linear-gradient(135deg,#8ECAE6,var(--sea));box-shadow:0 6px 14px rgba(7,59,76,.18)}
   .motif-tile.locked{background:#EAF1F3;opacity:.6}
   .motif-tile:active{transform:translateY(2px)}
-  .motif-tile .badge{position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:50%;
-    background:var(--kelp);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .motif-tile .badge{position:absolute;top:7px;right:7px;width:24px;height:24px;border-radius:50%;
+    background:var(--kelp);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
 
   .gal-side{width:250px;flex:none;display:flex;flex-direction:column;gap:10px;min-height:0;overflow-y:auto;scrollbar-width:thin}
   .stat-card{flex:none;background:var(--paper);border:3px solid var(--deep);border-radius:20px;
@@ -420,7 +420,7 @@
     <div class="gal-layout">
       <div class="motif-card">
         <div class="motif-card-head">
-          <b>Meine Motive</b>
+          <b>Meine Bilder</b>
           <span id="galMotifCount"></span>
         </div>
         <div class="motif-grid" id="galMotifGrid"></div>
