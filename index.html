@@ -1450,18 +1450,9 @@ function buildBubbles(){
     bubbles.appendChild(b);
   });
 }
-let stepStarred=[];
-function awardStepStar(i){
-  if(!profile || stepStarred[i]) return;
-  stepStarred[i]=true;
-  profile.stars=(profile.stars||0)+1;
-  profile.stepsDone=(profile.stepsDone||0)+1;
-  saveProfiles();
-}
 function openMotif(i){
   motif=allMotifs()[i];
   $('motifName').textContent=motif.emoji+' '+motif.name;
-  stepStarred=new Array(motif.steps.length).fill(false);
   buildArt(); buildBubbles(); undoStack=[];
   $('board').classList.remove('party');
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
@@ -1576,24 +1567,21 @@ $('modeColor').addEventListener('click',()=>setMode('color'));
   nextBtn.parentNode.replaceChild(orig,nextBtn);   // alte Listener entfernen
   orig.addEventListener('click',()=>{
     if(mode==='color'){ finishColor(); return; }
-    awardStepStar(step);
     if(step<motif.steps.length-1){
       if(Math.random()<0.55) Voice.say('praise',null,true);
       show(step+1);
     } else finish();
   });
 })();
-const AUSMAL_STARS=3;
 function finishColor(){
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
-  if(profile){ profile.stars=(profile.stars||0)+AUSMAL_STARS; saveProfiles(); }
   Voice.say('finish',null,true);
   stopIdle();
 }
 
 function showTrophyPopup(tier){
   $('rewardEmoji').textContent=tier.emoji;
-  $('rewardText').textContent=tier.label+' geschafft! Schau im Pokalschrank vorbei.';
+  $('rewardText').textContent=tier.label+' geschafft! Schau in deiner Galerie vorbei.';
   $('reward').classList.add('on');
   celebrate();
   Voice.raw('Wow! Du hast den '+tier.label+' gewonnen!');
@@ -1923,12 +1911,13 @@ async function keepPicture(){
   const prevDisc = Object.keys(counts).length;
   if(motif){ counts[motifName]=(counts[motifName]||0)+1; profile.motifCounts=JSON.stringify(counts); }
   const newDisc = firstTime ? prevDisc+1 : prevDisc;
+  profile.stars=(profile.stars||0)+1;
 
   const prevTier=trophyTier(prevDisc), newTier=trophyTier(newDisc);
   const trophyReached = !!newTier && (!prevTier || newTier.key!==prevTier.key);
 
   await saveProfiles();
-  toast('🖼️ Bild in der Galerie gespeichert');
+  toast('⭐ +1 Stern! Bild in der Galerie gespeichert');
 
   if(trophyReached) setTimeout(()=>showTrophyPopup(newTier),400);
   else Voice.say('gallery',null,true);
