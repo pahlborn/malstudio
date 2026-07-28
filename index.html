@@ -109,7 +109,7 @@
   .reward-card p{font-size:19px;font-weight:800;margin:12px 0 16px}
   .reward-card button{width:100%}
 
-  /* ---------- Pokale & Motiv-Sammlung (in der Galerie) ---------- */
+  /* ---------- Medaillen & Motiv-Sammlung (in der Galerie) ---------- */
   .profile-level{font-weight:700;font-size:13px;color:var(--sea);margin:0}
   .gal-layout{flex:1;min-height:0;display:flex;gap:14px}
   .motif-card{flex:1;min-width:0;background:var(--paper);border:3px solid var(--deep);border-radius:20px;
@@ -540,7 +540,7 @@
 <div class="reward" id="reward">
   <div class="reward-card">
     <p class="big" id="rewardEmoji">🏆</p>
-    <p id="rewardText">Pokal geschafft!</p>
+    <p id="rewardText">Medaille geschafft!</p>
     <button class="nav-btn primary" id="rewardOk">Juhu!</button>
   </div>
 </div>
@@ -1730,11 +1730,11 @@ async function pickProfile(p){
 }
 $('profileChip').addEventListener('click',()=>{ renderProfiles(); showSection(secProfiles); });
 
-/* ---------- Sterne & Pokale ---------- */
+/* ---------- Sterne & Medaillen ---------- */
 const TROPHIES=[
-  {key:'bronze', n:5,  emoji:'🥉', label:'Bronzepokal', labelEn:'Bronze Cup'},
-  {key:'silber', n:10, emoji:'🥈', label:'Silberpokal', labelEn:'Silver Cup'},
-  {key:'gold',   n:20, emoji:'🥇', label:'Goldpokal',   labelEn:'Gold Cup'}
+  {key:'bronze', n:5,  emoji:'🥉', label:'Bronzemedaille', labelEn:'Bronze Medal'},
+  {key:'silber', n:10, emoji:'🥈', label:'Silbermedaille', labelEn:'Silver Medal'},
+  {key:'gold',   n:20, emoji:'🥇', label:'Goldmedaille',   labelEn:'Gold Medal'}
 ];
 function trophyTier(count){ let t=null; for(const x of TROPHIES) if(count>=x.n) t=x; return t; }
 function nextTrophy(count){ return TROPHIES.find(x=>count<x.n)||null; }
@@ -1745,39 +1745,39 @@ function levelInfo(count){
 }
 function renderGreeting(){
   if(!profile) return;
-  const stars=profile.count||0, disc=discoveredCount(), nt=nextTrophy(disc);
+  const stars=profile.stars||0, disc=discoveredCount(), nt=nextTrophy(disc);
   const trophyLine = nt
-    ? '🏆 Noch '+(nt.n-disc)+' Motive bis zum '+nt.label+'.'
-    : '🏆 Du hast alle Pokale gewonnen!';
+    ? '🏆 Noch '+(nt.n-disc)+' Motive bis zur '+nt.label+'.'
+    : '🏆 Du hast alle Medaillen gewonnen!';
   $('homeGreeting').textContent='Hallo '+profile.name+'! '+profile.emoji+' Heute wartet dein nächstes Abenteuer. '
     +'⭐ Du hast '+stars+' '+(stars===1?'Stern':'Sterne')+'. '+trophyLine;
   $('homeBarFill').style.width=trophyProgress(disc).pct+'%';
 }
 function updateProgressChips(){
-  const stars=profile?(profile.count||0):0;
+  const stars=profile?(profile.stars||0):0;
   const tier=trophyTier(discoveredCount());
   const html='⭐ '+stars+(tier?' '+tier.emoji:'');
   document.querySelectorAll('[data-chip]').forEach(el=>{ el.textContent=profile?html:''; });
 }
 function trophyProgress(count){
   const nt=nextTrophy(count);
-  if(!nt) return {pct:100,label:'🏆 Alle Pokale gewonnen!'};
+  if(!nt) return {pct:100,label:'🏆 Alle Medaillen gewonnen!'};
   const prevN=TROPHIES[TROPHIES.indexOf(nt)-1]?TROPHIES[TROPHIES.indexOf(nt)-1].n:0;
   const pct=Math.max(0,Math.min(100,Math.round((count-prevN)/(nt.n-prevN)*100)));
-  return {pct:pct,label:count+' von '+nt.n+' Motiven bis zum '+nt.label};
+  return {pct:pct,label:count+' von '+nt.n+' Motiven bis zur '+nt.label};
 }
 async function renderTrophyPanel(){
   if(!profile) return;
-  const stars=profile.count||0, disc=discoveredCount();
+  const stars=profile.stars||0, disc=discoveredCount();
   const lvl=levelInfo(disc);
   $('galLevelLine').textContent=lvl.title+' · Level '+lvl.level;
 
   const nt=nextTrophy(disc);
-  $('galBarTitle').textContent = nt ? 'Auf dem Weg zum '+nt.label+' 🏆' : 'Alle Pokale gewonnen! 🏆';
+  $('galBarTitle').textContent = nt ? 'Auf dem Weg zur '+nt.label+' 🏆' : 'Alle Medaillen gewonnen! 🏆';
   const prog=trophyProgress(disc);
   $('galBarFill').style.width=prog.pct+'%';
   $('galBarLabel').textContent = nt
-    ? 'noch '+(nt.n-disc)+' '+(nt.n-disc===1?'Motiv':'Motive')+' bis zum Pokal'
+    ? 'noch '+(nt.n-disc)+' '+(nt.n-disc===1?'Motiv':'Motive')+' bis zur Medaille'
     : 'Alle Motive entdeckt!';
 
   $('galStatPictures').textContent=profile.count||0;
@@ -2010,6 +2010,7 @@ function completeMotif(){
   const prevDisc=Object.keys(counts).length;
   counts[motif.name]=(counts[motif.name]||0)+1;
   profile.motifCounts=JSON.stringify(counts);
+  profile.stars=(profile.stars||0)+1;
   const newDisc=firstTime?prevDisc+1:prevDisc;
   const prevTier=trophyTier(prevDisc), newTier=trophyTier(newDisc);
   const trophyReached=!!newTier && (!prevTier || newTier.key!==prevTier.key);
@@ -2067,7 +2068,7 @@ function showTrophyPopup(tier){
   $('rewardText').textContent=tier.label+' geschafft! Schau in deiner Galerie vorbei.';
   $('reward').classList.add('on');
   celebrate();
-  Voice.rawBoth('Wow! Du hast den '+tier.label+' gewonnen!', 'Wow! You won the '+tier.labelEn+'!');
+  Voice.rawBoth('Wow! Du hast die '+tier.label+' gewonnen!', 'Wow! You won the '+tier.labelEn+'!');
 }
 $('rewardOk').addEventListener('click',()=>$('reward').classList.remove('on'));
 
@@ -2395,7 +2396,7 @@ async function keepPicture(){
   pictureSaved=true;
 
   await saveProfiles();
-  toast('⭐ +1 Stern! Bild in der Galerie gespeichert');
+  toast('🖼️ Bild in der Galerie gespeichert');
   Voice.say('gallery',null,true);
 }
 $('keep').addEventListener('click',keepPicture);
