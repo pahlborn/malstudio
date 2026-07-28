@@ -120,7 +120,8 @@
   .motif-grid{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;display:grid;
     grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:12px;align-content:center;padding:2px}
   .motif-tile{aspect-ratio:1/1;border-radius:16px;border:none;display:flex;align-items:center;justify-content:center;
-    font-size:30px;position:relative;cursor:pointer;padding:0}
+    font-size:30px;position:relative;cursor:pointer;padding:0;overflow:hidden}
+  .motif-tile img{width:100%;height:100%;object-fit:cover;display:block}
   .motif-tile.got{background:linear-gradient(135deg,#8ECAE6,var(--sea));box-shadow:0 6px 14px rgba(7,59,76,.18)}
   .motif-tile.locked{background:#EAF1F3;opacity:.6}
   .motif-tile:active{transform:translateY(2px)}
@@ -1332,6 +1333,7 @@ function renderProfiles(){
       e.stopPropagation();
       if(x.classList.contains('armed')){
         for(const k of await Store.keys('pic:'+p.id+':')) await Store.del(k);
+        for(const k of await Store.keys('motifpic:'+p.id+':')) await Store.del(k);
         for(const k of await Store.keys('motif:'+p.id+':')) await Store.del(k);
         profiles=profiles.filter(q=>q.id!==p.id); await saveProfiles(); renderProfiles();
       }else{ x.classList.add('armed'); x.textContent='Löschen?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
@@ -1408,7 +1410,7 @@ function trophyProgress(count){
   const pct=Math.max(0,Math.min(100,Math.round((count-prevN)/(nt.n-prevN)*100)));
   return {pct:pct,label:count+' von '+nt.n+' Motiven bis zum '+nt.label};
 }
-function renderTrophyPanel(){
+async function renderTrophyPanel(){
   if(!profile) return;
   const stars=profile.stars||0, disc=discoveredCount();
   const lvl=levelInfo(disc);
@@ -1434,20 +1436,27 @@ function renderTrophyPanel(){
     list.appendChild(row);
   });
 
-  renderMotifGrid();
+  await renderMotifGrid();
 }
-function renderMotifGrid(){
+async function renderMotifGrid(){
   const grid=$('galMotifGrid'); grid.textContent='';
   const list=allMotifs(), counts=motifCounts();
-  list.forEach((m,i)=>{
-    const got=!!counts[m.name];
+  for(let i=0;i<list.length;i++){
+    const m=list[i], got=!!counts[m.name];
     const d=document.createElement('button');
     d.className='motif-tile '+(got?'got':'locked');
     d.setAttribute('aria-label', got?m.name:'Noch nicht entdeckt');
-    d.innerHTML = got ? '<span>'+m.emoji+'</span><i class="badge">✓</i>' : '<span>🔒</span>';
+    if(got){
+      const img=await Store.get('motifpic:'+profile.id+':'+m.name);
+      d.innerHTML = img
+        ? '<img src="'+img+'" alt="">'+'<i class="badge">✓</i>'
+        : '<span>'+m.emoji+'</span><i class="badge">✓</i>';
+    }else{
+      d.innerHTML='<span>🔒</span>';
+    }
     d.addEventListener('click',()=>openMotif(i));
     grid.appendChild(d);
-  });
+  }
   $('galMotifCount').textContent=Object.keys(counts).length+' von '+list.length+' gemalt';
 }
 $('trophyCTA').addEventListener('click',()=>{
@@ -1959,11 +1968,18 @@ $('voiceToggle').addEventListener('click',()=>{
 });
 
 /* ---------- Galerie ---------- */
+function thumb(){
+  const c=document.createElement('canvas'); c.width=320; c.height=240;
+  const o=c.getContext('2d'); o.fillStyle=PAPER; o.fillRect(0,0,c.width,c.height);
+  o.drawImage(art,0,0,c.width,c.height);
+  return c.toDataURL('image/jpeg',0.82);
+}
 async function keepPicture(){
   if(!profile) return;
   const motifName=motif?motif.name:'Bild';
   await Store.set('pic:'+profile.id+':'+Date.now(), JSON.stringify({motif:motifName}));
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
+  if(motif) await Store.set('motifpic:'+profile.id+':'+motifName, thumb());
 
   const counts=motifCounts();
   const firstTime = !!motif && !counts[motifName];
@@ -1985,10 +2001,10 @@ $('keep').addEventListener('click',keepPicture);
 $('galBtn').addEventListener('click',openGallery);
 $('galBack').addEventListener('click',()=>showSection(secHome));
 
-function openGallery(){
+async function openGallery(){
   showSection(secGallery);
   $('galTitle').textContent='Galerie von '+(profile?profile.name:'');
-  renderTrophyPanel();
+  await renderTrophyPanel();
 }
 
 /* ============================================================
