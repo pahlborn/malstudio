@@ -156,42 +156,6 @@
   #trophyCTA{align-self:center;padding:0 32px;min-width:220px;flex:none}
   #homeGreeting{font-weight:700;color:var(--deep)}
 
-  /* ---------- Schatzkarte ---------- */
-  #mapArea{flex:1;min-height:0;overflow:auto}
-  .treasure-map{position:relative;padding:10px 0 30px;
-    background:linear-gradient(180deg,#8ED8EA 0%,#5EC1DE 100%);border-radius:20px;overflow:hidden}
-  .map-island{position:relative;margin:0 auto;width:86%;background:#EBD9A5;
-    box-shadow:inset 0 0 0 9px rgba(76,153,86,.35);
-    filter:drop-shadow(0 8px 10px rgba(7,59,76,.2));
-    clip-path:polygon(9% 0%,5% 14%,12% 28%,6% 42%,13% 56%,5% 70%,12% 84%,7% 100%,
-      91% 100%,95% 84%,88% 70%,94% 56%,87% 42%,93% 28%,86% 14%,90% 0%);
-    padding:34px 0 46px}
-  .map-island::before{content:"";position:absolute;left:50%;top:3%;bottom:3%;
-    border-left:5px dashed rgba(120,78,42,.4);border-radius:6px;transform:translateX(-50%)}
-  .map-deco{position:absolute;font-size:26px;opacity:.8;pointer-events:none;z-index:0}
-  .map-endpoint{display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;z-index:1;margin:2px 0}
-  .map-endpoint em{font-size:38px;font-style:normal}
-  .map-endpoint span{font-family:var(--font);font-weight:800;font-size:13px;color:var(--deep);
-    background:var(--paper);padding:2px 10px;border-radius:8px;border:2px solid var(--deep)}
-  .map-row{display:flex;position:relative;z-index:1;margin:9px 0}
-  .map-row.pos-0{justify-content:flex-start;padding-left:11%}
-  .map-row.pos-1{justify-content:center}
-  .map-row.pos-2{justify-content:flex-end;padding-right:11%}
-  .map-stop{display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font)}
-  .map-node{position:relative;background:var(--paper);border:4px solid var(--deep);border-radius:50%;
-    width:74px;height:74px;display:flex;align-items:center;justify-content:center;
-    box-shadow:0 8px 16px rgba(7,59,76,.13)}
-  .map-node em{font-size:32px;font-style:normal;line-height:1}
-  .map-node.found{border-color:var(--sea);background:linear-gradient(160deg,#DFF3FA,var(--paper))}
-  .map-node.found::after{content:"✓";position:absolute;bottom:-6px;right:-6px;width:23px;height:23px;
-    border-radius:50%;background:var(--kelp);color:#fff;display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:13px;border:2px solid var(--paper)}
-  .map-node.gold{border-color:#E3A008;box-shadow:0 8px 16px rgba(7,59,76,.13);background:linear-gradient(160deg,#FFEBB0,var(--paper))}
-  .map-node.gold::after{content:"🥇";position:absolute;bottom:-11px;right:-9px;font-size:20px}
-  .map-stop:active .map-node{transform:translateY(3px)}
-  .map-label{font-weight:800;font-size:12px;color:var(--deep);
-    background:var(--paper);padding:2px 9px;border-radius:8px;border:2px solid var(--deep);white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis}
-
   /* ---------- Fortschritts-Chip & -Balken ---------- */
   .progress-chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;
     border-radius:12px;border:3px solid var(--sand);background:#FFF7E0;color:var(--deep);
@@ -441,19 +405,7 @@
       <p class="hint" id="voiceHint" style="margin-top:8px"></p>
     </div>
     <p class="hint" id="homeHint">Links steht die Vorlage – im weißen Feld malst du sie nach.</p>
-    <div class="modes" id="viewModes">
-      <button class="modebtn on" id="viewMap" aria-pressed="true">🗺️ Schatzkarte</button>
-      <button class="modebtn" id="viewList" aria-pressed="false">📋 Liste</button>
-    </div>
-    <p class="hint" id="mapExplain" hidden>🗺️ Deine Insel voller Motive! Tippe auf ein Feld, um es zu malen – in welcher Reihenfolge du magst.</p>
-    <div id="mapArea">
-      <div class="treasure-map" id="treasureMap"></div>
-      <div id="customStrip" hidden>
-        <div class="ref-label" style="margin:12px 2px 6px">Meine eigenen Motive</div>
-        <div class="picker" id="customPicker" style="flex:none"></div>
-      </div>
-    </div>
-    <div class="picker" id="picker" hidden></div>
+    <div class="picker" id="picker"></div>
   </section>
 
   <!-- ============ POKALSCHRANK ============ -->
@@ -572,7 +524,6 @@
       <button class="icon-btn go" id="toGallery">🖼️ In die Galerie</button>
       <button class="icon-btn" id="again">↻ Noch einmal</button>
       <button class="icon-btn" id="nextAdventure">🧭 Nächstes Abenteuer</button>
-      <button class="icon-btn" id="other">🎨 Anderes Motiv</button>
     </div>
 
     <div class="stage">
@@ -1407,7 +1358,7 @@ function toast(msg){
 function showSection(s){
   [secProfiles,secHome,secGallery,secDraw,secCreator,secAlbum,secTrophy,secSeaAlbum].forEach(x=>x.hidden = x!==s);
   updateProgressChips();
-  if(s===secHome){ renderGreeting(); renderMap(); }
+  if(s===secHome){ renderGreeting(); }
   if(s!==secDraw) stopIdle();
   requestAnimationFrame(()=>{ if(typeof layout==='function') layout(); });
 }
@@ -1473,7 +1424,6 @@ async function pickProfile(p){
   Store.set('lastProfile',p.id);
   await loadCustoms();
   renderPicker();
-  renderMap();
   showSection(secHome);
   Voice.say('hello',null,true);
 }
@@ -1494,17 +1444,17 @@ function levelInfo(count){
 }
 function renderGreeting(){
   if(!profile) return;
-  const stars=profile.stars||0, count=profile.count||0, nt=nextTrophy(count);
+  const stars=profile.stars||0, disc=discoveredCount(), nt=nextTrophy(disc);
   const trophyLine = nt
-    ? '🏆 Noch '+(nt.n-count)+' bis zum '+nt.label+'.'
+    ? '🏆 Noch '+(nt.n-disc)+' Motive bis zum '+nt.label+'.'
     : '🏆 Du hast alle Pokale gewonnen!';
   $('homeGreeting').textContent='Hallo '+profile.name+'! '+profile.emoji+' Heute wartet dein nächstes Abenteuer. '
     +'⭐ Du hast '+stars+' '+(stars===1?'Stern':'Sterne')+'. '+trophyLine;
-  $('homeBarFill').style.width=trophyProgress(count).pct+'%';
+  $('homeBarFill').style.width=trophyProgress(disc).pct+'%';
 }
 function updateProgressChips(){
   const stars=profile?(profile.stars||0):0;
-  const tier=trophyTier(profile?(profile.count||0):0);
+  const tier=trophyTier(discoveredCount());
   const html='⭐ '+stars+(tier?' '+tier.emoji:'');
   document.querySelectorAll('[data-chip]').forEach(el=>{ el.textContent=profile?html:''; });
 }
@@ -1513,18 +1463,18 @@ function trophyProgress(count){
   if(!nt) return {pct:100,label:'🏆 Alle Pokale gewonnen!'};
   const prevN=TROPHIES[TROPHIES.indexOf(nt)-1]?TROPHIES[TROPHIES.indexOf(nt)-1].n:0;
   const pct=Math.max(0,Math.min(100,Math.round((count-prevN)/(nt.n-prevN)*100)));
-  return {pct:pct,label:count+' von '+nt.n+' Bildern bis zum '+nt.label};
+  return {pct:pct,label:count+' von '+nt.n+' Motiven bis zum '+nt.label};
 }
 function openTrophy(){
   showSection(secTrophy);
   if(!profile) return;
-  const count=profile.count||0, stars=profile.stars||0, steps=profile.stepsDone||0;
-  const lvl=levelInfo(count);
+  const count=profile.count||0, stars=profile.stars||0, steps=profile.stepsDone||0, disc=discoveredCount();
+  const lvl=levelInfo(disc);
   $('trophyAvatar').textContent=profile.emoji;
   $('trophyName').textContent=profile.name;
   $('trophyLevel').textContent=lvl.title+' · Level '+lvl.level;
   $('trophyStarsLabel').textContent='⭐ '+stars+' '+(stars===1?'Stern':'Sterne');
-  const prog=trophyProgress(count);
+  const prog=trophyProgress(disc);
   $('trophyBarFill').style.width=prog.pct+'%';
   $('trophyBarLabel').textContent=prog.label;
   $('statPictures').textContent=count;
@@ -1532,10 +1482,10 @@ function openTrophy(){
   $('statStickers').textContent=earnedList().length+' / '+STICKERS.length;
   const grid=$('trophyGrid'); grid.textContent='';
   TROPHIES.forEach(t=>{
-    const got=count>=t.n;
+    const got=disc>=t.n;
     const d=document.createElement('div');
     d.className='trophy-card '+(got?t.key:'locked');
-    d.innerHTML='<em>'+t.emoji+'</em><b>'+t.label+'</b><small>'+(got?'Geschafft!':'Noch '+(t.n-count)+' Bilder')+'</small>';
+    d.innerHTML='<em>'+t.emoji+'</em><b>'+t.label+'</b><small>'+(got?'Geschafft!':'Noch '+(t.n-disc)+' Motive')+'</small>';
     grid.appendChild(d);
   });
 }
@@ -1550,6 +1500,7 @@ $('trophyCTA').addEventListener('click',()=>{
 /* ---------- Meeresalbum ---------- */
 const GOLD_REPEATS=3;
 function motifCounts(){ try{ return JSON.parse(profile.motifCounts||'{}'); }catch(e){ return {}; } }
+function discoveredCount(){ return Object.keys(motifCounts()).length; }
 function seaAlbumStatus(name,counts){
   const n=counts[name]||0;
   if(n<=0) return 'locked';
@@ -1599,87 +1550,13 @@ function renderPicker(){
       const x=document.createElement('button'); x.className='x'; x.textContent='✕';
       x.addEventListener('click',async e=>{
         e.stopPropagation();
-        if(x.classList.contains('armed')){ await Store.del(m._key); await loadCustoms(); renderPicker(); renderMap(); }
+        if(x.classList.contains('armed')){ await Store.del(m._key); await loadCustoms(); renderPicker(); }
         else{ x.classList.add('armed'); x.textContent='Weg?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
       });
       b.appendChild(x);
     }
     picker.appendChild(b);
   });
-}
-
-let pickerView='map';
-function setPickerView(v){
-  pickerView=v;
-  $('viewMap').classList.toggle('on',v==='map'); $('viewMap').setAttribute('aria-pressed',v==='map'?'true':'false');
-  $('viewList').classList.toggle('on',v==='list'); $('viewList').setAttribute('aria-pressed',v==='list'?'true':'false');
-  $('mapArea').hidden = v!=='map';
-  $('picker').hidden = v!=='list';
-  $('mapExplain').hidden = v!=='map';
-  Store.set('pickerView',v);
-}
-$('viewMap').addEventListener('click',()=>setPickerView('map'));
-$('viewList').addEventListener('click',()=>setPickerView('list'));
-
-const MAP_DECO=['🌴','🪨','🌺','🌴','🪨','🌵'];
-function renderMap(){
-  const map=$('treasureMap'); map.textContent='';
-  const island=document.createElement('div'); island.className='map-island';
-  const counts=profile?motifCounts():{};
-
-  const start=document.createElement('div'); start.className='map-endpoint';
-  start.innerHTML='<em>⛵</em><span>Los geht\'s!</span>';
-  island.appendChild(start);
-
-  MOTIFS.forEach((m,i)=>{
-    const st=seaAlbumStatus(m.name,counts);   // 'locked'=noch nicht gemalt (aber frei wählbar), 'found', 'gold'
-    const row=document.createElement('div');
-    row.className='map-row pos-'+(i%3);
-    const stop=document.createElement('button');
-    stop.className='map-stop';
-    const node=document.createElement('span');
-    node.className='map-node'+(st==='locked'?'':' '+st);
-    node.innerHTML='<em>'+m.emoji+'</em>';
-    const label=document.createElement('span'); label.className='map-label'; label.textContent=m.name;
-    stop.appendChild(node); stop.appendChild(label);
-    stop.addEventListener('click',()=>openMotif(i));
-    row.appendChild(stop);
-    island.appendChild(row);
-    if(i%4===3){
-      const deco=document.createElement('span'); deco.className='map-deco';
-      deco.textContent=MAP_DECO[(i>>2)%MAP_DECO.length];
-      deco.style.top=(i*11+40)+'px';
-      deco.style.left = (i%3===2) ? '8%' : (i%3===0 ? '80%' : '6%');
-      island.appendChild(deco);
-    }
-  });
-
-  const end=document.createElement('div'); end.className='map-endpoint';
-  end.innerHTML='<em>🏆</em><span>Alle entdeckt!</span>';
-  island.appendChild(end);
-
-  map.appendChild(island);
-  const cs=$('customStrip'), cp=$('customPicker');
-  if(customs.length){
-    cs.hidden=false; cp.textContent='';
-    customs.forEach((m,ci)=>{
-      const i=MOTIFS.length+ci;
-      const b=document.createElement('button');
-      b.className='tile mine';
-      b.innerHTML='<em>'+m.emoji+'</em>'+m.name+'<b>'+m.level+'</b>';
-      b.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; openMotif(i); });
-      const x=document.createElement('button'); x.className='x'; x.textContent='✕';
-      x.addEventListener('click',async e=>{
-        e.stopPropagation();
-        if(x.classList.contains('armed')){ await Store.del(m._key); await loadCustoms(); renderPicker(); renderMap(); }
-        else{ x.classList.add('armed'); x.textContent='Weg?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
-      });
-      b.appendChild(x);
-      cp.appendChild(b);
-    });
-  }else{
-    cs.hidden=true;
-  }
 }
 
 function shapeEl(sh){
@@ -1743,7 +1620,6 @@ function openMotif(i){
   }
 }
 $('home-btn').addEventListener('click',()=>showSection(secHome));
-$('other').addEventListener('click',()=>showSection(secHome));
 
 function show(i,silent){
   step=i;
@@ -1813,7 +1689,6 @@ function finish(){
   [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
   [...bubbles.children].forEach(x=>{x.classList.remove('now');x.classList.add('done');});
   Voice.say('finish',null,true);
-  celebrate();
   stopIdle();
 }
 $('again').addEventListener('click',()=>{
@@ -1823,7 +1698,10 @@ $('again').addEventListener('click',()=>{
   pokeIdle();
 });
 $('nextAdventure').addEventListener('click',()=>{
-  doneBar.classList.remove('on'); showSection(secHome);
+  doneBar.classList.remove('on');
+  const list=allMotifs(), counts=motifCounts();
+  const idx=list.findIndex(m=>!counts[m.name]);
+  if(idx>=0) openMotif(idx); else showSection(secHome);
 });
 
 /* ---------- Modus-Umschalter ---------- */
@@ -1861,7 +1739,6 @@ function finishColor(){
   doneBar.classList.add('on');
   if(profile){ profile.stars=(profile.stars||0)+AUSMAL_STARS; saveProfiles(); }
   Voice.say('finish',null,true);
-  celebrate();
   stopIdle();
 }
 
@@ -2235,14 +2112,15 @@ async function keepPicture(){
     JSON.stringify({motif:motifName,emoji:motifEmoji,img:thumb()}));
   const ks=await Store.keys('pic:'+profile.id+':');
   if(ks.length>40){ ks.sort(); for(const k of ks.slice(0,ks.length-40)) await Store.del(k); }
-  const prevCount=profile.count||0;
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
 
   const counts=motifCounts();
   const firstTime = !!motif && !counts[motifName];
+  const prevDisc = Object.keys(counts).length;
   if(motif){ counts[motifName]=(counts[motifName]||0)+1; profile.motifCounts=JSON.stringify(counts); }
+  const newDisc = firstTime ? prevDisc+1 : prevDisc;
 
-  const prevTier=trophyTier(prevCount), newTier=trophyTier(profile.count);
+  const prevTier=trophyTier(prevDisc), newTier=trophyTier(newDisc);
   const trophyReached = !!newTier && (!prevTier || newTier.key!==prevTier.key);
 
   await saveProfiles();
@@ -2363,7 +2241,7 @@ $('cFinish').addEventListener('click',async()=>{
   const name=($('cName').value||'').trim()||'Mein Motiv';
   const m={name:name,emoji:cAvatar,level:'von mir',steps:cSteps};
   await Store.set('motif:'+profile.id+':'+Date.now(),JSON.stringify(m));
-  await loadCustoms(); renderPicker(); renderMap(); showSection(secHome);
+  await loadCustoms(); renderPicker(); showSection(secHome);
   toast('✏️ Motiv gespeichert'); Voice.raw('Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!');
 });
 $('newMotif').addEventListener('click',()=>{ cReset(); cNewLiveGroup(); showSection(secCreator); Voice.say('creator',null,true); });
@@ -2430,7 +2308,6 @@ layout();
   const vName=await Store.get('voiceName'); if(vName) setTimeout(()=>Voice.setVoice(vName),400);
   syncVoiceButtons();
   const savedMode=await Store.get('mode'); setMode(savedMode==='color'?'color':'draw');
-  const savedView=await Store.get('pickerView'); setPickerView(savedView==='list'?'list':'map');
   const last=await Store.get('lastProfile');
   const found=profiles.find(p=>p.id===last);
   if(found) pickProfile(found); else showSection(secProfiles);
