@@ -109,28 +109,51 @@
   .reward-card p{font-size:19px;font-weight:800;margin:12px 0 16px}
   .reward-card button{width:100%}
 
-  /* ---------- Pokale (in der Galerie) ---------- */
+  /* ---------- Pokale & Motiv-Sammlung (in der Galerie) ---------- */
   .profile-level{font-weight:700;font-size:13px;color:var(--sea);margin:0}
+  .gal-layout{flex:1;min-height:0;display:flex;gap:14px}
+  .motif-card{flex:1;min-width:0;background:var(--paper);border:3px solid var(--deep);border-radius:20px;
+    box-shadow:0 8px 16px rgba(7,59,76,.13);padding:16px 18px;display:flex;flex-direction:column;min-height:0}
+  .motif-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px;flex:none}
+  .motif-card-head b{font-family:var(--font);font-weight:800;font-size:18px;color:var(--deep)}
+  .motif-card-head span{font-weight:700;font-size:13px;color:var(--coral)}
+  .motif-grid{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:12px;align-content:center;padding:2px}
+  .motif-tile{aspect-ratio:1/1;border-radius:16px;border:none;display:flex;align-items:center;justify-content:center;
+    font-size:30px;position:relative;cursor:pointer;padding:0}
+  .motif-tile.got{background:linear-gradient(135deg,#8ECAE6,var(--sea));box-shadow:0 6px 14px rgba(7,59,76,.18)}
+  .motif-tile.locked{background:#EAF1F3;opacity:.6}
+  .motif-tile:active{transform:translateY(2px)}
+  .motif-tile .badge{position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:50%;
+    background:var(--kelp);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+  .gal-side{width:250px;flex:none;display:flex;flex-direction:column;gap:10px;min-height:0;overflow-y:auto;scrollbar-width:thin}
   .stat-card{flex:none;background:var(--paper);border:3px solid var(--deep);border-radius:20px;
     box-shadow:0 8px 16px rgba(7,59,76,.13);padding:16px 18px}
-  .stat-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-  .stat-card-head b{font-family:var(--font);font-weight:800;font-size:18px;color:var(--deep)}
-  .stat-card-head span{font-weight:700;font-size:13px;color:var(--coral)}
+  .stat-card b{font-family:var(--font);font-weight:800;font-size:15px;color:var(--deep)}
+  .stat-card .progress-bar{margin-top:10px}
+  .stat-card-sub{margin-top:6px;font-weight:700;font-size:12px;color:var(--coral)}
+  .stats2{flex:none;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat-tile{background:var(--paper);border:3px solid var(--deep);border-radius:16px;
+    box-shadow:0 8px 16px rgba(7,59,76,.13);padding:10px 6px;text-align:center}
+  .stat-tile em{font-size:22px;font-style:normal;display:block}
+  .stat-tile b{display:block;font-family:var(--font);font-weight:800;font-size:18px;color:var(--deep);margin-top:2px}
+  .stat-tile small{font-weight:700;font-size:10px;opacity:.75}
   .awards-card{flex:none;background:var(--paper);border:3px solid var(--deep);border-radius:20px;
-    box-shadow:0 8px 16px rgba(7,59,76,.13);padding:16px 18px}
-  .awards-card>b{display:block;font-family:var(--font);font-weight:800;font-size:16px;color:var(--deep);margin-bottom:10px}
-  .trophies{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .trophy-card{background:var(--paper);border:3px solid var(--deep);border-radius:16px;
-    box-shadow:0 8px 16px rgba(7,59,76,.13);padding:14px 6px;display:flex;flex-direction:column;
-    align-items:center;gap:4px;text-align:center}
-  .trophy-card em{font-size:44px;font-style:normal;line-height:1}
-  .trophy-card b{font-size:14px}
-  .trophy-card small{opacity:.8;font-weight:700;font-size:11px}
-  .trophy-card.bronze{border-color:#C97B3D;box-shadow:0 8px 16px rgba(7,59,76,.13);background:linear-gradient(160deg,#F6DEC6,var(--paper))}
-  .trophy-card.silber{border-color:#9AA7B0;box-shadow:0 8px 16px rgba(7,59,76,.13);background:linear-gradient(160deg,#E7ECEF,var(--paper))}
-  .trophy-card.gold{border-color:#E3A008;box-shadow:0 8px 16px rgba(7,59,76,.13);background:linear-gradient(160deg,#FFEBB0,var(--paper))}
-  .trophy-card.locked{filter:grayscale(1);opacity:.5}
-  #trophyCTA{align-self:center;padding:0 32px;min-width:220px;flex:none}
+    box-shadow:0 8px 16px rgba(7,59,76,.13);padding:14px 16px}
+  .awards-card>b{display:block;font-family:var(--font);font-weight:800;font-size:15px;color:var(--deep);margin-bottom:8px}
+  .trophy-list{display:flex;flex-direction:column;gap:6px}
+  .trophy-row{display:flex;align-items:center;gap:8px;background:#F1F6F8;border-radius:12px;padding:6px 10px}
+  .trophy-row em{font-size:24px;font-style:normal;flex:none}
+  .trophy-row b{display:block;font-size:12px;color:var(--deep)}
+  .trophy-row small{display:block;font-weight:700;font-size:10.5px;color:#7C8A93}
+  .trophy-row.got{background:linear-gradient(135deg,#FFE8C8,#FFD9A0);border:2px solid #EF9F3C}
+  .trophy-row.got b{color:#8A5A2B}
+  .trophy-row.got small{color:#B08256}
+  .trophy-row.next em{filter:grayscale(.5)}
+  .trophy-row.locked{opacity:.55}
+  .trophy-row.locked em{filter:grayscale(1)}
+  #trophyCTA{flex:none}
   #homeGreeting{font-weight:700;color:var(--deep)}
 
   /* ---------- Fortschritts-Chip & -Balken ---------- */
@@ -187,14 +210,6 @@
 
   /* ---------- Galerie ---------- */
   #gallery{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
-  .gal{flex:1;min-height:0;overflow:auto;display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;align-content:start;padding:4px 2px}
-  .pic{position:relative;background:var(--paper);border:3px solid var(--deep);border-radius:18px;
-    box-shadow:0 8px 16px rgba(7,59,76,.13);overflow:hidden}
-  .pic img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
-  .pic .cap{padding:6px 10px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;gap:6px}
-  .pic .cap small{font-weight:500;opacity:.6}
-  .empty{opacity:.6;font-weight:600;padding:20px 4px}
 
   /* ---------- Werkstatt ---------- */
   #creator{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
@@ -322,6 +337,9 @@
     .grid2{grid-template-columns:repeat(3,auto)}
     .navrow{width:auto;min-width:280px}
     .spacer{display:none}
+    .gal-layout{flex-direction:column}
+    .gal-side{width:100%}
+    .motif-card{flex:none;max-height:44vh}
   }
 </style>
 </head>
@@ -386,22 +404,35 @@
     </div>
     <p class="profile-level" id="galLevelLine"></p>
 
-    <div class="stat-card">
-      <div class="stat-card-head">
-        <b id="galStarsLabel"></b>
-        <span id="galBarLabel"></span>
+    <div class="gal-layout">
+      <div class="motif-card">
+        <div class="motif-card-head">
+          <b>Meine Motive</b>
+          <span id="galMotifCount"></span>
+        </div>
+        <div class="motif-grid" id="galMotifGrid"></div>
       </div>
-      <div class="progress-bar"><div class="progress-bar-fill" id="galBarFill"></div></div>
+
+      <div class="gal-side">
+        <div class="stat-card">
+          <b id="galBarTitle"></b>
+          <div class="progress-bar"><div class="progress-bar-fill" id="galBarFill"></div></div>
+          <div class="stat-card-sub" id="galBarLabel"></div>
+        </div>
+
+        <div class="stats2">
+          <div class="stat-tile"><em>🖼️</em><b id="galStatPictures"></b><small>Bilder gemalt</small></div>
+          <div class="stat-tile"><em>⭐</em><b id="galStatStars"></b><small>Sterne</small></div>
+        </div>
+
+        <div class="awards-card">
+          <b>Meine Auszeichnungen</b>
+          <div class="trophy-list" id="galTrophyList"></div>
+        </div>
+
+        <button class="nav-btn primary" id="trophyCTA">Weiter zum Abenteuer →</button>
+      </div>
     </div>
-
-    <div class="awards-card">
-      <b>Meine Auszeichnungen</b>
-      <div class="trophies" id="galTrophyGrid"></div>
-    </div>
-
-    <button class="nav-btn primary" id="trophyCTA">Weiter zum Abenteuer →</button>
-
-    <div class="gal" id="galGrid"></div>
   </section>
 
   <!-- ============ WERKSTATT ============ -->
@@ -1371,18 +1402,42 @@ function renderTrophyPanel(){
   const stars=profile.stars||0, disc=discoveredCount();
   const lvl=levelInfo(disc);
   $('galLevelLine').textContent=lvl.title+' · Level '+lvl.level;
-  $('galStarsLabel').textContent='⭐ '+stars+' '+(stars===1?'Stern':'Sterne');
+
+  const nt=nextTrophy(disc);
+  $('galBarTitle').textContent = nt ? 'Auf dem Weg zum '+nt.label+' 🏆' : 'Alle Pokale gewonnen! 🏆';
   const prog=trophyProgress(disc);
   $('galBarFill').style.width=prog.pct+'%';
-  $('galBarLabel').textContent=prog.label;
-  const grid=$('galTrophyGrid'); grid.textContent='';
-  TROPHIES.forEach(t=>{
+  $('galBarLabel').textContent = nt
+    ? 'noch '+(nt.n-disc)+' '+(nt.n-disc===1?'Motiv':'Motive')+' bis zum Pokal'
+    : 'Alle Motive entdeckt!';
+
+  $('galStatPictures').textContent=profile.count||0;
+  $('galStatStars').textContent=stars;
+
+  const list=$('galTrophyList'); list.textContent='';
+  [...TROPHIES].reverse().forEach(t=>{
     const got=disc>=t.n;
-    const d=document.createElement('div');
-    d.className='trophy-card '+(got?t.key:'locked');
-    d.innerHTML='<em>'+t.emoji+'</em><b>'+t.label+'</b><small>'+(got?'Geschafft!':'Noch '+(t.n-disc)+' Motive')+'</small>';
+    const row=document.createElement('div');
+    row.className='trophy-row '+(got?'got':(t===nt?'next':'locked'));
+    row.innerHTML='<em>'+t.emoji+'</em><div><b>'+t.label+'</b><small>'+(got?'Geschafft! ✓':'noch '+(t.n-disc)+' Motive')+'</small></div>';
+    list.appendChild(row);
+  });
+
+  renderMotifGrid();
+}
+function renderMotifGrid(){
+  const grid=$('galMotifGrid'); grid.textContent='';
+  const list=allMotifs(), counts=motifCounts();
+  list.forEach((m,i)=>{
+    const got=!!counts[m.name];
+    const d=document.createElement('button');
+    d.className='motif-tile '+(got?'got':'locked');
+    d.setAttribute('aria-label', got?m.name:'Noch nicht entdeckt');
+    d.innerHTML = got ? '<span>'+m.emoji+'</span><i class="badge">✓</i>' : '<span>🔒</span>';
+    d.addEventListener('click',()=>openMotif(i));
     grid.appendChild(d);
   });
+  $('galMotifCount').textContent=Object.keys(counts).length+' von '+list.length+' gemalt';
 }
 $('trophyCTA').addEventListener('click',()=>{
   const list=allMotifs(), counts=motifCounts();
@@ -1895,19 +1950,10 @@ $('voiceToggle').addEventListener('click',()=>{
 });
 
 /* ---------- Galerie ---------- */
-function thumb(){
-  const c=document.createElement('canvas'); c.width=640; c.height=480;
-  const o=c.getContext('2d'); o.fillStyle=PAPER; o.fillRect(0,0,c.width,c.height);
-  o.drawImage(art,0,0,c.width,c.height);
-  return c.toDataURL('image/jpeg',0.82);
-}
 async function keepPicture(){
   if(!profile) return;
-  const motifName=motif?motif.name:'Bild', motifEmoji=motif?motif.emoji:'🎨';
-  await Store.set('pic:'+profile.id+':'+Date.now(),
-    JSON.stringify({motif:motifName,emoji:motifEmoji,img:thumb()}));
-  const ks=await Store.keys('pic:'+profile.id+':');
-  if(ks.length>40){ ks.sort(); for(const k of ks.slice(0,ks.length-40)) await Store.del(k); }
+  const motifName=motif?motif.name:'Bild';
+  await Store.set('pic:'+profile.id+':'+Date.now(), JSON.stringify({motif:motifName}));
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
 
   const counts=motifCounts();
@@ -1930,32 +1976,10 @@ $('keep').addEventListener('click',keepPicture);
 $('galBtn').addEventListener('click',openGallery);
 $('galBack').addEventListener('click',()=>showSection(secHome));
 
-async function openGallery(){
+function openGallery(){
   showSection(secGallery);
-  renderTrophyPanel();
-  const grid=$('galGrid'); grid.textContent='';
   $('galTitle').textContent='Galerie von '+(profile?profile.name:'');
-  const ks=(await Store.keys('pic:'+profile.id+':')).sort().reverse();
-  if(!ks.length){ grid.innerHTML='<p class="empty">Noch keine Bilder. Male eins und tippe auf „In die Galerie".</p>'; return; }
-  for(const k of ks){
-    let rec; try{ rec=JSON.parse(await Store.get(k)); }catch(e){ continue; }
-    if(!rec) continue;
-    const card=document.createElement('div'); card.className='pic';
-    const im=document.createElement('img'); im.src=rec.img; im.alt=rec.motif;
-    const cap=document.createElement('div'); cap.className='cap';
-    const when=new Date(Number(k.split(':')[2])||Date.now());
-    cap.innerHTML='<span>'+(rec.emoji||'')+' '+rec.motif+'</span><small>'+when.toLocaleDateString('de-DE')+'</small>';
-    const x=document.createElement('button'); x.className='x'; x.textContent='✕';
-    x.addEventListener('click',async()=>{
-      if(x.classList.contains('armed')){
-        await Store.del(k);
-        profile.count=(await Store.keys('pic:'+profile.id+':')).length;
-        await saveProfiles(); openGallery();
-      }else{ x.classList.add('armed'); x.textContent='Löschen?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2600); }
-    });
-    card.appendChild(im); card.appendChild(cap); card.appendChild(x);
-    grid.appendChild(card);
-  }
+  renderTrophyPanel();
 }
 
 /* ============================================================
