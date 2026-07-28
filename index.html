@@ -286,7 +286,9 @@
     .bub{transition:none}.board.party{animation:none}
   }
 
-  .side{width:202px;flex:none;display:flex;flex-direction:column;gap:7px;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+  .side{width:202px;flex:none;display:flex;flex-direction:column;gap:7px;min-height:0}
+  .side-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;
+    display:flex;flex-direction:column;gap:7px}
   .tools3{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;flex:none}
   .tool{height:70px;border-radius:16px;border:3px solid var(--deep);background:var(--paper);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
@@ -321,9 +323,8 @@
   .nav-btn.primary{background:var(--kelp)}
   .nav-btn:active{transform:translateY(3px);box-shadow:0 2px 6px rgba(7,59,76,.12)}
   .nav-btn:disabled{opacity:.35;transform:none;cursor:default}
-  .navrow{display:flex;gap:6px;width:100%}
+  .navrow{display:flex;gap:6px;width:100%;flex:none}
   .navrow .nav-btn{flex:1;min-width:0;height:46px;font-size:14px;padding:0 4px;letter-spacing:-.2px}
-  .spacer{flex:1}
 
   .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);
     background:var(--deep);color:#fff;font-weight:700;font-size:15px;
@@ -335,6 +336,7 @@
     .ref{width:186px}
     .ref-note{display:none}
     .side{width:100%;order:3;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center}
+    .side-scroll{display:contents}
     .colors{grid-template-columns:repeat(10,auto)}
     .sizes,.tools3{grid-template-columns:repeat(4,52px)}
     .tools3 .tool{height:60px}
@@ -342,7 +344,6 @@
     .tools3 .tool b{font-size:9px;letter-spacing:-.01em}
     .grid2{grid-template-columns:repeat(3,auto)}
     .navrow{width:auto;min-width:280px}
-    .spacer{display:none}
     .gal-layout{flex-direction:column}
     .gal-side{width:100%}
     .motif-card{flex:none;max-height:44vh}
@@ -503,28 +504,29 @@
       </div>
 
       <div class="side">
-        <div class="tools3" id="tools3">
-          <button class="tool" id="tPen"   aria-pressed="true"  title="Stift"><em>✏️</em><b>Stift</b></button>
-          <button class="tool" id="tMagic" aria-pressed="false" title="Zauberpinsel"><em>🪄</em><b>Zauber</b></button>
-          <button class="tool" id="tFill"  aria-pressed="false" title="Farbeimer"><em>🪣</em><b>Eimer</b></button>
-          <button class="tool" id="tErase" aria-pressed="false" title="Radiergummi"><em>🧽</em><b>Radierer</b></button>
+        <div class="side-scroll">
+          <div class="tools3" id="tools3">
+            <button class="tool" id="tPen"   aria-pressed="true"  title="Stift"><em>✏️</em><b>Stift</b></button>
+            <button class="tool" id="tMagic" aria-pressed="false" title="Zauberpinsel"><em>🪄</em><b>Zauber</b></button>
+            <button class="tool" id="tFill"  aria-pressed="false" title="Farbeimer"><em>🪣</em><b>Eimer</b></button>
+            <button class="tool" id="tErase" aria-pressed="false" title="Radiergummi"><em>🧽</em><b>Radierer</b></button>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card-label">Farben</div>
+            <div class="colors" id="colors"></div>
+          </div>
+          <div class="tool-card">
+            <div class="sizes" id="sizes"></div>
+          </div>
+          <div class="grid2">
+            <button class="icon-btn" id="undo">↩︎ Zurück</button>
+            <button class="icon-btn" id="clear">🗑️ Alles</button>
+            <button class="icon-btn" id="helper">🫥 Hilfslinien</button>
+            <button class="icon-btn go" id="keep">🖼️ Galerie</button>
+            <button class="icon-btn" id="musicBtn">🎵 Musik</button>
+            <button class="icon-btn" id="voiceBtn2">🔊 Stimme</button>
+          </div>
         </div>
-        <div class="tool-card">
-          <div class="tool-card-label">Farben</div>
-          <div class="colors" id="colors"></div>
-        </div>
-        <div class="tool-card">
-          <div class="sizes" id="sizes"></div>
-        </div>
-        <div class="grid2">
-          <button class="icon-btn" id="undo">↩︎ Zurück</button>
-          <button class="icon-btn" id="clear">🗑️ Alles</button>
-          <button class="icon-btn" id="helper">🫥 Hilfslinien</button>
-          <button class="icon-btn go" id="keep">🖼️ Galerie</button>
-          <button class="icon-btn" id="musicBtn">🎵 Musik</button>
-          <button class="icon-btn" id="voiceBtn2">🔊 Stimme</button>
-        </div>
-        <div class="spacer"></div>
         <div class="navrow">
           <button class="nav-btn" id="back">◀︎ Zurück</button>
           <button class="nav-btn primary" id="next">Weiter ▶︎</button>
