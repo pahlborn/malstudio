@@ -155,6 +155,75 @@
   #trophyCTA{flex:none}
   #homeGreeting{font-weight:700;color:var(--deep)}
 
+  /* ---------- Schatzinsel Albarella (optionale Karten-Ansicht) ---------- */
+  #island{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
+  .isl-layout{flex:1;min-height:0;display:flex;gap:14px}
+  .isl-map{--s:1;flex:none;height:100%;aspect-ratio:560/600;position:relative;
+    border-radius:20px;overflow:hidden;border:3px solid var(--deep);
+    box-shadow:0 8px 16px rgba(7,59,76,.13);
+    background:radial-gradient(ellipse at 50% 40%,#4FB3D9 0%,#2B93BE 55%,#1A7CA6 100%)}
+  .isl-map>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .isl-place{position:absolute;transform:translate(-50%,-50%);pointer-events:none;
+    font-family:var(--font);font-weight:800;color:var(--deep);background:rgba(255,255,255,.92);
+    padding:calc(2px*var(--s)) calc(8px*var(--s));border-radius:999px;white-space:nowrap;
+    font-size:calc(11px*var(--s))}
+  .isl-place.green{color:#3B6B2B;background:rgba(255,255,255,.8);font-size:calc(10px*var(--s))}
+  .isl-bay{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;
+    align-items:center;gap:calc(4px*var(--s));background:none;border:0;padding:0;cursor:pointer}
+  .isl-bay:active{transform:translate(-50%,calc(-50% + 2px))}
+  .isl-disc{position:relative;overflow:hidden;width:calc(58px*var(--s));height:calc(58px*var(--s));
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:calc(26px*var(--s));background:#FFF6E0;border:calc(4px*var(--s)) solid var(--sand);
+    box-shadow:0 calc(6px*var(--s)) calc(14px*var(--s)) rgba(0,0,0,.2)}
+  .isl-fog{position:absolute;inset:0;background:radial-gradient(circle at 75% 30%,transparent 28%,#D7DBD6 68%)}
+  .isl-tag{display:flex;align-items:center;gap:calc(3px*var(--s));background:#fff;
+    padding:calc(2px*var(--s)) calc(8px*var(--s));border-radius:999px;white-space:nowrap;
+    box-shadow:0 calc(3px*var(--s)) calc(6px*var(--s)) rgba(0,0,0,.15);
+    font-family:var(--font);font-weight:800;font-size:calc(10px*var(--s));color:var(--deep)}
+  .isl-bay.sel .isl-disc{border-color:var(--coral)}
+  .isl-bay.sel .isl-tag{background:var(--coral);color:#fff}
+  .isl-bay.locked{opacity:.75}
+  .isl-bay.locked .isl-disc{background:#E1E4E1;border-style:dashed;border-color:#B7BEBA;color:#8A9490}
+  .isl-bay.locked .isl-tag{background:rgba(255,255,255,.92);color:#5B6B65;box-shadow:none}
+  .isl-mini{display:flex;gap:1px;font-size:calc(9px*var(--s))}
+  .isl-mini i{font-style:normal}
+  .isl-mini i.off{filter:grayscale(1);opacity:.5}
+  .isl-num{font-family:var(--font);font-weight:900;font-size:calc(9px*var(--s));color:var(--coral)}
+  .isl-bay.sel .isl-num{color:#fff}
+  .isl-chest{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;
+    align-items:center;gap:calc(3px*var(--s));pointer-events:none}
+  .isl-chest .box{width:calc(52px*var(--s));height:calc(42px*var(--s));border-radius:calc(8px*var(--s));
+    background:#D8C99A;border:calc(3px*var(--s)) dashed #B7942E;display:flex;align-items:center;
+    justify-content:center;font-size:calc(22px*var(--s));filter:grayscale(.7);opacity:.85}
+  .isl-chest.open .box{filter:none;opacity:1;border-style:solid}
+  .isl-chest .lbl{font-family:var(--font);font-weight:800;font-size:calc(10px*var(--s));
+    color:#5C4423;background:#FFE8B8;padding:calc(2px*var(--s)) calc(8px*var(--s));
+    border-radius:999px;white-space:nowrap}
+
+  .isl-side{width:270px;flex:none;display:flex;flex-direction:column;gap:10px;min-height:0}
+  .isl-side-scroll{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;
+    display:flex;flex-direction:column;gap:10px}
+  .isl-card{flex:none;background:#FFF8E7;border:3px solid var(--deep);border-radius:20px;
+    box-shadow:0 8px 16px rgba(7,59,76,.13);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+  .isl-card>b{font-family:var(--font);font-weight:800;font-size:16px;color:var(--deep)}
+  .isl-frame{width:100%;height:150px;flex:none;background:linear-gradient(135deg,#C9A06B,#A97C4A);
+    border-radius:10px;padding:7px;box-shadow:0 8px 16px rgba(0,0,0,.25)}
+  .isl-frame>div{width:100%;height:100%;border-radius:5px;background:#FFF6E0;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .isl-frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .isl-frame em{font-size:30px;font-style:normal}
+  .isl-frame small{font-weight:700;font-size:10px;color:#A97C4A}
+  .isl-icons{display:flex;gap:5px;flex-wrap:wrap;font-size:17px}
+  .isl-icons i{font-style:normal}
+  .isl-icons i.off{filter:grayscale(1);opacity:.45}
+  .isl-fact{background:var(--paper);border:2px solid var(--sand);border-radius:12px;padding:10px 12px}
+  .isl-fact-head{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+  .isl-fact-head b{font-family:var(--font);font-weight:800;font-size:11px;color:#B7942E}
+  .isl-fact-head button{margin-left:auto;background:none;border:0;font-size:16px;cursor:pointer;padding:0}
+  .isl-fact p{margin:0;font-weight:700;font-size:14px;color:#5C4423;line-height:1.45}
+  .isl-lock-note{font-weight:700;font-size:13px;color:var(--sub);margin:0;line-height:1.45}
+  .isl-cta{flex:none}
+
   /* ---------- Fortschritts-Chip & -Balken ---------- */
   .progress-chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;
     border-radius:12px;border:3px solid var(--sand);background:#FFF7E0;color:var(--deep);
@@ -347,6 +416,13 @@
     .gal-layout{flex-direction:column}
     .gal-side{width:100%}
     .motif-card{flex:none;max-height:44vh}
+    .isl-layout{flex-direction:column;overflow-y:auto;scrollbar-width:thin}
+    .isl-map{height:44vh;flex:none;align-self:center}
+    .isl-side{width:100%}
+    .isl-side-scroll{display:contents}
+    .isl-frame{height:120px}
+    /* Karte + Details scrollen gemeinsam – der Mal-Knopf bleibt trotzdem sichtbar */
+    .isl-cta{position:sticky;bottom:0;z-index:2;box-shadow:0 -6px 14px rgba(7,59,76,.18)}
   }
 </style>
 </head>
@@ -377,6 +453,7 @@
       <span class="progress-chip" data-chip></span>
       <span style="margin-left:auto"></span>
       <button class="icon-btn" id="newMotif">✏️ Eigenes Motiv</button>
+      <button class="icon-btn" id="islBtn">🗺️ Schatzinsel</button>
       <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
       <button class="icon-btn" id="fsBtn">⛶ Vollbild</button>
       <button class="icon-btn" id="voiceBtn">🔊 Stimme</button>
@@ -443,6 +520,22 @@
 
         <button class="nav-btn primary" id="trophyCTA">Nächstes Motiv →</button>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ SCHATZINSEL (zusätzlich, ersetzt nichts) ============ -->
+  <section id="island" hidden>
+    <div class="row">
+      <button class="icon-btn" id="islBack">◀︎ Zurück</button>
+      <h1>Albarella</h1>
+      <span class="profile-level" id="islSub"></span>
+      <span style="margin-left:auto"></span>
+      <span class="progress-chip" data-chip></span>
+    </div>
+
+    <div class="isl-layout">
+      <div class="isl-map" id="islMap"></div>
+      <div class="isl-side" id="islSide"></div>
     </div>
   </section>
 
@@ -1607,7 +1700,7 @@ const Voice=(function(){
    APP
    ============================================================ */
 const $=id=>document.getElementById(id);
-const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator');
+const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secIsland=$('island');
 const ref=$('ref'), ghost=$('ghost'), bubbles=$('bubbles');
 const pad=$('pad'), ctx=pad.getContext('2d');
 const helper=$('helper'), toastEl=$('toast');
@@ -1656,11 +1749,11 @@ function toast(msg){
   clearTimeout(toast._t); toast._t=setTimeout(()=>toastEl.classList.remove('on'),1800);
 }
 function showSection(s){
-  [secProfiles,secHome,secGallery,secDraw,secCreator].forEach(x=>x.hidden = x!==s);
+  [secProfiles,secHome,secGallery,secDraw,secCreator,secIsland].forEach(x=>x.hidden = x!==s);
   updateProgressChips();
   if(s===secHome){ renderGreeting(); }
   if(s!==secDraw) stopIdle();
-  requestAnimationFrame(()=>{ if(typeof layout==='function') layout(); });
+  requestAnimationFrame(()=>{ if(typeof layout==='function') layout(); sizeIsland(); });
 }
 
 /* ---------- Leerlauf-Ermutigung ---------- */
@@ -1831,11 +1924,213 @@ async function renderMotifGrid(){
 $('trophyCTA').addEventListener('click',()=>{
   const list=allMotifs(), counts=motifCounts();
   const idx=list.findIndex(m=>!counts[m.name]);
+  cameFromIsland=false;
   if(idx>=0) openMotif(idx); else showSection(secHome);
 });
 
 function motifCounts(){ try{ return JSON.parse(profile.motifCounts||'{}'); }catch(e){ return {}; } }
 function discoveredCount(){ return Object.keys(motifCounts()).length; }
+
+/* ============================================================
+   SCHATZINSEL ALBARELLA – zusätzliche Karten-Ansicht.
+   Ersetzt nichts: Die Motiv-Liste bleibt der normale Weg.
+   Liest denselben Fortschritt (motifCounts), speichert nichts Eigenes.
+   ============================================================ */
+const ISLAND_SVG = '<svg viewBox="0 0 560 600" aria-hidden="true">'
+  + '<path d="M 300 25 C 322 55 340 95 352 140 C 360 190 372 250 382 315 C 392 380 398 440 400 490 C 392 522 360 545 330 552 C 300 545 268 552 245 540 C 228 500 240 470 205 448 C 215 405 185 378 198 330 C 172 298 188 252 168 212 C 195 170 212 115 248 60 C 268 40 285 28 300 25 Z" fill="#F3DFA0" stroke="#E8CE84" stroke-width="6"></path>'
+  + '<path d="M 302 32 C 326 62 344 100 356 145 C 364 195 376 255 386 318 C 396 382 402 442 404 490" fill="none" stroke="#FBF0CE" stroke-width="14" stroke-linecap="round" opacity="0.95"></path>'
+  + '<path d="M 172 210 C 205 214 232 208 258 214" fill="none" stroke="#3AA0C4" stroke-width="7" stroke-linecap="round" opacity="0.6"></path>'
+  + '<path d="M 200 330 C 232 335 258 328 284 334" fill="none" stroke="#3AA0C4" stroke-width="7" stroke-linecap="round" opacity="0.6"></path>'
+  + '<path d="M 208 448 C 240 452 264 446 290 452" fill="none" stroke="#3AA0C4" stroke-width="7" stroke-linecap="round" opacity="0.55"></path>'
+  + '<path d="M 250 300 C 290 290 320 320 330 360 C 336 400 315 430 285 435 C 255 438 238 410 240 375 C 242 340 238 312 250 300 Z" fill="#8FBF6E" opacity="0.4"></path>'
+  + '<path d="M 245 160 C 275 152 300 172 305 200 C 308 226 288 244 265 244 C 243 244 232 222 234 198 C 236 178 236 166 245 160 Z" fill="#8FBF6E" opacity="0.35"></path>'
+  + '<ellipse cx="292" cy="392" rx="16" ry="9" fill="#3AA0C4" opacity="0.55"></ellipse>'
+  + '<ellipse cx="268" cy="214" rx="13" ry="7" fill="#3AA0C4" opacity="0.5"></ellipse>'
+  + '<path d="M 190 555 L 240 542" fill="none" stroke="#C9CBC7" stroke-width="6" stroke-linecap="round"></path>'
+  + '<path d="M 352 540 L 372 556 M 366 534 L 386 550" fill="none" stroke="#C9CBC7" stroke-width="4" stroke-linecap="round"></path>'
+  + '</svg>';
+
+const ISLAND_PLACES=[
+  {t:'Capo Nord',x:90,y:35}, {t:'Sandstrand',x:495,y:185},
+  {t:'Lagune & Kanäle',x:65,y:300}, {t:'Golfplatz & Pinien',x:255,y:350,green:1},
+  {t:'Marina',x:470,y:520}, {t:'🌉 Brücke zum Festland',x:100,y:530}
+];
+
+/* Reihenfolge = Freischalt-Reihenfolge. Zusammen decken die Buchten alle 29 Motive ab. */
+const BAYS=[
+  {key:'muschel', name:'Muschelbucht', emoji:'🐚', x:177, y:196,
+   motifs:['Muschel','Seestern','Sandburg','Krabbe','Seepferdchen'],
+   fact:'Miesmuscheln filtern Meerwasser und machen es dabei sauberer. Krabben tragen ihr Skelett außen wie eine Rüstung – und wechseln es, wenn sie größer werden.'},
+  {key:'leuchtturm', name:'Leuchtturmbucht', emoji:'🗼', x:360, y:190,
+   motifs:['Leuchtturm','Haus am Meer','Sonnenschirm','Strandkorb','Palme'],
+   fact:'Der Name „Albarella" kommt von einem Baum: der Silberpappel. Davon wachsen hier ganz viele!'},
+  {key:'segel', name:'Segelbucht', emoji:'⛵', x:377, y:286,
+   motifs:['Segelboot','Piratenschiff','Vespa','Möwe'],
+   fact:'Vor rund 400 Jahren hat der Fluss Po sein Bett verlagert und aus Sand und Schlamm neue Inseln geformt – eine davon ist Albarella.'},
+  {key:'tiefsee', name:'Tiefseebucht', emoji:'🐬', x:396, y:432,
+   motifs:['Fisch','Delfin','Wal','Krake','Schildkröte'],
+   fact:'In der Adria schwimmen mehr als 450 verschiedene Fischarten. Manchmal kommen sogar Delfine und große Meeresschildkröten vorbei.'},
+  {key:'wunder', name:'Wunderbucht', emoji:'🌈', x:206, y:428,
+   motifs:['Herz','Blume','Schmetterling','Kätzchen','Regenbogen','Rakete'],
+   fact:'Auf Albarella wachsen über 2 Millionen Bäume, von 150 verschiedenen Baumarten.'},
+  {key:'nasch', name:'Naschbucht', emoji:'🍦', x:312, y:548,
+   motifs:['Eis','Wassermelone','Pizza','Luftballons'],
+   fact:'Im Sommer wird das Wasser vor Albarella oft 24 bis 27 Grad warm. An der tiefsten Stelle ist das Mittelmeer über 5000 Meter tief!'}
+];
+
+let selBay=BAYS[0].key;
+let cameFromIsland=false;
+
+function bayStats(b){
+  const c=motifCounts();
+  const done=b.motifs.filter(n=>c[n]).length;
+  return {done:done, total:b.motifs.length, full:done>=b.motifs.length};
+}
+function bayUnlocked(i){ return i===0 || bayStats(BAYS[i-1]).full; }
+function baysDone(){ return BAYS.filter(b=>bayStats(b).full).length; }
+function motifEmoji(name){ const m=MOTIFS.find(x=>x.name===name); return m?m.emoji:'🎨'; }
+
+/* Marker skalieren mit der Kartenbreite (Design-Basis: 560px breit) */
+function sizeIsland(){
+  const map=$('islMap'); if(!map || secIsland.hidden) return;
+  const w=map.getBoundingClientRect().width;
+  if(w>0) map.style.setProperty('--s',(w/560).toFixed(4));
+}
+window.addEventListener('resize',sizeIsland);
+
+function renderIsland(){
+  if(!profile) return;
+  const map=$('islMap');
+  let html=ISLAND_SVG;
+  ISLAND_PLACES.forEach(p=>{
+    html+='<div class="isl-place'+(p.green?' green':'')+'" style="left:'+(p.x/560*100)+'%;top:'+(p.y/600*100)+'%">'+p.t+'</div>';
+  });
+  const allFull=baysDone()===BAYS.length;
+  html+='<div class="isl-chest'+(allFull?' open':'')+'" style="left:'+(288/560*100)+'%;top:'+(104/600*100)+'%">'
+      + '<div class="box">'+(allFull?'🎁':'🔒')+'</div>'
+      + '<div class="lbl">📍 Schatz beim Capo Nord</div></div>';
+  map.innerHTML=html;
+
+  BAYS.forEach((b,i)=>{
+    const st=bayStats(b), open=bayUnlocked(i);
+    const el=document.createElement('button');
+    el.className='isl-bay'+(open?'':' locked')+(selBay===b.key?' sel':'');
+    el.style.left=(b.x/560*100)+'%'; el.style.top=(b.y/600*100)+'%';
+    el.setAttribute('aria-label',b.name);
+
+    let disc='<div class="isl-disc">'+(open?b.emoji:'🔒');
+    if(open && !st.full) disc+='<div class="isl-fog"></div>';
+    disc+='</div>';
+
+    let tag='<div class="isl-tag"><span>'+b.name+'</span>';
+    if(!open){ /* nur Name */ }
+    else if(st.full){ tag+='<span>📜</span>'; }
+    else {
+      const c=motifCounts();
+      tag+='<span class="isl-mini">'+b.motifs.map(n=>'<i class="'+(c[n]?'':'off')+'">'+motifEmoji(n)+'</i>').join('')+'</span>';
+      tag+='<span class="isl-num">'+st.done+'/'+st.total+'</span>';
+    }
+    tag+='</div>';
+
+    el.innerHTML=disc+tag;
+    el.addEventListener('click',()=>{ selBay=b.key; renderIsland(); });
+    map.appendChild(el);
+  });
+
+  renderBaySide();
+  requestAnimationFrame(sizeIsland);
+}
+
+async function renderBaySide(){
+  const host=$('islSide'); host.textContent='';
+  const side=document.createElement('div'); side.className='isl-side-scroll';
+  host.appendChild(side);
+  const i=BAYS.findIndex(b=>b.key===selBay), b=BAYS[i];
+  const st=bayStats(b), open=bayUnlocked(i), c=motifCounts();
+  const done=baysDone();
+
+  $('islSub').textContent=levelInfo(discoveredCount()).title+' · '+done+' von '+BAYS.length+' Buchten fertig';
+
+  const card=document.createElement('div');
+  card.className='isl-card';
+  card.innerHTML='<b>'+(open?b.emoji:'🔒')+' '+b.name+'</b>';
+
+  if(!open){
+    const p=document.createElement('p');
+    p.className='isl-lock-note';
+    p.textContent='Diese Bucht ist noch im Nebel. Mal zuerst die '+BAYS[i-1].name+' fertig – dann öffnet sie sich.';
+    card.appendChild(p);
+  }else{
+    const frame=document.createElement('div');
+    frame.className='isl-frame';
+    const inner=document.createElement('div');
+    const img=await newestPicFor(b);
+    if(img){ const im=document.createElement('img'); im.src=img; im.alt=''; inner.appendChild(im); }
+    else { inner.innerHTML='<em>🖼️</em><small>hier erscheint dein gemaltes Bild</small>'; }
+    frame.appendChild(inner); card.appendChild(frame);
+
+    const icons=document.createElement('div');
+    icons.className='isl-icons';
+    icons.innerHTML=b.motifs.map(n=>'<i class="'+(c[n]?'':'off')+'" title="'+n+'">'+motifEmoji(n)+'</i>').join('');
+    card.appendChild(icons);
+
+    if(st.full){
+      const f=document.createElement('div');
+      f.className='isl-fact';
+      f.innerHTML='<div class="isl-fact-head"><span>📜</span><b>Wusstest du?</b>'
+        + '<button type="button" aria-label="Vorlesen">🔊</button></div><p></p>';
+      f.querySelector('p').textContent=b.fact;
+      f.querySelector('button').addEventListener('click',()=>Voice.raw(b.fact));
+      card.appendChild(f);
+    }
+  }
+  side.appendChild(card);
+
+  const prog=document.createElement('div');
+  prog.className='isl-card';
+  prog.style.background='var(--paper)';
+  prog.innerHTML='<b>Insel-Fortschritt</b>'
+    + '<div class="progress-bar"><div class="progress-bar-fill" style="width:'+Math.round(done/BAYS.length*100)+'%"></div></div>'
+    + '<div class="stat-card-sub">'+done+' von '+BAYS.length+' Buchten</div>';
+  side.appendChild(prog);
+
+  const cta=document.createElement('button');
+  cta.className='nav-btn primary isl-cta';
+  const target = (open && !st.full) ? b : BAYS.find((x,n)=>bayUnlocked(n) && !bayStats(x).full);
+  if(target){
+    const next=target.motifs.find(n=>!c[n]);
+    cta.textContent=(next||target.name)+' malen →';
+    cta.addEventListener('click',()=>{
+      const idx=allMotifs().findIndex(m=>m.name===next);
+      if(idx>=0){ cameFromIsland=true; openMotif(idx); }
+    });
+  }else{
+    cta.textContent='Alle Buchten fertig! 🎉';
+    cta.addEventListener('click',()=>toast('🎁 Die Schatztruhe kommt im nächsten Schritt!'));
+  }
+  host.appendChild(cta);
+}
+
+/* Neuestes gespeichertes Bild, dessen Motiv zu dieser Bucht gehört */
+async function newestPicFor(b){
+  if(!profile) return null;
+  const ks=(await Store.keys('pic:'+profile.id+':')).sort().reverse();
+  for(const k of ks){
+    try{
+      const rec=JSON.parse(await Store.get(k));
+      if(rec && rec.img && b.motifs.indexOf(rec.motif)>=0) return rec.img;
+    }catch(e){}
+  }
+  return null;
+}
+
+$('islBtn').addEventListener('click',()=>{
+  const i=BAYS.findIndex((b,n)=>bayUnlocked(n) && !bayStats(b).full);
+  selBay=BAYS[i>=0?i:BAYS.length-1].key;
+  showSection(secIsland);
+  renderIsland();
+});
+$('islBack').addEventListener('click',()=>{ cameFromIsland=false; showSection(secHome); });
 
 /* ---------- Eigene Motive ---------- */
 async function loadCustoms(){
@@ -1858,7 +2153,7 @@ function renderPicker(){
     const b=document.createElement('button');
     b.className='tile'+(m._key?' mine':' lv-'+m.level);
     b.innerHTML='<em>'+m.emoji+'</em>'+m.name+(m._key?'<b>'+m.level+'</b>':'');
-    b.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; openMotif(i); });
+    b.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; cameFromIsland=false; openMotif(i); });
     if(m._key){
       const x=document.createElement('button'); x.className='x'; x.textContent='✕';
       x.addEventListener('click',async e=>{
@@ -1902,6 +2197,7 @@ function buildBubbles(){
 function openMotif(i){
   motif=allMotifs()[i];
   motifCounted=false;
+  $('home-btn').textContent = cameFromIsland ? '◀︎ Insel' : '◀︎ Motive';
   $('motifName').textContent=motif.emoji+' '+motif.name;
   buildArt(); buildBubbles(); undoStack=[];
   $('board').classList.remove('party');
@@ -1924,7 +2220,10 @@ function openMotif(i){
     requestAnimationFrame(()=>{ layout(); clearArt(); show(0,true); });
   }
 }
-$('home-btn').addEventListener('click',()=>showSection(secHome));
+$('home-btn').addEventListener('click',()=>{
+  if(cameFromIsland){ showSection(secIsland); renderIsland(); }
+  else showSection(secHome);
+});
 
 /* ---- Sprachausgabe: Motiv-/Schritt-Texte je nach gewählter Stimme (DE/EN) ---- */
 function motifSpokenName(m){ return Voice.lang()==='en' ? (m.nameEn||m.name) : m.name; }
@@ -2537,7 +2836,7 @@ if(window.ResizeObserver){
   const cs=document.querySelector('.cstage'); if(cs) ro.observe(cs);
 }
 window.addEventListener('resize',layout);
-window.addEventListener('orientationchange',()=>setTimeout(layout,300));
+window.addEventListener('orientationchange',()=>setTimeout(()=>{ layout(); sizeIsland(); },300));
 layout();
 
 (async function(){
