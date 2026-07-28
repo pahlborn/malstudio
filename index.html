@@ -1620,6 +1620,7 @@ const art=document.createElement('canvas'); art.width=1200; art.height=900;
 const actx=art.getContext('2d',{willReadFrequently:true});
 let undoStack=[];
 let pictureSaved=false;
+let motifCounted=false;
 
 function clearArt(){ actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height); paint(); pictureSaved=false; }
 function paint(){ ctx.clearRect(0,0,pad.width,pad.height); ctx.drawImage(art,0,0,pad.width,pad.height); }
@@ -1900,6 +1901,7 @@ function buildBubbles(){
 }
 function openMotif(i){
   motif=allMotifs()[i];
+  motifCounted=false;
   $('motifName').textContent=motif.emoji+' '+motif.name;
   buildArt(); buildBubbles(); undoStack=[];
   $('board').classList.remove('party');
@@ -2000,6 +2002,22 @@ function celebrate(){
   }
   setTimeout(()=>{ host.textContent=''; },2800);
 }
+function completeMotif(){
+  if(!profile || !motif || motifCounted) return;
+  motifCounted=true;
+  const counts=motifCounts();
+  const firstTime=!counts[motif.name];
+  const prevDisc=Object.keys(counts).length;
+  counts[motif.name]=(counts[motif.name]||0)+1;
+  profile.motifCounts=JSON.stringify(counts);
+  const newDisc=firstTime?prevDisc+1:prevDisc;
+  const prevTier=trophyTier(prevDisc), newTier=trophyTier(newDisc);
+  const trophyReached=!!newTier && (!prevTier || newTier.key!==prevTier.key);
+  saveProfiles().then(()=>{
+    updateProgressChips();
+    if(trophyReached) setTimeout(()=>showTrophyPopup(newTier),600);
+  });
+}
 function finish(){
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
@@ -2007,6 +2025,7 @@ function finish(){
   [...bubbles.children].forEach(x=>{x.classList.remove('now');x.classList.add('done');});
   Voice.say('finish',null,true);
   stopIdle();
+  completeMotif();
 }
 
 /* ---------- Modus-Umschalter ---------- */
@@ -2040,6 +2059,7 @@ function finishColor(){
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
   Voice.say('finish',null,true);
   stopIdle();
+  completeMotif();
 }
 
 function showTrophyPopup(tier){
@@ -2372,22 +2392,11 @@ async function keepPicture(){
   const motifName=motif?motif.name:'Bild', motifEmoji=motif?motif.emoji:'🎨';
   await Store.set('pic:'+profile.id+':'+Date.now(), JSON.stringify({motif:motifName,emoji:motifEmoji,img:thumb()}));
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
-
-  const counts=motifCounts();
-  const firstTime = !!motif && !counts[motifName];
-  const prevDisc = Object.keys(counts).length;
-  if(motif){ counts[motifName]=(counts[motifName]||0)+1; profile.motifCounts=JSON.stringify(counts); }
-  const newDisc = firstTime ? prevDisc+1 : prevDisc;
   pictureSaved=true;
-
-  const prevTier=trophyTier(prevDisc), newTier=trophyTier(newDisc);
-  const trophyReached = !!newTier && (!prevTier || newTier.key!==prevTier.key);
 
   await saveProfiles();
   toast('⭐ +1 Stern! Bild in der Galerie gespeichert');
-
-  if(trophyReached) setTimeout(()=>showTrophyPopup(newTier),400);
-  else Voice.say('gallery',null,true);
+  Voice.say('gallery',null,true);
 }
 $('keep').addEventListener('click',keepPicture);
 $('galBtn').addEventListener('click',openGallery);
