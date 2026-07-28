@@ -275,19 +275,27 @@
 
   .side{width:202px;flex:none;display:flex;flex-direction:column;gap:7px;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
   .tools3{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;flex:none}
-  .tool{height:60px;border-radius:16px;border:3px solid var(--deep);background:var(--paper);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  .tool{height:70px;border-radius:16px;border:3px solid var(--deep);background:var(--paper);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
     cursor:pointer;box-shadow:0 6px 14px rgba(7,59,76,.12);padding:0}
-  .tool em{font-size:22px;font-style:normal;line-height:1}
-  .tool b{font-family:var(--font-body);font-weight:800;font-size:10px;color:var(--deep);letter-spacing:.01em}
-  .tool[aria-pressed="true"]{background:var(--sand)}
-  #tMagic[aria-pressed="true"]{background:#EAD9FF;border-color:#9B5DE5;box-shadow:0 6px 14px rgba(7,59,76,.12)}
-  .colors{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;justify-items:center;
-    align-content:start;padding:2px 2px 2px 0;flex:none}
-  .swatch{width:30px;height:30px;border-radius:50%;border:3px solid var(--paper);
+  .tool em{font-size:26px;font-style:normal;line-height:1}
+  .tool b{font-family:var(--font-body);font-weight:800;font-size:10.5px;color:var(--deep);letter-spacing:.01em}
+  .tool[aria-pressed="true"]{background:var(--sea);border-color:var(--sea);
+    box-shadow:0 0 0 4px rgba(17,138,178,.25),0 6px 14px rgba(7,59,76,.18)}
+  .tool[aria-pressed="true"] b{color:#fff}
+  #tMagic[aria-pressed="true"]{background:#EAD9FF;border-color:#9B5DE5;
+    box-shadow:0 0 0 4px rgba(155,93,229,.25),0 6px 14px rgba(7,59,76,.12)}
+  #tMagic[aria-pressed="true"] b{color:var(--deep)}
+  .tool-card{background:var(--paper);border-radius:18px;padding:10px 6px 8px;
+    box-shadow:0 6px 14px rgba(7,59,76,.10);flex:none}
+  .tool-card-label{font-family:var(--font);font-weight:800;font-size:11px;
+    letter-spacing:.06em;color:var(--sea);text-transform:uppercase;margin:0 0 8px 4px}
+  .colors{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;justify-items:center;
+    align-content:start;flex:none}
+  .swatch{width:27px;height:27px;border-radius:50%;border:3px solid var(--paper);
     box-shadow:0 0 0 3px var(--deep);cursor:pointer;padding:0;transition:transform .15s}
   .swatch[aria-pressed="true"]{transform:scale(1.22)}
-  .sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+  .sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;flex:1}
   .size{height:38px;border-radius:13px;border:3px solid var(--deep);background:var(--paper);
     cursor:pointer;padding:0;display:grid;place-items:center;box-shadow:0 6px 14px rgba(7,59,76,.12)}
   .size i{display:block;border-radius:50%;background:var(--deep)}
@@ -316,6 +324,9 @@
     .side{width:100%;order:3;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center}
     .colors{grid-template-columns:repeat(10,auto)}
     .sizes,.tools3{grid-template-columns:repeat(4,52px)}
+    .tools3 .tool{height:60px}
+    .tools3 .tool em{font-size:20px}
+    .tools3 .tool b{font-size:9px;letter-spacing:-.01em}
     .grid2{grid-template-columns:repeat(3,auto)}
     .navrow{width:auto;min-width:280px}
     .spacer{display:none}
@@ -484,8 +495,14 @@
           <button class="tool" id="tFill"  aria-pressed="false" title="Farbeimer"><em>🪣</em><b>Eimer</b></button>
           <button class="tool" id="tErase" aria-pressed="false" title="Radiergummi"><em>🧽</em><b>Radierer</b></button>
         </div>
-        <div class="colors" id="colors"></div>
-        <div class="sizes" id="sizes"></div>
+        <div class="tool-card">
+          <div class="tool-card-label">Farben</div>
+          <div class="colors" id="colors"></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-card-label">Dicke</div>
+          <div class="sizes" id="sizes"></div>
+        </div>
         <div class="grid2">
           <button class="icon-btn" id="undo">↩︎ Zurück</button>
           <button class="icon-btn" id="clear">🗑️ Alles</button>
