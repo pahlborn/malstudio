@@ -432,7 +432,7 @@
         </div>
 
         <div class="stats2">
-          <div class="stat-tile"><em>🖼️</em><b id="galStatPictures"></b><small>Bilder gemalt</small></div>
+          <div class="stat-tile"><em>🖼️</em><b id="galStatPictures"></b><small>Bilder gespeichert</small></div>
           <div class="stat-tile"><em>⭐</em><b id="galStatStars"></b><small>Sterne</small></div>
         </div>
 
@@ -441,7 +441,7 @@
           <div class="trophy-list" id="galTrophyList"></div>
         </div>
 
-        <button class="nav-btn primary" id="trophyCTA">Weiter zum Abenteuer →</button>
+        <button class="nav-btn primary" id="trophyCTA">Nächstes Motiv →</button>
       </div>
     </div>
   </section>
@@ -1620,6 +1620,7 @@ const art=document.createElement('canvas'); art.width=1200; art.height=900;
 const actx=art.getContext('2d',{willReadFrequently:true});
 let undoStack=[];
 let pictureSaved=false;
+let motifCounted=false;
 
 function clearArt(){ actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height); paint(); pictureSaved=false; }
 function paint(){ ctx.clearRect(0,0,pad.width,pad.height); ctx.drawImage(art,0,0,pad.width,pad.height); }
@@ -1744,7 +1745,7 @@ function levelInfo(count){
 }
 function renderGreeting(){
   if(!profile) return;
-  const stars=profile.stars||0, disc=discoveredCount(), nt=nextTrophy(disc);
+  const stars=profile.count||0, disc=discoveredCount(), nt=nextTrophy(disc);
   const trophyLine = nt
     ? '🏆 Noch '+(nt.n-disc)+' Motive bis zum '+nt.label+'.'
     : '🏆 Du hast alle Pokale gewonnen!';
@@ -1753,7 +1754,7 @@ function renderGreeting(){
   $('homeBarFill').style.width=trophyProgress(disc).pct+'%';
 }
 function updateProgressChips(){
-  const stars=profile?(profile.stars||0):0;
+  const stars=profile?(profile.count||0):0;
   const tier=trophyTier(discoveredCount());
   const html='⭐ '+stars+(tier?' '+tier.emoji:'');
   document.querySelectorAll('[data-chip]').forEach(el=>{ el.textContent=profile?html:''; });
@@ -1767,7 +1768,7 @@ function trophyProgress(count){
 }
 async function renderTrophyPanel(){
   if(!profile) return;
-  const stars=profile.stars||0, disc=discoveredCount();
+  const stars=profile.count||0, disc=discoveredCount();
   const lvl=levelInfo(disc);
   $('galLevelLine').textContent=lvl.title+' · Level '+lvl.level;
 
@@ -1900,6 +1901,7 @@ function buildBubbles(){
 }
 function openMotif(i){
   motif=allMotifs()[i];
+  motifCounted=false;
   $('motifName').textContent=motif.emoji+' '+motif.name;
   buildArt(); buildBubbles(); undoStack=[];
   $('board').classList.remove('party');
@@ -2000,6 +2002,22 @@ function celebrate(){
   }
   setTimeout(()=>{ host.textContent=''; },2800);
 }
+function completeMotif(){
+  if(!profile || !motif || motifCounted) return;
+  motifCounted=true;
+  const counts=motifCounts();
+  const firstTime=!counts[motif.name];
+  const prevDisc=Object.keys(counts).length;
+  counts[motif.name]=(counts[motif.name]||0)+1;
+  profile.motifCounts=JSON.stringify(counts);
+  const newDisc=firstTime?prevDisc+1:prevDisc;
+  const prevTier=trophyTier(prevDisc), newTier=trophyTier(newDisc);
+  const trophyReached=!!newTier && (!prevTier || newTier.key!==prevTier.key);
+  saveProfiles().then(()=>{
+    updateProgressChips();
+    if(trophyReached) setTimeout(()=>showTrophyPopup(newTier),600);
+  });
+}
 function finish(){
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
@@ -2007,6 +2025,7 @@ function finish(){
   [...bubbles.children].forEach(x=>{x.classList.remove('now');x.classList.add('done');});
   Voice.say('finish',null,true);
   stopIdle();
+  completeMotif();
 }
 
 /* ---------- Modus-Umschalter ---------- */
@@ -2040,6 +2059,7 @@ function finishColor(){
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
   Voice.say('finish',null,true);
   stopIdle();
+  completeMotif();
 }
 
 function showTrophyPopup(tier){
@@ -2372,23 +2392,11 @@ async function keepPicture(){
   const motifName=motif?motif.name:'Bild', motifEmoji=motif?motif.emoji:'🎨';
   await Store.set('pic:'+profile.id+':'+Date.now(), JSON.stringify({motif:motifName,emoji:motifEmoji,img:thumb()}));
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
-
-  const counts=motifCounts();
-  const firstTime = !!motif && !counts[motifName];
-  const prevDisc = Object.keys(counts).length;
-  if(motif){ counts[motifName]=(counts[motifName]||0)+1; profile.motifCounts=JSON.stringify(counts); }
-  const newDisc = firstTime ? prevDisc+1 : prevDisc;
-  profile.stars=(profile.stars||0)+1;
   pictureSaved=true;
-
-  const prevTier=trophyTier(prevDisc), newTier=trophyTier(newDisc);
-  const trophyReached = !!newTier && (!prevTier || newTier.key!==prevTier.key);
 
   await saveProfiles();
   toast('⭐ +1 Stern! Bild in der Galerie gespeichert');
-
-  if(trophyReached) setTimeout(()=>showTrophyPopup(newTier),400);
-  else Voice.say('gallery',null,true);
+  Voice.say('gallery',null,true);
 }
 $('keep').addEventListener('click',keepPicture);
 $('galBtn').addEventListener('click',openGallery);
