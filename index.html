@@ -167,7 +167,7 @@
 
 
   /* ---------- Feuerwerk-Abschluss ---------- */
-  .fireworks{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
+  .fireworks{position:fixed;inset:0;pointer-events:none;z-index:32;overflow:hidden}
   .fw-piece{position:absolute;top:-16px;border-radius:2px;opacity:.95;animation:fw-fall linear forwards}
   .fw-balloon{position:absolute;bottom:-60px;font-size:32px;animation:fw-rise ease-in forwards}
   .fw-star{position:absolute;font-size:22px;animation:fw-twinkle ease-out forwards}
@@ -1794,20 +1794,37 @@ async function renderTrophyPanel(){
 async function renderMotifGrid(){
   const grid=$('galMotifGrid'); grid.textContent='';
   const list=allMotifs(), counts=motifCounts();
-  const discovered=list.map((m,i)=>({m,i})).filter(x=>counts[x.m.name]);
-  if(!discovered.length){
+  const ks=(await Store.keys('pic:'+profile.id+':')).sort().reverse();
+  if(!ks.length){
     grid.innerHTML='<p class="gal-empty">Noch keine Bilder. Mal eins und tippe auf „Galerie"!</p>';
   }
-  for(const {m,i} of discovered){
+  for(const k of ks){
+    let rec; try{ rec=JSON.parse(await Store.get(k)); }catch(e){ continue; }
+    if(!rec) continue;
+    const idx=list.findIndex(m=>m.name===rec.motif);
     const d=document.createElement('button');
     d.className='motif-tile got';
-    d.setAttribute('aria-label', m.name);
-    const img=await Store.get('motifpic:'+profile.id+':'+m.name);
-    d.innerHTML = img ? '<img src="'+img+'" alt="">' : '<span>'+m.emoji+'</span>';
-    d.addEventListener('click',()=>openMotif(i));
+    d.setAttribute('aria-label', rec.motif||'Bild');
+    d.innerHTML = rec.img ? '<img src="'+rec.img+'" alt="">' : '<span>'+(rec.emoji||'🎨')+'</span>';
+    d.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; if(idx>=0) openMotif(idx); });
+    const x=document.createElement('button'); x.className='x'; x.textContent='✕';
+    x.addEventListener('click',async e=>{
+      e.stopPropagation();
+      if(x.classList.contains('armed')){
+        await Store.del(k);
+        profile.count=(await Store.keys('pic:'+profile.id+':')).length;
+        await saveProfiles();
+        updateProgressChips();
+        renderTrophyPanel();
+      }else{
+        x.classList.add('armed'); x.textContent='Löschen?';
+        setTimeout(()=>{ x.classList.remove('armed'); x.textContent='✕'; },2600);
+      }
+    });
+    d.appendChild(x);
     grid.appendChild(d);
   }
-  $('galMotifCount').textContent=discovered.length+' von '+list.length+' gemalt';
+  $('galMotifCount').textContent=Object.keys(counts).length+' von '+list.length+' gemalt';
 }
 $('trophyCTA').addEventListener('click',()=>{
   const list=allMotifs(), counts=motifCounts();
@@ -2350,10 +2367,9 @@ function thumb(){
 }
 async function keepPicture(){
   if(!profile) return;
-  const motifName=motif?motif.name:'Bild';
-  await Store.set('pic:'+profile.id+':'+Date.now(), JSON.stringify({motif:motifName}));
+  const motifName=motif?motif.name:'Bild', motifEmoji=motif?motif.emoji:'🎨';
+  await Store.set('pic:'+profile.id+':'+Date.now(), JSON.stringify({motif:motifName,emoji:motifEmoji,img:thumb()}));
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
-  if(motif) await Store.set('motifpic:'+profile.id+':'+motifName, thumb());
 
   const counts=motifCounts();
   const firstTime = !!motif && !counts[motifName];
