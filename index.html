@@ -123,10 +123,8 @@
     font-size:44px;position:relative;cursor:pointer;padding:0;overflow:hidden}
   .motif-tile img{width:100%;height:100%;object-fit:cover;display:block}
   .motif-tile.got{background:linear-gradient(135deg,#8ECAE6,var(--sea));box-shadow:0 6px 14px rgba(7,59,76,.18)}
-  .motif-tile.locked{background:#EAF1F3;opacity:.6}
   .motif-tile:active{transform:translateY(2px)}
-  .motif-tile .badge{position:absolute;top:7px;right:7px;width:24px;height:24px;border-radius:50%;
-    background:var(--kelp);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .gal-empty{grid-column:1/-1;text-align:center;opacity:.65;font-weight:600;padding:24px 6px}
 
   .gal-side{width:250px;flex:none;display:flex;flex-direction:column;gap:10px;min-height:0;overflow-y:auto;scrollbar-width:thin}
   .stat-card{flex:none;background:var(--paper);border:3px solid var(--deep);border-radius:20px;
@@ -1794,23 +1792,20 @@ async function renderTrophyPanel(){
 async function renderMotifGrid(){
   const grid=$('galMotifGrid'); grid.textContent='';
   const list=allMotifs(), counts=motifCounts();
-  for(let i=0;i<list.length;i++){
-    const m=list[i], got=!!counts[m.name];
+  const discovered=list.map((m,i)=>({m,i})).filter(x=>counts[x.m.name]);
+  if(!discovered.length){
+    grid.innerHTML='<p class="gal-empty">Noch keine Bilder. Mal eins und tippe auf „Galerie"!</p>';
+  }
+  for(const {m,i} of discovered){
     const d=document.createElement('button');
-    d.className='motif-tile '+(got?'got':'locked');
-    d.setAttribute('aria-label', got?m.name:'Noch nicht entdeckt');
-    if(got){
-      const img=await Store.get('motifpic:'+profile.id+':'+m.name);
-      d.innerHTML = img
-        ? '<img src="'+img+'" alt="">'+'<i class="badge">✓</i>'
-        : '<span>'+m.emoji+'</span><i class="badge">✓</i>';
-    }else{
-      d.innerHTML='<span>🔒</span>';
-    }
+    d.className='motif-tile got';
+    d.setAttribute('aria-label', m.name);
+    const img=await Store.get('motifpic:'+profile.id+':'+m.name);
+    d.innerHTML = img ? '<img src="'+img+'" alt="">' : '<span>'+m.emoji+'</span>';
     d.addEventListener('click',()=>openMotif(i));
     grid.appendChild(d);
   }
-  $('galMotifCount').textContent=Object.keys(counts).length+' von '+list.length+' gemalt';
+  $('galMotifCount').textContent=discovered.length+' von '+list.length+' gemalt';
 }
 $('trophyCTA').addEventListener('click',()=>{
   const list=allMotifs(), counts=motifCounts();
