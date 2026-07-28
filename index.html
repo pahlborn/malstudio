@@ -220,10 +220,14 @@
 
   .task{background:linear-gradient(135deg,#FFE8B8,#FFD9A0);border:3px solid var(--deep);border-radius:16px;
     padding:10px 16px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 16px rgba(7,59,76,.13);flex:none;cursor:pointer}
+  .task:active{transform:translateY(2px)}
   .task .emoji{font-size:26px;line-height:1;background:var(--paper);border-radius:14px;width:48px;height:48px;
     flex:none;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.08)}
   .task h2{font-family:var(--font);margin:0;font-size:clamp(15px,2.2vw,20px);font-weight:800}
   .task p{margin:1px 0 0;font-size:clamp(13px,1.9vw,16px);font-weight:500;opacity:.8}
+  .task-hear{margin-left:auto;flex:none;font-size:19px;background:var(--paper);border-radius:50%;
+    width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.08)}
 
   .stage{flex:1;min-height:0;display:flex;gap:14px}
   .ref{width:206px;flex:none;display:flex;flex-direction:column;gap:8px;min-height:0}
@@ -439,6 +443,7 @@
         <h2 id="taskTitle"></h2>
         <p id="taskText"></p>
       </div>
+      <div class="task-hear" aria-hidden="true">🔊</div>
     </div>
 
     <div class="stage">
@@ -1500,8 +1505,7 @@ function show(i,silent){
   pokeIdle();
 }
 $('taskCard').addEventListener('click',()=>{
-  const s=motif.steps[step];
-  Voice.raw('Schritt '+(step+1)+': '+s.title+'. '+s.text);
+  Voice.raw($('taskTitle').textContent+'. '+$('taskText').textContent);
 });
 $('back').addEventListener('click',()=>{ if(step>0) show(step-1); });
 
