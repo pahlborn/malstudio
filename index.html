@@ -98,17 +98,6 @@
     cursor:pointer;box-shadow:0 6px 14px rgba(7,59,76,.12)}
   .modebtn.on{background:var(--sea);color:#fff;border-color:var(--sea);box-shadow:0 6px 14px rgba(7,59,76,.12)}
   .modebtn:active{transform:translateY(2px);box-shadow:0 2px 6px rgba(7,59,76,.12)}
-  .stickers{flex:1;min-height:0;overflow:auto;display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:12px;align-content:start;padding:4px 2px}
-  .sticker{
-    aspect-ratio:1;border-radius:20px;border:3px solid var(--deep);background:var(--paper);
-    display:grid;place-items:center;font-size:44px;box-shadow:0 8px 16px rgba(7,59,76,.13);position:relative}
-  .sticker.locked{background:#EEF3F5;border-color:#C6D2D8;box-shadow:0 8px 16px rgba(7,59,76,.13);
-    filter:grayscale(1);opacity:.55;font-size:34px}
-  .sticker.locked::after{content:"?";position:absolute;font-size:28px;font-weight:800;color:#93A7B0}
-  .sticker.locked em{visibility:hidden}
-  .sticker em{font-style:normal}
-  .sticker.fresh{animation:pop .6s ease}
   @keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
 
   /* Sticker-Jubel beim Verdienen */
@@ -166,22 +155,6 @@
   .progress-bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--kelp),var(--sea));
     border-radius:5px;transition:width .6s ease}
 
-  /* ---------- Meeresalbum ---------- */
-  #seaAlbum{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
-  .sea-grid{flex:1;min-height:0;overflow:auto;display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:12px;align-content:start;padding:4px 2px}
-  .sea-card{background:var(--paper);border:3px solid var(--deep);border-radius:18px;box-shadow:0 8px 16px rgba(7,59,76,.13);
-    padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;position:relative}
-  .sea-card em{font-size:48px;font-style:normal;line-height:1}
-  .sea-card b{font-size:14px}
-  .sea-card small{font-size:11px;font-weight:800;letter-spacing:.2px;opacity:.85}
-  .sea-card.found{border-color:var(--sea);box-shadow:0 8px 16px rgba(7,59,76,.13);
-    background:linear-gradient(160deg,#DFF3FA,var(--paper))}
-  .sea-card.found small{color:var(--sea)}
-  .sea-card.gold{border-color:#E3A008;box-shadow:0 8px 16px rgba(7,59,76,.13);
-    background:linear-gradient(160deg,#FFEBB0,var(--paper))}
-  .sea-card.gold small{color:#B9790A}
-  .sea-card.locked{background:#EEF3F5;border-color:#C6D2D8;box-shadow:0 8px 16px rgba(7,59,76,.13);filter:grayscale(1);opacity:.6}
 
   /* ---------- Feuerwerk-Abschluss ---------- */
   .fireworks{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
@@ -213,7 +186,6 @@
   .tile.lv-leicht{border-color:var(--kelp);box-shadow:0 8px 16px rgba(7,59,76,.13);background:linear-gradient(160deg,#CDF3E4,var(--paper))}
   .tile.lv-mittel{border-color:var(--sand);box-shadow:0 8px 16px rgba(7,59,76,.13);background:linear-gradient(160deg,#FFE9B8,var(--paper))}
   .tile.lv-schwer{border-color:#E85D8A;box-shadow:0 8px 16px rgba(7,59,76,.13);background:linear-gradient(160deg,#FBCBD9,var(--paper))}
-  .tile.lv-Familie{border-color:var(--sea);box-shadow:0 8px 16px rgba(7,59,76,.13);background:linear-gradient(160deg,#CFE3FF,var(--paper))}
   .tile.lv-leicht b{color:#06A57D}
   .tile.lv-mittel b{color:#B98400}
   .tile.lv-schwer b{color:#D1477B}
@@ -264,12 +236,6 @@
     flex:none;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.08)}
   .task h2{font-family:var(--font);margin:0;font-size:clamp(15px,2.2vw,20px);font-weight:800}
   .task p{margin:1px 0 0;font-size:clamp(13px,1.9vw,16px);font-weight:500;opacity:.8}
-
-  .done-bar{display:none;align-items:center;gap:8px;flex-wrap:wrap;
-    background:var(--kelp);border:3px solid var(--deep);border-radius:16px;padding:7px 10px;box-shadow:0 8px 16px rgba(7,59,76,.13)}
-  .done-bar.on{display:flex}
-  .done-bar strong{font-size:16px}
-  .done-bar .icon-btn{height:36px;font-size:14px}
 
   .stage{flex:1;min-height:0;display:flex;gap:14px}
   .ref{width:206px;flex:none;display:flex;flex-direction:column;gap:8px;min-height:0}
@@ -381,9 +347,7 @@
       <span class="progress-chip" data-chip></span>
       <span style="margin-left:auto"></span>
       <button class="icon-btn" id="newMotif">✏️ Eigenes Motiv</button>
-      <button class="icon-btn" id="seaAlbumBtn">🌊 Meeresalbum</button>
       <button class="icon-btn" id="trophyBtn">🏆 Pokale</button>
-      <button class="icon-btn" id="stickerBtn">🏅 Sticker</button>
       <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
       <button class="icon-btn" id="fsBtn">⛶ Vollbild</button>
       <button class="icon-btn" id="voiceBtn">🔊 Stimme</button>
@@ -435,7 +399,7 @@
     <div class="stats3">
       <div class="stat-tile"><em>🖼️</em><b id="statPictures"></b><small>Bilder gemalt</small></div>
       <div class="stat-tile"><em>🎯</em><b id="statSteps"></b><small>Schritte gemeistert</small></div>
-      <div class="stat-tile"><em>🎀</em><b id="statStickers"></b><small>Sticker gesammelt</small></div>
+      <div class="stat-tile"><em>🗺️</em><b id="statDiscovered"></b><small>Motive entdeckt</small></div>
     </div>
 
     <div class="awards-card">
@@ -446,17 +410,6 @@
     <button class="nav-btn primary" id="trophyCTA">Weiter zum Abenteuer →</button>
   </section>
 
-  <!-- ============ MEERESALBUM ============ -->
-  <section id="seaAlbum" hidden>
-    <div class="row">
-      <button class="icon-btn" id="seaAlbumBack">◀︎ Zurück</button>
-      <h1>Mein Meeresalbum</h1>
-      <span class="progress-chip" data-chip></span>
-    </div>
-    <p class="hint" id="seaAlbumHint"></p>
-    <div class="sea-grid" id="seaAlbumGrid"></div>
-  </section>
-
   <!-- ============ GALERIE ============ -->
   <section id="gallery" hidden>
     <div class="row">
@@ -465,17 +418,6 @@
       <span class="progress-chip" data-chip></span>
     </div>
     <div class="gal" id="galGrid"></div>
-  </section>
-
-  <!-- ============ STICKER-ALBUM ============ -->
-  <section id="album" hidden>
-    <div class="row">
-      <button class="icon-btn" id="albBack">◀︎ Zurück</button>
-      <h1 id="albTitle">Meine Sticker</h1>
-      <span class="progress-chip" data-chip></span>
-    </div>
-    <p class="hint" id="albHint"></p>
-    <div class="stickers" id="stickerGrid"></div>
   </section>
 
   <!-- ============ WERKSTATT ============ -->
@@ -517,13 +459,6 @@
         <h2 id="taskTitle"></h2>
         <p id="taskText"></p>
       </div>
-    </div>
-
-    <div class="done-bar" id="doneBar">
-      <strong>🎉 Fertig!</strong>
-      <button class="icon-btn go" id="toGallery">🖼️ In die Galerie</button>
-      <button class="icon-btn" id="again">↻ Noch einmal</button>
-      <button class="icon-btn" id="nextAdventure">🧭 Nächstes Abenteuer</button>
     </div>
 
     <div class="stage">
@@ -569,8 +504,8 @@
 <div class="fireworks" id="fireworks"></div>
 <div class="reward" id="reward">
   <div class="reward-card">
-    <p class="big" id="rewardEmoji">🏅</p>
-    <p id="rewardText">Neuer Sticker!</p>
+    <p class="big" id="rewardEmoji">🏆</p>
+    <p id="rewardText">Pokal geschafft!</p>
     <button class="nav-btn primary" id="rewardOk">Juhu!</button>
   </div>
 </div>
@@ -973,33 +908,6 @@ const MOTIFS=[
  {emoji:"🌊",title:"Die Wellen",text:"Wellen unter das Schiff.",
   shapes:["M60,560 C110,538 160,582 210,560 C260,538 310,582 360,560 C410,538 460,582 510,560 C560,538 610,582 660,560 C700,542 730,556 760,566"]}
 ]},
-{name:"Familie",emoji:"👨‍👩‍👧‍👧",level:"Familie",steps:[
- {emoji:"👨",title:"Papa",text:"Ganz links der Papa: runder Kopf und ein breiter Körper.",
-  shapes:[[172,150,46],"M132,432 L132,244 C132,214 212,214 212,244 L212,432",
-          "M148,432 L148,516","M196,432 L196,516","M134,262 L104,344","M210,262 L240,344"]},
- {emoji:"😀",title:"Papas Gesicht",text:"Augen, ein Lächeln und kurze Haare.",
-  shapes:[[158,146,6],[186,146,6],"M158,168 C168,180 176,180 186,168","M128,150 C128,112 216,112 216,150"]},
- {emoji:"👩",title:"Mama",text:"Daneben die Mama: Kopf und ein Kleid wie ein Dreieck.",
-  shapes:[[332,164,44],"M296,436 L320,244 C320,230 344,230 344,244 L368,436 Z",
-          "M312,436 L312,510","M352,436 L352,510","M300,278 L272,352","M364,278 L392,352"]},
- {emoji:"💇‍♀️",title:"Mamas Gesicht",text:"Augen, ein Lächeln und lange Haare.",
-  shapes:[[318,160,6],[346,160,6],"M318,182 C328,194 336,194 346,182",
-          "M290,158 C288,110 376,110 374,158 C374,210 366,240 360,262","M290,158 C290,210 298,240 304,262"]},
- {emoji:"👧",title:"Das große Mädchen",text:"Das siebenjährige Mädchen: kleiner, mit Kleid und Zöpfen.",
-  shapes:[[480,244,36],"M450,436 L466,306 C466,294 494,294 494,306 L510,436 Z",
-          "M462,436 L462,500","M498,436 L498,500",
-          "M448,246 C430,242 420,262 428,282","M512,246 C530,242 540,262 532,282"]},
- {emoji:"👧",title:"Das kleine Mädchen",text:"Das fünfjährige Mädchen ganz rechts: am kleinsten.",
-  shapes:[[600,300,32],"M574,436 L586,352 C586,342 614,342 614,352 L626,436 Z",
-          "M586,436 L586,494","M614,436 L614,494",
-          "M572,302 C556,300 548,318 556,334","M628,302 C644,300 652,318 644,334"]},
- {emoji:"😊",title:"Die Gesichter der Mädchen",text:"Beide Mädchen bekommen Augen und ein Lächeln.",
-  shapes:[[470,240,5],[490,240,5],"M470,258 C478,268 486,268 494,258",
-          [592,296,5],[608,296,5],"M592,312 C599,320 607,320 614,312"]},
- {emoji:"☀️",title:"Sonne und Wiese",text:"Eine Sonne an den Himmel und Gras unter die Familie.",
-  shapes:[[706,120,42],"M70,520 C240,506 560,506 740,520",
-          "M300,520 L300,504","M340,520 L340,500","M470,520 L470,504","M520,520 L520,500"]}
-]},
 {name:"Kätzchen",emoji:"🐱",level:"leicht",steps:[
  {emoji:"⭕",title:"Der Kopf",text:"Ein runder Kopf in die Mitte.",
   shapes:["M300,250 C300,188 348,158 400,158 C452,158 500,188 500,250 C500,312 452,340 400,340 C348,340 300,312 300,250 Z"]},
@@ -1311,10 +1219,10 @@ const Voice=(function(){
    APP
    ============================================================ */
 const $=id=>document.getElementById(id);
-const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secAlbum=$('album'), secTrophy=$('trophy'), secSeaAlbum=$('seaAlbum');
+const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secTrophy=$('trophy');
 const ref=$('ref'), ghost=$('ghost'), bubbles=$('bubbles');
 const sheet=$('sheet'), pad=$('pad'), ctx=pad.getContext('2d');
-const doneBar=$('doneBar'), helper=$('helper'), toastEl=$('toast');
+const helper=$('helper'), toastEl=$('toast');
 
 let motif=null, step=0, color=COLORS[0], width=SIZES[1], tool='pen';
 let mode='draw';   // 'draw' = Schritt für Schritt, 'color' = Ausmalen
@@ -1356,7 +1264,7 @@ function toast(msg){
   clearTimeout(toast._t); toast._t=setTimeout(()=>toastEl.classList.remove('on'),1800);
 }
 function showSection(s){
-  [secProfiles,secHome,secGallery,secDraw,secCreator,secAlbum,secTrophy,secSeaAlbum].forEach(x=>x.hidden = x!==s);
+  [secProfiles,secHome,secGallery,secDraw,secCreator,secTrophy].forEach(x=>x.hidden = x!==s);
   updateProgressChips();
   if(s===secHome){ renderGreeting(); }
   if(s!==secDraw) stopIdle();
@@ -1479,7 +1387,7 @@ function openTrophy(){
   $('trophyBarLabel').textContent=prog.label;
   $('statPictures').textContent=count;
   $('statSteps').textContent=steps;
-  $('statStickers').textContent=earnedList().length+' / '+STICKERS.length;
+  $('statDiscovered').textContent=disc+' / '+MOTIFS.length;
   const grid=$('trophyGrid'); grid.textContent='';
   TROPHIES.forEach(t=>{
     const got=disc>=t.n;
@@ -1497,36 +1405,8 @@ $('trophyCTA').addEventListener('click',()=>{
   if(idx>=0) openMotif(idx); else showSection(secHome);
 });
 
-/* ---------- Meeresalbum ---------- */
-const GOLD_REPEATS=3;
 function motifCounts(){ try{ return JSON.parse(profile.motifCounts||'{}'); }catch(e){ return {}; } }
 function discoveredCount(){ return Object.keys(motifCounts()).length; }
-function seaAlbumStatus(name,counts){
-  const n=counts[name]||0;
-  if(n<=0) return 'locked';
-  if(n>=GOLD_REPEATS) return 'gold';
-  return 'found';
-}
-function openSeaAlbum(){
-  showSection(secSeaAlbum);
-  const counts=motifCounts();
-  const list=allMotifs();
-  const goldN=list.filter(m=>seaAlbumStatus(m.name,counts)==='gold').length;
-  const foundN=list.filter(m=>seaAlbumStatus(m.name,counts)!=='locked').length;
-  $('seaAlbumHint').textContent=foundN+' von '+list.length+' Motiven entdeckt · '+goldN+' davon in Gold';
-  const grid=$('seaAlbumGrid'); grid.textContent='';
-  list.forEach(m=>{
-    const st=seaAlbumStatus(m.name,counts);
-    const d=document.createElement('div');
-    d.className='sea-card '+st;
-    const label = st==='locked' ? 'Noch nicht entdeckt' : st==='gold' ? '🥇 Gold!' : '✓ Gefunden';
-    const emoji = st==='locked' ? '❓' : m.emoji;
-    d.innerHTML='<em>'+emoji+'</em><b>'+(st==='locked'?'':m.name)+'</b><small>'+label+'</small>';
-    grid.appendChild(d);
-  });
-}
-$('seaAlbumBtn').addEventListener('click',openSeaAlbum);
-$('seaAlbumBack').addEventListener('click',()=>showSection(secHome));
 
 /* ---------- Eigene Motive ---------- */
 async function loadCustoms(){
@@ -1539,9 +1419,13 @@ async function loadCustoms(){
 function allMotifs(){ return MOTIFS.concat(customs); }
 
 const picker=$('picker');
+const LEVEL_ORDER={leicht:0,mittel:1,schwer:2};
+function levelRank(lv){ return LEVEL_ORDER.hasOwnProperty(lv) ? LEVEL_ORDER[lv] : 3; }
 function renderPicker(){
   picker.textContent='';
-  allMotifs().forEach((m,i)=>{
+  const items=allMotifs().map((m,i)=>({m,i}));
+  items.sort((a,b)=>levelRank(a.m.level)-levelRank(b.m.level));
+  items.forEach(({m,i})=>{
     const b=document.createElement('button');
     b.className='tile'+(m._key?' mine':' lv-'+m.level);
     b.innerHTML='<em>'+m.emoji+'</em>'+m.name+'<b>'+m.level+'</b>';
@@ -1582,7 +1466,7 @@ function buildBubbles(){
     const b=document.createElement('button');
     b.className='bub'; b.textContent=i+1;
     b.setAttribute('aria-label','Schritt '+(i+1)+': '+s.title);
-    b.addEventListener('click',()=>{ doneBar.classList.remove('on'); show(i); });
+    b.addEventListener('click',()=>{ show(i); });
     bubbles.appendChild(b);
   });
 }
@@ -1599,7 +1483,7 @@ function openMotif(i){
   $('motifName').textContent=motif.emoji+' '+motif.name;
   stepStarred=new Array(motif.steps.length).fill(false);
   buildArt(); buildBubbles(); undoStack=[];
-  doneBar.classList.remove('on'); $('board').classList.remove('party');
+  $('board').classList.remove('party');
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
   secDraw.classList.toggle('mode-color', mode==='color');
   showSection(secDraw); Music.start();
@@ -1648,7 +1532,7 @@ $('taskCard').addEventListener('click',()=>{
   const s=motif.steps[step];
   Voice.raw('Schritt '+(step+1)+': '+s.title+'. '+s.text);
 });
-$('back').addEventListener('click',()=>{ doneBar.classList.remove('on'); if(step>0) show(step-1); });
+$('back').addEventListener('click',()=>{ if(step>0) show(step-1); });
 
 /* ---------- Feuerwerk-Abschluss (max. 3 Sek.) ---------- */
 const REDUCE_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1685,24 +1569,11 @@ function celebrate(){
 function finish(){
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
-  doneBar.classList.add('on');
   [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
   [...bubbles.children].forEach(x=>{x.classList.remove('now');x.classList.add('done');});
   Voice.say('finish',null,true);
   stopIdle();
 }
-$('again').addEventListener('click',()=>{
-  doneBar.classList.remove('on'); $('board').classList.remove('party');
-  undoStack=[]; stepStarred=new Array(motif.steps.length).fill(false);
-  if(mode==='color'){ outlineToCanvas(); } else { clearArt(); show(0); }
-  pokeIdle();
-});
-$('nextAdventure').addEventListener('click',()=>{
-  doneBar.classList.remove('on');
-  const list=allMotifs(), counts=motifCounts();
-  const idx=list.findIndex(m=>!counts[m.name]);
-  if(idx>=0) openMotif(idx); else showSection(secHome);
-});
 
 /* ---------- Modus-Umschalter ---------- */
 function setMode(m){
@@ -1727,7 +1598,6 @@ $('modeColor').addEventListener('click',()=>setMode('color'));
     if(mode==='color'){ finishColor(); return; }
     awardStepStar(step);
     if(step<motif.steps.length-1){
-      doneBar.classList.remove('on');
       if(Math.random()<0.55) Voice.say('praise',null,true);
       show(step+1);
     } else finish();
@@ -1736,39 +1606,11 @@ $('modeColor').addEventListener('click',()=>setMode('color'));
 const AUSMAL_STARS=3;
 function finishColor(){
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
-  doneBar.classList.add('on');
   if(profile){ profile.stars=(profile.stars||0)+AUSMAL_STARS; saveProfiles(); }
   Voice.say('finish',null,true);
   stopIdle();
 }
 
-/* ============================================================
-   STICKER & SAMMELALBUM
-   ============================================================ */
-const STICKERS=["🐠","🦀","🐬","🦋","🐢","🐙","🦭","🐳","🌴","🍦","⭐","🏰",
-                "⛵","🐚","🌈","🚀","🌸","🐱","🍉","☀️","⛱️","🍕","🦈","🪸"];
-function earnedList(){ try{ return JSON.parse(profile.stickers||'[]'); }catch(e){ return []; } }
-async function awardSticker(){
-  if(!profile) return null;
-  const have=earnedList();
-  if(have.length>=STICKERS.length) return null;      // alle gesammelt
-  // nächsten noch fehlenden vergeben
-  let idx=-1;
-  for(let i=0;i<STICKERS.length;i++){ if(have.indexOf(i)<0){ idx=i; break; } }
-  if(idx<0) return null;
-  have.push(idx);
-  profile.stickers=JSON.stringify(have);
-  await saveProfiles();
-  return idx;
-}
-function showReward(idx,motifName){
-  $('rewardEmoji').textContent=STICKERS[idx];
-  $('rewardText').textContent = motifName
-    ? 'Neuer Sticker! Du hast „'+motifName+'“ entdeckt.'
-    : 'Neuer Sticker für dein Album!';
-  $('reward').classList.add('on');
-  Voice.raw(motifName ? 'Juhu! Neuer Sticker für '+motifName+'!' : 'Juhu! Du hast einen neuen Sticker bekommen!');
-}
 function showTrophyPopup(tier){
   $('rewardEmoji').textContent=tier.emoji;
   $('rewardText').textContent=tier.label+' geschafft! Schau im Pokalschrank vorbei.';
@@ -1777,24 +1619,6 @@ function showTrophyPopup(tier){
   Voice.raw('Wow! Du hast den '+tier.label+' gewonnen!');
 }
 $('rewardOk').addEventListener('click',()=>$('reward').classList.remove('on'));
-
-function openAlbum(){
-  showSection(secAlbum);
-  const grid=$('stickerGrid'); grid.textContent='';
-  const have=earnedList();
-  $('albTitle').textContent='Sticker von '+(profile?profile.name:'');
-  $('albHint').textContent='Du hast '+have.length+' von '+STICKERS.length+' Stickern. Entdecke neue Motive oder gewinne einen Pokal – dann bekommst du mehr!';
-  STICKERS.forEach((em,i)=>{
-    const d=document.createElement('div');
-    const got=have.indexOf(i)>=0;
-    d.className='sticker'+(got?'':' locked');
-    d.innerHTML='<em>'+em+'</em>';
-    grid.appendChild(d);
-  });
-}
-$('stickerBtn').addEventListener('click',openAlbum);
-$('albBack').addEventListener('click',()=>showSection(secHome));
-
 
 /* ---------- Werkzeuge ---------- */
 const tools={pen:$('tPen'),magic:$('tMagic'),fill:$('tFill'),erase:$('tErase')};
@@ -2126,18 +1950,10 @@ async function keepPicture(){
   await saveProfiles();
   toast('🖼️ Bild in der Galerie gespeichert');
 
-  if(trophyReached){
-    setTimeout(()=>showTrophyPopup(newTier),400);
-  }else if(firstTime){
-    const idx=await awardSticker();
-    if(idx!=null) setTimeout(()=>showReward(idx,motifName),500);
-    else Voice.say('gallery',null,true);
-  }else{
-    Voice.say('gallery',null,true);
-  }
+  if(trophyReached) setTimeout(()=>showTrophyPopup(newTier),400);
+  else Voice.say('gallery',null,true);
 }
 $('keep').addEventListener('click',keepPicture);
-$('toGallery').addEventListener('click',async()=>{ await keepPicture(); openGallery(); });
 $('galBtn').addEventListener('click',openGallery);
 $('galBack').addEventListener('click',()=>showSection(secHome));
 
