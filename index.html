@@ -420,7 +420,6 @@
       <div class="motif-card">
         <div class="motif-card-head">
           <b>Meine Bilder</b>
-          <span id="galMotifCount"></span>
         </div>
         <div class="motif-grid" id="galMotifGrid"></div>
       </div>
@@ -1620,8 +1619,9 @@ let profiles=[], profile=null, customs=[];
 const art=document.createElement('canvas'); art.width=1200; art.height=900;
 const actx=art.getContext('2d',{willReadFrequently:true});
 let undoStack=[];
+let pictureSaved=false;
 
-function clearArt(){ actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height); paint(); }
+function clearArt(){ actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height); paint(); pictureSaved=false; }
 function paint(){ ctx.clearRect(0,0,pad.width,pad.height); ctx.drawImage(art,0,0,pad.width,pad.height); }
 
 /* Kompletten Umriss eines Motivs aufs Blatt zeichnen (für den Ausmal-Modus) */
@@ -1639,14 +1639,16 @@ function outlineToCanvas(){
   }));
   actx.restore();
   paint();
+  pictureSaved=false;
 }
-function snapshot(){ try{ undoStack.push(art.toDataURL('image/png')); if(undoStack.length>12) undoStack.shift(); }catch(e){} }
+function snapshot(){ try{ undoStack.push(art.toDataURL('image/png')); if(undoStack.length>12) undoStack.shift(); }catch(e){} pictureSaved=false; }
 function undoDraw(){
   const d=undoStack.pop(); if(!d) return;
   const img=new Image();
   img.onload=()=>{ actx.fillStyle=PAPER; actx.fillRect(0,0,art.width,art.height); actx.drawImage(img,0,0); paint(); };
   img.src=d;
   Voice.say('undo');
+  pictureSaved=false;
 }
 function toast(msg){
   toastEl.textContent=msg; toastEl.classList.add('on');
@@ -1793,7 +1795,7 @@ async function renderTrophyPanel(){
 }
 async function renderMotifGrid(){
   const grid=$('galMotifGrid'); grid.textContent='';
-  const list=allMotifs(), counts=motifCounts();
+  const list=allMotifs();
   const ks=(await Store.keys('pic:'+profile.id+':')).sort().reverse();
   if(!ks.length){
     grid.innerHTML='<p class="gal-empty">Noch keine Bilder. Mal eins und tippe auf „Galerie"!</p>';
@@ -1824,7 +1826,6 @@ async function renderMotifGrid(){
     d.appendChild(x);
     grid.appendChild(d);
   }
-  $('galMotifCount').textContent=Object.keys(counts).length+' von '+list.length+' gemalt';
 }
 $('trophyCTA').addEventListener('click',()=>{
   const list=allMotifs(), counts=motifCounts();
@@ -2367,6 +2368,7 @@ function thumb(){
 }
 async function keepPicture(){
   if(!profile) return;
+  if(pictureSaved){ toast('🖼️ Ist schon in deiner Galerie!'); return; }
   const motifName=motif?motif.name:'Bild', motifEmoji=motif?motif.emoji:'🎨';
   await Store.set('pic:'+profile.id+':'+Date.now(), JSON.stringify({motif:motifName,emoji:motifEmoji,img:thumb()}));
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
@@ -2377,6 +2379,7 @@ async function keepPicture(){
   if(motif){ counts[motifName]=(counts[motifName]||0)+1; profile.motifCounts=JSON.stringify(counts); }
   const newDisc = firstTime ? prevDisc+1 : prevDisc;
   profile.stars=(profile.stars||0)+1;
+  pictureSaved=true;
 
   const prevTier=trophyTier(prevDisc), newTier=trophyTier(newDisc);
   const trophyReached = !!newTier && (!prevTier || newTier.key!==prevTier.key);
