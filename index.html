@@ -201,6 +201,13 @@
   .tile.lv-mittel b{color:#B98400}
   .tile.lv-schwer b{color:#D1477B}
   .tile.mine b{color:var(--coral)}
+  .level-legend{display:flex;align-items:center;gap:16px;flex:none;flex-wrap:wrap;
+    font-family:var(--font-body);font-weight:700;font-size:12.5px;color:var(--sub)}
+  .level-legend span{display:inline-flex;align-items:center;gap:6px}
+  .lv-dot{width:13px;height:13px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(7,59,76,.15)}
+  .lv-dot.lv-leicht{background:var(--kelp)}
+  .lv-dot.lv-mittel{background:var(--sand)}
+  .lv-dot.lv-schwer{background:#E85D8A}
   .tile:active{transform:translateY(3px)}
   .panel{background:var(--paper);border:3px solid var(--sea);border-radius:18px;padding:10px 12px;box-shadow:0 8px 16px rgba(7,59,76,.13)}
   .panel select{
@@ -391,6 +398,11 @@
       <p class="hint" id="voiceHint" style="margin-top:8px"></p>
     </div>
     <p class="hint" id="homeHint">Links steht die Vorlage – im weißen Feld malst du sie nach.</p>
+    <div class="level-legend">
+      <span><i class="lv-dot lv-leicht"></i>leicht</span>
+      <span><i class="lv-dot lv-mittel"></i>mittel</span>
+      <span><i class="lv-dot lv-schwer"></i>schwer</span>
+    </div>
     <div class="picker" id="picker"></div>
   </section>
 
@@ -1468,7 +1480,7 @@ function renderPicker(){
   items.forEach(({m,i})=>{
     const b=document.createElement('button');
     b.className='tile'+(m._key?' mine':' lv-'+m.level);
-    b.innerHTML='<em>'+m.emoji+'</em>'+m.name+'<b>'+m.level+'</b>';
+    b.innerHTML='<em>'+m.emoji+'</em>'+m.name+(m._key?'<b>'+m.level+'</b>':'');
     b.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; openMotif(i); });
     if(m._key){
       const x=document.createElement('button'); x.className='x'; x.textContent='✕';
