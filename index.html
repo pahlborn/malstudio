@@ -2533,7 +2533,16 @@ layout();
 
 (async function(){
   if('serviceWorker' in navigator){
-    try{ await navigator.serviceWorker.register('sw.js'); }catch(e){}
+    try{
+      const reg=await navigator.serviceWorker.register('sw.js');
+      let reloaded=false;
+      navigator.serviceWorker.addEventListener('controllerchange',()=>{
+        if(reloaded) return;
+        reloaded=true;
+        location.reload();
+      });
+      reg.update().catch(()=>{});
+    }catch(e){}
   }
   await loadProfiles();
   for(const p of profiles){ p.count=(await Store.keys('pic:'+p.id+':')).length; }
