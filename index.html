@@ -14,7 +14,7 @@
 <title>Sommer am Meer – Malstudio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Caveat:wght@600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Caveat:wght@600;700&family=Grandstander:wght@700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
     --deep:#073B4C; --sea:#118AB2; --foam:#EAF6F8; --sand:#FFD166;
@@ -22,6 +22,7 @@
     --sub:#5B6B75;
     --font:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
     --font-hand:'Caveat','Bradley Hand','Segoe Script',cursive;
+    --font-map:'Grandstander','Baloo 2',system-ui,sans-serif;
     --ink:#4A3620; --parch1:#FBEECB; --parch2:#EDD9AB; --parch3:#E2C893;
     --parch-edge:#CDB07A; --rust:#8F2F1F; --map-blue:#1E5F8C;
     --font-body:'Nunito','Trebuchet MS',system-ui,sans-serif;
@@ -165,133 +166,106 @@
   #trophyCTA{flex:none}
   #homeGreeting{font-weight:700;color:var(--deep)}
 
-  /* ---------- Schatzinsel Albarella ---------- */
-  #island{display:flex;flex-direction:column;gap:8px;height:100%;min-height:0;
-    background:#FDF6E6;border-radius:18px;padding:8px;border:3px solid #E3D2AC}
-  #island>.row h1{color:var(--map-blue)}
-  #island>.row .profile-level{color:#7B8FA0}
-  .isl-layout{flex:1;min-height:0;display:flex;gap:12px}
+  /* ---------- Schatzinsel Albarella – Werte 1:1 aus dem Design-Entwurf ---------- */
+  #island{display:flex;flex-direction:column;height:100%;min-height:0;overflow:hidden;
+    font-family:'Nunito',sans-serif;background:#FDF6E6;border-radius:16px;
+    border:2px solid #E3D2AC;user-select:none}
 
-  /* Karte: Seitenverhältnis der gelieferten Illustration (1800x1600) */
-  .isl-map{--s:1;flex:none;position:relative;overflow:hidden;
-    border-radius:18px;border:3px solid var(--deep);box-shadow:0 8px 16px rgba(7,59,76,.13);
-    background:radial-gradient(ellipse at 50% 40%,#4FB3D9 0%,#2B93BE 55%,#1A7CA6 100%)}
+  .isl-top{height:54px;flex:none;display:flex;align-items:center;gap:14px;padding:0 16px;
+    background:linear-gradient(#FFFAF0,#F6ECD6);border-bottom:2px solid #E3D2AC;
+    box-shadow:0 2px 6px rgba(90,70,40,.08);z-index:5}
+  .isl-back{display:flex;align-items:center;gap:7px;padding:6px 14px 6px 10px;
+    border:2px solid #1E5F8C;border-radius:999px;color:#1E5F8C;font-family:'Nunito',sans-serif;
+    font-weight:800;font-size:14px;background:#fff;cursor:pointer}
+  .isl-back span:first-child{font-size:15px}
+  .isl-title{font-family:var(--font-map);font-weight:800;font-size:27px;color:#1E5F8C;letter-spacing:.4px}
+  .isl-sub{font-size:13px;font-weight:700;color:#7B8FA0}
+  .isl-key{border:0;background:none;font-size:15px;opacity:.5;cursor:pointer;padding:4px}
+  .isl-count{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+    background:#F2E3BF;border:2px solid #E0CB9C}
+  .isl-count b{font-size:13px;font-weight:800;color:#6B5322}
+
+  .isl-layout{flex:1;display:flex;min-height:0}
+  .isl-map{--s:1;flex:1;position:relative;overflow:hidden;background:#2F88B8}
   .isl-basis{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1}
+  .isl-map>svg.isl-fallback{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
   .isl-map::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
     background:radial-gradient(120% 90% at 50% 40%,rgba(255,244,214,.16),rgba(20,60,86,.28) 100%)}
-  .isl-map>svg.isl-fallback{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
 
-  /* Pergament-Zettel oben links: Geschichte der aktuellen Bucht */
-  .isl-note{position:absolute;left:2.5%;top:3.5%;width:31%;z-index:12;pointer-events:none;
-    background:linear-gradient(160deg,var(--parch1),var(--parch2) 60%,var(--parch3));
-    border-radius:3px;padding:calc(13px*var(--s)) calc(15px*var(--s)) calc(15px*var(--s));
-    box-shadow:0 8px 18px rgba(20,40,56,.34);transform:rotate(-1.2deg);
-    clip-path:polygon(2% 1%,98% 0,100% 8%,99% 96%,92% 100%,6% 99%,0 92%,1% 6%)}
-  .isl-note b{display:block;font-family:var(--font);font-weight:800;
-    font-size:calc(14px*var(--s));color:var(--rust);margin-bottom:calc(5px*var(--s))}
-  .isl-note p{margin:0;font-family:var(--font-hand);font-weight:600;
-    font-size:calc(18px*var(--s));line-height:1.25;color:var(--ink)}
-
-  /* Infokarte oben rechts */
-  .isl-info{position:absolute;right:2.5%;top:3.5%;width:27%;z-index:12;pointer-events:none;
-    background:linear-gradient(160deg,var(--parch1),var(--parch2) 60%,var(--parch3));
-    border-radius:3px;padding:calc(12px*var(--s)) calc(14px*var(--s));
-    box-shadow:0 8px 18px rgba(20,40,56,.34);transform:rotate(1.1deg);
-    clip-path:polygon(2% 0,97% 2%,100% 9%,99% 95%,93% 100%,5% 98%,0 90%,1% 5%)}
-  .isl-info b{display:block;font-family:var(--font);font-weight:800;
-    font-size:calc(13px*var(--s));color:var(--rust);margin-bottom:calc(4px*var(--s))}
-  .isl-info p{margin:0;font-family:var(--font-hand);font-weight:600;
-    font-size:calc(16px*var(--s));line-height:1.25;color:var(--ink)}
-
-  /* Start-Schild */
-  .isl-start{position:absolute;z-index:11;transform:translate(-50%,-50%);
-    text-align:center;pointer-events:none}
-  .isl-start b{display:block;font-family:var(--font-hand);font-weight:700;
-    font-size:calc(19px*var(--s));color:var(--ink);
-    background:linear-gradient(#E6CD9C,#CDAE78);padding:calc(3px*var(--s)) calc(16px*var(--s)) calc(5px*var(--s));
-    border-radius:4px;border:2px solid #A98A55;box-shadow:0 4px 8px rgba(20,40,56,.35)}
-  .isl-start i{display:block;width:calc(5px*var(--s));height:calc(16px*var(--s));
-    margin:0 auto;background:#8F7143}
-  /* Ortsnamen direkt auf der Karte, handgeschrieben */
-  .isl-place{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:11;
-    font-family:var(--font-hand);font-weight:700;font-size:calc(19px*var(--s));color:#fff;
-    text-shadow:0 2px 4px rgba(20,40,56,.85);white-space:nowrap}
-
-  /* Schatzpfad */
-  .isl-route{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
-  .isl-route polyline{fill:none;stroke-linecap:round;stroke-linejoin:round;
-    vector-effect:non-scaling-stroke}
+  .isl-route{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:4}
+  .isl-route polyline{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
   .isl-route polyline.under{stroke:#8F2F1F;stroke-opacity:.28;stroke-width:7}
   .isl-route polyline.over{stroke:#C8452F;stroke-width:4;stroke-dasharray:2 7}
 
-  /* Buchten-Marker: Kreis + Nummer, daneben Name + drei Sterne */
-  .isl-bay{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;
-    gap:calc(6px*var(--s));background:none;border:0;padding:0;cursor:pointer;z-index:10}
+  .isl-start{position:absolute;transform:translate(-50%,-50%);text-align:center;pointer-events:none;z-index:11}
+  .isl-start b{display:block;font-family:var(--font-hand);font-weight:700;font-size:19px;color:#4A3620;
+    background:linear-gradient(#E6CD9C,#CDAE78);padding:3px 16px 5px;border-radius:4px;
+    border:2px solid #A98A55;box-shadow:0 4px 8px rgba(20,40,56,.35)}
+  .isl-start i{display:block;width:5px;height:16px;margin:0 auto;background:#8F7143}
+  .isl-place{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:11;
+    font-family:var(--font-hand);font-weight:700;font-size:20px;color:#fff;
+    text-shadow:0 2px 4px rgba(20,40,56,.8);white-space:nowrap}
+
+  /* Buchten-Marker */
+  .isl-bay{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;
+    background:none;border:0;padding:0;cursor:pointer;z-index:10}
+  .isl-bay.sel{z-index:20}
   .isl-bay.side-left{flex-direction:row-reverse}
-  .isl-bay:active{transform:translate(-50%,calc(-50% + 2px))}
-  .isl-pin{position:relative;flex:none;width:calc(46px*var(--s));height:calc(46px*var(--s));
-    border-radius:50%;display:flex;align-items:center;justify-content:center;
-    font-size:calc(23px*var(--s));background:linear-gradient(#FFFDF5,#F3E6C9);
-    border:calc(3px*var(--s)) solid var(--sand);box-shadow:0 calc(6px*var(--s)) calc(14px*var(--s)) rgba(20,40,56,.35)}
-  .isl-bay.sel .isl-pin{border-color:var(--coral)}
-  .isl-bay.locked .isl-pin{background:linear-gradient(#DFE4E6,#C3CCD0);border-style:solid;
-    border-color:#A6B2B7;font-size:calc(17px*var(--s));opacity:.85}
+  .isl-pin{position:relative;width:46px;height:46px;flex:none;border-radius:999px;
+    display:flex;align-items:center;justify-content:center;font-size:23px;line-height:1;
+    background:linear-gradient(#FFFDF5,#F3E6C9);border:3px solid #DFA63A;
+    box-shadow:0 6px 14px rgba(20,40,56,.35)}
+  .isl-bay.sel .isl-pin{border-color:#C8452F}
   .isl-bay.active .isl-pin{animation:pinPulse 2.2s ease-in-out infinite}
-  @keyframes pinPulse{0%,100%{box-shadow:0 6px 14px rgba(20,40,56,.35)}
-    50%{box-shadow:0 6px 14px rgba(20,40,56,.35),0 0 0 calc(6px*var(--s)) rgba(239,71,111,.28)}}
-  .isl-pin .num{position:absolute;top:calc(-6px*var(--s));right:calc(-6px*var(--s));
-    width:calc(19px*var(--s));height:calc(19px*var(--s));border-radius:50%;
-    display:flex;align-items:center;justify-content:center;font-family:var(--font);
-    font-weight:800;font-size:calc(11px*var(--s));color:#fff;background:var(--coral);
-    border:calc(2px*var(--s)) solid #FFFDF5}
-  .isl-bay.done .isl-pin .num{background:#4F7F42}
-  .isl-bay.locked .isl-pin .num{background:#93A1A7}
-  .isl-bay.side-left .isl-pin .num{right:auto;left:calc(-6px*var(--s))}
-  .isl-baylabel{background:rgba(255,253,245,.95);border:calc(2px*var(--s)) solid #D9C193;
-    border-radius:calc(6px*var(--s));padding:calc(3px*var(--s)) calc(9px*var(--s)) calc(4px*var(--s));
-    box-shadow:0 calc(4px*var(--s)) calc(10px*var(--s)) rgba(20,40,56,.28);white-space:nowrap}
-  .isl-bay.sel .isl-baylabel{border-color:var(--coral)}
-  .isl-bay.locked .isl-baylabel{background:rgba(232,237,239,.94);border-color:#B6C0C4}
-  .isl-baylabel b{display:block;font-family:var(--font);font-weight:800;
-    font-size:calc(12px*var(--s));color:var(--sea);line-height:1.15}
-  .isl-bay.locked .isl-baylabel b{color:#7D8B90}
-  .isl-baystars{display:flex;justify-content:center;gap:calc(1px*var(--s));font-size:calc(10px*var(--s));line-height:1}
-  .isl-baystars i{font-style:normal;opacity:.3;filter:grayscale(1)}
-  .isl-baystars i.on{opacity:1;filter:none}
+  @keyframes pinPulse{0%,100%{box-shadow:0 0 0 0 rgba(223,166,58,.85),0 6px 14px rgba(20,40,56,.35)}
+    50%{box-shadow:0 0 0 12px rgba(223,166,58,0),0 6px 14px rgba(20,40,56,.35)}}
+  .isl-pin i{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:999px;
+    display:flex;align-items:center;justify-content:center;font-family:var(--font-map);
+    font-weight:800;font-size:12px;color:#fff;background:#C8452F;border:2px solid #FFFDF5;font-style:normal}
+  .isl-bay.done .isl-pin i{background:#4F7F42}
+  .isl-bay.side-left .isl-pin i{right:auto;left:-7px}
+  .isl-baylabel{padding:3px 10px 4px;border-radius:6px;background:rgba(255,253,245,.94);
+    border:2px solid #D9C193;box-shadow:0 4px 10px rgba(20,40,56,.28)}
+  .isl-bay.sel .isl-baylabel{border-color:#C8452F}
+  .isl-baylabel b{display:block;font-family:var(--font-map);font-weight:800;font-size:13px;
+    white-space:nowrap;color:#1E5F8C}
+  .isl-baystars{display:flex;gap:2px;justify-content:center}
+  .isl-baystars i{font-style:normal;font-size:11px;line-height:1;color:rgba(120,120,120,.32)}
+  .isl-baystars i.on{color:#DFA63A}
 
-  /* Schatztruhe am Capo Nord */
-  .isl-chest{position:absolute;transform:translate(-50%,-50%);z-index:11;
-    display:flex;flex-direction:column;align-items:center;gap:calc(3px*var(--s))}
-  .isl-chest .box{width:calc(54px*var(--s));height:calc(54px*var(--s));border-radius:50%;
-    display:flex;align-items:center;justify-content:center;font-size:calc(27px*var(--s));
-    background:linear-gradient(#DFE4E6,#C3CCD0);border:calc(3px*var(--s)) solid #A6B2B7;
-    box-shadow:0 calc(8px*var(--s)) calc(18px*var(--s)) rgba(20,40,56,.4)}
-  .isl-chest.ready .box{background:radial-gradient(circle at 35% 30%,#FFF6D8,#E8C473);
-    border-color:var(--sand);animation:pinPulse 2s ease-in-out infinite}
-  .isl-chest .lbl{font-family:var(--font);font-weight:800;font-size:calc(11px*var(--s));
-    color:#5C4423;background:#FFE8B8;border:calc(1.5px*var(--s)) solid #D9C193;
-    padding:calc(2px*var(--s)) calc(9px*var(--s));border-radius:999px;white-space:nowrap}
+  /* Schatztruhe */
+  .isl-chest{position:absolute;transform:translate(-50%,-50%);z-index:15;cursor:pointer}
+  .isl-chest .box{width:62px;height:62px;border-radius:999px;display:flex;align-items:center;
+    justify-content:center;font-size:30px;background:radial-gradient(circle at 35% 30%,#FFF6D8,#E8C473);
+    border:4px solid #DFA63A;box-shadow:0 8px 20px rgba(20,40,56,.4);animation:pinPulse 2s ease-in-out infinite}
 
-  /* Schatzfragmente als Pergamentstreifen unten in der Karte */
-  .isl-fragstrip{position:absolute;left:2%;right:2%;bottom:2%;z-index:12;
-    display:flex;align-items:center;gap:calc(8px*var(--s));
-    background:linear-gradient(rgba(247,233,200,.94),rgba(233,211,165,.94));
-    border:2px solid var(--parch-edge);border-radius:8px;
-    padding:calc(7px*var(--s)) calc(12px*var(--s));box-shadow:0 6px 14px rgba(20,40,56,.3)}
-  .isl-fragstrip>b{flex:none;font-family:var(--font-hand);font-weight:700;
-    font-size:calc(17px*var(--s));color:#6B5322;line-height:1;white-space:nowrap}
-  .isl-frag{flex:1;min-width:0;height:calc(34px*var(--s));border-radius:calc(7px*var(--s));
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    font-size:calc(16px*var(--s));background:rgba(255,253,245,.45);border:2px dashed #C0A774}
-  .isl-frag.got{background:linear-gradient(#FFF7E2,#F6E4B8);border:2px solid var(--sand);
+  /* Geschichten-Zettel */
+  .isl-note{position:absolute;left:14px;top:12px;width:224px;padding:16px 18px 18px;z-index:12;
+    background:linear-gradient(160deg,#FBEECB,#EDD9AB 60%,#E2C893);border-radius:3px;
+    box-shadow:0 8px 18px rgba(20,40,56,.34);transform:rotate(-1.2deg);pointer-events:none;
+    clip-path:polygon(2% 1%,98% 0,100% 8%,99% 96%,92% 100%,6% 99%,0 92%,1% 6%)}
+  .isl-note .hd{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+  .isl-note .hd b{font-family:var(--font-map);font-weight:800;font-size:15px;color:#8F2F1F}
+  .isl-note p{margin:0;font-family:var(--font-hand);font-weight:600;font-size:19px;
+    line-height:1.25;color:#4A3620}
+
+  /* Schatzfragmente */
+  .isl-fragstrip{position:absolute;left:10px;right:10px;bottom:8px;z-index:12;display:flex;
+    align-items:center;gap:8px;padding:7px 12px;border-radius:8px;border:2px solid #CDB07A;
+    background:linear-gradient(#F7E9C8EE,#E9D3A5EE);box-shadow:0 6px 14px rgba(20,40,56,.3)}
+  .isl-fragstrip>b{flex:none;font-family:var(--font-hand);font-weight:700;font-size:16px;
+    color:#6B5322;line-height:1;white-space:nowrap}
+  .isl-fragstrip>div{flex:1;display:flex;gap:6px}
+  .isl-frag{flex:1;height:30px;border-radius:6px;display:flex;align-items:center;
+    justify-content:center;font-size:17px;background:rgba(255,253,245,.35);border:2px dashed #C0A774}
+  .isl-frag.got{background:linear-gradient(#FFF7E2,#F6E4B8);border:2px solid #DFA63A;
     box-shadow:0 2px 5px rgba(120,90,30,.2)}
-  .isl-frag small{font-weight:700;font-size:calc(7.5px*var(--s));color:#8A7350;line-height:1}
 
   /* Nebel */
   .isl-mapfog{position:absolute;inset:-8%;pointer-events:none;z-index:5;
-    background:linear-gradient(120deg,rgba(228,238,243,.66),rgba(208,224,233,.56) 60%,rgba(228,238,243,.66));
-    backdrop-filter:grayscale(.85) blur(4px) brightness(1.06);
-    -webkit-backdrop-filter:grayscale(.85) blur(4px) brightness(1.06);
+    background:linear-gradient(180deg,rgba(214,226,232,.5),rgba(196,212,220,.42));
+    backdrop-filter:grayscale(.88) blur(3px) brightness(1.06);
+    -webkit-backdrop-filter:grayscale(.88) blur(3px) brightness(1.06);
     animation:fogDrift 14s ease-in-out infinite;
     transition:-webkit-mask-image .9s ease, mask-image .9s ease}
   @keyframes fogDrift{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.2%,.8%)}}
@@ -300,10 +274,8 @@
     animation:gustBlow 1s ease-out forwards}
   @keyframes gustBlow{0%{opacity:0;transform:translate(-30px,0) scale(.6) rotate(0)}
     15%{opacity:.85}100%{opacity:0;transform:translate(160px,-18px) scale(1.3) rotate(50deg)}}
-
-  /* Wolkendecke über Capo Nord bis zum Finale */
   .isl-chestcloud{position:absolute;transform:translate(-50%,-50%);z-index:7;pointer-events:none;
-    width:calc(130px*var(--s));height:calc(130px*var(--s))}
+    width:150px;height:150px}
   .isl-chestcloud .half{position:absolute;top:0;width:62%;height:100%;
     background:radial-gradient(circle,#EDF2F4 0%,rgba(237,242,244,0) 72%);filter:blur(2px)}
   .isl-chestcloud .half.l{left:-12%}
@@ -317,121 +289,115 @@
   @keyframes cloudPartR{0%{transform:translateX(0)}100%{transform:translateX(75%);opacity:0}}
   @keyframes beamIn{0%{opacity:0}60%{opacity:1}100%{opacity:.9}}
 
-  /* Verstecktes Detail (Bonus-Stern 2) */
-  .isl-hidden{position:absolute;border-radius:999px;z-index:9;background:transparent;
-    border:0;padding:0;cursor:pointer}
+  .isl-hidden{position:absolute;border-radius:999px;z-index:9;background:transparent;border:0;padding:0;cursor:pointer}
   .isl-hidden.hint{box-shadow:0 0 0 3px rgba(223,166,58,.9),0 0 22px rgba(255,236,170,.9);
-    background:rgba(255,240,190,.25);animation:hintPulse 1.4s ease-in-out infinite}
-  @keyframes hintPulse{0%,100%{opacity:.7}50%{opacity:1}}
-
-  /* Lebendige Details */
-  .isl-sprite{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:3;
-    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,240,190,.22)}
+  .isl-sprite{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:8;
+    display:flex;align-items:center;justify-content:center;line-height:1;
     filter:drop-shadow(0 4px 6px rgba(20,40,56,.4))}
   .isl-sprite img{width:100%;height:100%;object-fit:contain;display:block}
   .isl-sprite em{font-style:normal;line-height:1}
   .isl-sprite.bob{animation:bob 5s ease-in-out infinite}
   @keyframes bob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 5px))}}
 
-  /* ---------- Seitenspalte ---------- */
-  .isl-side{width:300px;flex:none;display:flex;flex-direction:column;gap:9px;min-height:0;
-    background:linear-gradient(#FDF6E6,#F7ECD6);border-left:2px solid #E3D2AC;
-    border-radius:0 14px 14px 0;padding-left:10px}
-  .isl-side-scroll{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;
-    display:flex;flex-direction:column;gap:9px}
-  .isl-card{flex:none;background:#FFF8E7;border:3px solid var(--deep);border-radius:18px;
-    box-shadow:0 8px 16px rgba(7,59,76,.13);padding:12px 14px;display:flex;flex-direction:column;gap:9px}
-  .isl-card.plain{background:var(--paper)}
-  .isl-cardhead{display:flex;align-items:center;gap:7px}
-  .isl-cardhead b{font-family:var(--font);font-weight:800;font-size:14px;color:var(--deep)}
-  .isl-dots{margin-left:auto;display:flex;gap:4px}
-  .isl-dots i{width:8px;height:8px;border-radius:50%;background:#DCE5E8;font-style:normal}
-  .isl-dots i.on{background:var(--kelp)}
-  .isl-bayname{font-family:var(--font);font-weight:800;font-size:17px;color:var(--deep)}
-  .isl-bayname span{font-size:13px}
-  .isl-frame{width:100%;height:132px;flex:none;border-radius:7px;padding:9px;
+  /* ---------- Seitenspalte (268px, wie im Entwurf) ---------- */
+  .isl-side{width:268px;flex:none;display:flex;flex-direction:column;gap:8px;padding:10px;
+    background:linear-gradient(#FDF6E6,#F7ECD6);border-left:2px solid #E3D2AC;overflow:hidden}
+  .isl-sidehead{display:flex;align-items:center;gap:7px;flex:none}
+  .isl-sidehead b{font-family:var(--font-map);font-weight:800;font-size:17px;color:#1E5F8C}
+  .isl-status{margin-left:auto;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:800}
+  .isl-status.done{color:#3F6B34;background:#E6F1DE}
+  .isl-status.now{color:#8F2F1F;background:#FBE3DC}
+  .isl-frame{flex:none;position:relative;padding:9px;border-radius:7px;
     background:linear-gradient(150deg,#C39A63,#9D7742 45%,#B98F57);
     box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),0 4px 10px rgba(90,70,40,.25)}
-  .isl-frame>div{width:100%;height:100%;border-radius:3px;background:#FFFDF7;overflow:hidden;
+  .isl-frame>div{height:118px;border-radius:3px;background:#FFFDF7;overflow:hidden;
     box-shadow:inset 0 2px 8px rgba(90,70,40,.18);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
   .isl-frame img{width:100%;height:100%;object-fit:cover;display:block}
-  .isl-frame em{font-size:26px;font-style:normal}
-  .isl-frame small{font-family:var(--font-hand);font-weight:600;font-size:16px;color:#9D8A68}
-  .isl-chips{display:flex;gap:4px;flex-wrap:wrap}
-  .isl-chips span{padding:2px 8px;border-radius:999px;font-weight:700;font-size:11px;
+  .isl-frame em{font-size:34px;font-style:normal;opacity:.3}
+  .isl-frame small{font-family:var(--font-hand);font-weight:600;font-size:17px;color:#9D8A68}
+  .isl-scroll{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;display:flex;
+    flex-direction:column;gap:8px}
+  .isl-stars{display:flex;flex-direction:column;gap:4px}
+  .isl-star-row{display:flex;align-items:center;gap:7px;padding:5px 9px;border-radius:6px;
+    color:#8B7C62;background:#F2E8D2;border:1.5px solid #E0D0AD}
+  .isl-star-row.got{color:#3F6B34;background:#E6F1DE;border-color:#B9D8AB}
+  .isl-star-row em{font-style:normal;font-size:14px;color:rgba(140,130,110,.4)}
+  .isl-star-row.got em{color:#DFA63A}
+  .isl-star-row span{flex:1;font-size:12px;font-weight:700}
+  .isl-star-row small{font-size:11px;font-weight:700}
+  .isl-chips{display:flex;flex-wrap:wrap;gap:4px}
+  .isl-chips span{padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;
     background:#F0EADE;border:1.5px solid #DED6C4;color:#9A9184}
   .isl-chips span.got{background:#FFF6DF;border-color:#E5CF9D;color:#6B5322}
-  .isl-fact{background:var(--paper);border:2px solid var(--sand);border-radius:12px;padding:9px 11px}
+  .isl-fact{background:rgba(255,253,245,.85);border:2px solid #E5CF9D;border-radius:8px;padding:9px 11px}
   .isl-fact-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
-  .isl-fact-head b{font-family:var(--font);font-weight:800;font-size:11px;color:#B7942E}
-  .isl-fact-head button{margin-left:auto;background:none;border:0;font-size:16px;cursor:pointer;padding:0}
-  .isl-fact p{margin:0;font-weight:700;font-size:13px;color:#5C4423;line-height:1.4}
-  .isl-stars{display:flex;flex-direction:column;gap:4px}
-  .isl-star-row{display:flex;align-items:center;gap:7px;padding:5px 9px;border-radius:8px;
-    background:#F1F6F8;font-weight:700;font-size:12px;color:var(--sub)}
-  .isl-star-row.got{background:#E6F1DE;color:#3F6B34}
-  .isl-star-row em{font-style:normal;font-size:14px}
-  .isl-star-row small{margin-left:auto;font-weight:800;font-size:10px;opacity:.7}
-  .isl-actionrow{display:flex;gap:8px}
+  .isl-fact-head b{font-family:var(--font-map);font-weight:800;font-size:11px;color:#B7942E}
+  .isl-fact-head button{margin-left:auto;background:none;border:0;font-size:15px;cursor:pointer;padding:0}
+  .isl-fact p{margin:0;font-family:var(--font-hand);font-weight:600;font-size:18px;
+    color:#4A3620;line-height:1.25}
+  .isl-lock-note{margin:0;font-family:var(--font-hand);font-weight:600;font-size:18px;
+    color:#4A3620;line-height:1.25}
+  .isl-actionrow{display:flex;gap:6px;flex:none}
   .isl-actionrow button{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
-    padding:9px 6px;border-radius:10px;font-family:var(--font);font-weight:800;font-size:12.5px;
-    color:#6B5322;background:#FFF6DF;border:2px solid #E5CF9D;cursor:pointer}
+    padding:8px 6px;border-radius:8px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
+    cursor:pointer;background:#FFF6DF;border:2px solid #E5CF9D;color:#6B5322}
   .isl-actionrow button:disabled{opacity:.45;cursor:default}
   .isl-actionrow button.active{background:#F6E4B8}
-  .isl-lock-note{font-weight:700;font-size:13px;color:var(--sub);margin:0;line-height:1.45}
-  .isl-captain{flex:none;background:#EAF4FA;border:3px dashed #8FC0D8;border-radius:18px;padding:11px 13px}
-  .isl-captain b{display:block;font-family:var(--font);font-weight:800;font-size:14px;
-    color:var(--deep);margin-bottom:3px}
-  .isl-captain p{margin:0 0 8px;font-weight:700;font-size:12px;color:var(--sub);line-height:1.35}
-  .isl-captain .steps{display:flex;gap:8px}
-  .isl-captain .steps i{flex:1;height:30px;border-radius:8px;display:flex;align-items:center;
-    justify-content:center;font-style:normal;font-family:var(--font);font-weight:800;font-size:13px;
-    background:#DCE5E8;color:#8A9BA2}
-  .isl-captain .steps i.on{background:linear-gradient(#FFF7E2,#F6E4B8);color:#6B5322;border:2px solid var(--sand)}
-  .isl-cta{flex:none}
+  .isl-cta{flex:none;padding:12px 14px;border-radius:10px;text-align:center;border:0;
+    font-family:var(--font-map);font-weight:800;font-size:14px;color:#fff;cursor:pointer;
+    background:linear-gradient(#3F9C6D,#2C7C54);box-shadow:0 4px 0 rgba(0,0,0,.16)}
+  .isl-cta.gold{background:linear-gradient(#E0A636,#C1861D)}
 
-  /* Quiz */
-  .isl-quiz-card{background:linear-gradient(165deg,var(--parch1),#ECD7A7);border-radius:6px;
-    padding:24px 26px 20px;text-align:left;box-shadow:0 20px 50px rgba(10,30,45,.5);max-width:470px;
+  /* ---------- Quiz ---------- */
+  .isl-quiz-card{width:470px;max-width:92vw;padding:24px 26px 20px;border-radius:6px;
+    background:linear-gradient(165deg,#FBEECB,#ECD7A7);box-shadow:0 20px 50px rgba(10,30,45,.5);
     clip-path:polygon(1% 1%,99% 0,100% 5%,99% 97%,95% 100%,4% 99%,0 95%,1% 4%)}
-  .isl-quiz-dots{display:flex;justify-content:center;gap:8px;margin-bottom:10px}
-  .isl-quiz-dots i{width:12px;height:12px;border-radius:50%;background:#E1E4E1;font-style:normal}
-  .isl-quiz-dots i.on{background:var(--kelp)}
-  .isl-quiz-title{font-family:var(--font);font-weight:800;font-size:17px;color:var(--rust);margin:0 0 10px}
+  .isl-quiz-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .isl-quiz-head b{font-family:var(--font-map);font-weight:800;font-size:18px;color:#8F2F1F}
+  .isl-quiz-head button{margin-left:auto;width:28px;height:28px;border-radius:999px;border:0;
+    background:#E0CBA0;color:#6B5322;font-weight:800;cursor:pointer}
   .isl-quiz-q{font-family:var(--font-hand);font-weight:700;font-size:25px;line-height:1.2;
-    color:var(--ink);margin:0 0 14px}
-  .isl-quiz-opts{display:flex;flex-direction:column;gap:10px}
+    color:#4A3620;margin:0 0 14px}
+  .isl-quiz-opts{display:flex;flex-direction:column;gap:8px}
   .isl-quiz-opt{display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:8px;
-    border:2px solid #D9C193;background:rgba(255,253,245,.85);
-    font-family:var(--font-body);font-weight:700;font-size:14px;color:var(--ink);cursor:pointer;text-align:left}
-  .isl-quiz-opt i{flex:none;width:24px;height:24px;border-radius:999px;background:#E9D7AB;
-    color:#6B5322;font-style:normal;font-weight:800;font-size:12px;
+    cursor:pointer;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;color:#4A3620;
+    background:rgba(255,253,245,.85);border:2px solid #D9C193;text-align:left}
+  .isl-quiz-opt i{width:24px;height:24px;flex:none;border-radius:999px;background:#E9D7AB;
+    color:#6B5322;font-weight:800;font-size:12px;font-style:normal;
     display:flex;align-items:center;justify-content:center}
+  .isl-quiz-opt span{flex:1}
   .isl-quiz-opt.right{background:#DFF0D5;border-color:#89BD72}
   .isl-quiz-opt.wrong{background:#F7DDD6;border-color:#DD9C8B}
-  .isl-quiz-feedback{min-height:24px;margin-top:12px;font-family:var(--font-hand);font-weight:700;
-    font-size:20px;color:#3F6B34}
-  .isl-quiz-feedback.retry{color:var(--coral)}
-  .isl-quiz-close{margin-top:14px;width:100%}
+  .isl-quiz-feedback{margin-top:12px;min-height:20px;font-family:var(--font-hand);
+    font-weight:700;font-size:20px;color:#3F6B34}
+  .isl-quiz-feedback.retry{color:#A8492F}
 
-  /* Schatzfund */
-  .treasure-card{position:relative;background:linear-gradient(150deg,#F0DCAE,#E0C489 55%,#CFAE6F);
-    border-radius:4px;padding:30px 34px 26px;box-shadow:0 24px 60px rgba(10,30,45,.55);
-    max-width:460px;transform:rotate(-.8deg);
+  /* ---------- Schatzfund ---------- */
+  .treasure-card{position:relative;width:500px;max-width:92vw;padding:30px 34px 26px;
+    background:linear-gradient(150deg,#F0DCAE,#E0C489 55%,#CFAE6F);border-radius:4px;
+    box-shadow:0 24px 60px rgba(10,30,45,.55);transform:rotate(-.8deg);
     clip-path:polygon(1.5% 2%,20% 0,52% 1.5%,80% 0,98.5% 2%,100% 20%,99% 50%,100% 80%,
       98% 98%,78% 100%,50% 98.5%,22% 100%,2% 98%,0 78%,1% 50%,0 20%)}
   .treasure-card::before{content:'';position:absolute;inset:0;pointer-events:none;
     background:radial-gradient(70% 60% at 30% 25%,rgba(255,255,255,.35),transparent 70%)}
-  .treasure-card b{display:block;font-family:var(--font);font-weight:800;font-size:20px;
-    color:var(--rust);margin-bottom:12px}
-  .treasure-card p{font-family:var(--font-hand);font-weight:700;font-size:24px;color:var(--ink);
-    line-height:1.25;margin:0;background:rgba(255,253,243,.72);border:2px dashed #B18F5C;
-    border-radius:4px;padding:12px 14px}
-  .treasure-card button{width:100%;margin-top:16px}
+  .treasure-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .treasure-head b{font-family:var(--font-map);font-weight:800;font-size:22px;color:#8F2F1F}
+  .treasure-card>p.lead{font-family:var(--font-hand);font-weight:700;font-size:27px;line-height:1.25;
+    color:#4A3620;margin:0 0 14px}
+  .treasure-body{display:flex;gap:14px;align-items:stretch}
+  .treasure-hint{flex:1;padding:12px 14px;background:rgba(255,253,243,.72);
+    border:2px dashed #B18F5C;border-radius:4px}
+  .treasure-hint small{display:block;font-size:11px;font-weight:800;letter-spacing:.8px;
+    color:#8B7346;text-transform:uppercase;margin-bottom:5px}
+  .treasure-hint p{margin:0;font-family:var(--font-hand);font-weight:700;font-size:22px;
+    line-height:1.2;color:#4A3620}
+  .treasure-card .nav-btn{width:100%;margin-top:16px}
   .isl-coins{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:31}
   .isl-coins i{position:absolute;top:-30px;font-style:normal;animation:coinFall linear infinite}
-  @keyframes coinFall{to{transform:translateY(115vh) rotate(360deg)}}
+  @keyframes coinFall{0%{transform:translateY(-30px) rotate(0);opacity:0}
+    12%{opacity:1}100%{transform:translateY(460px) rotate(680deg);opacity:0}}
 
   /* ---------- Fortschritts-Chip & -Balken ---------- */
   .progress-chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;
@@ -626,11 +592,14 @@
     .gal-side{width:100%}
     .motif-card{flex:none;max-height:44vh}
     .isl-layout{flex-direction:column}
-    .isl-map{flex:none;align-self:center}
-    .isl-side{width:100%;flex:1;min-height:0}
-    .isl-frame{height:104px}
-    .isl-note{width:38%}
-    .isl-info{display:none}
+    .isl-map{flex:none;height:40vh;width:100%}
+    .isl-side{width:100%;flex:1;min-height:0;border-left:0;border-top:2px solid #E3D2AC}
+    .isl-frame>div{height:96px}
+    .isl-note{width:46%;left:8px;top:8px;padding:11px 13px 13px}
+    .isl-note p{font-size:16px}
+    .isl-top{padding:0 10px;gap:9px}
+    .isl-title{font-size:22px}
+    .isl-sub{display:none}
   }
 </style>
 </head>
@@ -733,13 +702,13 @@
 
   <!-- ============ SCHATZINSEL (zusätzlich, ersetzt nichts) ============ -->
   <section id="island" hidden>
-    <div class="row">
-      <button class="icon-btn" id="islBack">◀︎ Zurück</button>
-      <h1>Albarella</h1>
-      <span class="profile-level" id="islSub"></span>
-      <span style="margin-left:auto"></span>
-      <button class="icon-btn" id="islHintBtn" style="font-size:11px;padding:0 8px;height:28px;opacity:.55" title="Nur für Eltern">🔑</button>
-      <span class="progress-chip" data-chip></span>
+    <div class="isl-top">
+      <button class="isl-back" id="islBack"><span>‹</span><span>Zurück</span></button>
+      <div class="isl-title">Albarella</div>
+      <div class="isl-sub" id="islSub">Insel-Abenteuer · Schatzsuche</div>
+      <div style="flex:1"></div>
+      <button class="isl-key" id="islHintBtn" title="Nur für Eltern">🔑</button>
+      <div class="isl-count"><span>🗺️</span><b id="islCount"></b></div>
     </div>
 
     <div class="isl-layout">
@@ -856,21 +825,27 @@
 
 <div class="reward" id="islQuiz">
   <div class="isl-quiz-card">
+    <div class="isl-quiz-head"><span style="font-size:20px">📜</span><b id="islQuizTitle"></b>
+      <button type="button" id="islQuizClose" aria-label="Schließen">✕</button></div>
     <div class="isl-quiz-dots" id="islQuizDots"></div>
-    <p class="isl-quiz-title" id="islQuizTitle"></p>
     <p class="isl-quiz-q" id="islQuizQ"></p>
     <div class="isl-quiz-opts" id="islQuizOpts"></div>
     <div class="isl-quiz-feedback" id="islQuizFeedback"></div>
-    <button class="nav-btn isl-quiz-close" id="islQuizClose">Später weiter</button>
   </div>
 </div>
 
 <div class="reward" id="treasureReveal">
+  <div class="isl-coins" id="treasureCoins"></div>
   <div class="treasure-card">
-    <div class="isl-coins" id="treasureCoins"></div>
-    <b>Geheimer Hinweis für den echten Schatz</b>
-    <p id="treasureHintText"></p>
-    <a class="nav-btn" id="treasureMapLink" href="#" target="_blank" rel="noopener" style="display:none;margin-top:10px;text-decoration:none;">📍 In Karten öffnen</a>
+    <div class="treasure-head"><span style="font-size:26px">✖️</span><b>Der echte Schatz</b></div>
+    <p class="lead">Du hast alle Hinweise gefunden. Jetzt öffnet sich die Truhe.</p>
+    <div class="treasure-body">
+      <div class="treasure-hint">
+        <small>Hinweis von Mama &amp; Papa</small>
+        <p id="treasureHintText"></p>
+      </div>
+    </div>
+    <a class="nav-btn" id="treasureMapLink" href="#" target="_blank" rel="noopener" style="display:none;margin-top:12px;text-decoration:none;text-align:center">📍 In Karten öffnen</a>
     <button class="nav-btn primary" id="treasureOk">Juhu! 🎉</button>
   </div>
 </div>
@@ -2355,7 +2330,9 @@ function motifEmoji(name){ const m=MOTIFS.find(x=>x.name===name); return m?m.emo
 function star2Set(){ try{ return JSON.parse(profile.islandStar2||'[]'); }catch(e){ return []; } }
 function star3Set(){ try{ return JSON.parse(profile.islandStar3||'[]'); }catch(e){ return []; } }
 function goldTierN(){ return TROPHIES.find(t=>t.key==='gold').n; }
-function islandUnlocked(){ return discoveredCount()>=goldTierN(); }
+/* Elternzugang: langes Drücken auf den Schatzinsel-Knopf schaltet die Karte zum Testen frei. */
+let islandTestMode=false;
+function islandUnlocked(){ return islandTestMode || discoveredCount()>=goldTierN(); }
 function bayEarned(b,i){
   const st=bayStats(b);
   return [st.full, star2Set().indexOf(b.key)>=0, star3Set().indexOf(b.key)>=0];
@@ -2364,22 +2341,8 @@ function bayEarned(b,i){
 /* Marker skalieren mit der Kartenbreite (Design-Basis: 800px breit) */
 function sizeIsland(){
   const map=$('islMap'); if(!map || secIsland.hidden) return;
-  const lay=map.parentElement, side=$('islSide');
-  const R=9/8;                                  // Seitenverhaeltnis der Illustration (1800x1600)
-  const portrait=window.matchMedia('(orientation:portrait)').matches;
-  let availW, availH;
-  if(portrait){
-    availW=lay.clientWidth;
-    availH=Math.round(window.innerHeight*0.36);
-  }else{
-    availW=lay.clientWidth - side.getBoundingClientRect().width - 12;
-    availH=lay.clientHeight;
-  }
-  if(availW<40 || availH<40) return;
-  const w=Math.max(140,Math.floor(Math.min(availW, availH*R)));
-  map.style.width=w+'px';
-  map.style.height=Math.floor(w/R)+'px';
-  map.style.setProperty('--s',Math.max(0.5,Math.min(1.2,w/800)).toFixed(4));
+  const w=map.getBoundingClientRect().width;
+  if(w>0) map.style.setProperty('--s',Math.max(.6,Math.min(1.2,w/676)).toFixed(4));
 }
 window.addEventListener('resize',sizeIsland);
 
@@ -2454,19 +2417,17 @@ function renderIsland(){
      + '<div class="half l"></div><div class="beam"></div><div class="half r"></div></div>';
   }
 
-  /* Zettel oben links zeigt die Geschichte der gewählten Bucht */
-  h+='<div class="isl-note"><b>'+(selOpen?sel.name:'Noch im Nebel')+'</b><p>'
-   + (selOpen ? sel.story : 'Mal zuerst die '+BAYS[selIdx-1].name+' fertig – dann lichtet der Meereswind den Nebel.')
+  /* Geschichten-Zettel oben links, wie im Entwurf */
+  h+='<div class="isl-note"><div class="hd"><span>'+(selOpen?sel.emoji:'🔒')+'</span><b>'
+   + (selOpen?sel.name:'Noch im Nebel')+'</b></div><p>'
+   + (selOpen ? sel.story : 'Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die '+BAYS[selIdx-1].name+' fertig.')
    + '</p></div>';
-  h+='<div class="isl-info"><b>Das ist Albarella ❤️</b><p>Der Meereswind hilft mutigen Schatzsuchern: '
-   + 'Für jede Aufgabe bläst er den Nebel ein Stück weiter fort.</p></div>';
 
-  let frag='<div class="isl-fragstrip"><b>Deine Schatz&shy;fragmente</b>';
+  let frag='<div class="isl-fragstrip"><b>Deine Schatzfragmente</b><div>';
   FRAGMENTS.forEach((f,i)=>{
-    frag+='<div class="isl-frag'+(i<done?' got':'')+'" title="'+f.name+'">'
-        + (i<done?f.emoji+'<small>'+f.name+'</small>':'')+'</div>';
+    frag+='<div class="isl-frag'+(i<done?' got':'')+'" title="'+f.name+'">'+(i<done?f.emoji:'')+'</div>';
   });
-  h+=frag+'</div>';
+  h+=frag+'</div></div>';
 
   map.innerHTML=h;
 
@@ -2475,11 +2436,10 @@ function renderIsland(){
     if(!bayUnlocked(i)) return;
     const st=bayStats(b), earned=bayEarned(b,i);
     const el=document.createElement('button');
-    el.className='isl-bay side-'+b.side + (st.full?' done':'')
-      + (selBay===b.key?' sel':'') + (st.full?'':' active');
+    el.className='isl-bay side-'+b.side+(st.full?' done':' active')+(selBay===b.key?' sel':'');
     el.style.left=b.x+'%'; el.style.top=b.y+'%';
     el.setAttribute('aria-label',b.name);
-    el.innerHTML='<span class="isl-pin">'+b.emoji+'<i class="num">'+b.nr+'</i></span>'
+    el.innerHTML='<span class="isl-pin">'+b.emoji+'<i>'+b.nr+'</i></span>'
       + '<span class="isl-baylabel"><b>'+b.name+'</b>'
       + '<span class="isl-baystars">'+earned.map(e=>'<i class="'+(e?'on':'')+'">★</i>').join('')+'</span></span>';
     el.addEventListener('click',()=>{ selBay=b.key; findMode=false; renderIsland(); });
@@ -2526,45 +2486,60 @@ function tapHidden(key){
 
 async function renderBaySide(){
   const host=$('islSide'); host.textContent='';
-  const side=document.createElement('div'); side.className='isl-side-scroll';
-  host.appendChild(side);
   const i=BAYS.findIndex(b=>b.key===selBay), b=BAYS[i];
   const st=bayStats(b), open=bayUnlocked(i), c=motifCounts();
   const done=baysDone();
 
-  $('islSub').textContent=levelInfo(discoveredCount()).title+' · '+done+' von '+BAYS.length+' Buchten fertig';
+  $('islCount').textContent=done+' von '+BAYS.length+' Buchten';
+  $('islSub').textContent=levelInfo(discoveredCount()).title+' · Schatzsuche';
 
-  const card=document.createElement('div');
-  card.className='isl-card';
+  /* Kopfzeile: Bucht + Status */
   const head=document.createElement('div');
-  head.className='isl-cardhead';
-  head.innerHTML='<span>'+(open?b.emoji:'🔒')+'</span><b>Aktuelle Aufgabe</b>'
-    + '<span class="isl-dots">'+BAYS.map((x,n)=>'<i class="'+(n<done?'on':'')+'"></i>').join('')+'</span>';
-  card.appendChild(head);
-  const nm=document.createElement('div');
-  nm.className='isl-bayname';
-  nm.innerHTML=b.name + (open ? (st.full?' <span style="color:var(--kelp)">· fertig! 🎉</span>'
-      : ' <span style="color:var(--coral)">· '+st.done+' von '+st.total+'</span>') : ' <span>· im Nebel</span>');
-  card.appendChild(nm);
+  head.className='isl-sidehead';
+  head.innerHTML='<span style="font-size:17px">'+(open?b.emoji:'🔒')+'</span><b>'+b.name+'</b>'
+    + '<span class="isl-status '+(st.full?'done':'now')+'">'+(st.full?'fertig':(open?st.done+' von '+st.total:'im Nebel'))+'</span>';
+  host.appendChild(head);
+
+  /* Holzrahmen mit dem gemalten Bild */
+  const frame=document.createElement('div');
+  frame.className='isl-frame';
+  const inner=document.createElement('div');
+  const img=open?await newestPicFor(b):null;
+  if(img){ const im=document.createElement('img'); im.src=img; im.alt=''; inner.appendChild(im); }
+  else{
+    inner.innerHTML='<em></em><small></small>';
+    inner.querySelector('em').textContent=open?b.emoji:'🔒';
+    inner.querySelector('small').textContent=st.full?'Dein Bild aus der Bucht':'Hier erscheint dein Bild';
+  }
+  frame.appendChild(inner); host.appendChild(frame);
+
+  /* Scrollbereich: Sterne, Motive, Fakten */
+  const scroll=document.createElement('div');
+  scroll.className='isl-scroll';
+  host.appendChild(scroll);
 
   if(!open){
     const p=document.createElement('p');
     p.className='isl-lock-note';
-    p.textContent='Diese Bucht ist noch im Nebel. Mal zuerst die '+BAYS[i-1].name+' fertig – dann öffnet sie sich.';
-    card.appendChild(p);
+    p.textContent='Diese Bucht liegt noch im Nebel. Mal zuerst die '+BAYS[i-1].name+' fertig.';
+    scroll.appendChild(p);
   }else{
-    const frame=document.createElement('div');
-    frame.className='isl-frame';
-    const inner=document.createElement('div');
-    const img=await newestPicFor(b);
-    if(img){ const im=document.createElement('img'); im.src=img; im.alt=''; inner.appendChild(im); }
-    else { inner.innerHTML='<em>🖼️</em><small>hier erscheint dein gemaltes Bild</small>'; }
-    frame.appendChild(inner); card.appendChild(frame);
+    const earned=bayEarned(b,i);
+    const labels=['Alle Motive gemalt','Verstecktes Detail gefunden','Wissensfrage beantwortet'];
+    const stars=document.createElement('div');
+    stars.className='isl-stars';
+    labels.forEach((l,idx)=>{
+      const row=document.createElement('div');
+      row.className='isl-star-row'+(earned[idx]?' got':'');
+      row.innerHTML='<em>★</em><span>'+l+'</span><small>'+(earned[idx]?'✓':(idx===0?'':'Bonus'))+'</small>';
+      stars.appendChild(row);
+    });
+    scroll.appendChild(stars);
 
     const chips=document.createElement('div');
     chips.className='isl-chips';
-    chips.innerHTML=b.motifs.map(n=>'<span class="'+(c[n]?'got':'')+'">'+motifEmoji(n)+' '+n+'</span>').join('');
-    card.appendChild(chips);
+    chips.innerHTML=b.motifs.map(n=>'<span class="'+(c[n]?'got':'')+'">'+n+'</span>').join('');
+    scroll.appendChild(chips);
 
     if(st.full){
       const f=document.createElement('div');
@@ -2573,80 +2548,59 @@ async function renderBaySide(){
         + '<button type="button" aria-label="Vorlesen">🔊</button></div><p></p>';
       f.querySelector('p').textContent=b.fact;
       f.querySelector('button').addEventListener('click',()=>Voice.raw(b.fact));
-      card.appendChild(f);
+      scroll.appendChild(f);
     }
+  }
 
+  /* Bonus-Knöpfe */
+  if(open){
     const earned=bayEarned(b,i);
-    const labels=['Alle Motive gemalt','Verstecktes Detail gefunden','Wissensfrage beantwortet'];
-    const stars=document.createElement('div');
-    stars.className='isl-stars';
-    labels.forEach((l,idx)=>{
-      const row=document.createElement('div');
-      row.className='isl-star-row'+(earned[idx]?' got':'');
-      row.innerHTML='<em>'+(earned[idx]?'⭐':'☆')+'</em><span>'+l+'</span>'
-        + '<small>'+(earned[idx]?'✓':(idx===0?'':'Bonus'))+'</small>';
-      stars.appendChild(row);
-    });
-    card.appendChild(stars);
-
     const actions=document.createElement('div');
     actions.className='isl-actionrow';
+    const quizBtn=document.createElement('button');
+    quizBtn.innerHTML='<span>🧠</span><span></span>';
+    quizBtn.lastChild.textContent=earned[2]?'Beantwortet':'Wissensfrage';
+    quizBtn.disabled=earned[2];
+    quizBtn.addEventListener('click',()=>openBayQuiz(b));
     const findBtn=document.createElement('button');
-    findBtn.textContent=earned[1]?'✓ Gefunden':'🔍 Suchen';
+    findBtn.innerHTML='<span>🔍</span><span></span>';
+    findBtn.lastChild.textContent=earned[1]?'Gefunden':'Suchen';
     if(findMode) findBtn.classList.add('active');
     findBtn.disabled=earned[1];
     findBtn.addEventListener('click',()=>{ findMode=!findMode; renderIsland(); });
-    const quizBtn=document.createElement('button');
-    quizBtn.textContent=earned[2]?'✓ Beantwortet':'🧠 Wissensfrage';
-    quizBtn.disabled=earned[2];
-    quizBtn.addEventListener('click',()=>openBayQuiz(b));
-    actions.appendChild(findBtn); actions.appendChild(quizBtn);
-    card.appendChild(actions);
+    actions.appendChild(quizBtn); actions.appendChild(findBtn);
+    host.appendChild(actions);
   }
-  side.appendChild(card);
 
-  const prog=document.createElement('div');
-  prog.className='isl-card plain';
-  prog.innerHTML='<div class="isl-cardhead"><b>Insel-Fortschritt</b>'
-    + '<span style="margin-left:auto;font-weight:800;font-size:12px;color:var(--coral)">'+done+' von '+BAYS.length+'</span></div>'
-    + '<div class="progress-bar"><div class="progress-bar-fill" style="width:'+Math.round(done/BAYS.length*100)+'%"></div></div>';
-  side.appendChild(prog);
-
-  const cap=document.createElement('div');
-  cap.className='isl-captain';
-  cap.innerHTML='<b>🦜 Kapitänsprüfung</b><p>'
-    + (profile.treasureFound ? 'Geschafft! Die Truhe am Capo Nord ist offen.'
-       : done===BAYS.length ? 'Beantworte 3 Fragen richtig, um die Schatztruhe zu öffnen!'
-       : 'Erst wenn alle 6 Buchten fertig sind, wartet die Prüfung am Capo Nord.')
-    + '</p><div class="steps">'+[1,2,3].map(n=>'<i class="'+(profile.treasureFound?'on':'')+'">'+n+'</i>').join('')+'</div>';
-  side.appendChild(cap);
-
-  /* Der Knopf gehört immer zur gerade angezeigten Bucht. */
-  if(open){
-    const cta=document.createElement('button');
-    cta.className='nav-btn primary isl-cta';
-    if(!st.full){
-      const next=b.motifs.find(n=>!c[n]);
-      cta.textContent=(next||b.name)+' malen →';
-      cta.addEventListener('click',()=>{
-        const idx=allMotifs().findIndex(m=>m.name===next);
-        if(idx>=0){ cameFromIsland=true; openMotif(idx); }
-      });
+  /* Hauptknopf, immer zur angezeigten Bucht */
+  const cta=document.createElement('button');
+  cta.className='isl-cta';
+  if(!open){
+    cta.textContent='Weiter zur '+BAYS[done].name+' →';
+    cta.addEventListener('click',()=>{ selBay=BAYS[done].key; findMode=false; renderIsland(); });
+  }else if(!st.full){
+    const next=b.motifs.find(n=>!c[n]);
+    cta.textContent=(next||b.name)+' malen →';
+    cta.addEventListener('click',()=>{
+      const idx=allMotifs().findIndex(m=>m.name===next);
+      if(idx>=0){ cameFromIsland=true; openMotif(idx); }
+    });
+  }else{
+    const nextIdx=BAYS.findIndex((x,n)=>n>i && !bayStats(x).full);
+    if(nextIdx>=0){
+      cta.textContent='Weiter zur '+BAYS[nextIdx].name+' →';
+      cta.addEventListener('click',()=>{ selBay=BAYS[nextIdx].key; findMode=false; renderIsland(); });
+    }else if(done===BAYS.length && !profile.treasureFound){
+      cta.className='isl-cta gold';
+      cta.textContent='Kapitänsprüfung starten →';
+      cta.addEventListener('click',openCaptainQuiz);
     }else{
-      const nextIdx=BAYS.findIndex((x,n)=>n>i && !bayStats(x).full);
-      if(nextIdx>=0){
-        cta.textContent='Weiter zur '+BAYS[nextIdx].name+' →';
-        cta.addEventListener('click',()=>{ selBay=BAYS[nextIdx].key; findMode=false; renderIsland(); });
-      }else if(done===BAYS.length && !profile.treasureFound){
-        cta.textContent='Kapitänsprüfung starten →';
-        cta.addEventListener('click',openCaptainQuiz);
-      }else{
-        cta.textContent='Schatz gefunden! 🎁';
-        cta.addEventListener('click',showTreasureCard);
-      }
+      cta.className='isl-cta gold';
+      cta.textContent='Schatz gefunden! 🎁';
+      cta.addEventListener('click',showTreasureCard);
     }
-    host.appendChild(cta);
   }
+  host.appendChild(cta);
 }
 
 /* Neuestes gespeichertes Bild, dessen Motiv zu dieser Bucht gehört */
@@ -2784,6 +2738,21 @@ $('islHintBtn').addEventListener('click',()=>{
   toast('🔑 Hinweis gespeichert');
 });
 
+/* Langes Drücken (1,2 s) schaltet den Testzugang um – für Kinder praktisch unauffindbar. */
+(function(){
+  const b=$('islBtn'); let t=null, held=false;
+  const start=()=>{ held=false; clearTimeout(t); t=setTimeout(async()=>{
+    held=true;
+    islandTestMode=!islandTestMode;
+    await Store.set('islandTest', islandTestMode?'1':'0');
+    renderGreeting();
+    toast(islandTestMode ? '🔓 Testzugang an – Schatzinsel offen' : '🔒 Testzugang aus');
+  },1200); };
+  const stop=()=>clearTimeout(t);
+  b.addEventListener('pointerdown',start);
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,stop));
+  b.addEventListener('click',e=>{ if(held){ e.stopImmediatePropagation(); held=false; } },true);
+})();
 $('islBtn').addEventListener('click',()=>{
   if(!islandUnlocked()){
     const need=goldTierN()-discoveredCount();
@@ -3556,6 +3525,7 @@ layout();
   const vName=await Store.get('voiceName'); if(vName) setTimeout(()=>Voice.setVoice(vName),400);
   syncVoiceButtons();
   const savedMode=await Store.get('mode'); setMode(savedMode==='color'?'color':'draw');
+  islandTestMode=(await Store.get('islandTest'))==='1';
   const last=await Store.get('lastProfile');
   const found=profiles.find(p=>p.id===last);
   if(found) pickProfile(found); else showSection(secProfiles);
