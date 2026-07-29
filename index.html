@@ -162,135 +162,191 @@
   #trophyCTA{flex:none}
   #homeGreeting{font-weight:700;color:var(--deep)}
 
-  /* ---------- Schatzinsel Albarella (optionale Karten-Ansicht) ---------- */
-  #island{display:flex;flex-direction:column;gap:9px;height:100%;min-height:0}
-  .isl-layout{flex:1;min-height:0;display:flex;gap:14px}
-  .isl-map{--s:1;flex:none;height:100%;aspect-ratio:560/600;position:relative;
-    border-radius:20px;overflow:hidden;border:3px solid var(--deep);
-    box-shadow:0 8px 16px rgba(7,59,76,.13);
+  /* ---------- Schatzinsel Albarella ---------- */
+  #island{display:flex;flex-direction:column;gap:8px;height:100%;min-height:0}
+  .isl-layout{flex:1;min-height:0;display:flex;gap:12px}
+
+  /* Karte: Seitenverhältnis der gelieferten Illustration (1800x1600) */
+  .isl-map{--s:1;flex:none;position:relative;overflow:hidden;
+    border-radius:18px;border:3px solid var(--deep);box-shadow:0 8px 16px rgba(7,59,76,.13);
     background:radial-gradient(ellipse at 50% 40%,#4FB3D9 0%,#2B93BE 55%,#1A7CA6 100%)}
-  .isl-map>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-  .isl-place{position:absolute;transform:translate(-50%,-50%);pointer-events:none;
-    font-family:var(--font);font-weight:800;color:var(--deep);background:rgba(255,255,255,.92);
-    padding:calc(2px*var(--s)) calc(8px*var(--s));border-radius:999px;white-space:nowrap;
-    font-size:calc(11px*var(--s))}
-  .isl-place.green{color:#3B6B2B;background:rgba(255,255,255,.8);font-size:calc(10px*var(--s))}
-  .isl-bay{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;
-    align-items:center;gap:calc(4px*var(--s));background:none;border:0;padding:0;cursor:pointer;z-index:10}
+  .isl-basis{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1}
+  .isl-map>svg.isl-fallback{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+
+  /* Pergament-Zettel oben links: Geschichte der aktuellen Bucht */
+  .isl-note{position:absolute;left:2.5%;top:3.5%;width:31%;z-index:12;
+    background:linear-gradient(#F7EBCF,#EFDFBC);border:2px solid #D9C193;
+    border-radius:4px 16px 4px 16px;padding:calc(9px*var(--s)) calc(11px*var(--s));
+    box-shadow:0 6px 14px rgba(20,40,56,.28);transform:rotate(-1.5deg)}
+  .isl-note b{display:block;font-family:var(--font);font-weight:800;
+    font-size:calc(12px*var(--s));color:#A8492F;margin-bottom:calc(3px*var(--s))}
+  .isl-note p{margin:0;font-family:var(--font-body);font-weight:700;
+    font-size:calc(11.5px*var(--s));line-height:1.35;color:#5C4423}
+
+  /* Infokarte oben rechts */
+  .isl-info{position:absolute;right:2.5%;top:3.5%;width:27%;z-index:12;
+    background:linear-gradient(#F7EBCF,#EFDFBC);border:2px solid #D9C193;
+    border-radius:16px 4px 16px 4px;padding:calc(9px*var(--s)) calc(11px*var(--s));
+    box-shadow:0 6px 14px rgba(20,40,56,.28);transform:rotate(1deg)}
+  .isl-info b{display:block;font-family:var(--font);font-weight:800;
+    font-size:calc(11px*var(--s));color:#A8492F;margin-bottom:calc(3px*var(--s))}
+  .isl-info p{margin:0;font-family:var(--font-body);font-weight:700;
+    font-size:calc(11px*var(--s));line-height:1.35;color:#5C4423}
+
+  /* Start-Schild */
+  .isl-start{position:absolute;z-index:11;transform:translate(-50%,-50%);
+    background:linear-gradient(#E8CE9E,#D9B87F);border:2px solid #A8834B;border-radius:5px;
+    padding:calc(4px*var(--s)) calc(14px*var(--s));box-shadow:0 5px 10px rgba(20,40,56,.3);
+    font-family:var(--font);font-weight:800;font-size:calc(13px*var(--s));color:#5C4423}
+
+  /* Schatzpfad */
+  .isl-route{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+  .isl-route polyline{fill:none;stroke:#C8452F;stroke-width:1.1;stroke-linecap:round;
+    stroke-dasharray:1.6 2.4;opacity:.9;transition:stroke-dashoffset 1.1s ease}
+
+  /* Buchten-Marker: Kreis + Nummer, daneben Name + drei Sterne */
+  .isl-bay{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;
+    gap:calc(6px*var(--s));background:none;border:0;padding:0;cursor:pointer;z-index:10}
+  .isl-bay.side-left{flex-direction:row-reverse}
   .isl-bay:active{transform:translate(-50%,calc(-50% + 2px))}
-  .isl-disc{position:relative;overflow:hidden;width:calc(58px*var(--s));height:calc(58px*var(--s));
+  .isl-pin{position:relative;flex:none;width:calc(46px*var(--s));height:calc(46px*var(--s));
     border-radius:50%;display:flex;align-items:center;justify-content:center;
-    font-size:calc(26px*var(--s));background:#FFF6E0;border:calc(4px*var(--s)) solid var(--sand);
-    box-shadow:0 calc(6px*var(--s)) calc(14px*var(--s)) rgba(0,0,0,.2)}
-  .isl-fog{position:absolute;inset:0;background:radial-gradient(circle at 75% 30%,transparent 28%,#D7DBD6 68%)}
-  .isl-tag{display:flex;align-items:center;gap:calc(3px*var(--s));background:#fff;
-    padding:calc(2px*var(--s)) calc(8px*var(--s));border-radius:999px;white-space:nowrap;
-    box-shadow:0 calc(3px*var(--s)) calc(6px*var(--s)) rgba(0,0,0,.15);
-    font-family:var(--font);font-weight:800;font-size:calc(10px*var(--s));color:var(--deep)}
-  .isl-bay.sel .isl-disc{border-color:var(--coral)}
-  .isl-bay.sel .isl-tag{background:var(--coral);color:#fff}
-  .isl-bay.locked{opacity:.75}
-  .isl-bay.locked .isl-disc{background:#E1E4E1;border-style:dashed;border-color:#B7BEBA;color:#8A9490}
-  .isl-bay.locked .isl-tag{background:rgba(255,255,255,.92);color:#5B6B65;box-shadow:none}
-  .isl-mini{display:flex;gap:1px;font-size:calc(9px*var(--s))}
-  .isl-mini i{font-style:normal}
-  .isl-mini i.off{filter:grayscale(1);opacity:.5}
-  .isl-num{font-family:var(--font);font-weight:900;font-size:calc(9px*var(--s));color:var(--coral)}
-  .isl-bay.sel .isl-num{color:#fff}
-  .isl-chest{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;
-    align-items:center;gap:calc(3px*var(--s));pointer-events:none}
-  .isl-chest .box{width:calc(52px*var(--s));height:calc(42px*var(--s));border-radius:calc(8px*var(--s));
-    background:#D8C99A;border:calc(3px*var(--s)) dashed #B7942E;display:flex;align-items:center;
-    justify-content:center;font-size:calc(22px*var(--s));filter:grayscale(.7);opacity:.85}
-  .isl-chest.open .box{filter:none;opacity:1;border-style:solid}
-  .isl-chest .lbl{font-family:var(--font);font-weight:800;font-size:calc(10px*var(--s));
-    color:#5C4423;background:#FFE8B8;padding:calc(2px*var(--s)) calc(8px*var(--s));
-    border-radius:999px;white-space:nowrap}
+    font-size:calc(23px*var(--s));background:linear-gradient(#FFFDF5,#F3E6C9);
+    border:calc(3px*var(--s)) solid var(--sand);box-shadow:0 calc(6px*var(--s)) calc(14px*var(--s)) rgba(20,40,56,.35)}
+  .isl-bay.sel .isl-pin{border-color:var(--coral)}
+  .isl-bay.locked .isl-pin{background:linear-gradient(#DFE4E6,#C3CCD0);border-style:solid;
+    border-color:#A6B2B7;font-size:calc(17px*var(--s));opacity:.85}
+  .isl-bay.active .isl-pin{animation:pinPulse 2.2s ease-in-out infinite}
+  @keyframes pinPulse{0%,100%{box-shadow:0 6px 14px rgba(20,40,56,.35)}
+    50%{box-shadow:0 6px 14px rgba(20,40,56,.35),0 0 0 calc(6px*var(--s)) rgba(239,71,111,.28)}}
+  .isl-pin .num{position:absolute;top:calc(-6px*var(--s));right:calc(-6px*var(--s));
+    width:calc(19px*var(--s));height:calc(19px*var(--s));border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-family:var(--font);
+    font-weight:800;font-size:calc(11px*var(--s));color:#fff;background:var(--coral);
+    border:calc(2px*var(--s)) solid #FFFDF5}
+  .isl-bay.done .isl-pin .num{background:#4F7F42}
+  .isl-bay.locked .isl-pin .num{background:#93A1A7}
+  .isl-bay.side-left .isl-pin .num{right:auto;left:calc(-6px*var(--s))}
+  .isl-baylabel{background:rgba(255,253,245,.95);border:calc(2px*var(--s)) solid #D9C193;
+    border-radius:calc(6px*var(--s));padding:calc(3px*var(--s)) calc(9px*var(--s)) calc(4px*var(--s));
+    box-shadow:0 calc(4px*var(--s)) calc(10px*var(--s)) rgba(20,40,56,.28);white-space:nowrap}
+  .isl-bay.sel .isl-baylabel{border-color:var(--coral)}
+  .isl-bay.locked .isl-baylabel{background:rgba(232,237,239,.94);border-color:#B6C0C4}
+  .isl-baylabel b{display:block;font-family:var(--font);font-weight:800;
+    font-size:calc(12px*var(--s));color:var(--sea);line-height:1.15}
+  .isl-bay.locked .isl-baylabel b{color:#7D8B90}
+  .isl-baystars{display:flex;justify-content:center;gap:calc(1px*var(--s));font-size:calc(10px*var(--s));line-height:1}
+  .isl-baystars i{font-style:normal;opacity:.3;filter:grayscale(1)}
+  .isl-baystars i.on{opacity:1;filter:none}
 
-  .isl-side{width:270px;flex:none;display:flex;flex-direction:column;gap:10px;min-height:0}
-  .isl-side-scroll{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;
-    display:flex;flex-direction:column;gap:10px}
-  .isl-card{flex:none;background:#FFF8E7;border:3px solid var(--deep);border-radius:20px;
-    box-shadow:0 8px 16px rgba(7,59,76,.13);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
-  .isl-card>b{font-family:var(--font);font-weight:800;font-size:16px;color:var(--deep)}
-  .isl-frame{width:100%;height:150px;flex:none;background:linear-gradient(135deg,#C9A06B,#A97C4A);
-    border-radius:10px;padding:7px;box-shadow:0 8px 16px rgba(0,0,0,.25)}
-  .isl-frame>div{width:100%;height:100%;border-radius:5px;background:#FFF6E0;overflow:hidden;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
-  .isl-frame img{width:100%;height:100%;object-fit:cover;display:block}
-  .isl-frame em{font-size:30px;font-style:normal}
-  .isl-frame small{font-weight:700;font-size:10px;color:#A97C4A}
-  .isl-icons{display:flex;gap:5px;flex-wrap:wrap;font-size:17px}
-  .isl-icons i{font-style:normal}
-  .isl-icons i.off{filter:grayscale(1);opacity:.45}
-  .isl-fact{background:var(--paper);border:2px solid var(--sand);border-radius:12px;padding:10px 12px}
-  .isl-fact-head{display:flex;align-items:center;gap:6px;margin-bottom:5px}
-  .isl-fact-head b{font-family:var(--font);font-weight:800;font-size:11px;color:#B7942E}
-  .isl-fact-head button{margin-left:auto;background:none;border:0;font-size:16px;cursor:pointer;padding:0}
-  .isl-fact p{margin:0;font-weight:700;font-size:14px;color:#5C4423;line-height:1.45}
-  .isl-lock-note{font-weight:700;font-size:13px;color:var(--sub);margin:0;line-height:1.45}
-  .isl-story{font-family:var(--font-body);font-weight:700;font-size:13px;color:var(--sub);
-    font-style:italic;margin:0;line-height:1.4}
-  .isl-cta{flex:none}
+  /* Schatztruhe am Capo Nord */
+  .isl-chest{position:absolute;transform:translate(-50%,-50%);z-index:11;
+    display:flex;flex-direction:column;align-items:center;gap:calc(3px*var(--s))}
+  .isl-chest .box{width:calc(54px*var(--s));height:calc(54px*var(--s));border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:calc(27px*var(--s));
+    background:linear-gradient(#DFE4E6,#C3CCD0);border:calc(3px*var(--s)) solid #A6B2B7;
+    box-shadow:0 calc(8px*var(--s)) calc(18px*var(--s)) rgba(20,40,56,.4)}
+  .isl-chest.ready .box{background:radial-gradient(circle at 35% 30%,#FFF6D8,#E8C473);
+    border-color:var(--sand);animation:pinPulse 2s ease-in-out infinite}
+  .isl-chest .lbl{font-family:var(--font);font-weight:800;font-size:calc(11px*var(--s));
+    color:#5C4423;background:#FFE8B8;border:calc(1.5px*var(--s)) solid #D9C193;
+    padding:calc(2px*var(--s)) calc(9px*var(--s));border-radius:999px;white-space:nowrap}
 
-  /* Schatzpfad: zieht sich per SVG-Linie durch den Nebel, Länge per JS gesteuert */
-  .isl-path{fill:none;stroke:#B7942E;stroke-width:5;stroke-linecap:round;stroke-dasharray:6 10;
-    opacity:.85;pathLength:100;stroke-dashoffset:100;transition:stroke-dashoffset 1.1s ease}
+  /* Schatzfragmente als Pergamentstreifen unten in der Karte */
+  .isl-fragstrip{position:absolute;left:2.5%;right:2.5%;bottom:2.5%;z-index:12;
+    display:flex;align-items:center;gap:calc(6px*var(--s));
+    background:linear-gradient(#F7EBCF,#EFDFBC);border:2px solid #D9C193;border-radius:10px;
+    padding:calc(6px*var(--s)) calc(10px*var(--s));box-shadow:0 6px 14px rgba(20,40,56,.28)}
+  .isl-fragstrip>b{flex:none;font-family:var(--font);font-weight:800;
+    font-size:calc(11px*var(--s));color:#5C4423;line-height:1.15;max-width:calc(78px*var(--s))}
+  .isl-frag{flex:1;min-width:0;height:calc(34px*var(--s));border-radius:calc(7px*var(--s));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:calc(16px*var(--s));background:rgba(255,253,245,.45);border:2px dashed #C0A774}
+  .isl-frag.got{background:linear-gradient(#FFF7E2,#F6E4B8);border:2px solid var(--sand);
+    box-shadow:0 2px 5px rgba(120,90,30,.2)}
+  .isl-frag small{font-weight:700;font-size:calc(7.5px*var(--s));color:#8A7350;line-height:1}
 
-  /* Nebel: leicht in Bewegung, deckt Ungeöffnetes ab; „Löcher" kommen per Inline-Style (Maske) von JS */
+  /* Nebel */
   .isl-mapfog{position:absolute;inset:-6%;pointer-events:none;z-index:5;
-    background:linear-gradient(120deg,rgba(214,226,232,.55),rgba(196,212,220,.46) 60%,rgba(214,226,232,.55));
-    backdrop-filter:grayscale(.85) blur(3px) brightness(1.05);-webkit-backdrop-filter:grayscale(.85) blur(3px) brightness(1.05);
+    background:linear-gradient(120deg,rgba(214,226,232,.62),rgba(196,212,220,.5) 60%,rgba(214,226,232,.62));
+    backdrop-filter:grayscale(.9) blur(4px) brightness(1.05);
+    -webkit-backdrop-filter:grayscale(.9) blur(4px) brightness(1.05);
     animation:fogDrift 14s ease-in-out infinite;
     transition:-webkit-mask-image .9s ease, mask-image .9s ease}
   @keyframes fogDrift{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.2%,.8%)}}
-
-  /* Windstoß-Effekt beim Freischalten einer Bucht: kurze Wirbel, die abziehen */
   .isl-gust{position:absolute;inset:0;pointer-events:none;z-index:6;overflow:hidden}
-  .isl-gust i{position:absolute;font-style:normal;font-size:38px;opacity:0;filter:blur(1px);
+  .isl-gust i{position:absolute;font-style:normal;font-size:34px;opacity:0;filter:blur(1px);
     animation:gustBlow 1s ease-out forwards}
-  @keyframes gustBlow{
-    0%{opacity:0;transform:translate(-30px,0) scale(.6) rotate(0deg)}
-    15%{opacity:.85}
-    100%{opacity:0;transform:translate(160px,-18px) scale(1.3) rotate(50deg)}
-  }
+  @keyframes gustBlow{0%{opacity:0;transform:translate(-30px,0) scale(.6) rotate(0)}
+    15%{opacity:.85}100%{opacity:0;transform:translate(160px,-18px) scale(1.3) rotate(50deg)}}
 
-  /* Capo Nord bleibt dicht verwölkt bis zum Finale; eigene, dichtere Wolkendecke + Aufreiß-Animation */
-  .isl-chestcloud{position:absolute;transform:translate(-50%,-50%);width:calc(120px*var(--s));height:calc(120px*var(--s));
-    z-index:7;pointer-events:none}
-  .isl-chestcloud .half{position:absolute;top:0;width:60%;height:100%;background:radial-gradient(circle,#E7EDEF 0%,rgba(231,237,239,0) 72%);
-    filter:blur(2px)}
-  .isl-chestcloud .half.l{left:-10%}
-  .isl-chestcloud .half.r{right:-10%}
+  /* Wolkendecke über Capo Nord bis zum Finale */
+  .isl-chestcloud{position:absolute;transform:translate(-50%,-50%);z-index:7;pointer-events:none;
+    width:calc(130px*var(--s));height:calc(130px*var(--s))}
+  .isl-chestcloud .half{position:absolute;top:0;width:62%;height:100%;
+    background:radial-gradient(circle,#EDF2F4 0%,rgba(237,242,244,0) 72%);filter:blur(2px)}
+  .isl-chestcloud .half.l{left:-12%}
+  .isl-chestcloud .half.r{right:-12%}
+  .isl-chestcloud .beam{position:absolute;inset:0;border-radius:50%;opacity:0;
+    background:radial-gradient(circle,rgba(255,244,196,.95) 0%,rgba(255,244,196,0) 70%)}
   .isl-chestcloud.part .half.l{animation:cloudPartL 1.8s ease forwards}
   .isl-chestcloud.part .half.r{animation:cloudPartR 1.8s ease forwards}
   .isl-chestcloud.part .beam{animation:beamIn 1.8s ease forwards}
-  .isl-chestcloud .beam{position:absolute;inset:0;border-radius:50%;opacity:0;
-    background:radial-gradient(circle,rgba(255,244,196,.9) 0%,rgba(255,244,196,0) 70%)}
-  @keyframes cloudPartL{0%{transform:translateX(0)}100%{transform:translateX(-70%);opacity:0}}
-  @keyframes cloudPartR{0%{transform:translateX(0)}100%{transform:translateX(70%);opacity:0}}
+  @keyframes cloudPartL{0%{transform:translateX(0)}100%{transform:translateX(-75%);opacity:0}}
+  @keyframes cloudPartR{0%{transform:translateX(0)}100%{transform:translateX(75%);opacity:0}}
   @keyframes beamIn{0%{opacity:0}60%{opacity:1}100%{opacity:.9}}
 
-  /* Verstecktes Detail zum Antippen (Stern 2) */
-  .isl-hidden{position:absolute;border-radius:999px;z-index:9;background:transparent;border:0;padding:0;cursor:pointer}
-  .isl-hidden.hint{box-shadow:0 0 0 3px rgba(223,166,58,.85),0 0 22px rgba(255,236,170,.9);
+  /* Verstecktes Detail (Bonus-Stern 2) */
+  .isl-hidden{position:absolute;border-radius:999px;z-index:9;background:transparent;
+    border:0;padding:0;cursor:pointer}
+  .isl-hidden.hint{box-shadow:0 0 0 3px rgba(223,166,58,.9),0 0 22px rgba(255,236,170,.9);
     background:rgba(255,240,190,.25);animation:hintPulse 1.4s ease-in-out infinite}
   @keyframes hintPulse{0%,100%{opacity:.7}50%{opacity:1}}
 
-  /* Sprites: still lebendig werdende Details, je nach Fortschritt – bewusst UNTER dem Nebel (z-index 5),
-     damit sie erst beim Aufdecken der jeweiligen Bucht sichtbar werden */
+  /* Lebendige Details */
   .isl-sprite{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:3;
-    filter:drop-shadow(0 4px 6px rgba(20,40,56,.35))}
-  .isl-sprite em{font-style:normal;display:block;line-height:1}
+    display:flex;align-items:center;justify-content:center;
+    filter:drop-shadow(0 4px 6px rgba(20,40,56,.4))}
+  .isl-sprite img{width:100%;height:100%;object-fit:contain;display:block}
+  .isl-sprite em{font-style:normal;line-height:1}
   .isl-sprite.bob{animation:bob 5s ease-in-out infinite}
   @keyframes bob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 5px))}}
 
-  /* 3-Sterne-Zeile */
-  .isl-stars{display:flex;flex-direction:column;gap:5px}
+  /* ---------- Seitenspalte ---------- */
+  .isl-side{width:300px;flex:none;display:flex;flex-direction:column;gap:9px;min-height:0}
+  .isl-side-scroll{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;
+    display:flex;flex-direction:column;gap:9px}
+  .isl-card{flex:none;background:#FFF8E7;border:3px solid var(--deep);border-radius:18px;
+    box-shadow:0 8px 16px rgba(7,59,76,.13);padding:12px 14px;display:flex;flex-direction:column;gap:9px}
+  .isl-card.plain{background:var(--paper)}
+  .isl-cardhead{display:flex;align-items:center;gap:7px}
+  .isl-cardhead b{font-family:var(--font);font-weight:800;font-size:14px;color:var(--deep)}
+  .isl-dots{margin-left:auto;display:flex;gap:4px}
+  .isl-dots i{width:8px;height:8px;border-radius:50%;background:#DCE5E8;font-style:normal}
+  .isl-dots i.on{background:var(--kelp)}
+  .isl-bayname{font-family:var(--font);font-weight:800;font-size:17px;color:var(--deep)}
+  .isl-bayname span{font-size:13px}
+  .isl-frame{width:100%;height:132px;flex:none;background:linear-gradient(135deg,#C9A06B,#A97C4A);
+    border-radius:10px;padding:6px;box-shadow:0 8px 16px rgba(0,0,0,.25)}
+  .isl-frame>div{width:100%;height:100%;border-radius:5px;background:#FFF6E0;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .isl-frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .isl-frame em{font-size:26px;font-style:normal}
+  .isl-frame small{font-weight:700;font-size:10px;color:#A97C4A}
+  .isl-chips{display:flex;gap:4px;flex-wrap:wrap}
+  .isl-chips span{padding:2px 8px;border-radius:999px;font-weight:700;font-size:11px;
+    background:#F0EADE;border:1.5px solid #DED6C4;color:#9A9184}
+  .isl-chips span.got{background:#FFF6DF;border-color:#E5CF9D;color:#6B5322}
+  .isl-fact{background:var(--paper);border:2px solid var(--sand);border-radius:12px;padding:9px 11px}
+  .isl-fact-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+  .isl-fact-head b{font-family:var(--font);font-weight:800;font-size:11px;color:#B7942E}
+  .isl-fact-head button{margin-left:auto;background:none;border:0;font-size:16px;cursor:pointer;padding:0}
+  .isl-fact p{margin:0;font-weight:700;font-size:13px;color:#5C4423;line-height:1.4}
+  .isl-stars{display:flex;flex-direction:column;gap:4px}
   .isl-star-row{display:flex;align-items:center;gap:7px;padding:5px 9px;border-radius:8px;
     background:#F1F6F8;font-weight:700;font-size:12px;color:var(--sub)}
   .isl-star-row.got{background:#E6F1DE;color:#3F6B34}
-  .isl-star-row em{font-style:normal;font-size:15px}
+  .isl-star-row em{font-style:normal;font-size:14px}
   .isl-star-row small{margin-left:auto;font-weight:800;font-size:10px;opacity:.7}
   .isl-actionrow{display:flex;gap:8px}
   .isl-actionrow button{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
@@ -298,15 +354,19 @@
     color:#6B5322;background:#FFF6DF;border:2px solid #E5CF9D;cursor:pointer}
   .isl-actionrow button:disabled{opacity:.45;cursor:default}
   .isl-actionrow button.active{background:#F6E4B8}
+  .isl-lock-note{font-weight:700;font-size:13px;color:var(--sub);margin:0;line-height:1.45}
+  .isl-captain{flex:none;background:#EAF4FA;border:3px dashed #8FC0D8;border-radius:18px;padding:11px 13px}
+  .isl-captain b{display:block;font-family:var(--font);font-weight:800;font-size:14px;
+    color:var(--deep);margin-bottom:3px}
+  .isl-captain p{margin:0 0 8px;font-weight:700;font-size:12px;color:var(--sub);line-height:1.35}
+  .isl-captain .steps{display:flex;gap:8px}
+  .isl-captain .steps i{flex:1;height:30px;border-radius:8px;display:flex;align-items:center;
+    justify-content:center;font-style:normal;font-family:var(--font);font-weight:800;font-size:13px;
+    background:#DCE5E8;color:#8A9BA2}
+  .isl-captain .steps i.on{background:linear-gradient(#FFF7E2,#F6E4B8);color:#6B5322;border:2px solid var(--sand)}
+  .isl-cta{flex:none}
 
-  /* Schatzfragmente-Leiste im Kartenkopf */
-  .isl-fragrow{display:flex;gap:6px}
-  .isl-frag{flex:1;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;
-    font-size:17px;background:rgba(255,253,245,.5);border:2px dashed #C0A774}
-  .isl-frag.got{background:linear-gradient(#FFF7E2,#F6E4B8);border:2px solid var(--sand);
-    box-shadow:0 2px 5px rgba(120,90,30,.2)}
-
-  /* Quiz-Karte (Buchten-Mini-Quiz & Kapitänsprüfung) */
+  /* Quiz */
   .isl-quiz-card{background:var(--paper);border:4px solid var(--deep);border-radius:28px;
     padding:26px 30px;text-align:center;box-shadow:0 12px 24px rgba(7,59,76,.16);max-width:420px}
   .isl-quiz-dots{display:flex;justify-content:center;gap:8px;margin-bottom:10px}
@@ -323,11 +383,12 @@
   .isl-quiz-feedback.retry{color:var(--coral)}
   .isl-quiz-close{margin-top:14px;width:100%}
 
-  /* Schatztruhen-Fund: Piratenkarte statt schlichter Schriftrolle */
+  /* Schatzfund */
   .treasure-card{position:relative;background:#F4E7C8;border-radius:6px 22px 6px 22px;
     padding:26px 28px;box-shadow:0 16px 40px rgba(0,0,0,.35);max-width:380px;transform:rotate(-1deg);
     border:3px solid #B7942E}
-  .treasure-card b{display:block;font-family:var(--font);font-weight:800;font-size:12px;color:#B7942E;margin-bottom:8px}
+  .treasure-card b{display:block;font-family:var(--font);font-weight:800;font-size:12px;
+    color:#B7942E;margin-bottom:8px}
   .treasure-card p{font-family:var(--font-body);font-weight:700;font-size:16px;color:#5C4423;
     line-height:1.5;margin:0}
   .treasure-card button{width:100%;margin-top:16px}
@@ -528,9 +589,11 @@
     .gal-side{width:100%}
     .motif-card{flex:none;max-height:44vh}
     .isl-layout{flex-direction:column}
-    .isl-map{height:38vh;flex:none;align-self:center}
+    .isl-map{flex:none;align-self:center}
     .isl-side{width:100%;flex:1;min-height:0}
-    .isl-frame{height:110px}
+    .isl-frame{height:104px}
+    .isl-note{width:38%}
+    .isl-info{display:none}
   }
 </style>
 </head>
@@ -641,7 +704,6 @@
       <button class="icon-btn" id="islHintBtn" style="font-size:11px;padding:0 8px;height:28px;opacity:.55" title="Nur für Eltern">🔑</button>
       <span class="progress-chip" data-chip></span>
     </div>
-    <div class="isl-fragrow" id="islFrags"></div>
 
     <div class="isl-layout">
       <div class="isl-map" id="islMap"></div>
@@ -2077,73 +2139,62 @@ function discoveredCount(){ return Object.keys(motifCounts()).length; }
    Ersetzt nichts: Die Motiv-Liste bleibt der normale Weg.
    Liest denselben Fortschritt (motifCounts), speichert nichts Eigenes.
    ============================================================ */
-const ISLAND_SVG = '<svg viewBox="0 0 560 600" aria-hidden="true">'
-  + '<path d="M 300 25 C 322 55 340 95 352 140 C 360 190 372 250 382 315 C 392 380 398 440 400 490 C 392 522 360 545 330 552 C 300 545 268 552 245 540 C 228 500 240 470 205 448 C 215 405 185 378 198 330 C 172 298 188 252 168 212 C 195 170 212 115 248 60 C 268 40 285 28 300 25 Z" fill="#F3DFA0" stroke="#E8CE84" stroke-width="6"></path>'
-  + '<path d="M 302 32 C 326 62 344 100 356 145 C 364 195 376 255 386 318 C 396 382 402 442 404 490" fill="none" stroke="#FBF0CE" stroke-width="14" stroke-linecap="round" opacity="0.95"></path>'
-  + '<path d="M 172 210 C 205 214 232 208 258 214" fill="none" stroke="#3AA0C4" stroke-width="7" stroke-linecap="round" opacity="0.6"></path>'
-  + '<path d="M 200 330 C 232 335 258 328 284 334" fill="none" stroke="#3AA0C4" stroke-width="7" stroke-linecap="round" opacity="0.6"></path>'
-  + '<path d="M 208 448 C 240 452 264 446 290 452" fill="none" stroke="#3AA0C4" stroke-width="7" stroke-linecap="round" opacity="0.55"></path>'
-  + '<path d="M 250 300 C 290 290 320 320 330 360 C 336 400 315 430 285 435 C 255 438 238 410 240 375 C 242 340 238 312 250 300 Z" fill="#8FBF6E" opacity="0.4"></path>'
-  + '<path d="M 245 160 C 275 152 300 172 305 200 C 308 226 288 244 265 244 C 243 244 232 222 234 198 C 236 178 236 166 245 160 Z" fill="#8FBF6E" opacity="0.35"></path>'
-  + '<ellipse cx="292" cy="392" rx="16" ry="9" fill="#3AA0C4" opacity="0.55"></ellipse>'
-  + '<ellipse cx="268" cy="214" rx="13" ry="7" fill="#3AA0C4" opacity="0.5"></ellipse>'
-  + '<path d="M 190 555 L 240 542" fill="none" stroke="#C9CBC7" stroke-width="6" stroke-linecap="round"></path>'
-  + '<path d="M 352 540 L 372 556 M 366 534 L 386 550" fill="none" stroke="#C9CBC7" stroke-width="4" stroke-linecap="round"></path>'
+/* Basisbild der Illustration. Fehlt die Datei, greift die schlichte Ersatz-Silhouette darunter. */
+const ISLAND_BASIS='albarella-basis.png';
+const ISLAND_FALLBACK_SVG = '<svg class="isl-fallback" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'
+  + '<path d="M14 90 C22 74 18 62 26 52 C33 43 30 33 38 26 C46 19 54 14 60 12 C68 15 74 22 76 32'
+  + ' C79 44 86 50 84 60 C82 71 72 76 66 82 C58 90 40 94 30 93 C22 92 17 92 14 90 Z"'
+  + ' fill="#EFDCA4" stroke="#DCC489" stroke-width="1.2"></path>'
+  + '<path d="M40 30 C50 26 60 32 62 42 C64 52 56 58 48 57 C40 56 36 48 38 40 Z" fill="#8FBF6E" opacity=".38"></path>'
+  + '<path d="M30 62 C40 58 52 64 54 72 C56 80 46 84 39 82 C32 80 28 70 30 62 Z" fill="#8FBF6E" opacity=".32"></path>'
   + '</svg>';
 
-const ISLAND_PLACES=[
-  {t:'Capo Nord',x:90,y:35}, {t:'Sandstrand',x:495,y:185},
-  {t:'Lagune & Kanäle',x:65,y:300}, {t:'Golfplatz & Pinien',x:255,y:350,green:1},
-  {t:'Marina',x:470,y:520}, {t:'🌉 Brücke zum Festland',x:100,y:530}
-];
-
-/* Reihenfolge = Freischalt-Reihenfolge. Zusammen decken die Buchten alle 29 Motive ab. */
+/* Buchten in Freischalt-Reihenfolge. Koordinaten in % des Basisbildes (aus dem Design-Entwurf). */
 const BAYS=[
-  {key:'muschel', name:'Muschelbucht', emoji:'🐚', x:177, y:196,
+  {key:'muschel', nr:1, name:'Muschelbucht', emoji:'🐚', x:60, y:83, side:'right',
    motifs:['Muschel','Seestern','Sandburg','Krabbe','Seepferdchen'],
    fact:'Miesmuscheln filtern Meerwasser und machen es dabei sauberer. Krabben tragen ihr Skelett außen wie eine Rüstung – und wechseln es, wenn sie größer werden.',
    story:'Der alte Pirat hat hier eine Muschel versteckt. Male sie fertig, und der Weg zeigt sich.',
-   hidden:{was:'Finde die kleine Muschel im Sand', x:140, y:230, r:30},
+   hidden:{was:'Finde die kleine Muschel im Sand', x:80, y:73, r:30},
    quiz:{q:'Was machen Krabben, wenn sie größer werden?', a:0,
      o:['Sie wechseln ihr Skelett wie eine Rüstung','Sie werden zu Fischen','Sie verlieren ihre Scheren']}},
-  {key:'leuchtturm', name:'Leuchtturmbucht', emoji:'🗼', x:360, y:190,
+  {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:74, y:60, side:'left',
    motifs:['Leuchtturm','Haus am Meer','Sonnenschirm','Strandkorb','Palme'],
    fact:'Der Name „Albarella" kommt von einem Baum: der Silberpappel. Davon wachsen hier ganz viele!',
    story:'Nur wer den Leuchtturm findet, erkennt den nächsten Weg.',
-   hidden:{was:'Finde die Möwe am Himmel', x:410, y:140, r:32},
+   hidden:{was:'Finde die Möwe am Himmel', x:81, y:31, r:32},
    quiz:{q:'Woraus sind vor rund 400 Jahren neue Inseln wie Albarella entstanden?', a:0,
      o:['Aus Sand und Schlamm, die der Fluss Po brachte','Aus Vulkangestein','Aus Muschelschalen']}},
-  {key:'segel', name:'Segelbucht', emoji:'⛵', x:377, y:286,
+  {key:'segel', nr:3, name:'Segelbucht', emoji:'⛵', x:22, y:67, side:'right',
    motifs:['Segelboot','Piratenschiff','Vespa','Möwe'],
    fact:'Vor rund 400 Jahren hat der Fluss Po sein Bett verlagert und aus Sand und Schlamm neue Inseln geformt – eine davon ist Albarella.',
    story:'Ein Segelschiff bringt dich über die Lagune – mal es fertig, dann kannst du ablegen.',
-   hidden:{was:'Finde das zweite, kleinere Boot am Horizont', x:430, y:310, r:30},
+   hidden:{was:'Finde das zweite, kleinere Boot am Horizont', x:6, y:57, r:30},
    quiz:{q:'Wie viele verschiedene Baumarten wachsen auf Albarella?', a:0,
      o:['Etwa 150','Etwa 10','Etwa 1000']}},
-  {key:'tiefsee', name:'Tiefseebucht', emoji:'🐬', x:396, y:432,
+  {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:80, y:41, side:'left',
    motifs:['Fisch','Delfin','Wal','Krake','Schildkröte'],
    fact:'In der Adria schwimmen mehr als 450 verschiedene Fischarten. Manchmal kommen sogar Delfine und große Meeresschildkröten vorbei.',
    story:'Tief unter den Wellen wartet ein Geheimnis. Male dich hindurch.',
-   hidden:{was:'Finde den Delfin, der aus dem Wasser springt', x:415, y:480, r:34},
+   hidden:{was:'Finde den Delfin, der aus dem Wasser springt', x:78, y:18, r:34},
    quiz:{q:'Welche zwei Tiere schwimmen manchmal durch die Adria?', a:0,
      o:['Delfine und Meeresschildkröten','Haie und Wale','Pinguine und Robben']}},
-  {key:'wunder', name:'Wunderbucht', emoji:'🌈', x:206, y:428,
+  {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:18, y:44, side:'right',
    motifs:['Herz','Blume','Schmetterling','Kätzchen','Regenbogen','Rakete'],
    fact:'Auf Albarella wachsen über 2 Millionen Bäume, von 150 verschiedenen Baumarten.',
    story:'Hier ist alles ein bisschen anders – und ein bisschen wunderbar.',
-   hidden:{was:'Finde den Reiher im Gras', x:250, y:470, r:32},
+   hidden:{was:'Finde den Reiher im Gras', x:26, y:56, r:32},
    quiz:{q:'Wie warm wird das Wasser vor Albarella im Sommer etwa?', a:0,
      o:['24 bis 27 Grad','5 Grad','40 Grad']}},
-  {key:'nasch', name:'Naschbucht', emoji:'🍦', x:312, y:548,
+  {key:'nasch', nr:6, name:'Naschbucht', emoji:'🍦', x:40, y:24, side:'right',
    motifs:['Eis','Wassermelone','Pizza','Luftballons'],
    fact:'Im Sommer wird das Wasser vor Albarella oft 24 bis 27 Grad warm. An der tiefsten Stelle ist das Mittelmeer über 5000 Meter tief!',
    story:'Der Pirat hatte Hunger! Male, was er sich gewünscht hat.',
-   hidden:{was:'Finde die kleine Krabbe am Weg', x:345, y:580, r:26},
+   hidden:{was:'Finde die kleine Krabbe am Weg', x:30, y:34, r:26},
    quiz:{q:'Wie tief ist das Mittelmeer an der tiefsten Stelle ungefähr?', a:0,
      o:['Über 5000 Meter','Über 500 Meter','Über 50 Meter']}}
 ];
 
-/* Fragen an der Schatztruhe – erst nach allen 6 Buchten. */
 const CAPTAIN=[
   {q:'Wie heißt der Baum, nach dem Albarella benannt ist?', a:0, o:['Silberpappel','Palme','Olivenbaum']},
   {q:'Wie viele Fischarten schwimmen in der Adria?', a:1, o:['10','Über 450','2']},
@@ -2152,22 +2203,25 @@ const CAPTAIN=[
 
 const FRAGMENTS=[
   {emoji:'🧭', name:'Kompass'}, {emoji:'🗝️', name:'Schlüssel'}, {emoji:'🪙', name:'Goldmünze'},
-  {emoji:'🪶', name:'Papageienfeder'}, {emoji:'🧩', name:'Kartenstück'}, {emoji:'💎', name:'Edelstein'}
+  {emoji:'🪶', name:'Feder'}, {emoji:'🧩', name:'Kartenstück'}, {emoji:'💎', name:'Edelstein'}
 ];
 
-/* Lebendige Insel: Platzhalter-Emoji, bis die echten Sprite-Dateien da sind (Dateiname vorbereitet). */
+/* Lebendige Details. Solange die Sprite-Dateien fehlen, springt das Emoji ein. */
 const SPRITES=[
-  {datei:'sprite-muscheln.png',    emoji:'🐚', x:150, y:230, w:46, h:36, min:1},
-  {datei:'sprite-moewe.png',       emoji:'🐦', x:380, y:140, w:40, h:32, min:2, bob:true},
-  {datei:'sprite-segelboot.png',   emoji:'⛵', x:420, y:300, w:56, h:56, min:3, bob:true},
-  {datei:'sprite-flamingopaar.png',emoji:'🦩', x:255, y:380, w:52, h:60, min:3},
-  {datei:'sprite-delfin.png',      emoji:'🐬', x:430, y:460, w:50, h:40, min:4},
-  {datei:'sprite-krabbe.png',      emoji:'🦀', x:330, y:570, w:32, h:28, min:6}
+  {datei:'sprite-muscheln.png',     emoji:'🐚', x:66, y:74, w:58, h:44, min:1},
+  {datei:'sprite-moewe.png',        emoji:'🕊️', x:94, y:52, w:56, h:40, min:2, bob:true},
+  {datei:'sprite-segelboot.png',    emoji:'⛵', x:92, y:76, w:92, h:92, min:3, bob:true},
+  {datei:'sprite-flamingopaar.png', emoji:'🦩', x:41, y:44, w:84, h:96, min:3},
+  {datei:'sprite-delfin.png',       emoji:'🐬', x:92, y:26, w:78, h:60, min:4},
+  {datei:'sprite-krabbe.png',       emoji:'🦀', x:44, y:32, w:44, h:40, min:6}
 ];
 
-/* Start -> die 6 Buchten in Freischalt-Reihenfolge -> Schatztruhe */
-const ROUTE=[[100,530],[177,196],[360,190],[377,286],[396,432],[206,428],[312,548],[288,104]];
-const CHEST_XY=[288,104];
+/* Schatzpfad: Start unten links, über alle Buchten hinauf zum Capo Nord. */
+const ROUTE=[[10,88],[34,86],[60,83],[70,72],[74,60],[52,66],[22,67],[30,55],[46,48],[80,41],[52,40],[18,44],[26,32],[40,24],[50,18],[57,14]];
+const CHEST_XY=[57,14];
+const START_XY=[10,88];
+/* Bis zu welchem Punkt der Pfad je freigeschalteter Bucht gezeichnet ist */
+const ROUTE_STOP=[2,4,6,9,11,13,15];
 
 let selBay=BAYS[0].key;
 let cameFromIsland=false;
@@ -2180,8 +2234,7 @@ function bayStats(b){
   return {done:done, total:b.motifs.length, full:done>=b.motifs.length};
 }
 function bayUnlocked(i){ return i===0 || bayStats(BAYS[i-1]).full; }
-/* Zählt nur die zusammenhängende Reihe fertiger Buchten von vorne – bleibt konsistent mit
-   der Freischalt-Reihenfolge auf der Karte, auch wenn zufällig ein späteres Motiv schon gemalt wurde. */
+/* Nur die zusammenhängende Reihe fertiger Buchten von vorne – passt zur Freischalt-Reihenfolge. */
 function baysDone(){
   let n=0;
   for(let i=0;i<BAYS.length;i++){ if(bayStats(BAYS[i]).full) n++; else break; }
@@ -2192,99 +2245,126 @@ function star2Set(){ try{ return JSON.parse(profile.islandStar2||'[]'); }catch(e
 function star3Set(){ try{ return JSON.parse(profile.islandStar3||'[]'); }catch(e){ return []; } }
 function goldTierN(){ return TROPHIES.find(t=>t.key==='gold').n; }
 function islandUnlocked(){ return discoveredCount()>=goldTierN(); }
+function bayEarned(b,i){
+  const st=bayStats(b);
+  return [st.full, star2Set().indexOf(b.key)>=0, star3Set().indexOf(b.key)>=0];
+}
 
-/* Marker skalieren mit der Kartenbreite (Design-Basis: 560px breit) */
+/* Marker skalieren mit der Kartenbreite (Design-Basis: 800px breit) */
 function sizeIsland(){
   const map=$('islMap'); if(!map || secIsland.hidden) return;
-  const w=map.getBoundingClientRect().width;
-  if(w>0) map.style.setProperty('--s',(w/560).toFixed(4));
+  const lay=map.parentElement, side=$('islSide');
+  const R=9/8;                                  // Seitenverhaeltnis der Illustration (1800x1600)
+  const portrait=window.matchMedia('(orientation:portrait)').matches;
+  let availW, availH;
+  if(portrait){
+    availW=lay.clientWidth;
+    availH=Math.round(window.innerHeight*0.36);
+  }else{
+    availW=lay.clientWidth - side.getBoundingClientRect().width - 12;
+    availH=lay.clientHeight;
+  }
+  if(availW<40 || availH<40) return;
+  const w=Math.max(140,Math.floor(Math.min(availW, availH*R)));
+  map.style.width=w+'px';
+  map.style.height=Math.floor(w/R)+'px';
+  map.style.setProperty('--s',Math.max(0.5,Math.min(1.2,w/800)).toFixed(4));
 }
 window.addEventListener('resize',sizeIsland);
 
-/* Nebel-Maske: „Löcher" an jeder freigeschalteten Bucht + Start; Capo Nord erst nach Schatzfund. */
+/* Nebel-Maske: Löcher an Start und an jeder freigeschalteten Bucht, Capo Nord erst nach dem Fund. */
 function fogMaskStyle(){
-  const holes=[];
+  const holes=['radial-gradient(circle at '+START_XY[0]+'% '+START_XY[1]+'%, transparent 0, transparent 42px, #000 96px)'];
   BAYS.forEach((b,i)=>{
-    if(bayUnlocked(i)) holes.push('radial-gradient(circle at '+(b.x/560*100)+'% '+(b.y/600*100)+'%, transparent 0, transparent 68px, #000 118px)');
+    if(bayUnlocked(i)) holes.push('radial-gradient(circle at '+b.x+'% '+b.y+'%, transparent 0, transparent 62px, #000 124px)');
   });
-  holes.push('radial-gradient(circle at '+(ROUTE[0][0]/560*100)+'% '+(ROUTE[0][1]/600*100)+'%, transparent 0, transparent 46px, #000 90px)');
-  if(profile.treasureFound) holes.push('radial-gradient(circle at '+(CHEST_XY[0]/560*100)+'% '+(CHEST_XY[1]/600*100)+'%, transparent 0, transparent 70px, #000 120px)');
+  if(profile.treasureFound) holes.push('radial-gradient(circle at '+CHEST_XY[0]+'% '+CHEST_XY[1]+'%, transparent 0, transparent 66px, #000 126px)');
   const v=holes.join(',');
   return 'mask-image:'+v+';-webkit-mask-image:'+v+';mask-composite:intersect;-webkit-mask-composite:source-in;';
 }
-/* Wie viele Wegabschnitte (von Start über die Buchten bis zur Truhe) schon sichtbar sein sollen */
-function pathReveal(){
-  const unlockedBays=BAYS.filter((b,i)=>bayUnlocked(i)).length;
-  const seg=unlockedBays + (baysDone()===BAYS.length ? 1 : 0);
-  return Math.min(seg, ROUTE.length-1) / (ROUTE.length-1);
+function routeVisiblePoints(){
+  const unlocked=BAYS.filter((b,i)=>bayUnlocked(i)).length;
+  const stop=(baysDone()===BAYS.length && profile.treasureFound) ? ROUTE.length-1 : ROUTE_STOP[Math.max(0,unlocked-1)];
+  return ROUTE.slice(0, Math.min(ROUTE.length, stop+1));
 }
 
 function renderIsland(){
   if(!profile) return;
   const map=$('islMap');
-  const gustFire = map.dataset.lastDone!==undefined && Number(map.dataset.lastDone) < baysDone();
-  map.dataset.lastDone = baysDone();
-  const chestReady = baysDone()===BAYS.length;
-  const captainDone = !!profile.treasureFound;
-  const chestClickable = chestReady || captainDone;
+  const prev=map.dataset.lastDone;
+  const done=baysDone();
+  const gustFire = prev!==undefined && Number(prev)<done;
+  map.dataset.lastDone=done;
+  const chestReady = done===BAYS.length;
+  const found = !!profile.treasureFound;
+  const selIdx=BAYS.findIndex(b=>b.key===selBay), sel=BAYS[selIdx];
+  const selOpen=bayUnlocked(selIdx);
 
-  let html=ISLAND_SVG;
-  ISLAND_PLACES.forEach(p=>{
-    html+='<div class="isl-place'+(p.green?' green':'')+'" style="left:'+(p.x/560*100)+'%;top:'+(p.y/600*100)+'%">'+p.t+'</div>';
+  let h='';
+  h+='<img class="isl-basis" src="'+ISLAND_BASIS+'" alt="" onerror="this.style.display=\'none\'">';
+  h+=ISLAND_FALLBACK_SVG;
+
+  const pts=routeVisiblePoints().map(p=>p[0]+','+p[1]).join(' ');
+  h+='<svg class="isl-route" viewBox="0 0 100 100" preserveAspectRatio="none">'
+   + '<polyline points="'+pts+'"></polyline></svg>';
+
+  SPRITES.filter(s=>done>=s.min).forEach(s=>{
+    h+='<div class="isl-sprite'+(s.bob?' bob':'')+'" style="left:'+s.x+'%;top:'+s.y+'%;'
+     + 'width:calc('+s.w+'px*var(--s));height:calc('+s.h+'px*var(--s));'
+     + 'font-size:calc('+Math.round(Math.min(s.w,s.h)*0.72)+'px*var(--s))">'
+     + '<img src="'+s.datei+'" alt="" onerror="this.replaceWith(Object.assign(document.createElement(\'em\'),{textContent:\''+s.emoji+'\'}))">'
+     + '</div>';
   });
 
-  const pts=ROUTE.map(p=>(p[0]/560*100)+','+(p[1]/600*100)).join(' ');
-  html+='<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;z-index:4;">'
-      + '<polyline class="isl-path" points="'+pts+'" pathLength="100" style="stroke-dashoffset:'+(100-100*pathReveal())+'"></polyline>'
-      + '</svg>';
-
-  SPRITES.filter(s=>baysDone()>=s.min).forEach(s=>{
-    html+='<div class="isl-sprite'+(s.bob?' bob':'')+'" style="left:'+(s.x/560*100)+'%;top:'+(s.y/600*100)+'%;width:'+s.w+'px;height:'+s.h+'px;font-size:'+Math.round(Math.min(s.w,s.h)*0.78)+'px"><em>'+s.emoji+'</em></div>';
-  });
+  h+='<div class="isl-start" style="left:'+START_XY[0]+'%;top:'+START_XY[1]+'%">Start</div>';
 
   const s2=star2Set();
   BAYS.forEach((b,i)=>{
     if(bayUnlocked(i) && s2.indexOf(b.key)<0){
-      html+='<button type="button" class="isl-hidden'+(findMode && selBay===b.key?' hint':'')+'" data-hidden="'+b.key+'" '
-          + 'style="left:'+(b.hidden.x/560*100)+'%;top:'+(b.hidden.y/600*100)+'%;width:'+(b.hidden.r*2)+'px;height:'+(b.hidden.r*2)+'px;margin:'+(-b.hidden.r)+'px 0 0 '+(-b.hidden.r)+'px" aria-label="'+b.hidden.was+'"></button>';
+      h+='<button type="button" class="isl-hidden'+(findMode && selBay===b.key?' hint':'')+'" data-hidden="'+b.key+'" '
+       + 'style="left:'+b.hidden.x+'%;top:'+b.hidden.y+'%;width:'+(b.hidden.r*2)+'px;height:'+(b.hidden.r*2)+'px;'
+       + 'margin:'+(-b.hidden.r)+'px 0 0 '+(-b.hidden.r)+'px" aria-label="'+b.hidden.was+'"></button>';
     }
   });
 
-  html+='<div class="isl-mapfog" id="islFog" style="'+fogMaskStyle()+'"></div>';
-  if(gustFire) html+='<div class="isl-gust" id="islGust"></div>';
+  h+='<div class="isl-mapfog" id="islFog" style="'+fogMaskStyle()+'"></div>';
+  if(gustFire) h+='<div class="isl-gust" id="islGust"></div>';
 
-  html+='<div class="isl-chest'+(captainDone?' open':'')+'" id="islChestEl" style="left:'+(CHEST_XY[0]/560*100)+'%;top:'+(CHEST_XY[1]/600*100)+'%;'+(chestClickable?'pointer-events:auto;cursor:pointer;':'')+'">'
-      + '<div class="box">'+(captainDone?'🎁':(chestReady?'🔓':'🔒'))+'</div>'
-      + '<div class="lbl">📍 Capo Nord</div></div>';
-  if(!captainDone){
-    html+='<div class="isl-chestcloud" id="islChestCloud" style="left:'+(CHEST_XY[0]/560*100)+'%;top:'+(CHEST_XY[1]/600*100)+'%">'
-        + '<div class="half l"></div><div class="beam"></div><div class="half r"></div></div>';
+  h+='<div class="isl-chest'+(chestReady||found?' ready':'')+'" id="islChestEl" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
+   + '<div class="box">'+(found?'🎁':(chestReady?'🔓':'🔒'))+'</div>'
+   + '<div class="lbl">Capo Nord</div></div>';
+  if(!found){
+    h+='<div class="isl-chestcloud" id="islChestCloud" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
+     + '<div class="half l"></div><div class="beam"></div><div class="half r"></div></div>';
   }
 
-  map.innerHTML=html;
+  /* Zettel oben links zeigt die Geschichte der gewählten Bucht */
+  h+='<div class="isl-note"><b>'+(selOpen?sel.name:'Noch im Nebel')+'</b><p>'
+   + (selOpen ? sel.story : 'Mal zuerst die '+BAYS[selIdx-1].name+' fertig – dann lichtet der Meereswind den Nebel.')
+   + '</p></div>';
+  h+='<div class="isl-info"><b>Das ist Albarella ❤️</b><p>Der Meereswind hilft mutigen Schatzsuchern: '
+   + 'Für jede Aufgabe bläst er den Nebel ein Stück weiter fort.</p></div>';
+
+  let frag='<div class="isl-fragstrip"><b>Deine Schatz&shy;fragmente</b>';
+  FRAGMENTS.forEach((f,i)=>{
+    frag+='<div class="isl-frag'+(i<done?' got':'')+'" title="'+f.name+'">'
+        + (i<done?f.emoji+'<small>'+f.name+'</small>':'')+'</div>';
+  });
+  h+=frag+'</div>';
+
+  map.innerHTML=h;
 
   BAYS.forEach((b,i)=>{
-    const st=bayStats(b), open=bayUnlocked(i);
+    const st=bayStats(b), open=bayUnlocked(i), earned=bayEarned(b,i);
     const el=document.createElement('button');
-    el.className='isl-bay'+(open?'':' locked')+(selBay===b.key?' sel':'');
-    el.style.left=(b.x/560*100)+'%'; el.style.top=(b.y/600*100)+'%';
+    el.className='isl-bay side-'+b.side
+      + (open?'':' locked') + (st.full?' done':'')
+      + (selBay===b.key?' sel':'') + (open&&!st.full?' active':'');
+    el.style.left=b.x+'%'; el.style.top=b.y+'%';
     el.setAttribute('aria-label',b.name);
-
-    let disc='<div class="isl-disc">'+(open?b.emoji:'🔒');
-    if(open && !st.full) disc+='<div class="isl-fog"></div>';
-    disc+='</div>';
-
-    let tag='<div class="isl-tag"><span>'+b.name+'</span>';
-    if(!open){ /* nur Name */ }
-    else if(st.full){ tag+='<span>📜</span>'; }
-    else {
-      const c=motifCounts();
-      tag+='<span class="isl-mini">'+b.motifs.map(n=>'<i class="'+(c[n]?'':'off')+'">'+motifEmoji(n)+'</i>').join('')+'</span>';
-      tag+='<span class="isl-num">'+st.done+'/'+st.total+'</span>';
-    }
-    tag+='</div>';
-
-    el.innerHTML=disc+tag;
+    el.innerHTML='<span class="isl-pin">'+(open?b.emoji:'🔒')+'<i class="num">'+b.nr+'</i></span>'
+      + '<span class="isl-baylabel"><b>'+b.name+'</b>'
+      + '<span class="isl-baystars">'+earned.map(e=>'<i class="'+(e?'on':'')+'">★</i>').join('')+'</span></span>';
     el.addEventListener('click',()=>{ selBay=b.key; findMode=false; renderIsland(); });
     map.appendChild(el);
   });
@@ -2292,15 +2372,11 @@ function renderIsland(){
   map.querySelectorAll('.isl-hidden').forEach(btn=>{
     btn.addEventListener('click',e=>{ e.stopPropagation(); tapHidden(btn.dataset.hidden); });
   });
-
-  if(chestClickable){
-    const chestEl=$('islChestEl');
-    chestEl.addEventListener('click',()=>{
-      if(profile.treasureFound) reopenTreasureCard();
-      else openCaptainQuiz();
-    });
+  if(chestReady||found){
+    const ch=$('islChestEl');
+    ch.style.cursor='pointer';
+    ch.addEventListener('click',()=>{ found?showTreasureCard():openCaptainQuiz(); });
   }
-
   if(gustFire){
     const gust=$('islGust');
     if(gust){
@@ -2308,7 +2384,7 @@ function renderIsland(){
       for(let k=0;k<10;k++){
         const i=document.createElement('i');
         i.textContent=bits[k%bits.length];
-        i.style.left=(10+Math.random()*30)+'%'; i.style.top=(20+Math.random()*60)+'%';
+        i.style.left=(8+Math.random()*34)+'%'; i.style.top=(18+Math.random()*62)+'%';
         i.style.animationDelay=(Math.random()*0.3)+'s';
         gust.appendChild(i);
       }
@@ -2316,21 +2392,8 @@ function renderIsland(){
     }
   }
 
-  renderFragments();
   renderBaySide();
   requestAnimationFrame(sizeIsland);
-}
-
-function renderFragments(){
-  const done=baysDone();
-  const host=$('islFrags'); host.innerHTML='';
-  FRAGMENTS.forEach((f,i)=>{
-    const d=document.createElement('div');
-    d.className='isl-frag'+(i<done?' got':'');
-    d.textContent=i<done?f.emoji:'';
-    d.title=f.name;
-    host.appendChild(d);
-  });
 }
 
 function tapHidden(key){
@@ -2356,8 +2419,16 @@ async function renderBaySide(){
 
   const card=document.createElement('div');
   card.className='isl-card';
-  card.innerHTML='<b>'+(open?b.emoji:'🔒')+' '+b.name
-    + (open&&st.full?' <span style="color:var(--kelp)">· Fertig! 🎉</span>':'')+'</b>';
+  const head=document.createElement('div');
+  head.className='isl-cardhead';
+  head.innerHTML='<span>'+(open?b.emoji:'🔒')+'</span><b>Aktuelle Aufgabe</b>'
+    + '<span class="isl-dots">'+BAYS.map((x,n)=>'<i class="'+(n<done?'on':'')+'"></i>').join('')+'</span>';
+  card.appendChild(head);
+  const nm=document.createElement('div');
+  nm.className='isl-bayname';
+  nm.innerHTML=b.name + (open ? (st.full?' <span style="color:var(--kelp)">· fertig! 🎉</span>'
+      : ' <span style="color:var(--coral)">· '+st.done+' von '+st.total+'</span>') : ' <span>· im Nebel</span>');
+  card.appendChild(nm);
 
   if(!open){
     const p=document.createElement('p');
@@ -2365,11 +2436,6 @@ async function renderBaySide(){
     p.textContent='Diese Bucht ist noch im Nebel. Mal zuerst die '+BAYS[i-1].name+' fertig – dann öffnet sie sich.';
     card.appendChild(p);
   }else{
-    const story=document.createElement('p');
-    story.className='isl-story';
-    story.textContent='„'+b.story+'"';
-    card.appendChild(story);
-
     const frame=document.createElement('div');
     frame.className='isl-frame';
     const inner=document.createElement('div');
@@ -2378,10 +2444,10 @@ async function renderBaySide(){
     else { inner.innerHTML='<em>🖼️</em><small>hier erscheint dein gemaltes Bild</small>'; }
     frame.appendChild(inner); card.appendChild(frame);
 
-    const icons=document.createElement('div');
-    icons.className='isl-icons';
-    icons.innerHTML=b.motifs.map(n=>'<i class="'+(c[n]?'':'off')+'" title="'+n+'">'+motifEmoji(n)+'</i>').join('');
-    card.appendChild(icons);
+    const chips=document.createElement('div');
+    chips.className='isl-chips';
+    chips.innerHTML=b.motifs.map(n=>'<span class="'+(c[n]?'got':'')+'">'+motifEmoji(n)+' '+n+'</span>').join('');
+    card.appendChild(chips);
 
     if(st.full){
       const f=document.createElement('div');
@@ -2393,8 +2459,7 @@ async function renderBaySide(){
       card.appendChild(f);
     }
 
-    const s2=star2Set(), s3=star3Set();
-    const earned=[st.full, s2.indexOf(b.key)>=0, s3.indexOf(b.key)>=0];
+    const earned=bayEarned(b,i);
     const labels=['Alle Motive gemalt','Verstecktes Detail gefunden','Wissensfrage beantwortet'];
     const stars=document.createElement('div');
     stars.className='isl-stars';
@@ -2409,16 +2474,14 @@ async function renderBaySide(){
 
     const actions=document.createElement('div');
     actions.className='isl-actionrow';
-    const found2=s2.indexOf(b.key)>=0;
     const findBtn=document.createElement('button');
-    findBtn.textContent=found2?'✓ Gefunden':'🔍 Suchen';
+    findBtn.textContent=earned[1]?'✓ Gefunden':'🔍 Suchen';
     if(findMode) findBtn.classList.add('active');
-    findBtn.disabled=found2;
+    findBtn.disabled=earned[1];
     findBtn.addEventListener('click',()=>{ findMode=!findMode; renderIsland(); });
-    const got3=s3.indexOf(b.key)>=0;
     const quizBtn=document.createElement('button');
-    quizBtn.textContent=got3?'✓ Beantwortet':'🧠 Wissensfrage';
-    quizBtn.disabled=got3;
+    quizBtn.textContent=earned[2]?'✓ Beantwortet':'🧠 Wissensfrage';
+    quizBtn.disabled=earned[2];
     quizBtn.addEventListener('click',()=>openBayQuiz(b));
     actions.appendChild(findBtn); actions.appendChild(quizBtn);
     card.appendChild(actions);
@@ -2426,14 +2489,22 @@ async function renderBaySide(){
   side.appendChild(card);
 
   const prog=document.createElement('div');
-  prog.className='isl-card';
-  prog.style.background='var(--paper)';
-  prog.innerHTML='<b>Insel-Fortschritt</b>'
-    + '<div class="progress-bar"><div class="progress-bar-fill" style="width:'+Math.round(done/BAYS.length*100)+'%"></div></div>'
-    + '<div class="stat-card-sub">'+done+' von '+BAYS.length+' Buchten</div>';
+  prog.className='isl-card plain';
+  prog.innerHTML='<div class="isl-cardhead"><b>Insel-Fortschritt</b>'
+    + '<span style="margin-left:auto;font-weight:800;font-size:12px;color:var(--coral)">'+done+' von '+BAYS.length+'</span></div>'
+    + '<div class="progress-bar"><div class="progress-bar-fill" style="width:'+Math.round(done/BAYS.length*100)+'%"></div></div>';
   side.appendChild(prog);
 
-  /* Der Knopf gehört immer zur gerade angezeigten Bucht, nie zu einer anderen. */
+  const cap=document.createElement('div');
+  cap.className='isl-captain';
+  cap.innerHTML='<b>🦜 Kapitänsprüfung</b><p>'
+    + (profile.treasureFound ? 'Geschafft! Die Truhe am Capo Nord ist offen.'
+       : done===BAYS.length ? 'Beantworte 3 Fragen richtig, um die Schatztruhe zu öffnen!'
+       : 'Erst wenn alle 6 Buchten fertig sind, wartet die Prüfung am Capo Nord.')
+    + '</p><div class="steps">'+[1,2,3].map(n=>'<i class="'+(profile.treasureFound?'on':'')+'">'+n+'</i>').join('')+'</div>';
+  side.appendChild(cap);
+
+  /* Der Knopf gehört immer zur gerade angezeigten Bucht. */
   if(open){
     const cta=document.createElement('button');
     cta.className='nav-btn primary isl-cta';
@@ -2453,8 +2524,8 @@ async function renderBaySide(){
         cta.textContent='Kapitänsprüfung starten →';
         cta.addEventListener('click',openCaptainQuiz);
       }else{
-        cta.textContent='Alle Buchten fertig! 🎉';
-        cta.disabled=true;
+        cta.textContent='Schatz gefunden! 🎁';
+        cta.addEventListener('click',showTreasureCard);
       }
     }
     host.appendChild(cta);
@@ -2474,7 +2545,7 @@ async function newestPicFor(b){
   return null;
 }
 
-/* ---------- Buchten-Mini-Quiz & Kapitänsprüfung ---------- */
+/* ---------- Wissensfragen & Kapitänsprüfung ---------- */
 function islQuizRenderDots(total,step){
   const host=$('islQuizDots');
   host.style.display = total<=1 ? 'none' : 'flex';
@@ -2519,17 +2590,14 @@ function islQuizPick(idx){
   opts.forEach(o=>o.disabled=true);
   if(ctx.kind==='bay'){
     $('islQuizFeedback').textContent='Richtig! Stern verdient ⭐';
-    $('islQuizFeedback').className='isl-quiz-feedback';
     const s3=star3Set();
     if(s3.indexOf(ctx.bayKey)<0){ s3.push(ctx.bayKey); profile.islandStar3=JSON.stringify(s3); saveProfiles(); }
     setTimeout(()=>{ $('islQuiz').classList.remove('on'); renderIsland(); },900);
   }else if(ctx.step<2){
     $('islQuizFeedback').textContent='Richtig! Nächste Frage.';
-    $('islQuizFeedback').className='isl-quiz-feedback';
     setTimeout(()=>{ islQuizCtx.step++; islQuizShow(); },700);
   }else{
     $('islQuizFeedback').textContent='Richtig! Alle Fragen geschafft!';
-    $('islQuizFeedback').className='isl-quiz-feedback';
     setTimeout(()=>{ $('islQuiz').classList.remove('on'); openChestReveal(); },900);
   }
 }
@@ -2539,13 +2607,14 @@ function openBayQuiz(b){
   $('islQuiz').classList.add('on');
 }
 function openCaptainQuiz(){
+  if(baysDone()<BAYS.length) return;
   islQuizCtx={kind:'captain', step:0};
   islQuizShow();
   $('islQuiz').classList.add('on');
 }
 $('islQuizClose').addEventListener('click',()=>$('islQuiz').classList.remove('on'));
 
-/* ---------- Schatztruhe: Wolken reißen auf, Münzen fallen, Hinweis erscheint ---------- */
+/* ---------- Schatztruhe: Wolken reißen auf, Münzen fallen ---------- */
 function openChestReveal(){
   profile.treasureFound=true;
   saveProfiles();
@@ -2557,7 +2626,6 @@ function openChestReveal(){
     Voice.rawBoth('Wow! Ihr habt Albarella entdeckt!','Wow! You discovered Albarella!');
   },1600);
 }
-function reopenTreasureCard(){ showTreasureCard(); }
 async function showTreasureCard(){
   const hint=await Store.get('treasureHint');
   const coords=await Store.get('treasureCoords');
@@ -2586,12 +2654,12 @@ $('treasureOk').addEventListener('click',()=>{
   $('treasureCoins').innerHTML='';
 });
 
-/* Nur für Eltern: Hinweistext nie vorausgefüllt anzeigen, damit Kinder ihn hier nicht lesen können. */
+/* Nur für Eltern: nie vorausgefüllt, damit Kinder den Hinweis hier nicht lesen können. */
 $('islHintBtn').addEventListener('click',()=>{
   const t=prompt('Neuer Hinweistext für den echten Schatz (überschreibt den alten):','');
   if(t===null) return;
-  if(t.trim()){ Store.set('treasureHint',t.trim()); }
-  const co=prompt('Koordinaten für den „In Karten öffnen"-Knopf (Format: Breite,Länge, z. B. 45.0877,12.3378) – leer lassen für keinen Kartenlink:','');
+  if(t.trim()) Store.set('treasureHint',t.trim());
+  const co=prompt('Koordinaten für den „In Karten öffnen"-Knopf (z. B. 45.0877,12.3378) – leer lassen für keinen Kartenlink:','');
   if(co===null) return;
   if(co.trim()) Store.set('treasureCoords',co.trim());
   toast('🔑 Hinweis gespeichert');
