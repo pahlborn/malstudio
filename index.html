@@ -176,7 +176,7 @@
     font-size:calc(11px*var(--s))}
   .isl-place.green{color:#3B6B2B;background:rgba(255,255,255,.8);font-size:calc(10px*var(--s))}
   .isl-bay{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;
-    align-items:center;gap:calc(4px*var(--s));background:none;border:0;padding:0;cursor:pointer}
+    align-items:center;gap:calc(4px*var(--s));background:none;border:0;padding:0;cursor:pointer;z-index:10}
   .isl-bay:active{transform:translate(-50%,calc(-50% + 2px))}
   .isl-disc{position:relative;overflow:hidden;width:calc(58px*var(--s));height:calc(58px*var(--s));
     border-radius:50%;display:flex;align-items:center;justify-content:center;
@@ -229,7 +229,111 @@
   .isl-fact-head button{margin-left:auto;background:none;border:0;font-size:16px;cursor:pointer;padding:0}
   .isl-fact p{margin:0;font-weight:700;font-size:14px;color:#5C4423;line-height:1.45}
   .isl-lock-note{font-weight:700;font-size:13px;color:var(--sub);margin:0;line-height:1.45}
+  .isl-story{font-family:var(--font-body);font-weight:700;font-size:13px;color:var(--sub);
+    font-style:italic;margin:0;line-height:1.4}
   .isl-cta{flex:none}
+
+  /* Schatzpfad: zieht sich per SVG-Linie durch den Nebel, Länge per JS gesteuert */
+  .isl-path{fill:none;stroke:#B7942E;stroke-width:5;stroke-linecap:round;stroke-dasharray:6 10;
+    opacity:.85;pathLength:100;stroke-dashoffset:100;transition:stroke-dashoffset 1.1s ease}
+
+  /* Nebel: leicht in Bewegung, deckt Ungeöffnetes ab; „Löcher" kommen per Inline-Style (Maske) von JS */
+  .isl-mapfog{position:absolute;inset:-6%;pointer-events:none;z-index:5;
+    background:linear-gradient(120deg,rgba(214,226,232,.55),rgba(196,212,220,.46) 60%,rgba(214,226,232,.55));
+    backdrop-filter:grayscale(.85) blur(3px) brightness(1.05);-webkit-backdrop-filter:grayscale(.85) blur(3px) brightness(1.05);
+    animation:fogDrift 14s ease-in-out infinite;
+    transition:-webkit-mask-image .9s ease, mask-image .9s ease}
+  @keyframes fogDrift{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.2%,.8%)}}
+
+  /* Windstoß-Effekt beim Freischalten einer Bucht: kurze Wirbel, die abziehen */
+  .isl-gust{position:absolute;inset:0;pointer-events:none;z-index:6;overflow:hidden}
+  .isl-gust i{position:absolute;font-style:normal;font-size:38px;opacity:0;filter:blur(1px);
+    animation:gustBlow 1s ease-out forwards}
+  @keyframes gustBlow{
+    0%{opacity:0;transform:translate(-30px,0) scale(.6) rotate(0deg)}
+    15%{opacity:.85}
+    100%{opacity:0;transform:translate(160px,-18px) scale(1.3) rotate(50deg)}
+  }
+
+  /* Capo Nord bleibt dicht verwölkt bis zum Finale; eigene, dichtere Wolkendecke + Aufreiß-Animation */
+  .isl-chestcloud{position:absolute;transform:translate(-50%,-50%);width:calc(120px*var(--s));height:calc(120px*var(--s));
+    z-index:7;pointer-events:none}
+  .isl-chestcloud .half{position:absolute;top:0;width:60%;height:100%;background:radial-gradient(circle,#E7EDEF 0%,rgba(231,237,239,0) 72%);
+    filter:blur(2px)}
+  .isl-chestcloud .half.l{left:-10%}
+  .isl-chestcloud .half.r{right:-10%}
+  .isl-chestcloud.part .half.l{animation:cloudPartL 1.8s ease forwards}
+  .isl-chestcloud.part .half.r{animation:cloudPartR 1.8s ease forwards}
+  .isl-chestcloud.part .beam{animation:beamIn 1.8s ease forwards}
+  .isl-chestcloud .beam{position:absolute;inset:0;border-radius:50%;opacity:0;
+    background:radial-gradient(circle,rgba(255,244,196,.9) 0%,rgba(255,244,196,0) 70%)}
+  @keyframes cloudPartL{0%{transform:translateX(0)}100%{transform:translateX(-70%);opacity:0}}
+  @keyframes cloudPartR{0%{transform:translateX(0)}100%{transform:translateX(70%);opacity:0}}
+  @keyframes beamIn{0%{opacity:0}60%{opacity:1}100%{opacity:.9}}
+
+  /* Verstecktes Detail zum Antippen (Stern 2) */
+  .isl-hidden{position:absolute;border-radius:999px;z-index:9;background:transparent;border:0;padding:0;cursor:pointer}
+  .isl-hidden.hint{box-shadow:0 0 0 3px rgba(223,166,58,.85),0 0 22px rgba(255,236,170,.9);
+    background:rgba(255,240,190,.25);animation:hintPulse 1.4s ease-in-out infinite}
+  @keyframes hintPulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+  /* Sprites: still lebendig werdende Details, je nach Fortschritt – bewusst UNTER dem Nebel (z-index 5),
+     damit sie erst beim Aufdecken der jeweiligen Bucht sichtbar werden */
+  .isl-sprite{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:3;
+    filter:drop-shadow(0 4px 6px rgba(20,40,56,.35))}
+  .isl-sprite em{font-style:normal;display:block;line-height:1}
+  .isl-sprite.bob{animation:bob 5s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 5px))}}
+
+  /* 3-Sterne-Zeile */
+  .isl-stars{display:flex;flex-direction:column;gap:5px}
+  .isl-star-row{display:flex;align-items:center;gap:7px;padding:5px 9px;border-radius:8px;
+    background:#F1F6F8;font-weight:700;font-size:12px;color:var(--sub)}
+  .isl-star-row.got{background:#E6F1DE;color:#3F6B34}
+  .isl-star-row em{font-style:normal;font-size:15px}
+  .isl-star-row small{margin-left:auto;font-weight:800;font-size:10px;opacity:.7}
+  .isl-actionrow{display:flex;gap:8px}
+  .isl-actionrow button{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
+    padding:9px 6px;border-radius:10px;font-family:var(--font);font-weight:800;font-size:12.5px;
+    color:#6B5322;background:#FFF6DF;border:2px solid #E5CF9D;cursor:pointer}
+  .isl-actionrow button:disabled{opacity:.45;cursor:default}
+  .isl-actionrow button.active{background:#F6E4B8}
+
+  /* Schatzfragmente-Leiste im Kartenkopf */
+  .isl-fragrow{display:flex;gap:6px}
+  .isl-frag{flex:1;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    font-size:17px;background:rgba(255,253,245,.5);border:2px dashed #C0A774}
+  .isl-frag.got{background:linear-gradient(#FFF7E2,#F6E4B8);border:2px solid var(--sand);
+    box-shadow:0 2px 5px rgba(120,90,30,.2)}
+
+  /* Quiz-Karte (Buchten-Mini-Quiz & Kapitänsprüfung) */
+  .isl-quiz-card{background:var(--paper);border:4px solid var(--deep);border-radius:28px;
+    padding:26px 30px;text-align:center;box-shadow:0 12px 24px rgba(7,59,76,.16);max-width:420px}
+  .isl-quiz-dots{display:flex;justify-content:center;gap:8px;margin-bottom:10px}
+  .isl-quiz-dots i{width:12px;height:12px;border-radius:50%;background:#E1E4E1;font-style:normal}
+  .isl-quiz-dots i.on{background:var(--kelp)}
+  .isl-quiz-title{font-family:var(--font);font-weight:800;font-size:13px;color:var(--coral);margin:0 0 8px}
+  .isl-quiz-q{font-family:var(--font);font-weight:800;font-size:19px;color:var(--deep);margin:0 0 16px}
+  .isl-quiz-opts{display:flex;flex-direction:column;gap:10px}
+  .isl-quiz-opt{padding:13px 16px;border-radius:14px;border:3px solid var(--ghost);background:var(--paper);
+    font-family:var(--font);font-weight:700;font-size:15px;color:var(--deep);cursor:pointer;text-align:left}
+  .isl-quiz-opt.right{background:#DFF0D5;border-color:#89BD72}
+  .isl-quiz-opt.wrong{background:#F7DDD6;border-color:#DD9C8B}
+  .isl-quiz-feedback{min-height:22px;margin-top:12px;font-weight:800;font-size:15px;color:var(--kelp)}
+  .isl-quiz-feedback.retry{color:var(--coral)}
+  .isl-quiz-close{margin-top:14px;width:100%}
+
+  /* Schatztruhen-Fund: Piratenkarte statt schlichter Schriftrolle */
+  .treasure-card{position:relative;background:#F4E7C8;border-radius:6px 22px 6px 22px;
+    padding:26px 28px;box-shadow:0 16px 40px rgba(0,0,0,.35);max-width:380px;transform:rotate(-1deg);
+    border:3px solid #B7942E}
+  .treasure-card b{display:block;font-family:var(--font);font-weight:800;font-size:12px;color:#B7942E;margin-bottom:8px}
+  .treasure-card p{font-family:var(--font-body);font-weight:700;font-size:16px;color:#5C4423;
+    line-height:1.5;margin:0}
+  .treasure-card button{width:100%;margin-top:16px}
+  .isl-coins{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:31}
+  .isl-coins i{position:absolute;top:-30px;font-style:normal;animation:coinFall linear infinite}
+  @keyframes coinFall{to{transform:translateY(115vh) rotate(360deg)}}
 
   /* ---------- Fortschritts-Chip & -Balken ---------- */
   .progress-chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;
@@ -423,13 +527,10 @@
     .gal-layout{flex-direction:column}
     .gal-side{width:100%}
     .motif-card{flex:none;max-height:44vh}
-    .isl-layout{flex-direction:column;overflow-y:auto;scrollbar-width:thin}
-    .isl-map{height:44vh;flex:none;align-self:center}
-    .isl-side{width:100%}
-    .isl-side-scroll{display:contents}
-    .isl-frame{height:120px}
-    /* Karte + Details scrollen gemeinsam – der Mal-Knopf bleibt trotzdem sichtbar */
-    .isl-cta{position:sticky;bottom:0;z-index:2;box-shadow:0 -6px 14px rgba(7,59,76,.18)}
+    .isl-layout{flex-direction:column}
+    .isl-map{height:38vh;flex:none;align-self:center}
+    .isl-side{width:100%;flex:1;min-height:0}
+    .isl-frame{height:110px}
   }
 </style>
 </head>
@@ -537,8 +638,10 @@
       <h1>Albarella</h1>
       <span class="profile-level" id="islSub"></span>
       <span style="margin-left:auto"></span>
+      <button class="icon-btn" id="islHintBtn" style="font-size:11px;padding:0 8px;height:28px;opacity:.55" title="Nur für Eltern">🔑</button>
       <span class="progress-chip" data-chip></span>
     </div>
+    <div class="isl-fragrow" id="islFrags"></div>
 
     <div class="isl-layout">
       <div class="isl-map" id="islMap"></div>
@@ -649,6 +752,27 @@
     <b>Fertig! Dein Bild ist gespeichert. 🖼️</b>
     <div class="done-frame"><img id="doneImg" src="" alt=""></div>
     <button class="nav-btn primary" id="doneOk"></button>
+  </div>
+</div>
+
+<div class="reward" id="islQuiz">
+  <div class="isl-quiz-card">
+    <div class="isl-quiz-dots" id="islQuizDots"></div>
+    <p class="isl-quiz-title" id="islQuizTitle"></p>
+    <p class="isl-quiz-q" id="islQuizQ"></p>
+    <div class="isl-quiz-opts" id="islQuizOpts"></div>
+    <div class="isl-quiz-feedback" id="islQuizFeedback"></div>
+    <button class="nav-btn isl-quiz-close" id="islQuizClose">Später weiter</button>
+  </div>
+</div>
+
+<div class="reward" id="treasureReveal">
+  <div class="treasure-card">
+    <div class="isl-coins" id="treasureCoins"></div>
+    <b>Geheimer Hinweis für den echten Schatz</b>
+    <p id="treasureHintText"></p>
+    <a class="nav-btn" id="treasureMapLink" href="#" target="_blank" rel="noopener" style="display:none;margin-top:10px;text-decoration:none;">📍 In Karten öffnen</a>
+    <button class="nav-btn primary" id="treasureOk">Juhu! 🎉</button>
   </div>
 </div>
 
@@ -1859,6 +1983,9 @@ function renderGreeting(){
   $('homeGreeting').textContent='Hallo '+profile.name+'! '+profile.emoji+' Heute wartet dein nächstes Abenteuer. '
     +'⭐ Du hast '+stars+' '+(stars===1?'Stern':'Sterne')+'. '+trophyLine;
   $('homeBarFill').style.width=trophyProgress(disc).pct+'%';
+  const islBtn=$('islBtn');
+  if(islandUnlocked()){ islBtn.textContent='🗺️ Schatzinsel'; islBtn.classList.remove('off'); }
+  else{ islBtn.textContent='🗺️ Schatzinsel 🔒'; islBtn.classList.add('off'); }
 }
 function updateProgressChips(){
   const stars=profile?(profile.stars||0):0;
@@ -1974,26 +2101,78 @@ const ISLAND_PLACES=[
 const BAYS=[
   {key:'muschel', name:'Muschelbucht', emoji:'🐚', x:177, y:196,
    motifs:['Muschel','Seestern','Sandburg','Krabbe','Seepferdchen'],
-   fact:'Miesmuscheln filtern Meerwasser und machen es dabei sauberer. Krabben tragen ihr Skelett außen wie eine Rüstung – und wechseln es, wenn sie größer werden.'},
+   fact:'Miesmuscheln filtern Meerwasser und machen es dabei sauberer. Krabben tragen ihr Skelett außen wie eine Rüstung – und wechseln es, wenn sie größer werden.',
+   story:'Der alte Pirat hat hier eine Muschel versteckt. Male sie fertig, und der Weg zeigt sich.',
+   hidden:{was:'Finde die kleine Muschel im Sand', x:140, y:230, r:30},
+   quiz:{q:'Was machen Krabben, wenn sie größer werden?', a:0,
+     o:['Sie wechseln ihr Skelett wie eine Rüstung','Sie werden zu Fischen','Sie verlieren ihre Scheren']}},
   {key:'leuchtturm', name:'Leuchtturmbucht', emoji:'🗼', x:360, y:190,
    motifs:['Leuchtturm','Haus am Meer','Sonnenschirm','Strandkorb','Palme'],
-   fact:'Der Name „Albarella" kommt von einem Baum: der Silberpappel. Davon wachsen hier ganz viele!'},
+   fact:'Der Name „Albarella" kommt von einem Baum: der Silberpappel. Davon wachsen hier ganz viele!',
+   story:'Nur wer den Leuchtturm findet, erkennt den nächsten Weg.',
+   hidden:{was:'Finde die Möwe am Himmel', x:410, y:140, r:32},
+   quiz:{q:'Woraus sind vor rund 400 Jahren neue Inseln wie Albarella entstanden?', a:0,
+     o:['Aus Sand und Schlamm, die der Fluss Po brachte','Aus Vulkangestein','Aus Muschelschalen']}},
   {key:'segel', name:'Segelbucht', emoji:'⛵', x:377, y:286,
    motifs:['Segelboot','Piratenschiff','Vespa','Möwe'],
-   fact:'Vor rund 400 Jahren hat der Fluss Po sein Bett verlagert und aus Sand und Schlamm neue Inseln geformt – eine davon ist Albarella.'},
+   fact:'Vor rund 400 Jahren hat der Fluss Po sein Bett verlagert und aus Sand und Schlamm neue Inseln geformt – eine davon ist Albarella.',
+   story:'Ein Segelschiff bringt dich über die Lagune – mal es fertig, dann kannst du ablegen.',
+   hidden:{was:'Finde das zweite, kleinere Boot am Horizont', x:430, y:310, r:30},
+   quiz:{q:'Wie viele verschiedene Baumarten wachsen auf Albarella?', a:0,
+     o:['Etwa 150','Etwa 10','Etwa 1000']}},
   {key:'tiefsee', name:'Tiefseebucht', emoji:'🐬', x:396, y:432,
    motifs:['Fisch','Delfin','Wal','Krake','Schildkröte'],
-   fact:'In der Adria schwimmen mehr als 450 verschiedene Fischarten. Manchmal kommen sogar Delfine und große Meeresschildkröten vorbei.'},
+   fact:'In der Adria schwimmen mehr als 450 verschiedene Fischarten. Manchmal kommen sogar Delfine und große Meeresschildkröten vorbei.',
+   story:'Tief unter den Wellen wartet ein Geheimnis. Male dich hindurch.',
+   hidden:{was:'Finde den Delfin, der aus dem Wasser springt', x:415, y:480, r:34},
+   quiz:{q:'Welche zwei Tiere schwimmen manchmal durch die Adria?', a:0,
+     o:['Delfine und Meeresschildkröten','Haie und Wale','Pinguine und Robben']}},
   {key:'wunder', name:'Wunderbucht', emoji:'🌈', x:206, y:428,
    motifs:['Herz','Blume','Schmetterling','Kätzchen','Regenbogen','Rakete'],
-   fact:'Auf Albarella wachsen über 2 Millionen Bäume, von 150 verschiedenen Baumarten.'},
+   fact:'Auf Albarella wachsen über 2 Millionen Bäume, von 150 verschiedenen Baumarten.',
+   story:'Hier ist alles ein bisschen anders – und ein bisschen wunderbar.',
+   hidden:{was:'Finde den Reiher im Gras', x:250, y:470, r:32},
+   quiz:{q:'Wie warm wird das Wasser vor Albarella im Sommer etwa?', a:0,
+     o:['24 bis 27 Grad','5 Grad','40 Grad']}},
   {key:'nasch', name:'Naschbucht', emoji:'🍦', x:312, y:548,
    motifs:['Eis','Wassermelone','Pizza','Luftballons'],
-   fact:'Im Sommer wird das Wasser vor Albarella oft 24 bis 27 Grad warm. An der tiefsten Stelle ist das Mittelmeer über 5000 Meter tief!'}
+   fact:'Im Sommer wird das Wasser vor Albarella oft 24 bis 27 Grad warm. An der tiefsten Stelle ist das Mittelmeer über 5000 Meter tief!',
+   story:'Der Pirat hatte Hunger! Male, was er sich gewünscht hat.',
+   hidden:{was:'Finde die kleine Krabbe am Weg', x:345, y:580, r:26},
+   quiz:{q:'Wie tief ist das Mittelmeer an der tiefsten Stelle ungefähr?', a:0,
+     o:['Über 5000 Meter','Über 500 Meter','Über 50 Meter']}}
 ];
+
+/* Fragen an der Schatztruhe – erst nach allen 6 Buchten. */
+const CAPTAIN=[
+  {q:'Wie heißt der Baum, nach dem Albarella benannt ist?', a:0, o:['Silberpappel','Palme','Olivenbaum']},
+  {q:'Wie viele Fischarten schwimmen in der Adria?', a:1, o:['10','Über 450','2']},
+  {q:'Was spüren Seesterne mit ihren Armspitzen?', a:1, o:['Gerüche','Hell und Dunkel','Musik']}
+];
+
+const FRAGMENTS=[
+  {emoji:'🧭', name:'Kompass'}, {emoji:'🗝️', name:'Schlüssel'}, {emoji:'🪙', name:'Goldmünze'},
+  {emoji:'🪶', name:'Papageienfeder'}, {emoji:'🧩', name:'Kartenstück'}, {emoji:'💎', name:'Edelstein'}
+];
+
+/* Lebendige Insel: Platzhalter-Emoji, bis die echten Sprite-Dateien da sind (Dateiname vorbereitet). */
+const SPRITES=[
+  {datei:'sprite-muscheln.png',    emoji:'🐚', x:150, y:230, w:46, h:36, min:1},
+  {datei:'sprite-moewe.png',       emoji:'🐦', x:380, y:140, w:40, h:32, min:2, bob:true},
+  {datei:'sprite-segelboot.png',   emoji:'⛵', x:420, y:300, w:56, h:56, min:3, bob:true},
+  {datei:'sprite-flamingopaar.png',emoji:'🦩', x:255, y:380, w:52, h:60, min:3},
+  {datei:'sprite-delfin.png',      emoji:'🐬', x:430, y:460, w:50, h:40, min:4},
+  {datei:'sprite-krabbe.png',      emoji:'🦀', x:330, y:570, w:32, h:28, min:6}
+];
+
+/* Start -> die 6 Buchten in Freischalt-Reihenfolge -> Schatztruhe */
+const ROUTE=[[100,530],[177,196],[360,190],[377,286],[396,432],[206,428],[312,548],[288,104]];
+const CHEST_XY=[288,104];
 
 let selBay=BAYS[0].key;
 let cameFromIsland=false;
+let findMode=false;
+let islQuizCtx=null;
 
 function bayStats(b){
   const c=motifCounts();
@@ -2001,8 +2180,18 @@ function bayStats(b){
   return {done:done, total:b.motifs.length, full:done>=b.motifs.length};
 }
 function bayUnlocked(i){ return i===0 || bayStats(BAYS[i-1]).full; }
-function baysDone(){ return BAYS.filter(b=>bayStats(b).full).length; }
+/* Zählt nur die zusammenhängende Reihe fertiger Buchten von vorne – bleibt konsistent mit
+   der Freischalt-Reihenfolge auf der Karte, auch wenn zufällig ein späteres Motiv schon gemalt wurde. */
+function baysDone(){
+  let n=0;
+  for(let i=0;i<BAYS.length;i++){ if(bayStats(BAYS[i]).full) n++; else break; }
+  return n;
+}
 function motifEmoji(name){ const m=MOTIFS.find(x=>x.name===name); return m?m.emoji:'🎨'; }
+function star2Set(){ try{ return JSON.parse(profile.islandStar2||'[]'); }catch(e){ return []; } }
+function star3Set(){ try{ return JSON.parse(profile.islandStar3||'[]'); }catch(e){ return []; } }
+function goldTierN(){ return TROPHIES.find(t=>t.key==='gold').n; }
+function islandUnlocked(){ return discoveredCount()>=goldTierN(); }
 
 /* Marker skalieren mit der Kartenbreite (Design-Basis: 560px breit) */
 function sizeIsland(){
@@ -2012,17 +2201,66 @@ function sizeIsland(){
 }
 window.addEventListener('resize',sizeIsland);
 
+/* Nebel-Maske: „Löcher" an jeder freigeschalteten Bucht + Start; Capo Nord erst nach Schatzfund. */
+function fogMaskStyle(){
+  const holes=[];
+  BAYS.forEach((b,i)=>{
+    if(bayUnlocked(i)) holes.push('radial-gradient(circle at '+(b.x/560*100)+'% '+(b.y/600*100)+'%, transparent 0, transparent 68px, #000 118px)');
+  });
+  holes.push('radial-gradient(circle at '+(ROUTE[0][0]/560*100)+'% '+(ROUTE[0][1]/600*100)+'%, transparent 0, transparent 46px, #000 90px)');
+  if(profile.treasureFound) holes.push('radial-gradient(circle at '+(CHEST_XY[0]/560*100)+'% '+(CHEST_XY[1]/600*100)+'%, transparent 0, transparent 70px, #000 120px)');
+  const v=holes.join(',');
+  return 'mask-image:'+v+';-webkit-mask-image:'+v+';mask-composite:intersect;-webkit-mask-composite:source-in;';
+}
+/* Wie viele Wegabschnitte (von Start über die Buchten bis zur Truhe) schon sichtbar sein sollen */
+function pathReveal(){
+  const unlockedBays=BAYS.filter((b,i)=>bayUnlocked(i)).length;
+  const seg=unlockedBays + (baysDone()===BAYS.length ? 1 : 0);
+  return Math.min(seg, ROUTE.length-1) / (ROUTE.length-1);
+}
+
 function renderIsland(){
   if(!profile) return;
   const map=$('islMap');
+  const gustFire = map.dataset.lastDone!==undefined && Number(map.dataset.lastDone) < baysDone();
+  map.dataset.lastDone = baysDone();
+  const chestReady = baysDone()===BAYS.length;
+  const captainDone = !!profile.treasureFound;
+  const chestClickable = chestReady || captainDone;
+
   let html=ISLAND_SVG;
   ISLAND_PLACES.forEach(p=>{
     html+='<div class="isl-place'+(p.green?' green':'')+'" style="left:'+(p.x/560*100)+'%;top:'+(p.y/600*100)+'%">'+p.t+'</div>';
   });
-  const allFull=baysDone()===BAYS.length;
-  html+='<div class="isl-chest'+(allFull?' open':'')+'" style="left:'+(288/560*100)+'%;top:'+(104/600*100)+'%">'
-      + '<div class="box">'+(allFull?'🎁':'🔒')+'</div>'
-      + '<div class="lbl">📍 Schatz beim Capo Nord</div></div>';
+
+  const pts=ROUTE.map(p=>(p[0]/560*100)+','+(p[1]/600*100)).join(' ');
+  html+='<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;z-index:4;">'
+      + '<polyline class="isl-path" points="'+pts+'" pathLength="100" style="stroke-dashoffset:'+(100-100*pathReveal())+'"></polyline>'
+      + '</svg>';
+
+  SPRITES.filter(s=>baysDone()>=s.min).forEach(s=>{
+    html+='<div class="isl-sprite'+(s.bob?' bob':'')+'" style="left:'+(s.x/560*100)+'%;top:'+(s.y/600*100)+'%;width:'+s.w+'px;height:'+s.h+'px;font-size:'+Math.round(Math.min(s.w,s.h)*0.78)+'px"><em>'+s.emoji+'</em></div>';
+  });
+
+  const s2=star2Set();
+  BAYS.forEach((b,i)=>{
+    if(bayUnlocked(i) && s2.indexOf(b.key)<0){
+      html+='<button type="button" class="isl-hidden'+(findMode && selBay===b.key?' hint':'')+'" data-hidden="'+b.key+'" '
+          + 'style="left:'+(b.hidden.x/560*100)+'%;top:'+(b.hidden.y/600*100)+'%;width:'+(b.hidden.r*2)+'px;height:'+(b.hidden.r*2)+'px;margin:'+(-b.hidden.r)+'px 0 0 '+(-b.hidden.r)+'px" aria-label="'+b.hidden.was+'"></button>';
+    }
+  });
+
+  html+='<div class="isl-mapfog" id="islFog" style="'+fogMaskStyle()+'"></div>';
+  if(gustFire) html+='<div class="isl-gust" id="islGust"></div>';
+
+  html+='<div class="isl-chest'+(captainDone?' open':'')+'" id="islChestEl" style="left:'+(CHEST_XY[0]/560*100)+'%;top:'+(CHEST_XY[1]/600*100)+'%;'+(chestClickable?'pointer-events:auto;cursor:pointer;':'')+'">'
+      + '<div class="box">'+(captainDone?'🎁':(chestReady?'🔓':'🔒'))+'</div>'
+      + '<div class="lbl">📍 Capo Nord</div></div>';
+  if(!captainDone){
+    html+='<div class="isl-chestcloud" id="islChestCloud" style="left:'+(CHEST_XY[0]/560*100)+'%;top:'+(CHEST_XY[1]/600*100)+'%">'
+        + '<div class="half l"></div><div class="beam"></div><div class="half r"></div></div>';
+  }
+
   map.innerHTML=html;
 
   BAYS.forEach((b,i)=>{
@@ -2047,12 +2285,63 @@ function renderIsland(){
     tag+='</div>';
 
     el.innerHTML=disc+tag;
-    el.addEventListener('click',()=>{ selBay=b.key; renderIsland(); });
+    el.addEventListener('click',()=>{ selBay=b.key; findMode=false; renderIsland(); });
     map.appendChild(el);
   });
 
+  map.querySelectorAll('.isl-hidden').forEach(btn=>{
+    btn.addEventListener('click',e=>{ e.stopPropagation(); tapHidden(btn.dataset.hidden); });
+  });
+
+  if(chestClickable){
+    const chestEl=$('islChestEl');
+    chestEl.addEventListener('click',()=>{
+      if(profile.treasureFound) reopenTreasureCard();
+      else openCaptainQuiz();
+    });
+  }
+
+  if(gustFire){
+    const gust=$('islGust');
+    if(gust){
+      const bits=['🍃','✨','〰️'];
+      for(let k=0;k<10;k++){
+        const i=document.createElement('i');
+        i.textContent=bits[k%bits.length];
+        i.style.left=(10+Math.random()*30)+'%'; i.style.top=(20+Math.random()*60)+'%';
+        i.style.animationDelay=(Math.random()*0.3)+'s';
+        gust.appendChild(i);
+      }
+      setTimeout(()=>{ if(gust.parentNode) gust.remove(); },1300);
+    }
+  }
+
+  renderFragments();
   renderBaySide();
   requestAnimationFrame(sizeIsland);
+}
+
+function renderFragments(){
+  const done=baysDone();
+  const host=$('islFrags'); host.innerHTML='';
+  FRAGMENTS.forEach((f,i)=>{
+    const d=document.createElement('div');
+    d.className='isl-frag'+(i<done?' got':'');
+    d.textContent=i<done?f.emoji:'';
+    d.title=f.name;
+    host.appendChild(d);
+  });
+}
+
+function tapHidden(key){
+  const s2=star2Set();
+  if(s2.indexOf(key)>=0) return;
+  s2.push(key);
+  profile.islandStar2=JSON.stringify(s2);
+  saveProfiles();
+  selBay=key; findMode=false;
+  toast('⭐ Verstecktes Detail gefunden!');
+  renderIsland();
 }
 
 async function renderBaySide(){
@@ -2076,6 +2365,11 @@ async function renderBaySide(){
     p.textContent='Diese Bucht ist noch im Nebel. Mal zuerst die '+BAYS[i-1].name+' fertig – dann öffnet sie sich.';
     card.appendChild(p);
   }else{
+    const story=document.createElement('p');
+    story.className='isl-story';
+    story.textContent='„'+b.story+'"';
+    card.appendChild(story);
+
     const frame=document.createElement('div');
     frame.className='isl-frame';
     const inner=document.createElement('div');
@@ -2098,6 +2392,36 @@ async function renderBaySide(){
       f.querySelector('button').addEventListener('click',()=>Voice.raw(b.fact));
       card.appendChild(f);
     }
+
+    const s2=star2Set(), s3=star3Set();
+    const earned=[st.full, s2.indexOf(b.key)>=0, s3.indexOf(b.key)>=0];
+    const labels=['Alle Motive gemalt','Verstecktes Detail gefunden','Wissensfrage beantwortet'];
+    const stars=document.createElement('div');
+    stars.className='isl-stars';
+    labels.forEach((l,idx)=>{
+      const row=document.createElement('div');
+      row.className='isl-star-row'+(earned[idx]?' got':'');
+      row.innerHTML='<em>'+(earned[idx]?'⭐':'☆')+'</em><span>'+l+'</span>'
+        + '<small>'+(earned[idx]?'✓':(idx===0?'':'Bonus'))+'</small>';
+      stars.appendChild(row);
+    });
+    card.appendChild(stars);
+
+    const actions=document.createElement('div');
+    actions.className='isl-actionrow';
+    const found2=s2.indexOf(b.key)>=0;
+    const findBtn=document.createElement('button');
+    findBtn.textContent=found2?'✓ Gefunden':'🔍 Suchen';
+    if(findMode) findBtn.classList.add('active');
+    findBtn.disabled=found2;
+    findBtn.addEventListener('click',()=>{ findMode=!findMode; renderIsland(); });
+    const got3=s3.indexOf(b.key)>=0;
+    const quizBtn=document.createElement('button');
+    quizBtn.textContent=got3?'✓ Beantwortet':'🧠 Wissensfrage';
+    quizBtn.disabled=got3;
+    quizBtn.addEventListener('click',()=>openBayQuiz(b));
+    actions.appendChild(findBtn); actions.appendChild(quizBtn);
+    card.appendChild(actions);
   }
   side.appendChild(card);
 
@@ -2124,10 +2448,13 @@ async function renderBaySide(){
       const nextIdx=BAYS.findIndex((x,n)=>n>i && !bayStats(x).full);
       if(nextIdx>=0){
         cta.textContent='Weiter zur '+BAYS[nextIdx].name+' →';
-        cta.addEventListener('click',()=>{ selBay=BAYS[nextIdx].key; renderIsland(); });
+        cta.addEventListener('click',()=>{ selBay=BAYS[nextIdx].key; findMode=false; renderIsland(); });
+      }else if(done===BAYS.length && !profile.treasureFound){
+        cta.textContent='Kapitänsprüfung starten →';
+        cta.addEventListener('click',openCaptainQuiz);
       }else{
         cta.textContent='Alle Buchten fertig! 🎉';
-        cta.addEventListener('click',()=>toast('🎁 Die Schatztruhe kommt im nächsten Schritt!'));
+        cta.disabled=true;
       }
     }
     host.appendChild(cta);
@@ -2147,9 +2474,138 @@ async function newestPicFor(b){
   return null;
 }
 
+/* ---------- Buchten-Mini-Quiz & Kapitänsprüfung ---------- */
+function islQuizRenderDots(total,step){
+  const host=$('islQuizDots');
+  host.style.display = total<=1 ? 'none' : 'flex';
+  host.innerHTML='';
+  for(let k=0;k<total;k++){
+    const i=document.createElement('i');
+    if(k<=step) i.className='on';
+    host.appendChild(i);
+  }
+}
+function islQuizShow(){
+  const ctx=islQuizCtx;
+  const bay=ctx.kind==='bay'?BAYS.find(x=>x.key===ctx.bayKey):null;
+  const q=ctx.kind==='captain'?CAPTAIN[ctx.step]:bay.quiz;
+  $('islQuizTitle').textContent = ctx.kind==='captain'
+    ? 'Kapitänsprüfung · Frage '+(ctx.step+1)+' von 3'
+    : 'Wissensfrage · '+bay.name;
+  islQuizRenderDots(ctx.kind==='captain'?3:1, ctx.step);
+  $('islQuizQ').textContent=q.q;
+  const opts=$('islQuizOpts'); opts.innerHTML='';
+  $('islQuizFeedback').textContent=''; $('islQuizFeedback').className='isl-quiz-feedback';
+  q.o.forEach((t,idx)=>{
+    const btn=document.createElement('button');
+    btn.type='button'; btn.className='isl-quiz-opt'; btn.textContent=t;
+    btn.addEventListener('click',()=>islQuizPick(idx));
+    opts.appendChild(btn);
+  });
+}
+function islQuizPick(idx){
+  const ctx=islQuizCtx;
+  const bay=ctx.kind==='bay'?BAYS.find(x=>x.key===ctx.bayKey):null;
+  const q=ctx.kind==='captain'?CAPTAIN[ctx.step]:bay.quiz;
+  const opts=[...$('islQuizOpts').children];
+  if(idx!==q.a){
+    opts[idx].classList.add('wrong');
+    $('islQuizFeedback').textContent='Versuch’s nochmal!';
+    $('islQuizFeedback').className='isl-quiz-feedback retry';
+    setTimeout(()=>opts[idx].classList.remove('wrong'),700);
+    return;
+  }
+  opts[idx].classList.add('right');
+  opts.forEach(o=>o.disabled=true);
+  if(ctx.kind==='bay'){
+    $('islQuizFeedback').textContent='Richtig! Stern verdient ⭐';
+    $('islQuizFeedback').className='isl-quiz-feedback';
+    const s3=star3Set();
+    if(s3.indexOf(ctx.bayKey)<0){ s3.push(ctx.bayKey); profile.islandStar3=JSON.stringify(s3); saveProfiles(); }
+    setTimeout(()=>{ $('islQuiz').classList.remove('on'); renderIsland(); },900);
+  }else if(ctx.step<2){
+    $('islQuizFeedback').textContent='Richtig! Nächste Frage.';
+    $('islQuizFeedback').className='isl-quiz-feedback';
+    setTimeout(()=>{ islQuizCtx.step++; islQuizShow(); },700);
+  }else{
+    $('islQuizFeedback').textContent='Richtig! Alle Fragen geschafft!';
+    $('islQuizFeedback').className='isl-quiz-feedback';
+    setTimeout(()=>{ $('islQuiz').classList.remove('on'); openChestReveal(); },900);
+  }
+}
+function openBayQuiz(b){
+  islQuizCtx={kind:'bay', bayKey:b.key, step:0};
+  islQuizShow();
+  $('islQuiz').classList.add('on');
+}
+function openCaptainQuiz(){
+  islQuizCtx={kind:'captain', step:0};
+  islQuizShow();
+  $('islQuiz').classList.add('on');
+}
+$('islQuizClose').addEventListener('click',()=>$('islQuiz').classList.remove('on'));
+
+/* ---------- Schatztruhe: Wolken reißen auf, Münzen fallen, Hinweis erscheint ---------- */
+function openChestReveal(){
+  profile.treasureFound=true;
+  saveProfiles();
+  const cloud=$('islChestCloud');
+  if(cloud) cloud.classList.add('part');
+  setTimeout(()=>{
+    renderIsland();
+    showTreasureCard();
+    Voice.rawBoth('Wow! Ihr habt Albarella entdeckt!','Wow! You discovered Albarella!');
+  },1600);
+}
+function reopenTreasureCard(){ showTreasureCard(); }
+async function showTreasureCard(){
+  const hint=await Store.get('treasureHint');
+  const coords=await Store.get('treasureCoords');
+  $('treasureHintText').textContent = hint || 'Frag Mama oder Papa – sie wissen, wo der Schatz ist!';
+  const link=$('treasureMapLink');
+  if(coords && /^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/.test(coords)){
+    link.href='https://maps.apple.com/?ll='+coords.replace(/\s+/g,'');
+    link.style.display='block';
+  }else{
+    link.style.display='none';
+  }
+  const coins=$('treasureCoins'); coins.innerHTML='';
+  for(let k=0;k<22;k++){
+    const i=document.createElement('i');
+    i.textContent='🪙';
+    i.style.left=(4+(k*4.3)%92)+'%';
+    i.style.fontSize=(16+(k%4)*5)+'px';
+    i.style.animationDuration=(1.8+(k%5)*0.3)+'s';
+    i.style.animationDelay=((k%9)*0.2)+'s';
+    coins.appendChild(i);
+  }
+  $('treasureReveal').classList.add('on');
+}
+$('treasureOk').addEventListener('click',()=>{
+  $('treasureReveal').classList.remove('on');
+  $('treasureCoins').innerHTML='';
+});
+
+/* Nur für Eltern: Hinweistext nie vorausgefüllt anzeigen, damit Kinder ihn hier nicht lesen können. */
+$('islHintBtn').addEventListener('click',()=>{
+  const t=prompt('Neuer Hinweistext für den echten Schatz (überschreibt den alten):','');
+  if(t===null) return;
+  if(t.trim()){ Store.set('treasureHint',t.trim()); }
+  const co=prompt('Koordinaten für den „In Karten öffnen"-Knopf (Format: Breite,Länge, z. B. 45.0877,12.3378) – leer lassen für keinen Kartenlink:','');
+  if(co===null) return;
+  if(co.trim()) Store.set('treasureCoords',co.trim());
+  toast('🔑 Hinweis gespeichert');
+});
+
 $('islBtn').addEventListener('click',()=>{
+  if(!islandUnlocked()){
+    const need=goldTierN()-discoveredCount();
+    toast('🗺️ Noch '+need+' '+(need===1?'Motiv':'Motive')+' bis zur Goldmedaille – dann öffnet sich die Schatzinsel!');
+    return;
+  }
   const i=BAYS.findIndex((b,n)=>bayUnlocked(n) && !bayStats(b).full);
   selBay=BAYS[i>=0?i:BAYS.length-1].key;
+  findMode=false;
   showSection(secIsland);
   renderIsland();
 });
@@ -2351,6 +2807,7 @@ function showDoneCard(pendingTier){
     $('doneCard').classList.remove('on');
     if(cameFromIsland){
       const bay=BAYS.find(x=>x.motifs.indexOf(motif.name)>=0); if(bay) selBay=bay.key;
+      findMode=false;
       showSection(secIsland); renderIsland();
     }else{
       showSection(secHome);
