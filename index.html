@@ -267,10 +267,10 @@
   .isl-frag small{font-weight:700;font-size:calc(7.5px*var(--s));color:#8A7350;line-height:1}
 
   /* Nebel */
-  .isl-mapfog{position:absolute;inset:-6%;pointer-events:none;z-index:5;
-    background:linear-gradient(120deg,rgba(214,226,232,.62),rgba(196,212,220,.5) 60%,rgba(214,226,232,.62));
-    backdrop-filter:grayscale(.9) blur(4px) brightness(1.05);
-    -webkit-backdrop-filter:grayscale(.9) blur(4px) brightness(1.05);
+  .isl-mapfog{position:absolute;inset:-8%;pointer-events:none;z-index:5;
+    background:linear-gradient(120deg,rgba(228,238,243,.66),rgba(208,224,233,.56) 60%,rgba(228,238,243,.66));
+    backdrop-filter:grayscale(.85) blur(4px) brightness(1.06);
+    -webkit-backdrop-filter:grayscale(.85) blur(4px) brightness(1.06);
     animation:fogDrift 14s ease-in-out infinite;
     transition:-webkit-mask-image .9s ease, mask-image .9s ease}
   @keyframes fogDrift{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.2%,.8%)}}
@@ -2139,15 +2139,87 @@ function discoveredCount(){ return Object.keys(motifCounts()).length; }
    Ersetzt nichts: Die Motiv-Liste bleibt der normale Weg.
    Liest denselben Fortschritt (motifCounts), speichert nichts Eigenes.
    ============================================================ */
-/* Basisbild der Illustration. Fehlt die Datei, greift die schlichte Ersatz-Silhouette darunter. */
+/* Insel Albarella. Gezeichnet im viewBox 900x800 (= Seitenverhaeltnis der Karte).
+   Wird automatisch durch albarella-basis.png ersetzt, sobald die Illustration vorliegt. */
 const ISLAND_BASIS='albarella-basis.png';
-const ISLAND_FALLBACK_SVG = '<svg class="isl-fallback" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'
-  + '<path d="M14 90 C22 74 18 62 26 52 C33 43 30 33 38 26 C46 19 54 14 60 12 C68 15 74 22 76 32'
-  + ' C79 44 86 50 84 60 C82 71 72 76 66 82 C58 90 40 94 30 93 C22 92 17 92 14 90 Z"'
-  + ' fill="#EFDCA4" stroke="#DCC489" stroke-width="1.2"></path>'
-  + '<path d="M40 30 C50 26 60 32 62 42 C64 52 56 58 48 57 C40 56 36 48 38 40 Z" fill="#8FBF6E" opacity=".38"></path>'
-  + '<path d="M30 62 C40 58 52 64 54 72 C56 80 46 84 39 82 C32 80 28 70 30 62 Z" fill="#8FBF6E" opacity=".32"></path>'
-  + '</svg>';
+const ISLAND_FALLBACK_SVG =
+ '<svg class="isl-fallback" viewBox="0 0 900 800" aria-hidden="true">'
++'<defs>'
++'<radialGradient id="isSea" cx="50%" cy="42%" r="72%">'
++'<stop offset="0%" stop-color="#63C0E2"/><stop offset="55%" stop-color="#2F97C6"/>'
++'<stop offset="100%" stop-color="#1B6F9C"/></radialGradient>'
++'<linearGradient id="isLand" x1="0" y1="0" x2="0" y2="1">'
++'<stop offset="0%" stop-color="#F6E7B4"/><stop offset="100%" stop-color="#E8D191"/></linearGradient>'
++'<linearGradient id="isWood" x1="0" y1="0" x2="0" y2="1">'
++'<stop offset="0%" stop-color="#8CC06B"/><stop offset="100%" stop-color="#6BA353"/></linearGradient>'
++'</defs>'
++'<rect width="900" height="800" fill="url(#isSea)"/>'
+/* sanfte Wellenlinien im Meer */
++'<g stroke="#BFE6F4" stroke-width="3" fill="none" opacity=".38" stroke-linecap="round">'
++'<path d="M60 210 q22 -11 44 0 t44 0"/><path d="M760 180 q22 -11 44 0 t44 0"/>'
++'<path d="M70 470 q22 -11 44 0 t44 0"/><path d="M790 560 q22 -11 44 0 t44 0"/>'
++'<path d="M120 650 q22 -11 44 0 t44 0"/><path d="M700 700 q22 -11 44 0 t44 0"/>'
++'</g>'
+/* Brandungssaum */
++'<path d="M520 74 C640 148 706 292 726 382 C706 486 664 556 622 620 C556 686 470 716 388 704'
++' C296 672 232 614 178 546 C142 470 136 386 156 296 C226 212 330 146 434 98 Z"'
++' fill="#9FD8EC" opacity=".55"/>'
+/* Landmasse */
++'<path d="M520 90 C636 160 700 300 720 380 C700 478 658 546 618 610 C554 672 470 702 390 690'
++' C300 660 236 602 184 540 C150 466 144 384 164 300 C232 218 334 152 434 105 Z"'
++' fill="url(#isLand)" stroke="#DFC489" stroke-width="5"/>'
+/* heller Sandstrand entlang der Ostkueste */
++'<path d="M516 104 C626 172 686 302 706 380 C688 470 650 536 610 598"'
++' fill="none" stroke="#FCF3D6" stroke-width="26" stroke-linecap="round" opacity=".9"/>'
+/* Lagunenkanaele, die von Westen einschneiden */
++'<g fill="none" stroke="#4FB0D6" stroke-width="15" stroke-linecap="round" opacity=".75">'
++'<path d="M150 350 C215 356 262 342 318 352"/>'
++'<path d="M182 520 C246 528 292 514 348 524"/>'
++'<path d="M214 618 C268 626 306 614 352 622"/>'
++'</g>'
+/* Pinienwaelder */
++'<path d="M300 210 C380 176 470 196 500 250 C520 300 480 336 424 340'
++' C356 344 300 314 288 264 C282 234 286 218 300 210 Z" fill="url(#isWood)" opacity=".75"/>'
++'<path d="M560 210 C620 196 664 240 668 290 C670 336 632 360 592 350'
++' C552 340 536 296 542 254 C546 226 548 214 560 210 Z" fill="url(#isWood)" opacity=".7"/>'
++'<path d="M262 400 C330 380 386 410 396 456 C404 500 366 528 316 522'
++' C266 516 240 476 246 436 C250 412 252 404 262 400 Z" fill="url(#isWood)" opacity=".72"/>'
++'<path d="M520 470 C596 452 646 492 650 540 C652 586 610 612 560 604'
++' C508 596 486 552 494 508 C498 484 508 474 520 470 Z" fill="url(#isWood)" opacity=".68"/>'
+/* Golfplatz */
++'<path d="M392 344 C470 330 528 366 532 414 C536 462 486 490 428 484'
++' C372 478 348 438 356 396 C360 366 374 348 392 344 Z" fill="#B9DC8E" opacity=".95"/>'
++'<circle cx="446" cy="410" r="7" fill="#F6E7B4"/>'
++'<path d="M470 386 l0 -30 l22 9 l-22 9" fill="#EF476F" stroke="#EF476F" stroke-width="3" stroke-linejoin="round"/>'
+/* Binnenseen */
++'<ellipse cx="352" cy="286" rx="30" ry="16" fill="#59B7DC" opacity=".85"/>'
++'<ellipse cx="556" cy="420" rx="24" ry="13" fill="#59B7DC" opacity=".8"/>'
+/* Haeuschen-Siedlung */
++'<g fill="#FFF6E6" stroke="#C9A06B" stroke-width="3">'
++'<rect x="300" y="560" width="26" height="20" rx="3"/><rect x="342" y="576" width="26" height="20" rx="3"/>'
++'<rect x="386" y="556" width="26" height="20" rx="3"/><rect x="430" y="580" width="26" height="20" rx="3"/>'
++'<rect x="470" y="556" width="26" height="20" rx="3"/>'
++'</g>'
++'<g fill="#E27C63">'
++'<path d="M298 560 l13 -12 l15 12 z"/><path d="M340 576 l13 -12 l15 12 z"/>'
++'<path d="M384 556 l13 -12 l15 12 z"/><path d="M428 580 l13 -12 l15 12 z"/>'
++'<path d="M468 556 l13 -12 l15 12 z"/>'
++'</g>'
+/* Wanderweg quer ueber die Insel */
++'<path d="M240 600 C320 556 380 520 430 470 C482 418 520 340 520 250"'
++' fill="none" stroke="#E6D3A5" stroke-width="9" stroke-linecap="round" opacity=".85"/>'
+/* Bruecke zum Festland (Suedwesten) */
++'<path d="M96 700 L212 636" fill="none" stroke="#CBB894" stroke-width="12" stroke-linecap="round"/>'
++'<g stroke="#A8834B" stroke-width="4">'
++'<path d="M120 692 l0 16"/><path d="M152 674 l0 16"/><path d="M184 656 l0 16"/>'
++'</g>'
+/* Marina im Suedosten */
++'<g stroke="#D8D2C4" stroke-width="7" stroke-linecap="round">'
++'<path d="M596 646 L648 686"/><path d="M622 630 L672 668"/>'
++'</g>'
+/* Capo Nord: Felsspitze */
++'<path d="M486 108 C508 92 536 96 548 116 C534 132 502 134 486 108 Z" fill="#D8C69A"/>'
++'</svg>';
 
 /* Buchten in Freischalt-Reihenfolge. Koordinaten in % des Basisbildes (aus dem Design-Entwurf). */
 const BAYS=[
@@ -2233,13 +2305,15 @@ function bayStats(b){
   const done=b.motifs.filter(n=>c[n]).length;
   return {done:done, total:b.motifs.length, full:done>=b.motifs.length};
 }
-function bayUnlocked(i){ return i===0 || bayStats(BAYS[i-1]).full; }
-/* Nur die zusammenhängende Reihe fertiger Buchten von vorne – passt zur Freischalt-Reihenfolge. */
+/* Nur die zusammenhaengende Reihe fertiger Buchten von vorne. */
 function baysDone(){
   let n=0;
   for(let i=0;i<BAYS.length;i++){ if(bayStats(BAYS[i]).full) n++; else break; }
   return n;
 }
+/* Streng der Reihe nach: Bucht i oeffnet sich erst, wenn ALLE davor fertig sind.
+   Sonst springen Buchten wild auf, sobald ein Kind ueber die normale Liste gemalt hat. */
+function bayUnlocked(i){ return i<=baysDone(); }
 function motifEmoji(name){ const m=MOTIFS.find(x=>x.name===name); return m?m.emoji:'🎨'; }
 function star2Set(){ try{ return JSON.parse(profile.islandStar2||'[]'); }catch(e){ return []; } }
 function star3Set(){ try{ return JSON.parse(profile.islandStar3||'[]'); }catch(e){ return []; } }
@@ -2274,11 +2348,11 @@ window.addEventListener('resize',sizeIsland);
 
 /* Nebel-Maske: Löcher an Start und an jeder freigeschalteten Bucht, Capo Nord erst nach dem Fund. */
 function fogMaskStyle(){
-  const holes=['radial-gradient(circle at '+START_XY[0]+'% '+START_XY[1]+'%, transparent 0, transparent 42px, #000 96px)'];
-  BAYS.forEach((b,i)=>{
-    if(bayUnlocked(i)) holes.push('radial-gradient(circle at '+b.x+'% '+b.y+'%, transparent 0, transparent 62px, #000 124px)');
-  });
-  if(profile.treasureFound) holes.push('radial-gradient(circle at '+CHEST_XY[0]+'% '+CHEST_XY[1]+'%, transparent 0, transparent 66px, #000 126px)');
+  /* Loecher in Prozent, damit sie mit der Kartengroesse mitwachsen */
+  const hole=(x,y,clear,fade)=>'radial-gradient(circle at '+x+'% '+y+'%, transparent 0, transparent '+clear+'%, #000 '+fade+'%)';
+  const holes=[hole(START_XY[0],START_XY[1],9,19)];
+  BAYS.forEach((b,i)=>{ if(bayUnlocked(i)) holes.push(hole(b.x,b.y,14,27)); });
+  if(profile.treasureFound) holes.push(hole(CHEST_XY[0],CHEST_XY[1],15,29));
   const v=holes.join(',');
   return 'mask-image:'+v+';-webkit-mask-image:'+v+';mask-composite:intersect;-webkit-mask-composite:source-in;';
 }
@@ -2330,9 +2404,12 @@ function renderIsland(){
   h+='<div class="isl-mapfog" id="islFog" style="'+fogMaskStyle()+'"></div>';
   if(gustFire) h+='<div class="isl-gust" id="islGust"></div>';
 
-  h+='<div class="isl-chest'+(chestReady||found?' ready':'')+'" id="islChestEl" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
-   + '<div class="box">'+(found?'🎁':(chestReady?'🔓':'🔒'))+'</div>'
-   + '<div class="lbl">Capo Nord</div></div>';
+  /* Capo Nord bleibt bis zum Schluss komplett im Nebel – nichts verraet, was dort wartet. */
+  if(chestReady||found){
+    h+='<div class="isl-chest ready" id="islChestEl" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
+     + '<div class="box">'+(found?'🎁':'🔓')+'</div>'
+     + '<div class="lbl">Capo Nord</div></div>';
+  }
   if(!found){
     h+='<div class="isl-chestcloud" id="islChestCloud" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
      + '<div class="half l"></div><div class="beam"></div><div class="half r"></div></div>';
@@ -2354,15 +2431,16 @@ function renderIsland(){
 
   map.innerHTML=h;
 
+  /* Nur freigeschaltete Buchten erscheinen. Was noch im Nebel liegt, bleibt ein Geheimnis. */
   BAYS.forEach((b,i)=>{
-    const st=bayStats(b), open=bayUnlocked(i), earned=bayEarned(b,i);
+    if(!bayUnlocked(i)) return;
+    const st=bayStats(b), earned=bayEarned(b,i);
     const el=document.createElement('button');
-    el.className='isl-bay side-'+b.side
-      + (open?'':' locked') + (st.full?' done':'')
-      + (selBay===b.key?' sel':'') + (open&&!st.full?' active':'');
+    el.className='isl-bay side-'+b.side + (st.full?' done':'')
+      + (selBay===b.key?' sel':'') + (st.full?'':' active');
     el.style.left=b.x+'%'; el.style.top=b.y+'%';
     el.setAttribute('aria-label',b.name);
-    el.innerHTML='<span class="isl-pin">'+(open?b.emoji:'🔒')+'<i class="num">'+b.nr+'</i></span>'
+    el.innerHTML='<span class="isl-pin">'+b.emoji+'<i class="num">'+b.nr+'</i></span>'
       + '<span class="isl-baylabel"><b>'+b.name+'</b>'
       + '<span class="isl-baystars">'+earned.map(e=>'<i class="'+(e?'on':'')+'">★</i>').join('')+'</span></span>';
     el.addEventListener('click',()=>{ selBay=b.key; findMode=false; renderIsland(); });
