@@ -248,9 +248,15 @@
   .isl-note .hd b{font-family:var(--font-map);font-weight:800;font-size:15px;color:#8F2F1F}
   .isl-note p{margin:0;font-family:var(--font-hand);font-weight:600;font-size:19px;
     line-height:1.25;color:#4A3620}
-  .isl-note .task{display:block;margin-top:8px;padding-top:7px;border-top:1.5px dashed #C0A774;
-    font-family:'Nunito',sans-serif;font-weight:800;font-size:12.5px;color:#8F2F1F}
-  .isl-note .task.done{color:#3F6B34}
+  /* Die Aufgabenzeile ist Teil des Zettels – gleiche Handschrift, gleiche Tinte,
+     nur durch eine gerissene Linie abgesetzt. Keine fremde Box auf dem Papier. */
+  .isl-note .isl-task{display:block;margin-top:9px;padding-top:8px;
+    border-top:1.5px dashed rgba(143,47,31,.35);
+    font-family:var(--font-hand);font-weight:700;font-size:20px;line-height:1.15;
+    color:#8F2F1F;text-shadow:0 1px 0 rgba(255,255,255,.45)}
+  .isl-note .isl-task.done{color:#3F6B34;border-top-color:rgba(63,107,52,.35)}
+
+  .isl-note.isl-nside{display:none}
 
   /* Schatzfragmente */
   .isl-fragstrip{position:absolute;left:10px;right:10px;bottom:8px;z-index:12;display:flex;
@@ -583,6 +589,57 @@
     background:var(--deep);color:#fff;font-weight:700;font-size:15px;
     padding:10px 18px;border-radius:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* Schmale Geräte (iPhone hoch & quer, iPad hoch): Zettel raus aus der Karte */
+  @media (max-width:820px), (max-height:480px){
+    .isl-map .isl-note{display:none}
+    .isl-note.isl-nside{display:block;position:static;transform:none;width:auto;flex:none;
+      padding:11px 13px 13px;box-shadow:0 4px 10px rgba(20,40,56,.2)}
+    .isl-note.isl-nside p{font-size:17px}
+    .isl-fragstrip>b{display:none}
+    .isl-fragstrip{left:6px;right:6px;bottom:6px;padding:5px 7px;gap:5px}
+    .isl-frag{height:26px;font-size:15px}
+    .isl-place{font-size:15px}
+    .isl-baylabel b{font-size:11px}
+    .isl-baystars i{font-size:9px}
+    .isl-pin{width:38px;height:38px;font-size:19px;border-width:2.5px}
+    .isl-pin i{width:17px;height:17px;font-size:10px;top:-5px;right:-5px}
+    .isl-bay.side-left .isl-pin i{left:-5px;right:auto}
+    .isl-chest .box{width:48px;height:48px;font-size:24px;border-width:3px}
+    .isl-top{height:46px;padding:0 10px;gap:8px}
+    .isl-title{font-size:21px}
+    .isl-sub{display:none}
+    .isl-back{padding:5px 11px 5px 8px;font-size:13px}
+    .isl-count{padding:5px 10px}
+    .isl-count b{font-size:12px}
+    .isl-quiz-card{padding:18px 18px 16px}
+    .isl-quiz-q{font-size:21px}
+    .treasure-card{padding:22px 24px 20px}
+    .treasure-card>p.lead{font-size:22px}
+  }
+
+  /* Telefone (quer wie hoch): die Seitenspalte ist nur ~270–330px hoch.
+     Alles muss hineinpassen – vor allem der Hauptknopf ganz unten. */
+  @media (max-height:480px), (max-width:540px){
+    .isl-side{padding:8px;gap:6px}
+    .isl-frame{display:none}            /* Bilderrahmen frisst hier die halbe Spalte */
+    /* Zettel: Überschrift weg (steht direkt darunter nochmal), Geschichte scrollt,
+       die Aufgabenzeile bleibt immer sichtbar. */
+    .isl-note.isl-nside{flex:0 1 auto;min-height:0;max-height:42%;overflow:hidden;
+      display:flex;flex-direction:column;padding:9px 11px 10px}
+    .isl-note.isl-nside .hd{display:none}
+    .isl-note.isl-nside p{flex:1 1 auto;min-height:0;overflow-y:auto;font-size:16px}
+    .isl-note.isl-nside .isl-task{flex:none;margin-top:6px;padding-top:6px;font-size:18px}
+    .isl-sidehead b{font-size:15px}
+    .isl-status{font-size:10px;padding:2px 7px}
+    /* Die drei Sterne nebeneinander statt untereinander */
+    .isl-stars{flex-direction:row;gap:5px}
+    .isl-star-row{flex:1;min-width:0;flex-direction:column;gap:1px;padding:4px 3px;text-align:center}
+    .isl-star-row span{flex:none;font-size:9.5px;line-height:1.1}
+    .isl-star-row small{display:none}
+    .isl-actionrow button{padding:6px 4px;font-size:11px}
+    .isl-cta{padding:9px 12px;font-size:13px}
+  }
 
   @media (orientation:portrait){
     .stage{flex-wrap:wrap}
@@ -2247,42 +2304,42 @@ const BAYS=[
   {key:'muschel', nr:1, name:'Muschelbucht', emoji:'🐚', x:60, y:83, side:'right',
    motifs:['Muschel','Seestern','Sandburg','Krabbe','Seepferdchen'],
    fact:'Miesmuscheln filtern Meerwasser und machen es dabei sauberer. Krabben tragen ihr Skelett außen wie eine Rüstung – und wechseln es, wenn sie größer werden.',
-   story:'Der alte Pirat hat hier eine Muschel versteckt. Male sie fertig, und der Weg zeigt sich.',
+   story:'Flaches Wasser, feiner Sand: Hier legt das Meer ab, was es gefunden hat. Wer die ganze Bucht malt, dem zeigt sich der Weg.',
    hidden:{was:'Finde die kleine Muschel im Sand', icon:'🐚', x:80, y:73, r:30},
    quiz:{q:'Was machen Krabben, wenn sie größer werden?', a:0,
      o:['Sie wechseln ihr Skelett wie eine Rüstung','Sie werden zu Fischen','Sie verlieren ihre Scheren']}},
   {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:74, y:60, side:'left',
    motifs:['Leuchtturm','Haus am Meer','Sonnenschirm','Strandkorb','Palme'],
    fact:'Der Name „Albarella" kommt von einem Baum: der Silberpappel. Davon wachsen hier ganz viele!',
-   story:'Nur wer den Leuchtturm findet, erkennt den nächsten Weg.',
+   story:'Oben auf den Klippen dreht sich das Licht. Es weist den Booten den Heimweg – und dir den Weg um die Insel.',
    hidden:{was:'Finde die Möwe am Himmel', icon:'🕊️', x:81, y:31, r:32},
    quiz:{q:'Woraus sind vor rund 400 Jahren neue Inseln wie Albarella entstanden?', a:0,
      o:['Aus Sand und Schlamm, die der Fluss Po brachte','Aus Vulkangestein','Aus Muschelschalen']}},
   {key:'segel', nr:3, name:'Segelbucht', emoji:'⛵', x:22, y:67, side:'right',
    motifs:['Segelboot','Piratenschiff','Vespa','Möwe'],
    fact:'Vor rund 400 Jahren hat der Fluss Po sein Bett verlagert und aus Sand und Schlamm neue Inseln geformt – eine davon ist Albarella.',
-   story:'Ein Segelschiff bringt dich über die Lagune – mal es fertig, dann kannst du ablegen.',
+   story:'Hier riecht es nach Salz und Wind. Am Steg warten die Boote darauf, dass endlich jemand ablegt.',
    hidden:{was:'Finde das zweite, kleinere Boot am Horizont', icon:'⛵', x:6, y:57, r:30},
    quiz:{q:'Wie viele verschiedene Baumarten wachsen auf Albarella?', a:0,
      o:['Etwa 150','Etwa 10','Etwa 1000']}},
   {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:80, y:41, side:'left',
    motifs:['Fisch','Delfin','Wal','Krake','Schildkröte'],
    fact:'In der Adria schwimmen mehr als 450 verschiedene Fischarten. Manchmal kommen sogar Delfine und große Meeresschildkröten vorbei.',
-   story:'Tief unter den Wellen wartet ein Geheimnis. Male dich hindurch.',
+   story:'Vor der Bucht wird das Wasser dunkelblau und tief. Wer lange genug hinschaut, sieht etwas vorbeiziehen.',
    hidden:{was:'Finde den Delfin, der aus dem Wasser springt', icon:'🐬', x:78, y:18, r:34},
    quiz:{q:'Welche zwei Tiere schwimmen manchmal durch die Adria?', a:0,
      o:['Delfine und Meeresschildkröten','Haie und Wale','Pinguine und Robben']}},
   {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:18, y:44, side:'right',
    motifs:['Herz','Blume','Schmetterling','Kätzchen','Regenbogen','Rakete'],
    fact:'Auf Albarella wachsen über 2 Millionen Bäume, von 150 verschiedenen Baumarten.',
-   story:'Hier ist alles ein bisschen anders – und ein bisschen wunderbar.',
+   story:'Hinter den Dünen ist alles ein bisschen anders und ein bisschen wunderbar. Was hier entsteht, gehört nur dir.',
    hidden:{was:'Finde den Reiher im Gras', icon:'🦩', x:26, y:56, r:32},
    quiz:{q:'Wie warm wird das Wasser vor Albarella im Sommer etwa?', a:0,
      o:['24 bis 27 Grad','5 Grad','40 Grad']}},
   {key:'nasch', nr:6, name:'Naschbucht', emoji:'🍦', x:40, y:24, side:'right',
    motifs:['Eis','Wassermelone','Pizza','Luftballons'],
    fact:'Im Sommer wird das Wasser vor Albarella oft 24 bis 27 Grad warm. An der tiefsten Stelle ist das Mittelmeer über 5000 Meter tief!',
-   story:'Der Pirat hatte Hunger! Male, was er sich gewünscht hat.',
+   story:'Am Ende des Weges liegt der kleine Hafen mit der Eisbude. Hier hatte der alte Pirat immer Hunger.',
    hidden:{was:'Finde die kleine Krabbe am Weg', icon:'🦀', x:30, y:34, r:26},
    quiz:{q:'Wie tief ist das Mittelmeer an der tiefsten Stelle ungefähr?', a:0,
      o:['Über 5000 Meter','Über 500 Meter','Über 50 Meter']}}
@@ -2321,8 +2378,17 @@ let cameFromIsland=false;
 let findMode=false;
 let islQuizCtx=null;
 
+/* Fortschritt der Schatzsuche zaehlt nur, was SEIT dem letzten Zuruecksetzen gemalt wurde.
+   Galerie, Sterne und Medaillen bleiben davon unberuehrt. */
+function islandBase(){ try{ return JSON.parse(profile.islandBase||'{}'); }catch(e){ return {}; } }
+function islandCounts(){
+  const c=motifCounts(), b=islandBase(), out={};
+  for(const k in c){ if((c[k]||0)-(b[k]||0)>0) out[k]=c[k]-(b[k]||0); }
+  return out;
+}
+
 function bayStats(b){
-  const c=motifCounts();
+  const c=islandCounts();
   const done=b.motifs.filter(n=>c[n]).length;
   return {done:done, total:b.motifs.length, full:done>=b.motifs.length};
 }
@@ -2430,9 +2496,9 @@ function renderIsland(){
   /* Geschichten-Zettel oben links, wie im Entwurf */
   let noteTask='';
   if(selOpen){
-    const cc=motifCounts(), nx=sel.motifs.find(n=>!cc[n]);
-    noteTask = nx ? '<span class="task">👉 Jetzt dran: '+nx+' malen</span>'
-                  : '<span class="task done">✓ Alle Motive gemalt!</span>';
+    const cc=islandCounts(), nx=sel.motifs.find(n=>!cc[n]);
+    noteTask = nx ? '<span class="isl-task">👉 Jetzt dran: '+nx+' malen</span>'
+                  : '<span class="isl-task done">✓ Alle Motive gemalt!</span>';
   }
   h+='<div class="isl-note"><div class="hd"><span>'+(selOpen?sel.emoji:'🔒')+'</span><b>'
    + (selOpen?sel.name:'Noch im Nebel')+'</b></div><p>'
@@ -2503,13 +2569,25 @@ function tapHidden(key){
 async function renderBaySide(){
   const host=$('islSide'); host.textContent='';
   const i=BAYS.findIndex(b=>b.key===selBay), b=BAYS[i];
-  const st=bayStats(b), open=bayUnlocked(i), c=motifCounts();
+  const st=bayStats(b), open=bayUnlocked(i), c=islandCounts();
   const done=baysDone();
 
   $('islCount').textContent=done+' von '+BAYS.length+' Buchten';
   $('islSub').textContent=levelInfo(discoveredCount()).title+' · Schatzsuche';
 
   /* Kopfzeile: Bucht + Status */
+  /* Auf schmalen Geräten wandert der Zettel hierher – auf der kleinen Karte verdeckt er zu viel. */
+  const noteSide=document.createElement('div');
+  noteSide.className='isl-note isl-nside';
+  const nx0=open?b.motifs.find(n=>!c[n]):null;
+  noteSide.innerHTML='<div class="hd"><span>'+(open?b.emoji:'🔒')+'</span><b></b></div><p></p>'
+    + (open?'<span class="isl-task'+(nx0?'':' done')+'"></span>':'');
+  noteSide.querySelector('b').textContent=open?b.name:'Noch im Nebel';
+  noteSide.querySelector('p').textContent=open?b.story
+    :'Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die '+BAYS[i-1].name+' fertig.';
+  if(open) noteSide.querySelector('.isl-task').textContent = nx0 ? '👉 Jetzt dran: '+nx0+' malen' : '✓ Alle Motive gemalt!';
+  host.appendChild(noteSide);
+
   const head=document.createElement('div');
   head.className='isl-sidehead';
   head.innerHTML='<span style="font-size:17px">'+(open?b.emoji:'🔒')+'</span><b>'+b.name+'</b>'
@@ -2744,7 +2822,9 @@ $('treasureOk').addEventListener('click',()=>{
 });
 
 /* Nur für Eltern: nie vorausgefüllt, damit Kinder den Hinweis hier nicht lesen können. */
+let hintHeld=false;   /* wird beim langen Drücken gesetzt, damit kein Hinweis-Dialog aufgeht */
 $('islHintBtn').addEventListener('click',()=>{
+  if(hintHeld){ hintHeld=false; return; }
   const t=prompt('Neuer Hinweistext für den echten Schatz (überschreibt den alten):','');
   if(t===null) return;
   if(t.trim()) Store.set('treasureHint',t.trim());
@@ -2753,6 +2833,33 @@ $('islHintBtn').addEventListener('click',()=>{
   if(co.trim()) Store.set('treasureCoords',co.trim());
   toast('🔑 Hinweis gespeichert');
 });
+
+/* Nur für Eltern: langes Drücken (1,2 s) auf denselben Schlüssel setzt die Schatzsuche zurück.
+   Gemalte Bilder, Sterne, Medaillen und die Galerie bleiben unangetastet – zurückgesetzt
+   werden nur die Aufgaben der Insel (Buchten, Bonussterne, Truhe). */
+async function resetIsland(){
+  profile.islandBase = profile.motifCounts || '{}';
+  profile.islandStar2 = '[]';
+  profile.islandStar3 = '[]';
+  profile.treasureFound = false;
+  await saveProfiles();
+  selBay = BAYS[0].key;
+  findMode = false;
+  renderIsland();
+  toast('🔄 Schatzsuche zurückgesetzt – die Insel liegt wieder im Nebel');
+}
+(function(){
+  const b=$('islHintBtn'); let t=null;
+  const start=()=>{ hintHeld=false; clearTimeout(t); t=setTimeout(()=>{
+    hintHeld=true;
+    if(confirm('Schatzsuche für '+(profile?profile.name:'')+' zurücksetzen?\n\n'
+      +'Alle Buchten liegen wieder im Nebel, Bonussterne und Truhe sind zurückgesetzt.\n'
+      +'Gemalte Bilder, Sterne und Medaillen bleiben erhalten.')) resetIsland();
+  },1200); };
+  const stop=()=>clearTimeout(t);
+  b.addEventListener('pointerdown',start);
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,stop));
+})();
 
 /* Langes Drücken (1,2 s) schaltet den Testzugang um – für Kinder praktisch unauffindbar. */
 (function(){
@@ -2767,7 +2874,6 @@ $('islHintBtn').addEventListener('click',()=>{
   const stop=()=>clearTimeout(t);
   b.addEventListener('pointerdown',start);
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,stop));
-  b.addEventListener('click',e=>{ if(held){ e.stopImmediatePropagation(); held=false; } },true);
 })();
 $('islBtn').addEventListener('click',()=>{
   if(!islandUnlocked()){
