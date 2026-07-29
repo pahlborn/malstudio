@@ -108,6 +108,13 @@
   .reward-card .big{font-size:96px;margin:0;animation:pop .6s ease}
   .reward-card p{font-size:19px;font-weight:800;margin:12px 0 16px}
   .reward-card button{width:100%}
+  .done-card{background:var(--paper);border:4px solid var(--deep);border-radius:28px;
+    padding:22px 26px;text-align:center;box-shadow:0 12px 24px rgba(7,59,76,.16);max-width:320px}
+  .done-card b{display:block;font-family:var(--font);font-weight:800;font-size:19px;color:var(--deep);margin:0 0 14px}
+  .done-frame{width:220px;height:165px;margin:0 auto 16px;border-radius:12px;overflow:hidden;
+    box-shadow:0 8px 16px rgba(0,0,0,.18)}
+  .done-frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .done-card button{width:100%}
 
   /* ---------- Medaillen & Motiv-Sammlung (in der Galerie) ---------- */
   .profile-level{font-weight:700;font-size:13px;color:var(--sea);margin:0}
@@ -635,6 +642,13 @@
     <p class="big" id="rewardEmoji">🏆</p>
     <p id="rewardText">Medaille geschafft!</p>
     <button class="nav-btn primary" id="rewardOk">Juhu!</button>
+  </div>
+</div>
+<div class="reward" id="doneCard">
+  <div class="done-card">
+    <b>Fertig! Dein Bild ist gespeichert. 🖼️</b>
+    <div class="done-frame"><img id="doneImg" src="" alt=""></div>
+    <button class="nav-btn primary" id="doneOk"></button>
   </div>
 </div>
 
@@ -2314,7 +2328,7 @@ function celebrate(){
   setTimeout(()=>{ host.textContent=''; },2800);
 }
 function completeMotif(){
-  if(!profile || !motif || motifCounted) return;
+  if(!profile || !motif || motifCounted) return null;
   motifCounted=true;
   const counts=motifCounts();
   const firstTime=!counts[motif.name];
@@ -2325,19 +2339,36 @@ function completeMotif(){
   const newDisc=firstTime?prevDisc+1:prevDisc;
   const prevTier=trophyTier(prevDisc), newTier=trophyTier(newDisc);
   const trophyReached=!!newTier && (!prevTier || newTier.key!==prevTier.key);
-  saveProfiles().then(()=>{
-    updateProgressChips();
-    if(trophyReached) setTimeout(()=>showTrophyPopup(newTier),600);
-  });
+  saveProfiles().then(updateProgressChips);
+  return trophyReached ? newTier : null;
 }
-function finish(){
+/* Zeigt die Fertig-Karte mit dem gemalten Bild und genau einem Weiter-Knopf.
+   Ein evtl. verdienter Medaillen-Popup kommt erst danach dran, nie gleichzeitig. */
+function showDoneCard(pendingTier){
+  $('doneImg').src=thumb();
+  $('doneOk').textContent = cameFromIsland ? '🗺️ Zurück zur Insel' : '✏️ Nächstes Motiv';
+  $('doneOk').onclick=()=>{
+    $('doneCard').classList.remove('on');
+    if(cameFromIsland){
+      const bay=BAYS.find(x=>x.motifs.indexOf(motif.name)>=0); if(bay) selBay=bay.key;
+      showSection(secIsland); renderIsland();
+    }else{
+      showSection(secHome);
+    }
+    if(pendingTier) setTimeout(()=>showTrophyPopup(pendingTier),350);
+  };
+  $('doneCard').classList.add('on');
+}
+async function finish(){
   ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
   [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
   [...bubbles.children].forEach(x=>{x.classList.remove('now');x.classList.add('done');});
   Voice.say('finish',null,true);
   stopIdle();
-  completeMotif();
+  const pendingTier=completeMotif();
+  await saveCurrentPicture();
+  showDoneCard(pendingTier);
 }
 
 /* ---------- Modus-Umschalter ---------- */
@@ -2367,11 +2398,13 @@ $('modeColor').addEventListener('click',()=>setMode('color'));
     } else finish();
   });
 })();
-function finishColor(){
+async function finishColor(){
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
   Voice.say('finish',null,true);
   stopIdle();
-  completeMotif();
+  const pendingTier=completeMotif();
+  await saveCurrentPicture();
+  showDoneCard(pendingTier);
 }
 
 function showTrophyPopup(tier){
@@ -2698,15 +2731,20 @@ function thumb(){
   o.drawImage(art,0,0,c.width,c.height);
   return c.toDataURL('image/jpeg',0.82);
 }
-async function keepPicture(){
-  if(!profile) return;
-  if(pictureSaved){ toast('🖼️ Ist schon in deiner Galerie!'); return; }
+/* Speichert das aktuelle Bild, falls seit dem letzten Speichern etwas geändert wurde.
+   Wird sowohl vom Galerie-Knopf als auch automatisch beim Erreichen von „Fertig" genutzt. */
+async function saveCurrentPicture(){
+  if(!profile || pictureSaved) return;
   const motifName=motif?motif.name:'Bild', motifEmoji=motif?motif.emoji:'🎨';
   await Store.set('pic:'+profile.id+':'+Date.now(), JSON.stringify({motif:motifName,emoji:motifEmoji,img:thumb()}));
   profile.count=(await Store.keys('pic:'+profile.id+':')).length;
   pictureSaved=true;
-
   await saveProfiles();
+}
+async function keepPicture(){
+  if(!profile) return;
+  if(pictureSaved){ toast('🖼️ Ist schon in deiner Galerie!'); return; }
+  await saveCurrentPicture();
   toast('🖼️ Bild in der Galerie gespeichert');
   Voice.say('gallery',null,true);
 }
