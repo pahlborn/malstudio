@@ -352,6 +352,12 @@
   .isl-fact-head button{margin-left:auto;background:none;border:0;font-size:15px;cursor:pointer;padding:0}
   .isl-fact p{margin:0;font-family:var(--font-hand);font-weight:600;font-size:18px;
     color:#4A3620;line-height:1.25}
+  .isl-fact.read{border-color:#B9D8AB;background:rgba(246,252,242,.9)}
+  .isl-fact-done{display:block;width:100%;margin-top:8px;padding:7px 10px;border-radius:7px;
+    cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
+    background:#F6E4B8;border:2px solid #DFA63A;color:#6B5322}
+  .isl-fact-ok{display:block;margin-top:7px;font-family:'Nunito',sans-serif;
+    font-size:11px;font-weight:800;color:#3F6B34}
   .isl-lock-note{margin:0;font-family:var(--font-hand);font-weight:600;font-size:18px;
     color:#4A3620;line-height:1.25}
   .isl-actionrow{display:flex;gap:6px;flex:none}
@@ -2303,52 +2309,55 @@ const ISLAND_FALLBACK_SVG =
 const BAYS=[
   {key:'muschel', nr:1, name:'Muschelbucht', emoji:'🐚', x:60, y:83, side:'right',
    motifs:['Muschel','Seestern','Sandburg','Krabbe','Seepferdchen'],
-   fact:'Miesmuscheln filtern Meerwasser und machen es dabei sauberer. Krabben tragen ihr Skelett außen wie eine Rüstung – und wechseln es, wenn sie größer werden.',
-   story:'Flaches Wasser, feiner Sand: Hier legt das Meer ab, was es gefunden hat. Wer die ganze Bucht malt, dem zeigt sich der Weg.',
+   story:'Hier läuft das Meer nur knöcheltief an den Strand und legt ab, was es unterwegs gefunden hat. Der Weg um die Insel beginnt genau an dieser Stelle.',
+   fact:'Muscheln sind die Putzkolonne des Meeres: Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus. Krabben dagegen tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – die Krabbe steigt heraus und trägt darunter schon eine neue, noch ganz weiche.',
    hidden:{was:'Finde die kleine Muschel im Sand', icon:'🐚', x:80, y:73, r:30},
-   quiz:{q:'Was machen Krabben, wenn sie größer werden?', a:0,
-     o:['Sie wechseln ihr Skelett wie eine Rüstung','Sie werden zu Fischen','Sie verlieren ihre Scheren']}},
+   quiz:{q:'Was passiert mit der Rüstung einer Krabbe, wenn sie wächst?', a:1,
+     o:['Sie wächst einfach mit','Sie platzt auf, und darunter wartet schon eine neue','Die Krabbe legt sie für immer ab']}},
   {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:74, y:60, side:'left',
    motifs:['Leuchtturm','Haus am Meer','Sonnenschirm','Strandkorb','Palme'],
-   fact:'Der Name „Albarella" kommt von einem Baum: der Silberpappel. Davon wachsen hier ganz viele!',
-   story:'Oben auf den Klippen dreht sich das Licht. Es weist den Booten den Heimweg – und dir den Weg um die Insel.',
+   story:'Oben auf der Landzunge dreht sich ein Licht, immer die gleiche Runde. Für die Boote draußen heißt das: Hier ist Land, hier geht es nach Hause.',
+   fact:'Der Name „Albarella“ kommt nicht vom Meer, sondern von einem Baum: der Silberpappel, auf Italienisch „albarella“. Ihre Blätter sind auf der Unterseite silbrig behaart – fährt der Wind hinein, wechselt der ganze Baum die Farbe.',
    hidden:{was:'Finde die Möwe am Himmel', icon:'🕊️', x:81, y:31, r:32},
-   quiz:{q:'Woraus sind vor rund 400 Jahren neue Inseln wie Albarella entstanden?', a:0,
-     o:['Aus Sand und Schlamm, die der Fluss Po brachte','Aus Vulkangestein','Aus Muschelschalen']}},
+   quiz:{q:'Woher hat die Insel Albarella ihren Namen?', a:2,
+     o:['Von einem Seeräuber','Von einer Muschelsorte','Von einem Baum, der Silberpappel']}},
   {key:'segel', nr:3, name:'Segelbucht', emoji:'⛵', x:22, y:67, side:'right',
    motifs:['Segelboot','Piratenschiff','Vespa','Möwe'],
-   fact:'Vor rund 400 Jahren hat der Fluss Po sein Bett verlagert und aus Sand und Schlamm neue Inseln geformt – eine davon ist Albarella.',
-   story:'Hier riecht es nach Salz und Wind. Am Steg warten die Boote darauf, dass endlich jemand ablegt.',
+   story:'Hier riecht die Luft nach Salz und nach warmem Holz. Die Boote liegen am Steg und klappern leise mit den Leinen, als könnten sie es kaum abwarten.',
+   fact:'Diese Insel hat kein Mensch gebaut, sondern ein Fluss. Vor etwa 400 Jahren suchte sich der Po ein neues Bett und schob dabei so viel Sand und Schlamm vor sich her, dass daraus neue Inseln entstanden – eine davon ist Albarella.',
    hidden:{was:'Finde das zweite, kleinere Boot am Horizont', icon:'⛵', x:6, y:57, r:30},
-   quiz:{q:'Wie viele verschiedene Baumarten wachsen auf Albarella?', a:0,
-     o:['Etwa 150','Etwa 10','Etwa 1000']}},
+   quiz:{q:'Wer hat Albarella vor rund 400 Jahren geformt?', a:0,
+     o:['Der Fluss Po, mit Sand und Schlamm','Ein Vulkan unter dem Meer','Fischer, die Steine aufschütteten']}},
   {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:80, y:41, side:'left',
    motifs:['Fisch','Delfin','Wal','Krake','Schildkröte'],
-   fact:'In der Adria schwimmen mehr als 450 verschiedene Fischarten. Manchmal kommen sogar Delfine und große Meeresschildkröten vorbei.',
-   story:'Vor der Bucht wird das Wasser dunkelblau und tief. Wer lange genug hinschaut, sieht etwas vorbeiziehen.',
+   story:'Ein paar Schritte weiter draußen wird das Wasser dunkelblau, und der Boden verschwindet. Wer geduldig genug hinschaut, sieht irgendwann etwas vorbeiziehen.',
+   fact:'In der Adria leben mehr als 450 verschiedene Fischarten – von fingerkleinen Grundeln bis zu Schwertfischen. Und manchmal kommt größerer Besuch vorbei: Delfine, die in Gruppen jagen, und Meeresschildkröten, die zum Luftholen auftauchen.',
    hidden:{was:'Finde den Delfin, der aus dem Wasser springt', icon:'🐬', x:78, y:18, r:34},
-   quiz:{q:'Welche zwei Tiere schwimmen manchmal durch die Adria?', a:0,
-     o:['Delfine und Meeresschildkröten','Haie und Wale','Pinguine und Robben']}},
+   quiz:{q:'Welche großen Gäste ziehen manchmal durch die Adria?', a:1,
+     o:['Pinguine und Eisbären','Delfine und Meeresschildkröten','Flusspferde und Krokodile']}},
   {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:18, y:44, side:'right',
    motifs:['Herz','Blume','Schmetterling','Kätzchen','Regenbogen','Rakete'],
-   fact:'Auf Albarella wachsen über 2 Millionen Bäume, von 150 verschiedenen Baumarten.',
-   story:'Hinter den Dünen ist alles ein bisschen anders und ein bisschen wunderbar. Was hier entsteht, gehört nur dir.',
+   story:'Hinter den Dünen wird es still. Kein Weg führt gerade, kein Baum steht wie der andere. Was hier entsteht, muss niemandem gefallen außer dir.',
+   fact:'Albarella ist eine Insel aus Bäumen: über zwei Millionen stehen hier, und sie gehören zu etwa 150 verschiedenen Arten – Pinien, Steineichen, Silberpappeln und viele mehr. Von oben sieht die Insel deshalb aus wie ein grünes Kissen im Meer.',
    hidden:{was:'Finde den Reiher im Gras', icon:'🦩', x:26, y:56, r:32},
-   quiz:{q:'Wie warm wird das Wasser vor Albarella im Sommer etwa?', a:0,
-     o:['24 bis 27 Grad','5 Grad','40 Grad']}},
+   quiz:{q:'Wie viele verschiedene Baumarten wachsen auf Albarella?', a:2,
+     o:['Etwa 3','Etwa 15','Etwa 150']}},
   {key:'nasch', nr:6, name:'Naschbucht', emoji:'🍦', x:40, y:24, side:'right',
    motifs:['Eis','Wassermelone','Pizza','Luftballons'],
-   fact:'Im Sommer wird das Wasser vor Albarella oft 24 bis 27 Grad warm. An der tiefsten Stelle ist das Mittelmeer über 5000 Meter tief!',
-   story:'Am Ende des Weges liegt der kleine Hafen mit der Eisbude. Hier hatte der alte Pirat immer Hunger.',
+   story:'Am Ende des Weges liegt der kleine Hafen, und dort gibt es Eis. Der alte Pirat, sagt man, hat hier nie widerstehen können.',
+   fact:'Im Sommer wird das Wasser vor Albarella 24 bis 27 Grad warm – wie eine Badewanne, die nie kalt wird. Weiter draußen ist das Mittelmeer dafür tief: an seiner tiefsten Stelle über 5000 Meter. Da könnte man die höchsten Berge der Alpen hineinstellen, und oben wäre noch Wasser darüber.',
    hidden:{was:'Finde die kleine Krabbe am Weg', icon:'🦀', x:30, y:34, r:26},
-   quiz:{q:'Wie tief ist das Mittelmeer an der tiefsten Stelle ungefähr?', a:0,
-     o:['Über 5000 Meter','Über 500 Meter','Über 50 Meter']}}
+   quiz:{q:'Wie tief ist das Mittelmeer an seiner tiefsten Stelle?', a:1,
+     o:['Über 50 Meter','Über 5000 Meter','Über 500 Meter']}}
 ];
 
 const CAPTAIN=[
-  {q:'Wie heißt der Baum, nach dem Albarella benannt ist?', a:0, o:['Silberpappel','Palme','Olivenbaum']},
-  {q:'Wie viele Fischarten schwimmen in der Adria?', a:1, o:['10','Über 450','2']},
-  {q:'Was spüren Seesterne mit ihren Armspitzen?', a:1, o:['Gerüche','Hell und Dunkel','Musik']}
+  {q:'Woher hat Albarella seinen Namen?', a:0,
+   o:['Von der Silberpappel','Von einer Muschel','Vom Fluss Po']},
+  {q:'Wie viele Fischarten leben in der Adria?', a:1,
+   o:['Etwa zehn','Mehr als 450','Genau hundert']},
+  {q:'Was tut eine Krabbe, wenn ihre Rüstung zu eng wird?', a:1,
+   o:['Sie bleibt für immer klein','Sie streift sie ab – darunter wartet eine neue','Sie tauscht sie mit einer anderen Krabbe']}
 ];
 
 const FRAGMENTS=[
@@ -2402,6 +2411,13 @@ function baysDone(){
    Sonst springen Buchten wild auf, sobald ein Kind ueber die normale Liste gemalt hat. */
 function bayUnlocked(i){ return i<=baysDone(); }
 function motifEmoji(name){ const m=MOTIFS.find(x=>x.name===name); return m?m.emoji:'🎨'; }
+/* Wissen zuerst: Welche Faktenkaertchen ein Kind schon gelesen hat. */
+function factReadSet(){ try{ return JSON.parse(profile.islandFacts||'[]'); }catch(e){ return []; } }
+async function markFactRead(key){
+  const f=factReadSet();
+  if(f.indexOf(key)<0){ f.push(key); profile.islandFacts=JSON.stringify(f); await saveProfiles(); }
+  renderIsland();
+}
 function star2Set(){ try{ return JSON.parse(profile.islandStar2||'[]'); }catch(e){ return []; } }
 function star3Set(){ try{ return JSON.parse(profile.islandStar3||'[]'); }catch(e){ return []; } }
 function goldTierN(){ return TROPHIES.find(t=>t.key==='gold').n; }
@@ -2635,15 +2651,20 @@ async function renderBaySide(){
     chips.innerHTML=b.motifs.map(n=>'<span class="'+(c[n]?'got':'')+'">'+n+'</span>').join('');
     scroll.appendChild(chips);
 
-    if(st.full){
-      const f=document.createElement('div');
-      f.className='isl-fact';
-      f.innerHTML='<div class="isl-fact-head"><span>📜</span><b>Wusstest du?</b>'
-        + '<button type="button" aria-label="Vorlesen">🔊</button></div><p></p>';
-      f.querySelector('p').textContent=b.fact;
-      f.querySelector('button').addEventListener('click',()=>Voice.raw(b.fact));
-      scroll.appendChild(f);
-    }
+    /* Wissen vor der Frage: Das Kaertchen steht von Anfang an in der Bucht,
+       die Wissensfrage oeffnet sich erst, wenn es gelesen (oder vorgelesen) wurde. */
+    const factRead=factReadSet().indexOf(b.key)>=0;
+    const f=document.createElement('div');
+    f.className='isl-fact'+(factRead?' read':'');
+    f.innerHTML='<div class="isl-fact-head"><span>📜</span><b>Wusstest du?</b>'
+      + '<button type="button" class="fspeak" aria-label="Vorlesen">🔊</button></div><p></p>'
+      + (factRead ? '<span class="isl-fact-ok">✓ Gelesen – die Wissensfrage ist offen</span>'
+                  : '<button type="button" class="isl-fact-done">Gelesen ✓</button>');
+    f.querySelector('p').textContent=b.fact;
+    f.querySelector('.fspeak').addEventListener('click',()=>Voice.raw(b.fact));
+    const dn=f.querySelector('.isl-fact-done');
+    if(dn) dn.addEventListener('click',()=>markFactRead(b.key));
+    scroll.appendChild(f);
   }
 
   /* Bonus-Knöpfe */
@@ -2653,8 +2674,9 @@ async function renderBaySide(){
     actions.className='isl-actionrow';
     const quizBtn=document.createElement('button');
     quizBtn.innerHTML='<span>🧠</span><span></span>';
-    quizBtn.lastChild.textContent=earned[2]?'Beantwortet':'Wissensfrage';
-    quizBtn.disabled=earned[2];
+    const read=factReadSet().indexOf(b.key)>=0;
+    quizBtn.lastChild.textContent=earned[2]?'Beantwortet':(read?'Wissensfrage':'Erst lesen 📜');
+    quizBtn.disabled=earned[2]||!read;
     quizBtn.addEventListener('click',()=>openBayQuiz(b));
     const findBtn=document.createElement('button');
     findBtn.innerHTML='<span>🔍</span><span></span>';
@@ -2769,6 +2791,8 @@ function islQuizPick(idx){
   }
 }
 function openBayQuiz(b){
+  /* Nie fragen, bevor erklaert wurde. */
+  if(factReadSet().indexOf(b.key)<0){ toast('📜 Lies erst das Kärtchen „Wusstest du?“'); return; }
   islQuizCtx={kind:'bay', bayKey:b.key, step:0};
   islQuizShow();
   $('islQuiz').classList.add('on');
@@ -2799,7 +2823,10 @@ async function showTreasureCard(){
   $('treasureHintText').textContent = hint || 'Frag Mama oder Papa – sie wissen, wo der Schatz ist!';
   const link=$('treasureMapLink');
   if(coords && /^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/.test(coords)){
-    link.href='https://maps.apple.com/?ll='+coords.replace(/\s+/g,'');
+    const ll=coords.replace(/\s+/g,'');
+    /* Apple Karten: ll setzt die Mitte, q beschriftet die Stecknadel. */
+    link.href='https://maps.apple.com/?ll='+ll+'&q='+encodeURIComponent('Schatz')+'&t=m';
+    link.textContent='📍 In Karten öffnen';
     link.style.display='block';
   }else{
     link.style.display='none';
@@ -2823,15 +2850,30 @@ $('treasureOk').addEventListener('click',()=>{
 
 /* Nur für Eltern: nie vorausgefüllt, damit Kinder den Hinweis hier nicht lesen können. */
 let hintHeld=false;   /* wird beim langen Drücken gesetzt, damit kein Hinweis-Dialog aufgeht */
-$('islHintBtn').addEventListener('click',()=>{
+$('islHintBtn').addEventListener('click',async ()=>{
   if(hintHeld){ hintHeld=false; return; }
-  const t=prompt('Neuer Hinweistext für den echten Schatz (überschreibt den alten):','');
+  /* Nie vorausgefuellt – aber der Elternteil soll sehen, ob schon etwas hinterlegt ist. */
+  const hasHint=!!(await Store.get('treasureHint'));
+  const hasCo=!!(await Store.get('treasureCoords'));
+  const t=prompt('Hinweistext für den echten Schatz'
+    +(hasHint?' (einer ist gespeichert)':' (noch keiner gespeichert)')
+    +':\n\nLeer lassen = unverändert. Ein Minuszeichen löscht ihn.','');
   if(t===null) return;
-  if(t.trim()) Store.set('treasureHint',t.trim());
-  const co=prompt('Koordinaten für den „In Karten öffnen"-Knopf (z. B. 45.0877,12.3378) – leer lassen für keinen Kartenlink:','');
-  if(co===null) return;
-  if(co.trim()) Store.set('treasureCoords',co.trim());
-  toast('🔑 Hinweis gespeichert');
+  if(t.trim()==='-'){ await Store.del('treasureHint'); }
+  else if(t.trim()){ await Store.set('treasureHint',t.trim()); }
+
+  const co=prompt('Koordinaten für den Knopf „In Karten öffnen"'
+    +(hasCo?' (welche sind gespeichert)':' (noch keine gespeichert)')
+    +':\n\nFormat 45.0877,12.3378 – leer lassen = unverändert, Minuszeichen löscht sie.','');
+  if(co===null){ toast('🔑 Hinweis gespeichert'); return; }
+  if(co.trim()==='-'){ await Store.del('treasureCoords'); toast('🔑 Gespeichert – Kartenlink entfernt'); return; }
+  if(!co.trim()){ toast('🔑 Hinweis gespeichert'); return; }
+  if(!/^-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?$/.test(co.trim())){
+    toast('⚠️ Koordinaten nicht erkannt – bitte als 45.0877,12.3378');
+    return;
+  }
+  await Store.set('treasureCoords',co.trim());
+  toast('🔑 Hinweis und Koordinaten gespeichert');
 });
 
 /* Nur für Eltern: langes Drücken (1,2 s) auf denselben Schlüssel setzt die Schatzsuche zurück.
@@ -2841,6 +2883,7 @@ async function resetIsland(){
   profile.islandBase = profile.motifCounts || '{}';
   profile.islandStar2 = '[]';
   profile.islandStar3 = '[]';
+  profile.islandFacts = '[]';
   profile.treasureFound = false;
   await saveProfiles();
   selBay = BAYS[0].key;
