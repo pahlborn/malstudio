@@ -2053,7 +2053,8 @@ async function renderBaySide(){
 
   const card=document.createElement('div');
   card.className='isl-card';
-  card.innerHTML='<b>'+(open?b.emoji:'🔒')+' '+b.name+'</b>';
+  card.innerHTML='<b>'+(open?b.emoji:'🔒')+' '+b.name
+    + (open&&st.full?' <span style="color:var(--kelp)">· Fertig! 🎉</span>':'')+'</b>';
 
   if(!open){
     const p=document.createElement('p');
@@ -2094,21 +2095,29 @@ async function renderBaySide(){
     + '<div class="stat-card-sub">'+done+' von '+BAYS.length+' Buchten</div>';
   side.appendChild(prog);
 
-  const cta=document.createElement('button');
-  cta.className='nav-btn primary isl-cta';
-  const target = (open && !st.full) ? b : BAYS.find((x,n)=>bayUnlocked(n) && !bayStats(x).full);
-  if(target){
-    const next=target.motifs.find(n=>!c[n]);
-    cta.textContent=(next||target.name)+' malen →';
-    cta.addEventListener('click',()=>{
-      const idx=allMotifs().findIndex(m=>m.name===next);
-      if(idx>=0){ cameFromIsland=true; openMotif(idx); }
-    });
-  }else{
-    cta.textContent='Alle Buchten fertig! 🎉';
-    cta.addEventListener('click',()=>toast('🎁 Die Schatztruhe kommt im nächsten Schritt!'));
+  /* Der Knopf gehört immer zur gerade angezeigten Bucht, nie zu einer anderen. */
+  if(open){
+    const cta=document.createElement('button');
+    cta.className='nav-btn primary isl-cta';
+    if(!st.full){
+      const next=b.motifs.find(n=>!c[n]);
+      cta.textContent=(next||b.name)+' malen →';
+      cta.addEventListener('click',()=>{
+        const idx=allMotifs().findIndex(m=>m.name===next);
+        if(idx>=0){ cameFromIsland=true; openMotif(idx); }
+      });
+    }else{
+      const nextIdx=BAYS.findIndex((x,n)=>n>i && !bayStats(x).full);
+      if(nextIdx>=0){
+        cta.textContent='Weiter zur '+BAYS[nextIdx].name+' →';
+        cta.addEventListener('click',()=>{ selBay=BAYS[nextIdx].key; renderIsland(); });
+      }else{
+        cta.textContent='Alle Buchten fertig! 🎉';
+        cta.addEventListener('click',()=>toast('🎁 Die Schatztruhe kommt im nächsten Schritt!'));
+      }
+    }
+    host.appendChild(cta);
   }
-  host.appendChild(cta);
 }
 
 /* Neuestes gespeichertes Bild, dessen Motiv zu dieser Bucht gehört */
@@ -2221,7 +2230,10 @@ function openMotif(i){
   }
 }
 $('home-btn').addEventListener('click',()=>{
-  if(cameFromIsland){ showSection(secIsland); renderIsland(); }
+  if(cameFromIsland){
+    if(motif){ const b=BAYS.find(x=>x.motifs.indexOf(motif.name)>=0); if(b) selBay=b.key; }
+    showSection(secIsland); renderIsland();
+  }
   else showSection(secHome);
 });
 
