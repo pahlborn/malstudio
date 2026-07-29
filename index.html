@@ -248,6 +248,9 @@
   .isl-note .hd b{font-family:var(--font-map);font-weight:800;font-size:15px;color:#8F2F1F}
   .isl-note p{margin:0;font-family:var(--font-hand);font-weight:600;font-size:19px;
     line-height:1.25;color:#4A3620}
+  .isl-note .task{display:block;margin-top:8px;padding-top:7px;border-top:1.5px dashed #C0A774;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:12.5px;color:#8F2F1F}
+  .isl-note .task.done{color:#3F6B34}
 
   /* Schatzfragmente */
   .isl-fragstrip{position:absolute;left:10px;right:10px;bottom:8px;z-index:12;display:flex;
@@ -289,9 +292,15 @@
   @keyframes cloudPartR{0%{transform:translateX(0)}100%{transform:translateX(75%);opacity:0}}
   @keyframes beamIn{0%{opacity:0}60%{opacity:1}100%{opacity:.9}}
 
-  .isl-hidden{position:absolute;border-radius:999px;z-index:9;background:transparent;border:0;padding:0;cursor:pointer}
+  .isl-hidden{position:absolute;border-radius:999px;z-index:9;background:transparent;border:0;padding:0;
+    cursor:pointer;display:flex;align-items:center;justify-content:center}
+  /* Dezent, aber sichtbar – sonst gaebe es nichts zu finden */
+  .isl-hidden em{font-style:normal;font-size:22px;opacity:.62;
+    filter:drop-shadow(0 2px 3px rgba(20,40,56,.45))}
   .isl-hidden.hint{box-shadow:0 0 0 3px rgba(223,166,58,.9),0 0 22px rgba(255,236,170,.9);
     background:rgba(255,240,190,.22)}
+  .isl-hidden.hint em{opacity:1;animation:findPulse 1.2s ease-in-out infinite}
+  @keyframes findPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
   .isl-sprite{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:8;
     display:flex;align-items:center;justify-content:center;line-height:1;
     filter:drop-shadow(0 4px 6px rgba(20,40,56,.4))}
@@ -2239,42 +2248,42 @@ const BAYS=[
    motifs:['Muschel','Seestern','Sandburg','Krabbe','Seepferdchen'],
    fact:'Miesmuscheln filtern Meerwasser und machen es dabei sauberer. Krabben tragen ihr Skelett außen wie eine Rüstung – und wechseln es, wenn sie größer werden.',
    story:'Der alte Pirat hat hier eine Muschel versteckt. Male sie fertig, und der Weg zeigt sich.',
-   hidden:{was:'Finde die kleine Muschel im Sand', x:80, y:73, r:30},
+   hidden:{was:'Finde die kleine Muschel im Sand', icon:'🐚', x:80, y:73, r:30},
    quiz:{q:'Was machen Krabben, wenn sie größer werden?', a:0,
      o:['Sie wechseln ihr Skelett wie eine Rüstung','Sie werden zu Fischen','Sie verlieren ihre Scheren']}},
   {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:74, y:60, side:'left',
    motifs:['Leuchtturm','Haus am Meer','Sonnenschirm','Strandkorb','Palme'],
    fact:'Der Name „Albarella" kommt von einem Baum: der Silberpappel. Davon wachsen hier ganz viele!',
    story:'Nur wer den Leuchtturm findet, erkennt den nächsten Weg.',
-   hidden:{was:'Finde die Möwe am Himmel', x:81, y:31, r:32},
+   hidden:{was:'Finde die Möwe am Himmel', icon:'🕊️', x:81, y:31, r:32},
    quiz:{q:'Woraus sind vor rund 400 Jahren neue Inseln wie Albarella entstanden?', a:0,
      o:['Aus Sand und Schlamm, die der Fluss Po brachte','Aus Vulkangestein','Aus Muschelschalen']}},
   {key:'segel', nr:3, name:'Segelbucht', emoji:'⛵', x:22, y:67, side:'right',
    motifs:['Segelboot','Piratenschiff','Vespa','Möwe'],
    fact:'Vor rund 400 Jahren hat der Fluss Po sein Bett verlagert und aus Sand und Schlamm neue Inseln geformt – eine davon ist Albarella.',
    story:'Ein Segelschiff bringt dich über die Lagune – mal es fertig, dann kannst du ablegen.',
-   hidden:{was:'Finde das zweite, kleinere Boot am Horizont', x:6, y:57, r:30},
+   hidden:{was:'Finde das zweite, kleinere Boot am Horizont', icon:'⛵', x:6, y:57, r:30},
    quiz:{q:'Wie viele verschiedene Baumarten wachsen auf Albarella?', a:0,
      o:['Etwa 150','Etwa 10','Etwa 1000']}},
   {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:80, y:41, side:'left',
    motifs:['Fisch','Delfin','Wal','Krake','Schildkröte'],
    fact:'In der Adria schwimmen mehr als 450 verschiedene Fischarten. Manchmal kommen sogar Delfine und große Meeresschildkröten vorbei.',
    story:'Tief unter den Wellen wartet ein Geheimnis. Male dich hindurch.',
-   hidden:{was:'Finde den Delfin, der aus dem Wasser springt', x:78, y:18, r:34},
+   hidden:{was:'Finde den Delfin, der aus dem Wasser springt', icon:'🐬', x:78, y:18, r:34},
    quiz:{q:'Welche zwei Tiere schwimmen manchmal durch die Adria?', a:0,
      o:['Delfine und Meeresschildkröten','Haie und Wale','Pinguine und Robben']}},
   {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:18, y:44, side:'right',
    motifs:['Herz','Blume','Schmetterling','Kätzchen','Regenbogen','Rakete'],
    fact:'Auf Albarella wachsen über 2 Millionen Bäume, von 150 verschiedenen Baumarten.',
    story:'Hier ist alles ein bisschen anders – und ein bisschen wunderbar.',
-   hidden:{was:'Finde den Reiher im Gras', x:26, y:56, r:32},
+   hidden:{was:'Finde den Reiher im Gras', icon:'🦩', x:26, y:56, r:32},
    quiz:{q:'Wie warm wird das Wasser vor Albarella im Sommer etwa?', a:0,
      o:['24 bis 27 Grad','5 Grad','40 Grad']}},
   {key:'nasch', nr:6, name:'Naschbucht', emoji:'🍦', x:40, y:24, side:'right',
    motifs:['Eis','Wassermelone','Pizza','Luftballons'],
    fact:'Im Sommer wird das Wasser vor Albarella oft 24 bis 27 Grad warm. An der tiefsten Stelle ist das Mittelmeer über 5000 Meter tief!',
    story:'Der Pirat hatte Hunger! Male, was er sich gewünscht hat.',
-   hidden:{was:'Finde die kleine Krabbe am Weg', x:30, y:34, r:26},
+   hidden:{was:'Finde die kleine Krabbe am Weg', icon:'🦀', x:30, y:34, r:26},
    quiz:{q:'Wie tief ist das Mittelmeer an der tiefsten Stelle ungefähr?', a:0,
      o:['Über 5000 Meter','Über 500 Meter','Über 50 Meter']}}
 ];
@@ -2400,7 +2409,8 @@ function renderIsland(){
     if(bayUnlocked(i) && s2.indexOf(b.key)<0){
       h+='<button type="button" class="isl-hidden'+(findMode && selBay===b.key?' hint':'')+'" data-hidden="'+b.key+'" '
        + 'style="left:'+b.hidden.x+'%;top:'+b.hidden.y+'%;width:'+(b.hidden.r*2)+'px;height:'+(b.hidden.r*2)+'px;'
-       + 'margin:'+(-b.hidden.r)+'px 0 0 '+(-b.hidden.r)+'px" aria-label="'+b.hidden.was+'"></button>';
+       + 'margin:'+(-b.hidden.r)+'px 0 0 '+(-b.hidden.r)+'px" aria-label="'+b.hidden.was+'">'
+       + '<em>'+b.hidden.icon+'</em></button>';
     }
   });
 
@@ -2418,10 +2428,16 @@ function renderIsland(){
   }
 
   /* Geschichten-Zettel oben links, wie im Entwurf */
+  let noteTask='';
+  if(selOpen){
+    const cc=motifCounts(), nx=sel.motifs.find(n=>!cc[n]);
+    noteTask = nx ? '<span class="task">👉 Jetzt dran: '+nx+' malen</span>'
+                  : '<span class="task done">✓ Alle Motive gemalt!</span>';
+  }
   h+='<div class="isl-note"><div class="hd"><span>'+(selOpen?sel.emoji:'🔒')+'</span><b>'
    + (selOpen?sel.name:'Noch im Nebel')+'</b></div><p>'
    + (selOpen ? sel.story : 'Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die '+BAYS[selIdx-1].name+' fertig.')
-   + '</p></div>';
+   + '</p>'+noteTask+'</div>';
 
   let frag='<div class="isl-fragstrip"><b>Deine Schatzfragmente</b><div>';
   FRAGMENTS.forEach((f,i)=>{
@@ -3360,9 +3376,13 @@ async function saveCurrentPicture(){
 async function keepPicture(){
   if(!profile) return;
   if(pictureSaved){ toast('🖼️ Ist schon in deiner Galerie!'); return; }
+  /* Wer sein Bild speichert, hat das Motiv geschafft – sonst zaehlt der Fortschritt nicht,
+     obwohl das Kind fertig ist. Der Schutz in completeMotif verhindert Doppelzaehlung. */
+  const tier=completeMotif();
   await saveCurrentPicture();
-  toast('🖼️ Bild in der Galerie gespeichert');
+  toast('⭐ Geschafft! Bild in der Galerie gespeichert');
   Voice.say('gallery',null,true);
+  if(tier) setTimeout(()=>showTrophyPopup(tier),500);
 }
 $('keep').addEventListener('click',keepPicture);
 $('galBtn').addEventListener('click',openGallery);
