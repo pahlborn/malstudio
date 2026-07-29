@@ -2690,6 +2690,9 @@ function openMotif(i){
     $('taskEmoji').textContent='🎨';
     $('taskTitle').textContent=motif.name+' wartet auf Farbe!';
     $('taskText').textContent='Tippe mit dem Farbeimer in die Flächen – so bunt du magst.';
+    /* Im Ausmal-Modus beendet der Knopf sofort – er muss also auch „Fertig" heißen,
+       sonst speichert ein vermeintliches „Weiter" das Bild ungewollt ab. */
+    $('next').textContent='Fertig! 🎉';
     [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
     Voice.say('colorStart',{m:motifSpokenName(motif)},true);
     requestAnimationFrame(()=>{ layout(); outlineToCanvas(); });
