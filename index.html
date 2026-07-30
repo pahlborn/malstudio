@@ -9,7 +9,9 @@
 <meta name="apple-mobile-web-app-title" content="Malstudio">
 <meta name="theme-color" content="#118AB2">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icon-167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icon-152.png">
 <link rel="icon" href="icon-192.png">
 <title>Sommer am Meer – Malstudio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -254,7 +256,7 @@
     border:4px solid #DFA63A;box-shadow:0 8px 20px rgba(20,40,56,.4);animation:pinPulse 2s ease-in-out infinite}
 
   /* Geschichten-Zettel */
-  .isl-note{position:absolute;left:14px;top:12px;width:224px;padding:16px 18px 18px;z-index:12;
+  .isl-note{position:absolute;left:14px;top:12px;width:min(200px,26%);padding:16px 18px 18px;z-index:12;
     background:linear-gradient(160deg,#FBEECB,#EDD9AB 60%,#E2C893);border-radius:3px;
     box-shadow:0 8px 18px rgba(20,40,56,.34);transform:rotate(-1.2deg);pointer-events:none;
     clip-path:polygon(2% 1%,98% 0,100% 8%,99% 96%,92% 100%,6% 99%,0 92%,1% 6%)}
@@ -270,11 +272,9 @@
     color:#8F2F1F;text-shadow:0 1px 0 rgba(255,255,255,.45)}
   .isl-note .isl-task.done{color:#3F6B34;border-top-color:rgba(63,107,52,.35)}
 
-  /* Der Geschichten-Zettel steht in der Seitenspalte, nicht auf der Karte:
-     die echte Inselform fuellt die Bildmitte, dort wuerde er Buchten verdecken. */
-  .isl-map .isl-note{display:none}
-  .isl-note.isl-nside{display:block;position:static;transform:none;width:auto;flex:none;
-    padding:13px 15px 15px;box-shadow:0 4px 10px rgba(20,40,56,.18)}
+  /* Die Insel liegt im Basisbild rechts – oben links bleibt Platz fuer den Zettel.
+     Auf schmalen Geraeten wandert er trotzdem in die Spalte (Media Query unten). */
+  .isl-note.isl-nside{display:none}
 
   /* Schatzfragmente */
   .isl-fragstrip{position:absolute;left:10px;right:10px;bottom:8px;z-index:12;display:flex;
@@ -360,7 +360,7 @@
 
   /* Delfin: auftauchen, kurz zeigen, abtauchen, lange Pause. 26 s pro Runde. */
   .isl-delfin{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:8;
-    width:calc(78px*var(--s));height:calc(56px*var(--s))}
+    width:calc(50px*var(--s));height:calc(36px*var(--s))}
   .isl-delfin img{position:absolute;left:0;bottom:0;width:100%;display:block;opacity:0;
     filter:drop-shadow(0 3px 5px rgba(20,40,56,.35))}
   .isl-delfin .kringel{bottom:-6%;animation:delfinRing 26s ease-in-out infinite}
@@ -378,17 +378,23 @@
 
   /* Zweites Boot: vom Meer zur Insel und zurueck, 200 s fuer die ganze Runde. */
   .isl-boot{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:7}
-  .isl-boot em{position:absolute;left:0;top:0;font-style:normal;line-height:1;
-    font-size:calc(30px*var(--s));filter:drop-shadow(0 3px 5px rgba(20,40,56,.35));
-    animation:bootFahrt 200s linear infinite}
+  .isl-boot em{position:absolute;font-style:normal;line-height:1;
+    transform:translate(-50%,-50%);
+    font-size:calc(26px*var(--s));filter:drop-shadow(0 3px 5px rgba(20,40,56,.35));
+    animation:bootFahrt 200s ease-in-out infinite}
   @keyframes bootFahrt{
-    0%   {transform:translate(-6%,62%) scale(.85)}
-    22%  {transform:translate(14%,74%) scale(1)}
-    44%  {transform:translate(30%,92%) scale(1.05)}
-    50%  {transform:translate(32%,94%) scale(1.05)}
-    56%  {transform:translate(30%,92%) scale(1.05)}
-    78%  {transform:translate(14%,74%) scale(1)}
-    100% {transform:translate(-6%,62%) scale(.85)}}
+    0%   {left:16%;top:94%;opacity:.55}
+    8%   {left:15%;top:88%;opacity:1}
+    46%  {left:22%;top:56%;opacity:1}
+    50%  {left:24%;top:52%;opacity:1}
+    54%  {left:22%;top:56%;opacity:1}
+    92%  {left:15%;top:88%;opacity:1}
+    100% {left:16%;top:94%;opacity:.55}}
+    48%  {transform:translate(24%,60%) scale(1.05)}
+    52%  {transform:translate(26%,58%) scale(1.05)}
+    56%  {transform:translate(24%,60%) scale(1.05)}
+    80%  {transform:translate(12%,74%) scale(.92)}
+    100% {transform:translate(4%,88%) scale(.8)}}
 
   .isl-chest .box.kiste{background:none;border:0;box-shadow:none;padding:0;
     display:flex;align-items:center;justify-content:center;position:relative}
@@ -407,7 +413,7 @@
   @keyframes bob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 5px))}}
 
   /* ---------- Seitenspalte (268px, wie im Entwurf) ---------- */
-  .isl-side{width:268px;flex:none;display:flex;flex-direction:column;gap:8px;padding:10px;
+  .isl-side{width:336px;flex:none;display:flex;flex-direction:column;gap:8px;padding:10px;
     background:linear-gradient(#FDF6E6,#F7ECD6);border-left:2px solid #E3D2AC;overflow:hidden}
   .isl-sidehead{display:flex;align-items:center;gap:7px;flex:none}
   .isl-sidehead b{font-family:var(--font-map);font-weight:800;font-size:17px;color:#1E5F8C}
@@ -490,6 +496,34 @@
     font-size:11.5px;font-weight:800;color:#A2937A}
   .wis-note{grid-column:1/-1;margin:0;font-family:'Nunito',sans-serif;font-size:11.5px;
     font-weight:700;color:#A2937A;text-align:center}
+
+  /* ---------- Fotos auf der Wissensseite ---------- */
+  .wis-bilder{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px;margin-top:10px}
+  .wis-bild{padding:0;border:2px solid #E0D0AD;border-radius:8px;overflow:hidden;cursor:pointer;
+    background:#FFFDF7;display:flex;flex-direction:column;text-align:left}
+  .wis-bild:active{transform:translateY(1px)}
+  .wis-bild img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+  .wis-bild span{padding:5px 7px 6px;font-family:'Nunito',sans-serif;font-size:10.5px;
+    font-weight:700;color:#6B5322;line-height:1.25}
+  .wis-hinweis{margin:0 0 9px;font-family:'Nunito',sans-serif;font-size:11.5px;font-weight:700;color:#A2937A}
+  .wis-links{display:flex;flex-wrap:wrap;gap:6px}
+  .wis-links a{padding:6px 11px;border-radius:999px;text-decoration:none;
+    font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
+    background:#EAF2F8;border:2px solid #C6DCEA;color:#1E5F8C}
+  .wis-quellen{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+  .wis-quellen li{font-family:'Nunito',sans-serif;font-size:10.5px;font-weight:600;
+    color:#8A7550;line-height:1.35}
+
+  .foto-rahmen{position:relative;width:min(92vw,900px);max-height:88vh;padding:10px 10px 8px;
+    border-radius:10px;background:linear-gradient(#FDF6E6,#F2E3C4);border:3px solid #C39A63;
+    box-shadow:0 20px 50px rgba(10,30,45,.5);display:flex;flex-direction:column}
+  .foto-rahmen img{width:100%;max-height:70vh;object-fit:contain;border-radius:5px;display:block;
+    background:#E8DCC2}
+  .foto-rahmen #fotoZu{position:absolute;right:-12px;top:-12px;width:38px;height:38px;border-radius:999px;
+    border:3px solid #C39A63;background:#FFFDF7;color:#6B5322;font-weight:800;font-size:16px;cursor:pointer;z-index:2}
+  .foto-text{margin:8px 4px 0;font-family:var(--font-hand);font-weight:600;font-size:21px;
+    line-height:1.2;color:#4A3620}
+  .foto-quelle{margin:4px 4px 2px;font-family:'Nunito',sans-serif;font-size:10.5px;font-weight:700;color:#A2937A}
 
   /* ---------- Botschaft des Piraten ---------- */
   .frag-intro{margin:0 0 12px;font-family:var(--font-hand);font-weight:600;font-size:20px;
@@ -1049,6 +1083,15 @@
     <p class="isl-quiz-q" id="islQuizQ"></p>
     <div class="isl-quiz-opts" id="islQuizOpts"></div>
     <div class="isl-quiz-feedback" id="islQuizFeedback"></div>
+  </div>
+</div>
+
+<div class="reward" id="fotoGross">
+  <div class="foto-rahmen">
+    <button type="button" id="fotoZu" aria-label="Schließen">✕</button>
+    <img id="fotoGrossBild" alt="">
+    <p class="foto-text" id="fotoGrossText"></p>
+    <p class="foto-quelle" id="fotoGrossQuelle"></p>
   </div>
 </div>
 
@@ -2467,46 +2510,46 @@ const ISLAND_FALLBACK_SVG =
 
 /* Buchten in Freischalt-Reihenfolge. Koordinaten in % des Basisbildes (aus dem Design-Entwurf). */
 const BAYS=[
-  {key:'muschel', nr:1, name:'Muschelbucht', emoji:'🐚', x:45.1, y:76.7, side:'right',
+  {key:'muschel', nr:1, name:'Muschelbucht', emoji:'🐚', x:53.2, y:69.3, side:'right',
    motifs:['Muschel','Seestern','Sandburg','Krabbe'],
    story:'Hier läuft das Meer nur knöcheltief an den Strand und legt ab, was es unterwegs gefunden hat. Der Weg um die Insel beginnt genau an dieser Stelle.',
    fact:'Muscheln sind die Putzkolonne des Meeres: Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus. Krabben dagegen tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – die Krabbe steigt heraus und trägt darunter schon eine neue, noch ganz weiche.',
-   hidden:{was:'Finde die kleine Muschel im Sand', icon:'🐚', x:52.0, y:84.0, r:30},
+   hidden:{was:'Finde die kleine Muschel im Sand', icon:'🐚', x:59, y:76, r:30},
    quiz:{q:'Was passiert mit der Rüstung einer Krabbe, wenn sie wächst?', a:1,
      o:['Sie wächst einfach mit','Sie platzt auf, und darunter wartet schon eine neue','Die Krabbe legt sie für immer ab']}},
-  {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:64.6, y:63.4, side:'left',
+  {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:60.4, y:81.4, side:'right',
    motifs:['Leuchtturm','Haus am Meer','Strandkorb','Palme'],
    story:'Oben auf der Landzunge dreht sich ein Licht, immer die gleiche Runde. Für die Boote draußen heißt das: Hier ist Land, hier geht es nach Hause.',
    fact:'Der Name „Albarella“ kommt nicht vom Meer, sondern von einem Baum: der Silberpappel, auf Italienisch „albarella“. Ihre Blätter sind auf der Unterseite silbrig behaart – fährt der Wind hinein, wechselt der ganze Baum die Farbe.',
-   hidden:{was:'Finde die Möwe am Himmel', icon:'🕊️', x:70.0, y:71.0, r:32},
+   hidden:{was:'Finde die Möwe am Himmel', icon:'🕊️', x:68, y:86, r:32},
    quiz:{q:'Woher hat die Insel Albarella ihren Namen?', a:2,
      o:['Von einem Seeräuber','Von einer Muschelsorte','Von einem Baum, der Silberpappel']}},
-  {key:'segel', nr:3, name:'Segelbucht', emoji:'⛵', x:72.0, y:52.0, side:'left',
+  {key:'segel', nr:3, name:'Segelbucht', emoji:'⛵', x:74.1, y:62.4, side:'left',
    motifs:['Segelboot','Piratenschiff','Vespa','Möwe'],
    story:'Hier riecht die Luft nach Salz und nach warmem Holz. Die Boote liegen am Steg und klappern leise mit den Leinen, als könnten sie es kaum abwarten.',
    fact:'Diese Insel hat kein Mensch gebaut, sondern ein Fluss. Vor etwa 400 Jahren suchte sich der Po ein neues Bett und schob dabei so viel Sand und Schlamm vor sich her, dass daraus neue Inseln entstanden – eine davon ist Albarella.',
-   hidden:{was:'Finde das zweite, kleinere Boot am Horizont', icon:'⛵', x:64.0, y:46.0, r:30},
+   hidden:{was:'Finde das zweite, kleinere Boot am Horizont', icon:'⛵', x:69, y:55, r:30},
    quiz:{q:'Wer hat Albarella vor rund 400 Jahren geformt?', a:0,
      o:['Der Fluss Po, mit Sand und Schlamm','Ein Vulkan unter dem Meer','Fischer, die Steine aufschütteten']}},
-  {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:62.0, y:40.5, side:'left',
+  {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:77.3, y:49.9, side:'left',
    motifs:['Fisch','Delfin','Wal','Schildkröte'],
    story:'Ein paar Schritte weiter draußen wird das Wasser dunkelblau, und der Boden verschwindet. Wer geduldig genug hinschaut, sieht irgendwann etwas vorbeiziehen.',
    fact:'In der Adria leben mehr als 450 verschiedene Fischarten – von fingerkleinen Grundeln bis zu Schwertfischen. Und manchmal kommt größerer Besuch vorbei: Delfine, die in Gruppen jagen, und Meeresschildkröten, die zum Luftholen auftauchen.',
-   hidden:{was:'Finde den Delfin, der aus dem Wasser springt', icon:'🐬', x:53.0, y:33.0, r:34},
+   hidden:{was:'Finde den Delfin, der aus dem Wasser springt', icon:'🐬', x:66, y:42, r:34},
    quiz:{q:'Welche großen Gäste ziehen manchmal durch die Adria?', a:1,
      o:['Pinguine und Eisbären','Delfine und Meeresschildkröten','Flusspferde und Krokodile']}},
-  {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:37.2, y:56.0, side:'right',
+  {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:49.1, y:56.0, side:'right',
    motifs:['Herz','Blume','Schmetterling','Regenbogen'],
    story:'Hinter den Dünen wird es still. Kein Weg führt gerade, kein Baum steht wie der andere. Was hier entsteht, muss niemandem gefallen außer dir.',
    fact:'Albarella ist eine Insel aus Bäumen: über zwei Millionen stehen hier, und sie gehören zu etwa 150 verschiedenen Arten – Pinien, Steineichen, Silberpappeln und viele mehr. Von oben sieht die Insel deshalb aus wie ein grünes Kissen im Meer.',
-   hidden:{was:'Finde den Reiher im Gras', icon:'🦩', x:44.0, y:64.0, r:32},
+   hidden:{was:'Finde den Reiher im Gras', icon:'🦩', x:44, y:62, r:32},
    quiz:{q:'Wie viele verschiedene Baumarten wachsen auf Albarella?', a:2,
      o:['Etwa 3','Etwa 15','Etwa 150']}},
-  {key:'nasch', nr:6, name:'Naschbucht', emoji:'🍦', x:30.0, y:30.0, side:'right',
+  {key:'nasch', nr:6, name:'Naschbucht', emoji:'🍦', x:61.4, y:24.3, side:'left',
    motifs:['Eis','Wassermelone','Pizza','Luftballons'],
    story:'Am Ende des Weges liegt der kleine Hafen, und dort gibt es Eis. Der alte Pirat, sagt man, hat hier nie widerstehen können.',
    fact:'Im Sommer wird das Wasser vor Albarella 24 bis 27 Grad warm – wie eine Badewanne, die nie kalt wird. Weiter draußen ist das Mittelmeer dafür tief: an seiner tiefsten Stelle über 5000 Meter. Da könnte man die höchsten Berge der Alpen hineinstellen, und oben wäre noch Wasser darüber.',
-   hidden:{was:'Finde die kleine Krabbe am Weg', icon:'🦀', x:35.0, y:23.0, r:26},
+   hidden:{was:'Finde die kleine Krabbe am Weg', icon:'🦀', x:56, y:30, r:26},
    quiz:{q:'Wie tief ist das Mittelmeer an seiner tiefsten Stelle?', a:1,
      o:['Über 50 Meter','Über 5000 Meter','Über 500 Meter']}}
 ];
@@ -2545,15 +2588,17 @@ const FRAGMENTS=[
    draussen, der Rehbock auch, solange nicht bestaetigt ist, dass es auf
    Albarella welche gibt. */
 const SPRITES=[
-  {datei:'sprite-muschel.png',      emoji:'🐚', x:56.0, y:24.5, w:52, h:45, min:1, atem:true},
-  {datei:'sprite-schildkroete.png', emoji:'🐢', x:41.0, y:41.0, w:62, h:32, min:3, bob:true},
-  {datei:'sprite-reh.png',          emoji:'🦌', x:52.0, y:52.0, w:56, h:47, min:5, atem:true}
+  {datei:'sprite-muschel.png',      emoji:'🐚', x:68.5, y:31.0, w:48, h:42, min:1, atem:true},
+  {datei:null,                      emoji:'⛵', x:92.5, y:83.5, w:54, h:54, min:1, bob:true},
+  {datei:'sprite-schildkroete.png', emoji:'🐢', x:40.0, y:44.5, w:54, h:28, min:2, bob:true},
+  {datei:'sprite-flamingo.png',     emoji:'🦩', x:52.0, y:40.5, w:32, h:47, min:3, atem:true},
+  {datei:'sprite-reh.png',          emoji:'🦌', x:63.0, y:49.5, w:50, h:42, min:5, atem:true}
 ];
 
 /* Schatzpfad: Start unten links, über alle Buchten hinauf zum Capo Nord. */
-const ROUTE=[[63.1,77.7],[54.0,78.5],[45.1,76.7],[53.9,68.7],[64.6,63.4],[67.5,57.2],[72.0,52.0],[66.2,47.0],[62.0,40.5],[50.7,50.0],[37.2,56.0],[31.8,43.5],[30.0,30.0],[34.3,23.0],[40.4,17.5]];
-const CHEST_XY=[40.4,17.5];
-const START_XY=[63.1,77.7];
+const ROUTE=[[72.8,76.0],[62.5,74.0],[53.2,69.3],[57.6,74.8],[60.4,81.4],[65.9,70.9],[74.1,62.4],[74.8,55.9],[77.3,49.9],[63.6,54.9],[49.1,56.0],[53.0,39.3],[61.4,24.3],[56.0,22.5],[51.4,19.3]];
+const CHEST_XY=[51.4,19.3];
+const START_XY=[72.8,76.0];
 /* Bis zu welchem Punkt der Pfad je freigeschalteter Bucht gezeichnet ist */
 const ROUTE_STOP=[2,4,6,8,10,12,14];
 
@@ -2611,8 +2656,11 @@ function star2Set(){ try{ return JSON.parse(profile.islandStar2||'[]'); }catch(e
 function star3Set(){ try{ return JSON.parse(profile.islandStar3||'[]'); }catch(e){ return []; } }
 function goldTierN(){ return TROPHIES.find(t=>t.key==='gold').n; }
 /* Elternzugang: langes Drücken auf den Schatzinsel-Knopf schaltet die Karte zum Testen frei. */
-let islandTestMode=false;
-function islandUnlocked(){ return islandTestMode || discoveredCount()>=goldTierN(); }
+/* Der Testzugang haengt am PROFIL, nicht am Geraet. Vorher lag er global im
+   Speicher – damit war die Insel fuer alle Kinder offen, sobald ein Elternteil
+   sie fuer eines freigeschaltet hatte. */
+function islandTestMode(){ return !!profile && profile.islandTest==='1'; }
+function islandUnlocked(){ return islandTestMode() || discoveredCount()>=goldTierN(); }
 function bayEarned(b,i){
   const st=bayStats(b);
   return [st.full, star2Set().indexOf(b.key)>=0, star3Set().indexOf(b.key)>=0];
@@ -2670,14 +2718,15 @@ function renderIsland(){
     h+='<div class="isl-sprite'+(s.bob?' bob':'')+(s.atem?' atem':'')+'" style="left:'+s.x+'%;top:'+s.y+'%;'
      + 'width:calc('+s.w+'px*var(--s));height:calc('+s.h+'px*var(--s));'
      + 'font-size:calc('+Math.round(Math.min(s.w,s.h)*0.72)+'px*var(--s))">'
-     + '<img src="'+s.datei+'" alt="" onerror="this.replaceWith(Object.assign(document.createElement(\'em\'),{textContent:\''+s.emoji+'\'}))">'
+     + (s.datei ? '<img src="'+s.datei+'" alt="" onerror="this.replaceWith(Object.assign(document.createElement(\'em\'),{textContent:\''+s.emoji+'\'}))">'
+                : '<em>'+s.emoji+'</em>')
      + '</div>';
   });
 
   /* Delfin: taucht ganz langsam auf und wieder ab. Grosse Tuemmler ziehen
      tatsaechlich gelegentlich durch die Adria. */
   if(unlockedCount>=4){
-    h+='<div class="isl-delfin" style="left:91.5%;top:26.0%">'
+    h+='<div class="isl-delfin" style="left:92.5%;top:28.0%">'
      + '<img class="kringel" src="sprite-kringel.png" alt="" onerror="this.remove()">'
      + '<img class="auf" src="sprite-delfin-auf.png" alt="" onerror="this.remove()">'
      + '<img class="tauch" src="sprite-delfin-tauch.png" alt="" onerror="this.remove()">'
@@ -2690,8 +2739,8 @@ function renderIsland(){
   }
 
   h+='<div class="isl-start" style="left:'+START_XY[0]+'%;top:'+(START_XY[1]-2)+'%"><b>Start</b><i></i></div>';
-  h+='<div class="isl-place" style="left:40%;top:8%">Capo Nord</div>';
-  h+='<div class="isl-place" style="left:72%;top:88%">Marina</div>';
+  h+='<div class="isl-place" style="left:51%;top:10%">Capo Nord</div>';
+  h+='<div class="isl-place" style="left:80%;top:84%">Marina</div>';
 
   /* Verstecke: Solange nicht gefunden, ist NICHTS zu sehen – sonst gibt es
      nichts zu suchen. Gefundene Details bleiben als Schmuck auf der Karte. */
@@ -3036,6 +3085,45 @@ async function newestPicFor(b){
 /* ---------- Wissensseite ----------
    Alles offline und handgeschrieben. Zahlen sind Naeherungen und als solche
    formuliert ("etwa", "rund"). */
+/* Fotos von Wikimedia Commons, frei lizenziert. Verkleinert und mitgeliefert,
+   damit die Seite offline funktioniert. Urheber und Lizenz stehen an jedem Bild. */
+const FOTOS=[
+  {key:"albarella", datei:'foto-albarella.jpg', text:"Der Strand von Albarella", urheber:"Abxbay", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Albarella_seaside.JPG"},
+  {key:"podelta", datei:'foto-podelta.jpg', text:"Das Po-Delta: Lagunen, Schilf und flaches Wasser", urheber:"Nicola Quirico", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Boccasette,_parco_regionale_veneto_del_Delta_del_Po.jpg"},
+  {key:"flamingo", datei:'foto-flamingo.jpg', text:"Flamingos in den Lagunen bei Comacchio, gleich neben dem Po-Delta", urheber:"Ale Pollina", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Fenicotteri_nelle_valli_di_Comacchio.jpg"},
+  {key:"delfin", datei:'foto-delfin.jpg', text:"Große Tümmler in der Adria", urheber:"Rob Schleiffert from Holland", lizenz:"CC BY-SA 2.0", seite:"https://commons.wikimedia.org/wiki/File:Dolphins_Croatia_(20022107230)_(cropped).jpg"},
+  {key:"schildkroete", datei:'foto-schildkroete.jpg', text:"Europäische Sumpfschildkröte", urheber:"George Chernilevsky", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Emys_orbicularis_2009_G1.jpg"},
+  {key:"seestern", datei:'foto-seestern.jpg', text:"Roter Mittelmeer-Seestern", urheber:"Diego Delso", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Estrella_roja_del_Mediterr%C3%A1neo_(Echinaster_sepositus),_Cabo_de_Palos,_Espa%C3%B1a,_2022-07-15,_DD_37.jpg"},
+  {key:"muschel", datei:'foto-muschel.jpg', text:"Mittelmeer-Miesmuschel", urheber:"H. Zell", lizenz:"CC BY-SA 3.0", seite:"https://commons.wikimedia.org/wiki/File:Mytilus_galloprovincialis_0001.jpg"},
+  {key:"seepferdchen", datei:'foto-seepferdchen.jpg', text:"Langschnäuziges Seepferdchen", urheber:"jujurenoult", lizenz:"CC BY 4.0", seite:"https://commons.wikimedia.org/wiki/File:Hippocampus_guttulatus_France.jpg"},
+  {key:"pinie", datei:'foto-pinie.jpg', text:"Pinien – ihre Kerne kann man essen", urheber:"Livioandronico2013", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Pinus_pinea_and_ruins_on_Palatine_Hill.jpg"},
+  {key:"silberpappel", datei:'foto-silberpappel.jpg', text:"Silberpappel: unten silbrige Blätter. Sie gab Albarella den Namen", urheber:"Hans Hillewaert", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Populus_alba_(leaves).jpg"},
+  {key:"strandhafer", datei:'foto-strandhafer.jpg', text:"Strandhafer hält die Dünen zusammen", urheber:"Bj.schoenmakers", lizenz:"CC0", seite:"https://commons.wikimedia.org/wiki/File:Ammophila_arenaria_(Marram_grass)_on_dune,_Westenschouwen,_the_Netherlands.jpg"},
+  {key:"neptungras", datei:'foto-neptungras.jpg', text:"Neptungras-Wiese – macht Sauerstoff im Meer", urheber:"National Oceanic and Atmospheric Administration", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Posidonia_oceanica.jpg"},
+  {key:"moewe", datei:'foto-moewe.jpg', text:"Mittelmeermöwe", urheber:"Gzzz", lizenz:"CC BY-SA 3.0", seite:"https://commons.wikimedia.org/wiki/File:Larus_michahellis_Olbia.jpg"},
+  {key:"krabbe", datei:'foto-krabbe.jpg', text:"Mittelmeer-Strandkrabbe", urheber:"George Chernilevsky", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Carcinus_aestuarii_2009_G1.jpg"}
+];
+function foto(key){ return FOTOS.find(f=>f.key===key); }
+
+/* Nur mit Internet erreichbar – deshalb als eigener Abschnitt gekennzeichnet. */
+const WIKI=[
+  ['Albarella','https://de.wikipedia.org/wiki/Albarella'],
+  ['Po-Delta','https://de.wikipedia.org/wiki/Po-Delta'],
+  ['Adriatisches Meer','https://de.wikipedia.org/wiki/Adriatisches_Meer'],
+  ['Mittelmeer','https://de.wikipedia.org/wiki/Mittelmeer'],
+  ['Rosaflamingo','https://de.wikipedia.org/wiki/Rosaflamingo'],
+  ['Gro\u00dfer T\u00fcmmler','https://de.wikipedia.org/wiki/Gro\u00dfer_T\u00fcmmler'],
+  ['Europ\u00e4ische Sumpfschildkr\u00f6te','https://de.wikipedia.org/wiki/Europ\u00e4ische_Sumpfschildkr\u00f6te'],
+  ['Seesterne','https://de.wikipedia.org/wiki/Seesterne'],
+  ['Seepferdchen','https://de.wikipedia.org/wiki/Seepferdchen'],
+  ['Miesmuscheln','https://de.wikipedia.org/wiki/Miesmuscheln'],
+  ['Pinie','https://de.wikipedia.org/wiki/Pinie'],
+  ['Silberpappel','https://de.wikipedia.org/wiki/Silber-Pappel'],
+  ['Strandhafer','https://de.wikipedia.org/wiki/Gew\u00f6hnlicher_Strandhafer'],
+  ['Neptungras','https://de.wikipedia.org/wiki/Neptungras'],
+  ['Po','https://de.wikipedia.org/wiki/Po_(Fluss)']
+];
+
 const WISSEN=[
  {icon:'🏝️', titel:'Die Insel Albarella', punkte:[
   'Albarella liegt im Po-Delta an der italienischen Adriaküste, ganz im Norden. Sie gehört zur Gemeinde Rosolina in der Region Veneto.',
@@ -3081,6 +3169,14 @@ const WISSEN=[
   'Alter der Insel: rund 400 Jahre. Für eine Insel ist das noch ein Baby.']}
 ];
 
+function zeigeFoto(key){
+  const f=foto(key); if(!f) return;
+  $('fotoGrossBild').src=f.datei;
+  $('fotoGrossBild').alt=f.text;
+  $('fotoGrossText').textContent=f.text;
+  $('fotoGrossQuelle').textContent=f.urheber+' · '+f.lizenz+' · Wikimedia Commons (verkleinert)';
+  $('fotoGross').classList.add('on');
+}
 function renderWissen(){
   const host=$('wisWrap'); host.textContent='';
   const mk=(icon,titel,punkte)=>{
@@ -3095,7 +3191,27 @@ function renderWissen(){
     c.querySelector('button').addEventListener('click',()=>Voice.raw(titel+'. '+punkte.join(' ')));
     return c;
   };
-  WISSEN.forEach(w=>host.appendChild(mk(w.icon,w.titel,w.punkte)));
+  const BILDER={"Die Insel Albarella": ["albarella", "silberpappel", "pinie"], "Das Mittelmeer": ["neptungras"], "Die Adria vor Albarella": ["podelta", "delfin"], "Tiere am Strand und im Wasser": ["krabbe", "seestern", "muschel", "seepferdchen", "moewe", "flamingo", "schildkroete"], "Pflanzen der Insel": ["strandhafer"], "Zahlen zum Staunen": []};
+  WISSEN.forEach(w=>{
+    const c=mk(w.icon,w.titel,w.punkte);
+    const keys=BILDER[w.titel]||[];
+    if(keys.length){
+      const g=document.createElement('div');
+      g.className='wis-bilder';
+      keys.forEach(k=>{
+        const f=foto(k); if(!f) return;
+        const b=document.createElement('button');
+        b.type='button'; b.className='wis-bild';
+        b.innerHTML='<img alt="" loading="lazy"><span></span>';
+        b.querySelector('img').src=f.datei;
+        b.querySelector('span').textContent=f.text;
+        b.addEventListener('click',()=>zeigeFoto(k));
+        g.appendChild(b);
+      });
+      c.appendChild(g);
+    }
+    host.appendChild(c);
+  });
 
   /* Alle Fragen der Insel, mit Antwort – ein Haken zeigt, was schon beantwortet ist. */
   const s3=star3Set();
@@ -3120,6 +3236,33 @@ function renderWissen(){
     fragen.appendChild(q);
   });
   host.appendChild(fragen);
+
+  /* Weiterlesen im Internet – offline funktionieren diese Knöpfe nicht. */
+  const wk=document.createElement('div');
+  wk.className='wis-card wide';
+  wk.innerHTML='<div class="wis-head"><em>\u{1F310}</em><b>Mehr im Internet</b></div>'
+    + '<p class="wis-hinweis">Diese Knöpfe öffnen Wikipedia. Das geht nur, wenn das iPad im WLAN ist.</p>'
+    + '<div class="wis-links"></div>';
+  const lh=wk.querySelector('.wis-links');
+  WIKI.forEach(([name,url])=>{
+    const a=document.createElement('a');
+    a.href=url; a.target='_blank'; a.rel='noopener';
+    a.textContent=name;
+    lh.appendChild(a);
+  });
+  host.appendChild(wk);
+
+  /* Bildnachweis – bei freien Lizenzen Pflicht. */
+  const qc=document.createElement('div');
+  qc.className='wis-card wide';
+  qc.innerHTML='<div class="wis-head"><em>\u{1F4F8}</em><b>Bildnachweis</b></div><ul class="wis-quellen"></ul>';
+  const ql=qc.querySelector('.wis-quellen');
+  FOTOS.forEach(f=>{
+    const li=document.createElement('li');
+    li.textContent=f.text+' – '+f.urheber+', '+f.lizenz+' (Wikimedia Commons, verkleinert)';
+    ql.appendChild(li);
+  });
+  host.appendChild(qc);
 
   const note=document.createElement('p');
   note.className='wis-note';
@@ -3280,6 +3423,8 @@ $('wisBack').addEventListener('click',()=>{
   showSection(wissenFrom===secIsland?secIsland:secHome);
   if(wissenFrom===secIsland) renderIsland();
 });
+$('fotoZu').addEventListener('click',()=>$('fotoGross').classList.remove('on'));
+$('fotoGross').addEventListener('click',e=>{ if(e.target===$('fotoGross')) $('fotoGross').classList.remove('on'); });
 $('wisSpeak').addEventListener('click',()=>{
   Voice.raw('Albarella-Wissen. '+WISSEN.map(w=>w.titel+'. '+w.punkte.join(' ')).join(' '));
 });
@@ -3443,10 +3588,12 @@ async function resetIsland(){
   const start=()=>{ held=false; clearTimeout(t); t=setTimeout(async()=>{
     held=true;
     if(!parentGate()) return;
-    islandTestMode=!islandTestMode;
-    await Store.set('islandTest', islandTestMode?'1':'0');
+    if(!profile) return;
+    profile.islandTest = profile.islandTest==='1' ? '0' : '1';
+    await saveProfiles();
     renderGreeting();
-    toast(islandTestMode ? '🔓 Testzugang an – Schatzinsel offen' : '🔒 Testzugang aus');
+    toast(islandTestMode() ? '🔓 Testzugang an – Schatzinsel offen für '+profile.name
+                           : '🔒 Testzugang aus für '+profile.name);
   },1200); };
   const stop=()=>clearTimeout(t);
   b.addEventListener('pointerdown',start);
@@ -4230,7 +4377,12 @@ layout();
   const vName=await Store.get('voiceName'); if(vName) setTimeout(()=>Voice.setVoice(vName),400);
   syncVoiceButtons();
   const savedMode=await Store.get('mode'); setMode(savedMode==='color'?'color':'draw');
-  islandTestMode=(await Store.get('islandTest'))==='1';
+  /* Alter, geraeteweiter Schalter: einmalig auf das aktive Profil uebertragen
+     und danach loeschen, damit er keine anderen Kinder mehr freischaltet. */
+  if((await Store.get('islandTest'))==='1'){
+    if(profile && profile.islandTest!=='1'){ profile.islandTest='1'; await saveProfiles(); }
+    await Store.del('islandTest');
+  }
   const last=await Store.get('lastProfile');
   const found=profiles.find(p=>p.id===last);
   if(found) pickProfile(found); else showSection(secProfiles);
