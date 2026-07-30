@@ -1,12 +1,21 @@
 /* Service Worker – speichert die App fürs Offline-Malen */
-const CACHE = 'malstudio-v7-36';
+const CACHE = 'malstudio-v7-39';
 const ASSETS = [
   './index.html',
   './manifest.webmanifest',
   './icon-180.png',
   './icon-192.png',
   './icon-512.png',
-  './icon-mask-512.png'
+  './icon-mask-512.png',
+  './sprite-schatzkiste.png',
+  './sprite-funkeln.png',
+  './sprite-flamingo.png',
+  './sprite-moewe.png',
+  './sprite-muschel.png',
+  './sprite-schildkroete.png',
+  './sprite-delfin-auf.png',
+  './sprite-delfin-tauch.png',
+  './sprite-kringel.png'
 ];
 
 self.addEventListener('install', e => {
