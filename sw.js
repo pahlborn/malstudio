@@ -1,5 +1,5 @@
 /* Service Worker – speichert die App fürs Offline-Malen */
-const CACHE = 'malstudio-v7-39';
+const CACHE = 'malstudio-v7-40';
 const ASSETS = [
   './index.html',
   './manifest.webmanifest',
@@ -7,10 +7,10 @@ const ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './icon-mask-512.png',
+  './albarella-basis.jpg',
+  './sprite-reh.png',
   './sprite-schatzkiste.png',
   './sprite-funkeln.png',
-  './sprite-flamingo.png',
-  './sprite-moewe.png',
   './sprite-muschel.png',
   './sprite-schildkroete.png',
   './sprite-delfin-auf.png',
