@@ -926,7 +926,7 @@
       <button class="icon-btn" id="wisBtn">📚 Albarella-Wissen</button>
       <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
       <button class="icon-btn" id="fsBtn">⛶ Vollbild</button>
-      <button class="icon-btn" id="voiceBtn">🔊 Stimme</button>
+      <button class="icon-btn" id="voiceBtn">🔊 Ton</button>
       <button class="icon-btn flagge" id="langBtn" aria-label="Sprache umschalten">🇩🇪</button>
       <button class="icon-btn" id="gearBtn" aria-label="Einstellungen">⚙️</button>
     </div>
@@ -935,16 +935,6 @@
     <div class="modes" id="modes">
       <button class="modebtn on" id="modeDraw" aria-pressed="true">✏️ Nachmalen</button>
       <button class="modebtn" id="modeColor" aria-pressed="false">🎨 Ausmalen</button>
-    </div>
-    <div class="panel" id="voicePanel" hidden>
-      <div class="row">
-        <strong style="font-size:15px">Stimme:</strong>
-        <select id="voiceSel"></select>
-        <button class="icon-btn" id="voiceTest">▶︎ Probe hören</button>
-        <button class="icon-btn go" id="voiceToggle">🔊 An</button>
-        <button class="icon-btn" id="voiceClose">Fertig</button>
-      </div>
-      <p class="hint" id="voiceHint" style="margin-top:8px"></p>
     </div>
     <p class="hint" id="homeHint">Links steht die Vorlage – im weißen Feld malst du sie nach.</p>
     <div class="level-legend">
@@ -2335,20 +2325,22 @@ function uebersetzeSeite(){
   });
   document.documentElement.lang = LANG;
 }
-async function setLang(l){
+async function setLang(l, nurAnzeigen){
   LANG = (l==='en') ? 'en' : 'de';
-  await Store.set('lang', LANG);
+  /* Die Sprache gehoert zum Kind. Der Geraetewert ist nur die Vorgabe fuer
+     neu angelegte Profile und fuer den Start ohne Profil. */
+  if(!nurAnzeigen){
+    await Store.set('lang', LANG);
+    if(profile && profile.lang!==LANG){ profile.lang=LANG; await saveProfiles(); }
+    /* Regel 3: Pro Sprache merken wir uns eine Stimme. */
+    const gemerkt=await Store.get('voice.'+LANG);
+    const passend=Voice.listFor(LANG);
+    const ziel = (gemerkt && passend.some(v=>v.name===gemerkt)) ? gemerkt : (Voice.bestFor(LANG)||{}).name;
+    if(ziel){ Voice.setVoice(ziel); await Store.set('voice.'+LANG, ziel); }
+  }
   const f = LANG==='en' ? '\u{1F1EC}\u{1F1E7}' : '\u{1F1E9}\u{1F1EA}';
   ['langBtn','islLangBtn','wisLangBtn'].forEach(id=>{ if($(id)) $(id).textContent=f; });
   document.querySelectorAll('.ein-flagge').forEach(b=>b.classList.toggle('an', b.dataset.lang===LANG));
-  /* Passende Stimme suchen – sonst spricht eine deutsche Stimme englische Saetze. */
-  try{
-    const liste=Voice.list();
-    const passt=liste.find(v=>new RegExp('^'+LANG,'i').test(v.lang));
-    if(passt && !new RegExp('^'+LANG,'i').test((liste.find(v=>v.name===Voice.currentName())||{}).lang||'')){
-      Voice.setVoice(passt.name); Store.set('voiceName',passt.name);
-    }
-  }catch(e){}
   uebersetzeSeite();
   /* Alles neu zeichnen, was Text enthaelt */
   if(typeof renderGreeting==='function' && profile) renderGreeting();
@@ -2531,7 +2523,9 @@ const Voice=(function(){
   };
   const last={};
   let on=true, voice=null, lastSpoke=0;
-  function currentLang(){ return (voice && /^en/i.test(voice.lang)) ? 'en' : 'de'; }
+  /* Regel 1: Die Flagge fuehrt. Frueher leitete sich die Sprache aus der gewaehlten
+     Stimme ab – dann konnte englischer Text mit deutscher Stimme gesprochen werden. */
+  function currentLang(){ return (typeof LANG!=='undefined' && LANG==='en') ? 'en' : 'de'; }
   function pick(pool,vars){
     const a=(P[currentLang()]||P.de)[pool]; if(!a||!a.length) return '';
     let t, tries=0;
@@ -2549,6 +2543,18 @@ const Voice=(function(){
     if(!('speechSynthesis' in window)) return [];
     return speechSynthesis.getVoices().filter(v=>/^(de|en)/i.test(v.lang));
   }
+  /* Regel 2: Nur Stimmen der aktuellen Sprache stehen zur Wahl. */
+  function voicesFor(l){
+    if(!('speechSynthesis' in window)) return [];
+    return speechSynthesis.getVoices().filter(v=>new RegExp('^'+l,'i').test(v.lang));
+  }
+  function bestFor(l){
+    const vs=voicesFor(l); if(!vs.length) return null;
+    const prem=vs.find(v=>/premium|enhanced|erweitert/i.test(v.name) && FEMALE.some(f=>v.name.toLowerCase().includes(f)));
+    if(prem) return prem;
+    for(const f of FEMALE){ const hit=vs.find(v=>v.name.toLowerCase().includes(f)); if(hit) return hit; }
+    return vs[0];
+  }
   function autoPick(){
     const vs=germanVoices(); if(!vs.length) return null;
     const prem=vs.find(v=>/premium|enhanced|erweitert/i.test(v.name) && FEMALE.some(f=>v.name.toLowerCase().includes(f)));
@@ -2563,6 +2569,13 @@ const Voice=(function(){
   }
   function speak(text,force){
     if(!on || !text || !('speechSynthesis' in window)) return;
+    /* Regel 4: Passt keine Stimme zur Sprache, sagen wir lieber nichts,
+       statt englische Saetze deutsch vorzulesen. */
+    if(!voice || !new RegExp('^'+currentLang(),'i').test(voice.lang)){
+      const ersatz=bestFor(currentLang());
+      if(!ersatz) return;
+      voice=ersatz;
+    }
     const now=Date.now();
     if(!force && now-lastSpoke<4000) return;
     lastSpoke=now;
@@ -2581,6 +2594,9 @@ const Voice=(function(){
     rawBoth(de,en){ speak(currentLang()==='en'?en:de, true); },
     lang:currentLang,
     list:usableVoices,
+    listFor:voicesFor,
+    bestFor:bestFor,
+    hasFor(l){ return voicesFor(l).length>0; },
     setVoice(name){ const v=usableVoices().find(x=>x.name===name); if(v) voice=v; },
     currentName(){ return voice?voice.name:''; },
     isOn(){ return on; },
@@ -2700,7 +2716,7 @@ AVATARS.forEach((a,i)=>{
 });
 $('pcreate').addEventListener('click',async()=>{
   const name=($('pname').value||'').trim()||'Kind';
-  profiles.push({id:'p'+Date.now(),name:name,emoji:newAvatar,count:0});
+  profiles.push({id:'p'+Date.now(),name:name,emoji:newAvatar,count:0,lang:LANG});
   await saveProfiles(); $('pname').value=''; $('maker').hidden=true; renderProfiles();
 });
 $('pcancel').addEventListener('click',()=>{ $('maker').hidden=true; $('pname').value=''; });
@@ -2711,6 +2727,7 @@ async function pickProfile(p){
   Store.set('lastProfile',p.id);
   await loadCustoms();
   renderPicker();
+  await setLang(profile.lang || (await Store.get('lang')) || 'de');
   showSection(secHome);
   Voice.say('hello',null,true);
 }
@@ -3677,22 +3694,29 @@ function renderWissen(){
 
 
 /* ---------- Einstellungen ---------- */
-const APP_VERSION='v7-45';
+const APP_VERSION='v7-46';
 let elternFrei=false;
 async function einstellungenOeffnen(){
   $('einUeber').textContent = t('Version')+' '+APP_VERSION+' · '
     + t('alles offline, keine Konten, keine Werbung, keine Daten verlassen dieses iPad.');
   document.querySelectorAll('.ein-flagge').forEach(b=>b.classList.toggle('an', b.dataset.lang===LANG));
+  /* Regel 2: Nur Stimmen der gewaehlten Sprache. */
   const sel=$('einVoiceSel'); sel.innerHTML='';
-  Voice.list().forEach(v=>{
+  const passend=Voice.listFor(LANG);
+  passend.forEach(v=>{
     const o=document.createElement('option'); o.value=v.name; o.textContent=v.name; sel.appendChild(o);
   });
   sel.value=Voice.currentName();
+  sel.disabled=!passend.length;
+  $('einVoiceTest').disabled=!passend.length;
   $('einVoiceToggle').textContent = Voice.isOn() ? t('🔊 Sprache an') : t('🔇 Sprache aus');
   $('einVoiceToggle').classList.toggle('an', Voice.isOn());
-  $('einVoiceHinweis').textContent = Voice.list().length
-    ? t('Bei englischer Flagge sucht die App eine englische Stimme.')
-    : t('Dieses Gerät bietet gerade keine Stimmen an.');
+  /* Regel 4: Fehlt eine Stimme, sagen wir es – statt still die falsche zu nehmen. */
+  $('einVoiceHinweis').textContent = passend.length
+    ? t('Stimmen mit „Premium“ oder „Erweitert“ klingen am freundlichsten.')
+    : (LANG==='en'
+        ? t('Für Englisch ist auf diesem iPad keine Stimme installiert. Die Texte sind englisch, vorgelesen wird nichts. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.')
+        : t('Für Deutsch ist auf diesem iPad keine Stimme installiert. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.'));
   $('einElternInhalt').hidden = !elternFrei;
   $('einElternAuf').hidden = elternFrei;
   if(elternFrei) await elternFelderFuellen();
@@ -3724,9 +3748,15 @@ $('langBtn').addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
 $('islLangBtn').addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
 $('wisLangBtn').addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
 $('wisGearBtn').addEventListener('click',einstellungenOeffnen);
-document.querySelectorAll('.ein-flagge').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+document.querySelectorAll('.ein-flagge').forEach(b=>b.addEventListener('click',async()=>{
+  await setLang(b.dataset.lang);
+  if($('einstellungen').classList.contains('on')) await einstellungenOeffnen();
+}));
 /* Stimme */
-$('einVoiceSel').addEventListener('change',e=>{ Voice.setVoice(e.target.value); Store.set('voiceName',e.target.value); });
+$('einVoiceSel').addEventListener('change',e=>{
+  Voice.setVoice(e.target.value);
+  Store.set('voice.'+LANG, e.target.value);   /* Regel 3: pro Sprache gemerkt */
+});
 $('einVoiceTest').addEventListener('click',()=>sprich('Hallo, ich bin es. So klinge ich.'));
 $('einVoiceToggle').addEventListener('click',e=>{
   const an=Voice.toggle(); Store.set('voiceOn',an?'1':'0');
@@ -4637,51 +4667,18 @@ function syncVoiceButtons(){
     b.textContent = on ? '🔊 Stimme' : '🔇 Stimme';
     b.classList.toggle('off',!on);
   });
-  $('voiceToggle').textContent = on ? '🔊 An' : '🔇 Aus';
-  $('voiceToggle').classList.toggle('go',on);
 }
 $('voiceBtn2').addEventListener('click',()=>{ Voice.toggle(); syncVoiceButtons(); Store.set('voiceOn',Voice.isOn()?'1':'0'); });
 
-/* ---------- Stimm-Einstellungen ---------- */
-function fillVoiceList(){
-  const sel=$('voiceSel'); const vs=Voice.list();
-  sel.textContent='';
-  if(!vs.length){
-    const o=document.createElement('option'); o.textContent='Keine deutsche oder englische Stimme gefunden'; sel.appendChild(o);
-    $('voiceHint').textContent='Auf dem iPad: Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Deutsch (oder Englisch). Dort eine Stimme mit dem Zusatz „Premium" oder „Erweitert" laden – die klingt deutlich natürlicher.';
-    return;
-  }
-  const de=vs.filter(v=>/^de/i.test(v.lang)), en=vs.filter(v=>/^en/i.test(v.lang));
-  const addGroup=(label,arr)=>{
-    if(!arr.length) return;
-    const g=document.createElement('optgroup'); g.label=label;
-    arr.forEach(v=>{
-      const o=document.createElement('option'); o.value=v.name; o.textContent=v.name;
-      if(v.name===Voice.currentName()) o.selected=true;
-      g.appendChild(o);
-    });
-    sel.appendChild(g);
-  };
-  addGroup('Deutsch',de);
-  addGroup('English',en);
-  $('voiceHint').textContent='Tipp: Stimmen mit „Premium" oder „Erweitert" klingen am freundlichsten. Wähle eine englische Stimme, damit Malstudio Anleitungen und Ansagen auf Englisch vorliest. Fehlt eine Stimme, lässt sie sich unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen kostenlos nachladen.';
-}
-window.__voiceListRefresh=fillVoiceList;
+/* ---------- Ton an/aus ----------
+   Die Stimmenwahl steckt vollstaendig im Zahnrad. Hier bleibt nur der schnelle
+   Schalter, den man mitten im Malen braucht. */
+window.__voiceListRefresh=function(){
+  if($('einstellungen') && $('einstellungen').classList.contains('on')) einstellungenOeffnen();
+};
 $('voiceBtn').addEventListener('click',()=>{
-  const p=$('voicePanel'); p.hidden=!p.hidden;
-  if(!p.hidden){ fillVoiceList(); syncVoiceButtons(); }
-});
-$('voiceClose').addEventListener('click',()=>{ $('voicePanel').hidden=true; });
-$('voiceSel').addEventListener('change',e=>{
-  Voice.setVoice(e.target.value); Store.set('voiceName',e.target.value);
-  Voice.rawBoth('Hallo, ich bin es. So klinge ich.', 'Hello, it\'s me. This is what I sound like.');
-});
-$('voiceTest').addEventListener('click',()=>{
-  Voice.rawBoth('Hallo! Ich male heute mit dir. Das wird richtig schön.', 'Hello! I\'m drawing with you today. This is going to be lovely.');
-});
-$('voiceToggle').addEventListener('click',()=>{
-  Voice.toggle(); syncVoiceButtons(); Store.set('voiceOn',Voice.isOn()?'1':'0');
-  if(Voice.isOn()) Voice.rawBoth('Da bin ich wieder!', 'I\'m back!');
+  const an=Voice.toggle(); syncVoiceButtons(); Store.set('voiceOn',an?'1':'0');
+  if(an) sprich('Da bin ich wieder!');
 });
 
 /* ---------- Galerie ---------- */
