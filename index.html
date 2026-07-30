@@ -183,6 +183,8 @@
   /* Discret, aber treffbar: 44px Tippflaeche bei kleinem Symbol. */
   .isl-key{border:0;background:none;font-size:17px;opacity:.55;cursor:pointer;
     width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex:none}
+  #treasurePhoto{display:block;width:100%;max-height:34vh;object-fit:cover;margin-top:12px;
+    border-radius:8px;border:3px solid #C39A63;box-shadow:0 4px 10px rgba(90,70,40,.3)}
   .treasure-parent{display:block;width:100%;margin-top:10px;padding:9px 12px;border-radius:10px;
     cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
     background:rgba(255,253,245,.7);border:2px dashed #C0A774;color:#8A7550}
@@ -341,6 +343,56 @@
   .isl-sprite img{width:100%;height:100%;object-fit:contain;display:block}
   .isl-sprite em{font-style:normal;line-height:1}
   .isl-sprite.bob{animation:bob 5s ease-in-out infinite}
+  /* „Atmen": kaum sichtbar, aber die Karte steht nicht still. */
+  .isl-sprite.atem img,.isl-sprite.atem em{animation:atem 7s ease-in-out infinite;transform-origin:50% 100%}
+  @keyframes atem{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+
+  /* Delfin: auftauchen, kurz zeigen, abtauchen, lange Pause. 26 s pro Runde. */
+  .isl-delfin{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:8;
+    width:calc(78px*var(--s));height:calc(56px*var(--s))}
+  .isl-delfin img{position:absolute;left:0;bottom:0;width:100%;display:block;opacity:0;
+    filter:drop-shadow(0 3px 5px rgba(20,40,56,.35))}
+  .isl-delfin .kringel{bottom:-6%;animation:delfinRing 26s ease-in-out infinite}
+  .isl-delfin .auf{animation:delfinAuf 26s ease-in-out infinite}
+  .isl-delfin .tauch{animation:delfinTauch 26s ease-in-out infinite}
+  @keyframes delfinRing{0%,20%{opacity:0}26%,74%{opacity:.55}88%,100%{opacity:0}}
+  @keyframes delfinAuf{
+    0%,22%{opacity:0;transform:translateY(30%)}
+    30%,46%{opacity:1;transform:translateY(0)}
+    54%,100%{opacity:0;transform:translateY(6%)}}
+  @keyframes delfinTauch{
+    0%,50%{opacity:0;transform:translateY(0)}
+    58%,72%{opacity:1;transform:translateY(0)}
+    84%,100%{opacity:0;transform:translateY(34%)}}
+
+  /* Zweites Boot: vom Meer zur Insel und zurueck, 200 s fuer die ganze Runde. */
+  .isl-boot{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:7}
+  .isl-boot em{position:absolute;left:0;top:0;font-style:normal;line-height:1;
+    font-size:calc(30px*var(--s));filter:drop-shadow(0 3px 5px rgba(20,40,56,.35));
+    animation:bootFahrt 200s linear infinite}
+  @keyframes bootFahrt{
+    0%   {transform:translate(-6%,62%) scale(.85)}
+    22%  {transform:translate(14%,74%) scale(1)}
+    44%  {transform:translate(30%,92%) scale(1.05)}
+    50%  {transform:translate(32%,94%) scale(1.05)}
+    56%  {transform:translate(30%,92%) scale(1.05)}
+    78%  {transform:translate(14%,74%) scale(1)}
+    100% {transform:translate(-6%,62%) scale(.85)}}
+
+  .isl-chest .box.kiste{background:none;border:0;box-shadow:none;padding:0;
+    display:flex;align-items:center;justify-content:center;position:relative}
+  .isl-chest .box.kiste img{width:100%;height:100%;object-fit:contain;display:block;
+    filter:drop-shadow(0 4px 7px rgba(20,40,56,.45))}
+  .isl-chest .box.kiste img.funkeln{position:absolute;left:-14%;top:-26%;width:60%;height:auto;
+    filter:none;animation:funkelPuls 3.4s ease-in-out infinite}
+  /* Noch verschlossen: blasser, mit Schloss. Offen: volle Farbe und Funkeln. */
+  .isl-chest .box.kiste.zu img{filter:saturate(.45) brightness(.92)
+    drop-shadow(0 4px 7px rgba(20,40,56,.45))}
+  .isl-chest .box.kiste .siegel{position:absolute;right:-16%;bottom:-14%;font-style:normal;
+    font-size:calc(20px*var(--s));filter:drop-shadow(0 2px 3px rgba(20,40,56,.5))}
+  .isl-chest .box.kiste.auf img:not(.funkeln){animation:kisteAuf 4.5s ease-in-out infinite}
+  @keyframes kisteAuf{0%,100%{transform:translateY(0)}50%{transform:translateY(-4%)}}
+  @keyframes funkelPuls{0%,100%{opacity:.25;transform:scale(.9)}50%{opacity:.95;transform:scale(1.08)}}
   @keyframes bob{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 5px))}}
 
   /* ---------- Seitenspalte (268px, wie im Entwurf) ---------- */
@@ -400,6 +452,33 @@
     font-family:var(--font-map);font-weight:800;font-size:14px;color:#fff;cursor:pointer;
     background:linear-gradient(#3F9C6D,#2C7C54);box-shadow:0 4px 0 rgba(0,0,0,.16)}
   .isl-cta.gold{background:linear-gradient(#E0A636,#C1861D)}
+
+  /* ---------- Wissensseite ---------- */
+  .wis-wrap{flex:1;min-height:0;overflow-y:auto;padding:14px 16px 22px;
+    background:linear-gradient(#FDF6E6,#F7ECD6);
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:12px;align-content:start}
+  .wis-card{padding:13px 15px 15px;border-radius:9px;background:rgba(255,253,245,.9);
+    border:2px solid #E5CF9D;box-shadow:0 3px 8px rgba(120,90,30,.1)}
+  .wis-card.wide{grid-column:1/-1}
+  .wis-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .wis-head em{font-style:normal;font-size:21px;line-height:1}
+  .wis-head b{font-family:var(--font-map);font-weight:800;font-size:16px;color:#1E5F8C}
+  .wis-head button{margin-left:auto;background:none;border:0;font-size:15px;cursor:pointer;padding:2px}
+  .wis-card ul{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+  .wis-card li{font-family:var(--font-hand);font-weight:600;font-size:19px;line-height:1.25;
+    color:#4A3620;padding-left:17px;position:relative}
+  .wis-card li::before{content:'\2022';position:absolute;left:3px;top:-1px;color:#DFA63A;font-weight:800}
+  .wis-q{border-top:1.5px dashed #DCC79B;padding-top:9px;margin-top:9px}
+  .wis-q:first-of-type{border-top:0;padding-top:0;margin-top:0}
+  .wis-q p{margin:0;font-family:var(--font-hand);font-weight:700;font-size:19px;
+    line-height:1.2;color:#8F2F1F}
+  .wis-q small{display:block;margin-top:3px;font-family:'Nunito',sans-serif;font-size:12.5px;
+    font-weight:800;color:#3F6B34}
+  .wis-q span.open{display:block;margin-top:3px;font-family:'Nunito',sans-serif;
+    font-size:11.5px;font-weight:800;color:#A2937A}
+  .wis-note{grid-column:1/-1;margin:0;font-family:'Nunito',sans-serif;font-size:11.5px;
+    font-weight:700;color:#A2937A;text-align:center}
 
   /* ---------- Botschaft des Piraten ---------- */
   .frag-intro{margin:0 0 12px;font-family:var(--font-hand);font-weight:600;font-size:20px;
@@ -745,6 +824,7 @@
       <span style="margin-left:auto"></span>
       <button class="icon-btn" id="newMotif">✏️ Eigenes Motiv</button>
       <button class="icon-btn" id="islBtn">🗺️ Schatzinsel</button>
+      <button class="icon-btn" id="wisBtn">📚 Albarella-Wissen</button>
       <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
       <button class="icon-btn" id="fsBtn">⛶ Vollbild</button>
       <button class="icon-btn" id="voiceBtn">🔊 Stimme</button>
@@ -821,6 +901,7 @@
       <div class="isl-title">Albarella</div>
       <div class="isl-sub" id="islSub">Insel-Abenteuer · Schatzsuche</div>
       <div style="flex:1"></div>
+      <button class="isl-key" id="islWisBtn" title="Albarella-Wissen">📚</button>
       <button class="isl-key" id="islHintBtn" title="Nur für Eltern">🔑</button>
       <div class="isl-count"><span>🗺️</span><b id="islCount"></b></div>
     </div>
@@ -829,6 +910,18 @@
       <div class="isl-map" id="islMap"></div>
       <div class="isl-side" id="islSide"></div>
     </div>
+  </section>
+
+  <!-- ============ WISSENSSEITE ============ -->
+  <section id="wissen" hidden>
+    <div class="isl-top">
+      <button class="isl-back" id="wisBack"><span>‹</span><span>Zurück</span></button>
+      <div class="isl-title">Albarella-Wissen</div>
+      <div class="isl-sub">Insel, Meer und alle Fragen</div>
+      <div style="flex:1"></div>
+      <button class="isl-key" id="wisSpeak" title="Vorlesen">🔊</button>
+    </div>
+    <div class="wis-wrap" id="wisWrap"></div>
   </section>
 
   <!-- ============ WERKSTATT ============ -->
@@ -964,12 +1057,15 @@
     <p class="lead">Du hast alle Hinweise gefunden! Jetzt beginnt die echte Suche – draußen, im Sand.</p>
     <div class="treasure-body">
       <div class="treasure-hint">
-        <small>Hinweis von Mama &amp; Papa</small>
+        <small>Jetzt suchen wir den Schatz</small>
         <p id="treasureHintText"></p>
       </div>
     </div>
-    <a class="nav-btn" id="treasureMapLink" href="#" target="_blank" rel="noopener" style="display:none;margin-top:12px;text-decoration:none;text-align:center">📍 In Karten öffnen</a>
+    <img id="treasurePhoto" alt="Foto vom Fundort" style="display:none">
+    <a class="nav-btn" id="treasureMapLink" href="#" target="_blank" rel="noopener" style="display:none;margin-top:12px;text-decoration:none;text-align:center">📍 Ich zeige Dir den Weg</a>
     <button type="button" id="treasureSetBtn" class="treasure-parent" style="display:none">🔑 Für Eltern: Fundort eintragen</button>
+    <button type="button" id="treasurePhotoBtn" class="treasure-parent">📸 Für Eltern: Foto vom Fundort</button>
+    <input type="file" id="treasurePhotoIn" accept="image/*" hidden>
     <button class="nav-btn primary" id="treasureOk">Juhu! 🎉</button>
   </div>
 </div>
@@ -2036,7 +2132,7 @@ const Voice=(function(){
    APP
    ============================================================ */
 const $=id=>document.getElementById(id);
-const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secIsland=$('island');
+const secProfiles=$('profiles'), secHome=$('home'), secGallery=$('gallery'), secDraw=$('draw'), secCreator=$('creator'), secIsland=$('island'), secWissen=$('wissen');
 const ref=$('ref'), ghost=$('ghost'), bubbles=$('bubbles');
 const pad=$('pad'), ctx=pad.getContext('2d');
 const helper=$('helper'), toastEl=$('toast');
@@ -2085,7 +2181,7 @@ function toast(msg){
   clearTimeout(toast._t); toast._t=setTimeout(()=>toastEl.classList.remove('on'),1800);
 }
 function showSection(s){
-  [secProfiles,secHome,secGallery,secDraw,secCreator,secIsland].forEach(x=>x.hidden = x!==s);
+  [secProfiles,secHome,secGallery,secDraw,secCreator,secIsland,secWissen].forEach(x=>x.hidden = x!==s);
   updateProgressChips();
   if(s===secHome){ renderGreeting(); }
   if(s!==secDraw) stopIdle();
@@ -2431,13 +2527,16 @@ const FRAGMENTS=[
 ];
 
 /* Lebendige Details. Solange die Sprite-Dateien fehlen, springt das Emoji ein. */
+/* Lebendige Details – bewusst nur Arten, die es im Po-Delta und in der Adria
+   wirklich gibt: Flamingo (Lagunen des Po-Deltas), Silbermoewe, Muschel,
+   Sumpfschildkroete, Grosser Tuemmler. Der Papagei aus dem Grafikblatt bleibt
+   draussen, der Rehbock auch, solange nicht bestaetigt ist, dass es auf
+   Albarella welche gibt. */
 const SPRITES=[
-  {datei:'sprite-muscheln.png',     emoji:'🐚', x:66, y:74, w:58, h:44, min:1},
-  {datei:'sprite-moewe.png',        emoji:'🕊️', x:94, y:52, w:56, h:40, min:2, bob:true},
-  {datei:'sprite-segelboot.png',    emoji:'⛵', x:92, y:76, w:92, h:92, min:3, bob:true},
-  {datei:'sprite-flamingopaar.png', emoji:'🦩', x:41, y:44, w:84, h:96, min:3},
-  {datei:'sprite-delfin.png',       emoji:'🐬', x:92, y:26, w:78, h:60, min:4},
-  {datei:'sprite-krabbe.png',       emoji:'🦀', x:44, y:32, w:44, h:40, min:6}
+  {datei:'sprite-muschel.png',      emoji:'🐚', x:66, y:74, w:52, h:45, min:1, atem:true},
+  {datei:'sprite-moewe.png',        emoji:'🕊️', x:94, y:52, w:50, h:54, min:2, bob:true},
+  {datei:'sprite-flamingo.png',     emoji:'🦩', x:41, y:44, w:60, h:88, min:3, atem:true},
+  {datei:'sprite-schildkroete.png', emoji:'🐢', x:44, y:32, w:62, h:32, min:5, bob:true}
 ];
 
 /* Schatzpfad: Start unten links, über alle Buchten hinauf zum Capo Nord. */
@@ -2544,13 +2643,29 @@ function renderIsland(){
    + '<polyline class="under" points="'+pts+'"></polyline>'
    + '<polyline class="over" points="'+pts+'"></polyline></svg>';
 
+  const unlockedCount=BAYS.filter((b,i)=>bayUnlocked(i)).length;
   SPRITES.filter(s=>done>=s.min).forEach(s=>{
-    h+='<div class="isl-sprite'+(s.bob?' bob':'')+'" style="left:'+s.x+'%;top:'+s.y+'%;'
+    h+='<div class="isl-sprite'+(s.bob?' bob':'')+(s.atem?' atem':'')+'" style="left:'+s.x+'%;top:'+s.y+'%;'
      + 'width:calc('+s.w+'px*var(--s));height:calc('+s.h+'px*var(--s));'
      + 'font-size:calc('+Math.round(Math.min(s.w,s.h)*0.72)+'px*var(--s))">'
      + '<img src="'+s.datei+'" alt="" onerror="this.replaceWith(Object.assign(document.createElement(\'em\'),{textContent:\''+s.emoji+'\'}))">'
      + '</div>';
   });
+
+  /* Delfin: taucht ganz langsam auf und wieder ab. Grosse Tuemmler ziehen
+     tatsaechlich gelegentlich durch die Adria. */
+  if(unlockedCount>=4){
+    h+='<div class="isl-delfin" style="left:88%;top:30%">'
+     + '<img class="kringel" src="sprite-kringel.png" alt="" onerror="this.remove()">'
+     + '<img class="auf" src="sprite-delfin-auf.png" alt="" onerror="this.remove()">'
+     + '<img class="tauch" src="sprite-delfin-tauch.png" alt="" onerror="this.remove()">'
+     + '</div>';
+  }
+  /* Zweites Boot: kommt vom offenen Meer zur Insel und faehrt wieder hinaus.
+     Sehr langsam, damit es nicht zappelt. */
+  if(unlockedCount>=3){
+    h+='<div class="isl-boot" aria-hidden="true"><em>⛵</em></div>';
+  }
 
   h+='<div class="isl-start" style="left:'+START_XY[0]+'%;top:'+(START_XY[1]-2)+'%"><b>Start</b><i></i></div>';
   h+='<div class="isl-place" style="left:57%;top:6%">Capo Nord</div>';
@@ -2580,7 +2695,12 @@ function renderIsland(){
   /* Capo Nord bleibt bis zum Schluss komplett im Nebel – nichts verraet, was dort wartet. */
   if(chestReady||found){
     h+='<div class="isl-chest ready" id="islChestEl" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
-     + '<div class="box">'+(found?'🎁':'🔓')+'</div></div>';
+     + '<div class="box kiste'+(found?' auf':' zu')+'" data-zustand="'+(found?'offen':'bereit')+'">'
+     + '<img src="sprite-schatzkiste.png" alt="'+(found?'Offene Schatzkiste':'Schatzkiste, noch verschlossen')+'" '
+     + 'onerror="this.replaceWith(Object.assign(document.createElement(\'em\'),{textContent:\''+(found?'🎁':'🔓')+'\'}))">'
+     + (found ? '<img class="funkeln" src="sprite-funkeln.png" alt="" onerror="this.remove()">'
+              : '<em class="siegel">🔒</em>')
+     + '</div></div>';
   }
   if(!found){
     h+='<div class="isl-chestcloud" id="islChestCloud" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
@@ -2890,6 +3010,100 @@ async function newestPicFor(b){
   return null;
 }
 
+/* ---------- Wissensseite ----------
+   Alles offline und handgeschrieben. Zahlen sind Naeherungen und als solche
+   formuliert ("etwa", "rund"). */
+const WISSEN=[
+ {icon:'🏝️', titel:'Die Insel Albarella', punkte:[
+  'Albarella liegt im Po-Delta an der italienischen Adriaküste, ganz im Norden. Sie gehört zur Gemeinde Rosolina in der Region Veneto.',
+  'Die Insel ist klein: rund drei Quadratkilometer. Zu Fuß ist man an einem Tag überall gewesen.',
+  'Ihr Name kommt von der Silberpappel, auf Italienisch „albarella“. Deren Blätter sind unten silbrig – im Wind wechselt der Baum die Farbe.',
+  'Auf Albarella wachsen über zwei Millionen Bäume, von etwa 150 verschiedenen Arten. Von oben sieht die Insel aus wie ein grünes Kissen im Meer.',
+  'Der Sandstrand an der Meerseite ist etwa vier Kilometer lang.',
+  'Man kommt über eine Brücke auf die Insel. Autos sind selten – die meisten fahren Fahrrad.']},
+
+ {icon:'🌊', titel:'Das Mittelmeer', punkte:[
+  'Das Mittelmeer liegt zwischen drei Erdteilen: Europa im Norden, Afrika im Süden, Asien im Osten.',
+  'Es hängt nur an einer einzigen schmalen Stelle am großen Ozean: der Straße von Gibraltar. Sie ist an der engsten Stelle bloß etwa 14 Kilometer breit.',
+  'Im Schnitt ist das Mittelmeer rund 1500 Meter tief. An seiner tiefsten Stelle, dem Calypso-Tief westlich von Griechenland, über 5000 Meter.',
+  'Weil dort so viel Wasser verdunstet, ist das Mittelmeer salziger als der Atlantik. Deshalb trägt es dich beim Schwimmen ein bisschen besser.',
+  'Ebbe und Flut sind hier winzig – meist nur ein paar Handbreit. An der Nordadria fallen sie am stärksten aus. Darum steht Venedig manchmal unter Wasser.']},
+
+ {icon:'🐠', titel:'Die Adria vor Albarella', punkte:[
+  'Die Adria ist der Arm des Mittelmeers zwischen Italien und der Balkanhalbinsel.',
+  'Vor dem Po-Delta ist sie flach: oft nur wenige Dutzend Meter tief. Deshalb wird das Wasser im Sommer so schnell warm – 24 bis 27 Grad.',
+  'In der Adria leben mehr als 450 Fischarten. Von fingerkleinen Grundeln bis zu Schwertfischen.',
+  'Größere Gäste ziehen manchmal vorbei: Große Tümmler (das sind Delfine) und Meeresschildkröten, die zum Luftholen auftauchen.',
+  'Der Po ist der längste Fluss Italiens, rund 650 Kilometer. Er bringt Süßwasser, Sand und Schlamm ins Meer – daraus ist Albarella entstanden.']},
+
+ {icon:'🦀', titel:'Tiere am Strand und im Wasser', punkte:[
+  'Krabben tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – darunter wartet schon eine neue, noch weiche.',
+  'Seesterne haben kein Gehirn, aber an jeder Armspitze winzige Augen, die Hell und Dunkel unterscheiden. Verliert ein Seestern einen Arm, wächst er nach.',
+  'Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus.',
+  'Möwen können Salzwasser trinken. Über den Augen haben sie kleine Drüsen, die das Salz wieder aussortieren.',
+  'Seepferdchen sind Fische. Und bei ihnen tragen die Väter die Babys im Bauch, nicht die Mütter.',
+  'Flamingos werden erst durch ihr Futter rosa – kleine Krebstiere und Algen. Ein Flamingo, der nur Salat frisst, bleibt weiß.']},
+
+ {icon:'🪴', titel:'Pflanzen der Insel', punkte:[
+  'Die Pinie hat lange Nadeln und dicke Zapfen. Darin stecken Pinienkerne – die kann man essen.',
+  'Strandhafer sieht aus wie zähes Gras, hält aber mit seinen Wurzeln ganze Dünen zusammen. Darum darf man ihn nicht ausreißen.',
+  'Im Meer wachsen Wiesen: Neptungras. Es macht Sauerstoff, und Seepferdchen halten sich mit dem Schwanz daran fest.',
+  'Die Stranddistel ist blaugrün und stachelig. Sie speichert Wasser, weil es im Sand kaum welches gibt.']},
+
+ {icon:'🔭', titel:'Zahlen zum Staunen', punkte:[
+  'Die tiefste Stelle des Mittelmeers ist über 5000 Meter tief. Man könnte die höchsten Alpengipfel hineinstellen – oben wäre noch Wasser darüber.',
+  'Wasser vor Albarella im Sommer: 24 bis 27 Grad. Wie eine Badewanne, die nie kalt wird.',
+  'Bäume auf Albarella: über 2 000 000. Baumarten: etwa 150.',
+  'Fischarten in der Adria: mehr als 450.',
+  'Alter der Insel: rund 400 Jahre. Für eine Insel ist das noch ein Baby.']}
+];
+
+function renderWissen(){
+  const host=$('wisWrap'); host.textContent='';
+  const mk=(icon,titel,punkte)=>{
+    const c=document.createElement('div');
+    c.className='wis-card';
+    c.innerHTML='<div class="wis-head"><em></em><b></b>'
+      + '<button type="button" aria-label="Vorlesen">🔊</button></div><ul></ul>';
+    c.querySelector('em').textContent=icon;
+    c.querySelector('b').textContent=titel;
+    const ul=c.querySelector('ul');
+    punkte.forEach(t=>{ const li=document.createElement('li'); li.textContent=t; ul.appendChild(li); });
+    c.querySelector('button').addEventListener('click',()=>Voice.raw(titel+'. '+punkte.join(' ')));
+    return c;
+  };
+  WISSEN.forEach(w=>host.appendChild(mk(w.icon,w.titel,w.punkte)));
+
+  /* Alle Fragen der Insel, mit Antwort – ein Haken zeigt, was schon beantwortet ist. */
+  const s3=star3Set();
+  const fragen=document.createElement('div');
+  fragen.className='wis-card wide';
+  fragen.innerHTML='<div class="wis-head"><em>🧠</em><b>Alle Wissensfragen</b></div>';
+  BAYS.forEach(b=>{
+    const q=document.createElement('div');
+    q.className='wis-q';
+    q.innerHTML='<p></p><small></small>'+(s3.indexOf(b.key)>=0?'':'<span class="open">noch nicht beantwortet</span>');
+    q.querySelector('p').textContent=b.emoji+' '+b.quiz.q;
+    q.querySelector('small').textContent='Antwort: '+b.quiz.o[b.quiz.a]
+      + (s3.indexOf(b.key)>=0?'  ✓':'');
+    fragen.appendChild(q);
+  });
+  CAPTAIN.forEach(k=>{
+    const q=document.createElement('div');
+    q.className='wis-q';
+    q.innerHTML='<p></p><small></small>';
+    q.querySelector('p').textContent='🪜 '+k.q;
+    q.querySelector('small').textContent='Antwort: '+k.o[k.a];
+    fragen.appendChild(q);
+  });
+  host.appendChild(fragen);
+
+  const note=document.createElement('p');
+  note.className='wis-note';
+  note.textContent='Zahlen sind gerundet – Meere und Wälder lassen sich nicht auf den Meter genau zählen.';
+  host.appendChild(note);
+}
+
 /* Jedes fertige Fragment gibt eine Zeile der Wegbeschreibung frei. */
 function showFragScroll(){
   const done=baysDone();
@@ -2998,19 +3212,25 @@ function openChestReveal(){
 async function showTreasureCard(){
   const hint=await Store.get('treasureHint');
   const coords=await Store.get('treasureCoords');
-  $('treasureHintText').textContent = hint || 'Frag Mama oder Papa – sie wissen, wo der Schatz ist!';
+  $('treasureHintText').textContent = hint || 'Frag Mama oder Papa – sie wissen, wo der Schatz liegt!';
   const link=$('treasureMapLink');
-  if(coords && /^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/.test(coords)){
-    const ll=coords.replace(/\s+/g,'');
+  const ll0=parseCoords(coords);
+  if(ll0){
+    const ll=ll0;
     /* Apple Karten: ll setzt die Mitte, q beschriftet die Stecknadel. */
     link.href='https://maps.apple.com/?ll='+ll+'&q='+encodeURIComponent('Schatz')+'&t=m';
-    link.textContent='📍 In Karten öffnen';
+    link.textContent='📍 Ich zeige Dir den Weg';
     link.style.display='block';
     $('treasureSetBtn').style.display='none';
   }else{
     link.style.display='none';
     $('treasureSetBtn').style.display='block';
   }
+  const foto=await Store.get('treasurePhoto');
+  const ph=$('treasurePhoto');
+  if(foto){ ph.src=foto; ph.style.display='block'; } else { ph.removeAttribute('src'); ph.style.display='none'; }
+  $('treasurePhotoBtn').textContent = foto ? '📸 Für Eltern: Foto ändern' : '📸 Für Eltern: Foto vom Fundort';
+
   const coins=$('treasureCoins'); coins.innerHTML='';
   for(let k=0;k<22;k++){
     const i=document.createElement('i');
@@ -3023,6 +3243,57 @@ async function showTreasureCard(){
   }
   $('treasureReveal').classList.add('on');
 }
+/* Die Wissensseite ist immer offen – sie ist keine Belohnung, sondern Nachschlagewerk. */
+let wissenFrom=null;
+function openWissen(from){
+  wissenFrom=from||secHome;
+  renderWissen();
+  showSection(secWissen);
+  $('wisWrap').scrollTop=0;
+}
+$('wisBtn').addEventListener('click',()=>openWissen(secHome));
+$('islWisBtn').addEventListener('click',()=>openWissen(secIsland));
+$('wisBack').addEventListener('click',()=>{
+  showSection(wissenFrom===secIsland?secIsland:secHome);
+  if(wissenFrom===secIsland) renderIsland();
+});
+$('wisSpeak').addEventListener('click',()=>{
+  Voice.raw('Albarella-Wissen. '+WISSEN.map(w=>w.titel+'. '+w.punkte.join(' ')).join(' '));
+});
+
+/* Foto vom Fundort: wird auf 1200 px verkleinert, sonst sprengt es den Speicher. */
+$('treasurePhotoBtn').addEventListener('click',async ()=>{
+  if(!parentGate()) return;
+  const hat=!!(await Store.get('treasurePhoto'));
+  if(hat && confirm('Foto entfernen?\n\nAbbrechen = ein neues Foto auswählen.')){
+    await Store.del('treasurePhoto');
+    await showTreasureCard();
+    return;
+  }
+  $('treasurePhotoIn').click();
+});
+$('treasurePhotoIn').addEventListener('change',async e=>{
+  const f=e.target.files && e.target.files[0];
+  e.target.value='';
+  if(!f) return;
+  try{
+    const data=await new Promise((res,rej)=>{
+      const r=new FileReader();
+      r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(f);
+    });
+    const img=await new Promise((res,rej)=>{
+      const i=new Image(); i.onload=()=>res(i); i.onerror=rej; i.src=data;
+    });
+    const max=1200, sc=Math.min(1, max/Math.max(img.width,img.height));
+    const cv=document.createElement('canvas');
+    cv.width=Math.round(img.width*sc); cv.height=Math.round(img.height*sc);
+    cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+    await Store.set('treasurePhoto', cv.toDataURL('image/jpeg',0.82));
+    toast('📸 Foto vom Fundort gespeichert');
+    await showTreasureCard();
+  }catch(err){ toast('⚠️ Foto konnte nicht gelesen werden'); }
+});
+
 $('fragClose').addEventListener('click',()=>$('fragScroll').classList.remove('on'));
 $('fragScroll').addEventListener('click',e=>{ if(e.target===$('fragScroll')) $('fragScroll').classList.remove('on'); });
 $('treasureOk').addEventListener('click',()=>{
@@ -3032,37 +3303,84 @@ $('treasureOk').addEventListener('click',()=>{
 
 /* Nur für Eltern: nie vorausgefüllt, damit Kinder den Hinweis hier nicht lesen können. */
 let hintHeld=false;   /* wird beim langen Drücken gesetzt, damit kein Hinweis-Dialog aufgeht */
+/* Punkt 7: Der Schluessel bleibt findbar fuer Eltern, aber verschlossen fuer
+   Kinder. Eine Malaufgabe im Zahlenraum ueber 100 ist fuer 5- bis 7-Jaehrige
+   sicher zu schwer und braucht keine PIN, die man vergessen kann. */
+let parentOkUntil=0;
+function parentGate(){
+  if(Date.now()<parentOkUntil) return true;
+  const a=6+Math.floor(Math.random()*7), b=7+Math.floor(Math.random()*7);
+  const t=prompt('Nur für Eltern.\n\nWie viel ist '+a+' × '+b+'?','');
+  if(t===null) return false;
+  if(parseInt(t,10)!==a*b){ toast('🔒 Leider falsch – das ist nur für Eltern.'); return false; }
+  parentOkUntil=Date.now()+5*60*1000;   /* fuenf Minuten Ruhe, damit man nicht dreimal rechnet */
+  return true;
+}
+
+/* Koordinaten in beiden Schreibweisen annehmen: dezimal (45.0877,12.3378)
+   und Grad/Minuten/Sekunden (45°05'15.82"N 12°20'16.19"E) – letzteres ist,
+   was Karten-Apps beim Teilen ausgeben. */
+function parseCoords(str){
+  if(!str) return null;
+  const t=str.trim();
+  const dez=t.match(/^(-?\d+(?:\.\d+)?)\s*[,;]?\s*(-?\d+(?:\.\d+)?)$/);
+  if(dez){
+    const la=parseFloat(dez[1]), lo=parseFloat(dez[2]);
+    if(Math.abs(la)<=90 && Math.abs(lo)<=180) return la.toFixed(6)+','+lo.toFixed(6);
+    return null;
+  }
+  const dms=/(\d+(?:\.\d+)?)\s*[°º]\s*(?:(\d+(?:\.\d+)?)\s*['′]\s*)?(?:(\d+(?:\.\d+)?)\s*["″“”]?\s*)?([NSEWnsew])?/g;
+  const teile=[];
+  let m;
+  while((m=dms.exec(t))!==null && teile.length<2){
+    let v=parseFloat(m[1]) + (m[2]?parseFloat(m[2])/60:0) + (m[3]?parseFloat(m[3])/3600:0);
+    const dir=(m[4]||'').toUpperCase();
+    if(dir==='S'||dir==='W') v=-v;
+    teile.push({v:v, dir:dir});
+  }
+  if(teile.length!==2) return null;
+  let [a,b]=teile;
+  /* Falls die Himmelsrichtungen dabeistehen, notfalls tauschen. */
+  if((a.dir==='E'||a.dir==='W') && (b.dir==='N'||b.dir==='S')){ const x=a; a=b; b=x; }
+  if(Math.abs(a.v)>90 || Math.abs(b.v)>180) return null;
+  return a.v.toFixed(6)+','+b.v.toFixed(6);
+}
+
 async function askTreasureHint(){
   /* Nie vorausgefuellt – aber der Elternteil soll sehen, ob schon etwas hinterlegt ist. */
   const hasHint=!!(await Store.get('treasureHint'));
   const hasCo=!!(await Store.get('treasureCoords'));
-  const t=prompt('Hinweistext für den echten Schatz'
+  const t=prompt('1 von 2 – Hinweis für die Kinder, in Worten'
     +(hasHint?' (einer ist gespeichert)':' (noch keiner gespeichert)')
-    +':\n\nLeer lassen = unverändert. Ein Minuszeichen löscht ihn.','');
+    +':\n\nZum Beispiel: „Am dritten Pfahl hinter der Düne, drei Schritte Richtung Wasser.“\n'
+    +'Leer lassen = unverändert. Ein Minuszeichen löscht ihn.','');
   if(t===null) return;
   if(t.trim()==='-'){ await Store.del('treasureHint'); }
   else if(t.trim()){ await Store.set('treasureHint',t.trim()); }
 
-  const co=prompt('Koordinaten für den Knopf „In Karten öffnen"'
+  const co=prompt('2 von 2 – Koordinaten für den Knopf „Ich zeige Dir den Weg"'
     +(hasCo?' (welche sind gespeichert)':' (noch keine gespeichert)')
-    +':\n\nFormat 45.0877,12.3378 – leer lassen = unverändert, Minuszeichen löscht sie.','');
+    +':\n\n45.0877,12.3378  oder  45°05\'15.82"N 12°20\'16.19"E\n'
+    +'Leer lassen = unverändert, Minuszeichen löscht sie.','');
   if(co===null){ toast('🔑 Hinweis gespeichert'); return true; }
   if(co.trim()==='-'){ await Store.del('treasureCoords'); toast('🔑 Gespeichert – Kartenlink entfernt'); return true; }
   if(!co.trim()){ toast('🔑 Hinweis gespeichert'); return true; }
-  if(!/^-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?$/.test(co.trim())){
-    toast('⚠️ Koordinaten nicht erkannt – bitte als 45.0877,12.3378');
+  const dez=parseCoords(co);
+  if(!dez){
+    toast('⚠️ Koordinaten nicht erkannt – 45.0877,12.3378 oder 45°05\'15.8"N 12°20\'16.2"E');
     return true;
   }
-  await Store.set('treasureCoords',co.trim());
+  await Store.set('treasureCoords',dez);
   toast('🔑 Fundort gespeichert – der Kartenknopf ist da');
   return true;
 }
 $('islHintBtn').addEventListener('click',()=>{
   if(hintHeld){ hintHeld=false; return; }
-  askTreasureHint();
+  if(parentGate()) askTreasureHint();
 });
 /* Der gleiche Dialog direkt aus der Schatzkarte – dort wird er gebraucht. */
 $('treasureSetBtn').addEventListener('click',async ()=>{
+  if(!parentGate()) return;
   await askTreasureHint();
   await showTreasureCard();
 });
@@ -3086,6 +3404,7 @@ async function resetIsland(){
   const b=$('islHintBtn'); let t=null;
   const start=()=>{ hintHeld=false; clearTimeout(t); t=setTimeout(()=>{
     hintHeld=true;
+    if(!parentGate()) return;
     if(confirm('Schatzsuche für '+(profile?profile.name:'')+' zurücksetzen?\n\n'
       +'Alle Buchten liegen wieder im Nebel, Bonussterne und Truhe sind zurückgesetzt.\n'
       +'Gemalte Bilder, Sterne und Medaillen bleiben erhalten.')) resetIsland();
@@ -3100,6 +3419,7 @@ async function resetIsland(){
   const b=$('islBtn'); let t=null, held=false;
   const start=()=>{ held=false; clearTimeout(t); t=setTimeout(async()=>{
     held=true;
+    if(!parentGate()) return;
     islandTestMode=!islandTestMode;
     await Store.set('islandTest', islandTestMode?'1':'0');
     renderGreeting();
@@ -3108,6 +3428,8 @@ async function resetIsland(){
   const stop=()=>clearTimeout(t);
   b.addEventListener('pointerdown',start);
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,stop));
+  /* Nach einem langen Druck darf der anschliessende Klick die Insel nicht auch noch oeffnen. */
+  b.addEventListener('click',e=>{ if(held){ e.stopImmediatePropagation(); held=false; } },true);
 })();
 $('islBtn').addEventListener('click',()=>{
   if(!islandUnlocked()){
