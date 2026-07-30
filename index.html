@@ -180,7 +180,12 @@
   .isl-back span:first-child{font-size:15px}
   .isl-title{font-family:var(--font-map);font-weight:800;font-size:27px;color:#1E5F8C;letter-spacing:.4px}
   .isl-sub{font-size:13px;font-weight:700;color:#7B8FA0}
-  .isl-key{border:0;background:none;font-size:15px;opacity:.5;cursor:pointer;padding:4px}
+  /* Discret, aber treffbar: 44px Tippflaeche bei kleinem Symbol. */
+  .isl-key{border:0;background:none;font-size:17px;opacity:.55;cursor:pointer;
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex:none}
+  .treasure-parent{display:block;width:100%;margin-top:10px;padding:9px 12px;border-radius:10px;
+    cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
+    background:rgba(255,253,245,.7);border:2px dashed #C0A774;color:#8A7550}
   .isl-count{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
     background:#F2E3BF;border:2px solid #E0CB9C}
   .isl-count b{font-size:13px;font-weight:800;color:#6B5322}
@@ -918,6 +923,7 @@
       </div>
     </div>
     <a class="nav-btn" id="treasureMapLink" href="#" target="_blank" rel="noopener" style="display:none;margin-top:12px;text-decoration:none;text-align:center">📍 In Karten öffnen</a>
+    <button type="button" id="treasureSetBtn" class="treasure-parent" style="display:none">🔑 Für Eltern: Fundort eintragen</button>
     <button class="nav-btn primary" id="treasureOk">Juhu! 🎉</button>
   </div>
 </div>
@@ -2828,8 +2834,10 @@ async function showTreasureCard(){
     link.href='https://maps.apple.com/?ll='+ll+'&q='+encodeURIComponent('Schatz')+'&t=m';
     link.textContent='📍 In Karten öffnen';
     link.style.display='block';
+    $('treasureSetBtn').style.display='none';
   }else{
     link.style.display='none';
+    $('treasureSetBtn').style.display='block';
   }
   const coins=$('treasureCoins'); coins.innerHTML='';
   for(let k=0;k<22;k++){
@@ -2850,8 +2858,7 @@ $('treasureOk').addEventListener('click',()=>{
 
 /* Nur für Eltern: nie vorausgefüllt, damit Kinder den Hinweis hier nicht lesen können. */
 let hintHeld=false;   /* wird beim langen Drücken gesetzt, damit kein Hinweis-Dialog aufgeht */
-$('islHintBtn').addEventListener('click',async ()=>{
-  if(hintHeld){ hintHeld=false; return; }
+async function askTreasureHint(){
   /* Nie vorausgefuellt – aber der Elternteil soll sehen, ob schon etwas hinterlegt ist. */
   const hasHint=!!(await Store.get('treasureHint'));
   const hasCo=!!(await Store.get('treasureCoords'));
@@ -2865,15 +2872,25 @@ $('islHintBtn').addEventListener('click',async ()=>{
   const co=prompt('Koordinaten für den Knopf „In Karten öffnen"'
     +(hasCo?' (welche sind gespeichert)':' (noch keine gespeichert)')
     +':\n\nFormat 45.0877,12.3378 – leer lassen = unverändert, Minuszeichen löscht sie.','');
-  if(co===null){ toast('🔑 Hinweis gespeichert'); return; }
-  if(co.trim()==='-'){ await Store.del('treasureCoords'); toast('🔑 Gespeichert – Kartenlink entfernt'); return; }
-  if(!co.trim()){ toast('🔑 Hinweis gespeichert'); return; }
+  if(co===null){ toast('🔑 Hinweis gespeichert'); return true; }
+  if(co.trim()==='-'){ await Store.del('treasureCoords'); toast('🔑 Gespeichert – Kartenlink entfernt'); return true; }
+  if(!co.trim()){ toast('🔑 Hinweis gespeichert'); return true; }
   if(!/^-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?$/.test(co.trim())){
     toast('⚠️ Koordinaten nicht erkannt – bitte als 45.0877,12.3378');
-    return;
+    return true;
   }
   await Store.set('treasureCoords',co.trim());
-  toast('🔑 Hinweis und Koordinaten gespeichert');
+  toast('🔑 Fundort gespeichert – der Kartenknopf ist da');
+  return true;
+}
+$('islHintBtn').addEventListener('click',()=>{
+  if(hintHeld){ hintHeld=false; return; }
+  askTreasureHint();
+});
+/* Der gleiche Dialog direkt aus der Schatzkarte – dort wird er gebraucht. */
+$('treasureSetBtn').addEventListener('click',async ()=>{
+  await askTreasureHint();
+  await showTreasureCard();
 });
 
 /* Nur für Eltern: langes Drücken (1,2 s) auf denselben Schlüssel setzt die Schatzsuche zurück.
