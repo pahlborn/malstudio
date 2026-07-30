@@ -1,5 +1,5 @@
 /* Service Worker – speichert die App fürs Offline-Malen */
-const CACHE = 'malstudio-v7-43';
+const CACHE = 'malstudio-v7-44';
 const ASSETS = [
   './index.html',
   './manifest.webmanifest',

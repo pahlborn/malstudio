@@ -185,8 +185,6 @@
   /* Discret, aber treffbar: 44px Tippflaeche bei kleinem Symbol. */
   .isl-key{border:0;background:none;font-size:17px;opacity:.55;cursor:pointer;
     width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex:none}
-  #treasurePhoto{display:block;width:100%;max-height:34vh;object-fit:cover;margin-top:12px;
-    border-radius:8px;border:3px solid #C39A63;box-shadow:0 4px 10px rgba(90,70,40,.3)}
   .treasure-parent{display:block;width:100%;margin-top:10px;padding:9px 12px;border-radius:10px;
     cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
     background:rgba(255,253,245,.7);border:2px dashed #C0A774;color:#8A7550}
@@ -439,10 +437,6 @@
   .isl-star-row.got em{color:#DFA63A}
   .isl-star-row span{flex:1;font-size:12px;font-weight:700}
   .isl-star-row small{font-size:11px;font-weight:700}
-  .isl-chips{display:flex;flex-wrap:wrap;gap:4px}
-  .isl-chips span{padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;
-    background:#F0EADE;border:1.5px solid #DED6C4;color:#9A9184}
-  .isl-chips span.got{background:#FFF6DF;border-color:#E5CF9D;color:#6B5322}
   .isl-fact{background:rgba(255,253,245,.85);border:2px solid #E5CF9D;border-radius:8px;padding:9px 11px}
   .isl-fact-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
   .isl-fact-head b{font-family:var(--font-map);font-weight:800;font-size:11px;color:#B7942E}
@@ -562,7 +556,7 @@
   .isl-quiz-feedback.retry{color:#A8492F}
 
   /* ---------- Schatzfund ---------- */
-  .treasure-card{position:relative;width:500px;max-width:92vw;padding:30px 34px 26px;
+  .treasure-card{position:relative;width:min(92vw,1040px);max-height:94vh;padding:22px 26px 20px;
     background:linear-gradient(150deg,#F0DCAE,#E0C489 55%,#CFAE6F);border-radius:4px;
     box-shadow:0 24px 60px rgba(10,30,45,.55);transform:rotate(-.8deg);
     clip-path:polygon(1.5% 2%,20% 0,52% 1.5%,80% 0,98.5% 2%,100% 20%,99% 50%,100% 80%,
@@ -571,9 +565,25 @@
     background:radial-gradient(70% 60% at 30% 25%,rgba(255,255,255,.35),transparent 70%)}
   .treasure-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
   .treasure-head b{font-family:var(--font-map);font-weight:800;font-size:22px;color:#8F2F1F}
-  .treasure-card>p.lead{font-family:var(--font-hand);font-weight:700;font-size:27px;line-height:1.25;
+  .tsp-text>p.lead{font-family:var(--font-hand);font-weight:700;font-size:26px;line-height:1.2;
     color:#4A3620;margin:0 0 14px}
-  .treasure-body{display:flex;gap:14px;align-items:stretch}
+  /* Zwei Spalten, damit alles ohne Scrollen und ohne Drehen sichtbar bleibt:
+     links das Foto vom Fundort, rechts Hinweis und Knoepfe. */
+  .treasure-spalten{display:flex;gap:20px;align-items:stretch;min-height:0}
+  .tsp-bild{flex:0 1 44%;min-width:0;display:none}
+  .tsp-bild.da{display:block}
+  .tsp-bild img{width:100%;height:100%;max-height:64vh;object-fit:cover;display:block;
+    border-radius:9px;border:3px solid #C39A63;box-shadow:0 4px 10px rgba(90,70,40,.3)}
+  .tsp-text{flex:1 1 56%;min-width:0;display:flex;flex-direction:column;gap:10px}
+  .tsp-text>*{margin:0}
+  .tsp-eltern{display:flex;gap:8px}
+  .tsp-eltern .treasure-parent{margin-top:0;font-size:11px;padding:7px 9px}
+  /* Hochformat: untereinander, Foto flacher */
+  @media (orientation:portrait){
+    .treasure-spalten{flex-direction:column;gap:12px}
+    .tsp-bild{flex:none}
+    .tsp-bild img{max-height:32vh}
+  }
   .treasure-hint{flex:1;padding:12px 14px;background:rgba(255,253,243,.72);
     border:2px dashed #B18F5C;border-radius:4px}
   .treasure-hint small{display:block;font-size:11px;font-weight:800;letter-spacing:.8px;
@@ -786,8 +796,8 @@
     .isl-count b{font-size:12px}
     .isl-quiz-card{padding:18px 18px 16px}
     .isl-quiz-q{font-size:21px}
-    .treasure-card{padding:22px 24px 20px}
-    .treasure-card>p.lead{font-size:22px}
+    .treasure-card{padding:16px 18px 14px}
+    .tsp-text>p.lead{font-size:21px}
   }
 
   /* Telefone (quer wie hoch): die Seitenspalte ist nur ~270–330px hoch.
@@ -1108,19 +1118,25 @@
   <div class="isl-coins" id="treasureCoins"></div>
   <div class="treasure-card">
     <div class="treasure-head"><span style="font-size:26px">✖️</span><b>Die Schatzkiste ist offen</b></div>
-    <p class="lead">Du hast alle Hinweise gefunden! Jetzt beginnt die echte Suche – draußen, im Sand.</p>
-    <div class="treasure-body">
-      <div class="treasure-hint">
-        <small>Jetzt suchen wir den Schatz</small>
-        <p id="treasureHintText"></p>
+    <div class="treasure-spalten">
+      <div class="tsp-bild" id="tspBild">
+        <img id="treasurePhoto" alt="Foto vom Fundort">
+      </div>
+      <div class="tsp-text">
+        <p class="lead">Du hast alle Hinweise gefunden! Jetzt beginnt die echte Suche – draußen, im Sand.</p>
+        <div class="treasure-hint">
+          <small>Jetzt suchen wir den Schatz</small>
+          <p id="treasureHintText"></p>
+        </div>
+        <a class="nav-btn" id="treasureMapLink" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none;text-align:center">📍 Ich zeige Dir den Weg</a>
+        <button class="nav-btn primary" id="treasureOk">Juhu! 🎉</button>
+        <div class="tsp-eltern">
+          <button type="button" id="treasureSetBtn" class="treasure-parent" style="display:none">🔑 Fundort eintragen</button>
+          <button type="button" id="treasurePhotoBtn" class="treasure-parent">📸 Foto vom Fundort</button>
+        </div>
+        <input type="file" id="treasurePhotoIn" accept="image/*" hidden>
       </div>
     </div>
-    <img id="treasurePhoto" alt="Foto vom Fundort" style="display:none">
-    <a class="nav-btn" id="treasureMapLink" href="#" target="_blank" rel="noopener" style="display:none;margin-top:12px;text-decoration:none;text-align:center">📍 Ich zeige Dir den Weg</a>
-    <button type="button" id="treasureSetBtn" class="treasure-parent" style="display:none">🔑 Für Eltern: Fundort eintragen</button>
-    <button type="button" id="treasurePhotoBtn" class="treasure-parent">📸 Für Eltern: Foto vom Fundort</button>
-    <input type="file" id="treasurePhotoIn" accept="image/*" hidden>
-    <button class="nav-btn primary" id="treasureOk">Juhu! 🎉</button>
   </div>
 </div>
 
@@ -2956,10 +2972,8 @@ async function renderBaySide(){
     });
     scroll.appendChild(stars);
 
-    const chips=document.createElement('div');
-    chips.className='isl-chips';
-    chips.innerHTML=b.motifs.map(n=>'<span class="'+(c[n]?'got':'')+'">'+n+'</span>').join('');
-    scroll.appendChild(chips);
+    /* Die Motiv-Ovale sind raus: Der Zaehler oben und der Hauptknopf sagen dasselbe,
+       und der Platz gehoert dem Wissenskaertchen. */
 
     /* Suchleiste: der Hinweis in Worten, dazu heiss/kalt und eine Notbremse. */
     if(findMode && !earned[1]){
@@ -3394,8 +3408,9 @@ async function showTreasureCard(){
   }
   const foto=await Store.get('treasurePhoto');
   const ph=$('treasurePhoto');
-  if(foto){ ph.src=foto; ph.style.display='block'; } else { ph.removeAttribute('src'); ph.style.display='none'; }
-  $('treasurePhotoBtn').textContent = foto ? '📸 Für Eltern: Foto ändern' : '📸 Für Eltern: Foto vom Fundort';
+  if(foto){ ph.src=foto; $('tspBild').classList.add('da'); }
+  else { ph.removeAttribute('src'); $('tspBild').classList.remove('da'); }
+  $('treasurePhotoBtn').textContent = foto ? '📸 Foto ändern' : '📸 Foto vom Fundort';
 
   const coins=$('treasureCoins'); coins.innerHTML='';
   for(let k=0;k<22;k++){
