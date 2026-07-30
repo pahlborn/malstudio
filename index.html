@@ -308,10 +308,33 @@
   /* Dezent, aber sichtbar – sonst gaebe es nichts zu finden */
   .isl-hidden em{font-style:normal;font-size:22px;opacity:.62;
     filter:drop-shadow(0 2px 3px rgba(20,40,56,.45))}
+  .isl-hidden.got{cursor:default}
+  .isl-hidden.got em{opacity:.9}
   .isl-hidden.hint{box-shadow:0 0 0 3px rgba(223,166,58,.9),0 0 22px rgba(255,236,170,.9);
-    background:rgba(255,240,190,.22)}
+    background:rgba(255,240,190,.22);z-index:16}
   .isl-hidden.hint em{opacity:1;animation:findPulse 1.2s ease-in-out infinite}
   @keyframes findPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+  /* Suchen: echte Suche statt Knopfdruck. Die Ebene nimmt Tipps an und
+     antwortet mit heiss/kalt – das Versteck bleibt unsichtbar. */
+  .isl-findlayer{position:absolute;inset:0;z-index:15;cursor:crosshair}
+  .isl-findlayer i{position:absolute;transform:translate(-50%,-50%);font-style:normal;
+    font-size:26px;pointer-events:none;animation:findMark 1.7s ease-out forwards;
+    filter:drop-shadow(0 2px 4px rgba(20,40,56,.5))}
+  @keyframes findMark{
+    0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}
+    22%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}
+    100%{opacity:0;transform:translate(-50%,-62%) scale(1)}}
+  .isl-findbar{flex:none;padding:9px 11px;border-radius:8px;
+    background:linear-gradient(#FFF6DF,#F6E4B8);border:2px solid #DFA63A}
+  .isl-findbar .cl{display:flex;align-items:flex-start;gap:7px}
+  .isl-findbar p{margin:0;flex:1;font-family:var(--font-hand);font-weight:600;font-size:18px;
+    line-height:1.2;color:#4A3620}
+  .isl-findbar button.sp{background:none;border:0;font-size:15px;cursor:pointer;padding:0;flex:none}
+  .isl-findbar small{display:block;margin-top:5px;font-family:'Nunito',sans-serif;
+    font-size:11px;font-weight:800;color:#8A7550}
+  .isl-findbar button.help{display:block;width:100%;margin-top:7px;padding:6px 8px;border-radius:6px;
+    cursor:pointer;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;
+    background:#FFFDF7;border:2px solid #DFA63A;color:#6B5322}
   .isl-sprite{position:absolute;transform:translate(-50%,-50%);pointer-events:none;z-index:8;
     display:flex;align-items:center;justify-content:center;line-height:1;
     filter:drop-shadow(0 4px 6px rgba(20,40,56,.4))}
@@ -2426,7 +2449,9 @@ const ROUTE_STOP=[2,4,6,9,11,13,15];
 
 let selBay=BAYS[0].key;
 let cameFromIsland=false;
-let findMode=false;
+let findMode=false;      /* Suche laeuft fuer die gewaehlte Bucht */
+let findTries=0;         /* Zahl der Versuche in dieser Suche */
+let findReveal=false;    /* Kind hat sich helfen lassen */
 let islQuizCtx=null;
 
 /* Fortschritt der Schatzsuche zaehlt nur, was SEIT dem letzten Zuruecksetzen gemalt wurde.
@@ -2531,15 +2556,23 @@ function renderIsland(){
   h+='<div class="isl-place" style="left:57%;top:6%">Capo Nord</div>';
   h+='<div class="isl-place" style="left:80.5%;top:88%">Marina</div>';
 
+  /* Verstecke: Solange nicht gefunden, ist NICHTS zu sehen – sonst gibt es
+     nichts zu suchen. Gefundene Details bleiben als Schmuck auf der Karte. */
   const s2=star2Set();
   BAYS.forEach((b,i)=>{
-    if(bayUnlocked(i) && s2.indexOf(b.key)<0){
-      h+='<button type="button" class="isl-hidden'+(findMode && selBay===b.key?' hint':'')+'" data-hidden="'+b.key+'" '
-       + 'style="left:'+b.hidden.x+'%;top:'+b.hidden.y+'%;width:'+(b.hidden.r*2)+'px;height:'+(b.hidden.r*2)+'px;'
-       + 'margin:'+(-b.hidden.r)+'px 0 0 '+(-b.hidden.r)+'px" aria-label="'+b.hidden.was+'">'
-       + '<em>'+b.hidden.icon+'</em></button>';
-    }
+    if(!bayUnlocked(i)) return;
+    const got=s2.indexOf(b.key)>=0;
+    const shown=got || (findReveal && findMode && selBay===b.key);
+    if(!shown) return;
+    h+='<button type="button" class="isl-hidden'+(got?' got':' hint')+'" data-hidden="'+b.key+'" '
+     + 'style="left:'+b.hidden.x+'%;top:'+b.hidden.y+'%;width:'+(b.hidden.r*2)+'px;height:'+(b.hidden.r*2)+'px;'
+     + 'margin:'+(-b.hidden.r)+'px 0 0 '+(-b.hidden.r)+'px" aria-label="'+b.hidden.was+'">'
+     + '<em>'+b.hidden.icon+'</em></button>';
   });
+  /* Suchfeld: waehrend der Suche nimmt eine Ebene ueber der Karte jeden Tipp an. */
+  if(findMode && selOpen && s2.indexOf(sel.key)<0){
+    h+='<div class="isl-findlayer" id="islFindLayer"></div>';
+  }
 
   h+='<div class="isl-mapfog" id="islFog" style="'+fogMaskStyle()+'"></div>';
   if(gustFire) h+='<div class="isl-gust" id="islGust"></div>';
@@ -2580,6 +2613,8 @@ function renderIsland(){
 
   const strip=$('islFragStrip');
   if(strip) strip.addEventListener('click',showFragScroll);
+  const layer=$('islFindLayer');
+  if(layer) layer.addEventListener('click',tapSearch);
 
   /* Nur freigeschaltete Buchten erscheinen. Was noch im Nebel liegt, bleibt ein Geheimnis. */
   BAYS.forEach((b,i)=>{
@@ -2623,13 +2658,42 @@ function renderIsland(){
   requestAnimationFrame(sizeIsland);
 }
 
+/* Heiss/kalt: Der Abstand wird in Bildpunkten der Karte gemessen, damit die
+   Rueckmeldung im Hoch- und Querformat gleich ausfaellt. */
+const FIND_STEPS=[
+  {f:2.2, emoji:'🔥', text:'Ganz heiß! Du bist fast drauf.'},
+  {f:3.6, emoji:'♨️', text:'Heiß – ganz in der Nähe!'},
+  {f:6.0, emoji:'🌞', text:'Warm. Weiter in diese Richtung.'},
+  {f:10.0,emoji:'☁️', text:'Kühl. Da ist nichts.'},
+  {f:1e9, emoji:'❄️', text:'Eiskalt. Ganz woanders suchen!'}
+];
+function tapSearch(e){
+  const b=BAYS.find(x=>x.key===selBay); if(!b) return;
+  const layer=e.currentTarget, r=layer.getBoundingClientRect();
+  const px=e.clientX-r.left, py=e.clientY-r.top;
+  const tx=b.hidden.x/100*r.width, ty=b.hidden.y/100*r.height;
+  const d=Math.hypot(px-tx,py-ty);
+
+  if(d<=b.hidden.r){ tapHidden(b.key); return; }
+
+  findTries++;
+  const step=FIND_STEPS.find(s=>d<=b.hidden.r*s.f);
+  const mark=document.createElement('i');
+  mark.textContent=step.emoji;
+  mark.style.left=px+'px'; mark.style.top=py+'px';
+  layer.appendChild(mark);
+  setTimeout(()=>mark.remove(),1800);
+  toast(step.emoji+' '+step.text);
+  const bar=$('islSide').querySelector('.isl-findbar');
+  if(bar) renderBaySide();
+}
 function tapHidden(key){
   const s2=star2Set();
   if(s2.indexOf(key)>=0) return;
   s2.push(key);
   profile.islandStar2=JSON.stringify(s2);
   saveProfiles();
-  selBay=key; findMode=false;
+  selBay=key; findMode=false; findTries=0; findReveal=false;
   toast('⭐ Verstecktes Detail gefunden!');
   renderIsland();
 }
@@ -2705,6 +2769,25 @@ async function renderBaySide(){
     chips.innerHTML=b.motifs.map(n=>'<span class="'+(c[n]?'got':'')+'">'+n+'</span>').join('');
     scroll.appendChild(chips);
 
+    /* Suchleiste: der Hinweis in Worten, dazu heiss/kalt und eine Notbremse. */
+    if(findMode && !earned[1]){
+      const fb=document.createElement('div');
+      fb.className='isl-findbar';
+      fb.innerHTML='<div class="cl"><span>🔍</span><p></p>'
+        + '<button type="button" class="sp" aria-label="Vorlesen">🔊</button></div>'
+        + '<small></small>'
+        + (findTries>=5 && !findReveal ? '<button type="button" class="help">Ich finde es nicht – zeig es mir</button>' : '');
+      fb.querySelector('p').textContent=b.hidden.was;
+      fb.querySelector('small').textContent = findTries===0
+        ? 'Tippe auf die Karte. Ich sage dir, ob du warm oder kalt bist.'
+        : findTries+' '+(findTries===1?'Versuch':'Versuche')
+          +(findReveal?' · es leuchtet jetzt auf der Karte':'');
+      fb.querySelector('.sp').addEventListener('click',()=>Voice.raw(b.hidden.was));
+      const hb=fb.querySelector('.help');
+      if(hb) hb.addEventListener('click',()=>{ findReveal=true; renderIsland(); });
+      scroll.appendChild(fb);
+    }
+
     /* Wissen vor der Frage: Das Kaertchen steht von Anfang an in der Bucht,
        die Wissensfrage oeffnet sich erst, wenn es gelesen (oder vorgelesen) wurde. */
     const factRead=factReadSet().indexOf(b.key)>=0;
@@ -2734,10 +2817,15 @@ async function renderBaySide(){
     quizBtn.addEventListener('click',()=>openBayQuiz(b));
     const findBtn=document.createElement('button');
     findBtn.innerHTML='<span>🔍</span><span></span>';
-    findBtn.lastChild.textContent=earned[1]?'Gefunden':'Suchen';
+    findBtn.lastChild.textContent=earned[1]?'Gefunden':(findMode?'Suche läuft':'Suchen');
     if(findMode) findBtn.classList.add('active');
     findBtn.disabled=earned[1];
-    findBtn.addEventListener('click',()=>{ findMode=!findMode; renderIsland(); });
+    findBtn.addEventListener('click',()=>{
+      findMode=!findMode;
+      findTries=0; findReveal=false;
+      if(findMode) Voice.raw(b.hidden.was);
+      renderIsland();
+    });
     actions.appendChild(quizBtn); actions.appendChild(findBtn);
     host.appendChild(actions);
   }
