@@ -194,8 +194,12 @@
 
   .isl-layout{flex:1;display:flex;min-height:0}
   .isl-map{--s:1;flex:1;position:relative;overflow:hidden;background:#2F88B8}
-  .isl-basis{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1}
+  /* Das Basisbild liegt UEBER der Ersatzzeichnung, und sobald es geladen ist,
+     verschwindet die Zeichnung ganz. Sonst deckt die SVG das Bild zu, weil sie
+     im DOM danach kommt. */
+  .isl-basis{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:2}
   .isl-map>svg.isl-fallback{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+  .isl-map.mit-basisbild>svg.isl-fallback{display:none}
   .isl-map::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
     background:radial-gradient(120% 90% at 50% 40%,rgba(255,244,214,.16),rgba(20,60,86,.28) 100%)}
 
@@ -241,7 +245,10 @@
   .isl-baystars i.on{color:#DFA63A}
 
   /* Schatztruhe */
-  .isl-chest{position:absolute;transform:translate(-50%,-50%);z-index:15;cursor:pointer}
+  /* Solange die Truhe nicht gefunden ist, liegt sie UNTER dem Nebel (z-index 4 < 5).
+     Antippen geht trotzdem, der Nebel nimmt keine Tipps an. */
+  .isl-chest{position:absolute;transform:translate(-50%,-50%);z-index:4;cursor:pointer}
+  .isl-chest.gefunden{z-index:15}
   .isl-chest .box{width:62px;height:62px;border-radius:999px;display:flex;align-items:center;
     justify-content:center;font-size:30px;background:radial-gradient(circle at 35% 30%,#FFF6D8,#E8C473);
     border:4px solid #DFA63A;box-shadow:0 8px 20px rgba(20,40,56,.4);animation:pinPulse 2s ease-in-out infinite}
@@ -263,7 +270,11 @@
     color:#8F2F1F;text-shadow:0 1px 0 rgba(255,255,255,.45)}
   .isl-note .isl-task.done{color:#3F6B34;border-top-color:rgba(63,107,52,.35)}
 
-  .isl-note.isl-nside{display:none}
+  /* Der Geschichten-Zettel steht in der Seitenspalte, nicht auf der Karte:
+     die echte Inselform fuellt die Bildmitte, dort wuerde er Buchten verdecken. */
+  .isl-map .isl-note{display:none}
+  .isl-note.isl-nside{display:block;position:static;transform:none;width:auto;flex:none;
+    padding:13px 15px 15px;box-shadow:0 4px 10px rgba(20,40,56,.18)}
 
   /* Schatzfragmente */
   .isl-fragstrip{position:absolute;left:10px;right:10px;bottom:8px;z-index:12;display:flex;
@@ -2372,8 +2383,9 @@ function discoveredCount(){ return Object.keys(motifCounts()).length; }
    Liest denselben Fortschritt (motifCounts), speichert nichts Eigenes.
    ============================================================ */
 /* Insel Albarella. Gezeichnet im viewBox 900x800 (= Seitenverhaeltnis der Karte).
-   Wird automatisch durch albarella-basis.png ersetzt, sobald die Illustration vorliegt. */
-const ISLAND_BASIS='albarella-basis.png';
+   Wird von albarella-basis.jpg ueberlagert: die echte Inselform, aus OpenStreetMap-Geometrie
+   (ODbL) selbst gezeichnet. Faellt das Bild aus, greift diese Zeichnung. */
+const ISLAND_BASIS='albarella-basis.jpg';
 const ISLAND_FALLBACK_SVG =
  '<svg class="isl-fallback" viewBox="0 0 900 800" aria-hidden="true">'
 +'<defs>'
@@ -2455,46 +2467,46 @@ const ISLAND_FALLBACK_SVG =
 
 /* Buchten in Freischalt-Reihenfolge. Koordinaten in % des Basisbildes (aus dem Design-Entwurf). */
 const BAYS=[
-  {key:'muschel', nr:1, name:'Muschelbucht', emoji:'🐚', x:60, y:83, side:'right',
+  {key:'muschel', nr:1, name:'Muschelbucht', emoji:'🐚', x:45.1, y:76.7, side:'right',
    motifs:['Muschel','Seestern','Sandburg','Krabbe'],
    story:'Hier läuft das Meer nur knöcheltief an den Strand und legt ab, was es unterwegs gefunden hat. Der Weg um die Insel beginnt genau an dieser Stelle.',
    fact:'Muscheln sind die Putzkolonne des Meeres: Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus. Krabben dagegen tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – die Krabbe steigt heraus und trägt darunter schon eine neue, noch ganz weiche.',
-   hidden:{was:'Finde die kleine Muschel im Sand', icon:'🐚', x:80, y:73, r:30},
+   hidden:{was:'Finde die kleine Muschel im Sand', icon:'🐚', x:52.0, y:84.0, r:30},
    quiz:{q:'Was passiert mit der Rüstung einer Krabbe, wenn sie wächst?', a:1,
      o:['Sie wächst einfach mit','Sie platzt auf, und darunter wartet schon eine neue','Die Krabbe legt sie für immer ab']}},
-  {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:74, y:60, side:'left',
+  {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:64.6, y:63.4, side:'left',
    motifs:['Leuchtturm','Haus am Meer','Strandkorb','Palme'],
    story:'Oben auf der Landzunge dreht sich ein Licht, immer die gleiche Runde. Für die Boote draußen heißt das: Hier ist Land, hier geht es nach Hause.',
    fact:'Der Name „Albarella“ kommt nicht vom Meer, sondern von einem Baum: der Silberpappel, auf Italienisch „albarella“. Ihre Blätter sind auf der Unterseite silbrig behaart – fährt der Wind hinein, wechselt der ganze Baum die Farbe.',
-   hidden:{was:'Finde die Möwe am Himmel', icon:'🕊️', x:81, y:31, r:32},
+   hidden:{was:'Finde die Möwe am Himmel', icon:'🕊️', x:70.0, y:71.0, r:32},
    quiz:{q:'Woher hat die Insel Albarella ihren Namen?', a:2,
      o:['Von einem Seeräuber','Von einer Muschelsorte','Von einem Baum, der Silberpappel']}},
-  {key:'segel', nr:3, name:'Segelbucht', emoji:'⛵', x:22, y:67, side:'right',
+  {key:'segel', nr:3, name:'Segelbucht', emoji:'⛵', x:72.0, y:52.0, side:'left',
    motifs:['Segelboot','Piratenschiff','Vespa','Möwe'],
    story:'Hier riecht die Luft nach Salz und nach warmem Holz. Die Boote liegen am Steg und klappern leise mit den Leinen, als könnten sie es kaum abwarten.',
    fact:'Diese Insel hat kein Mensch gebaut, sondern ein Fluss. Vor etwa 400 Jahren suchte sich der Po ein neues Bett und schob dabei so viel Sand und Schlamm vor sich her, dass daraus neue Inseln entstanden – eine davon ist Albarella.',
-   hidden:{was:'Finde das zweite, kleinere Boot am Horizont', icon:'⛵', x:6, y:57, r:30},
+   hidden:{was:'Finde das zweite, kleinere Boot am Horizont', icon:'⛵', x:64.0, y:46.0, r:30},
    quiz:{q:'Wer hat Albarella vor rund 400 Jahren geformt?', a:0,
      o:['Der Fluss Po, mit Sand und Schlamm','Ein Vulkan unter dem Meer','Fischer, die Steine aufschütteten']}},
-  {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:80, y:41, side:'left',
+  {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:62.0, y:40.5, side:'left',
    motifs:['Fisch','Delfin','Wal','Schildkröte'],
    story:'Ein paar Schritte weiter draußen wird das Wasser dunkelblau, und der Boden verschwindet. Wer geduldig genug hinschaut, sieht irgendwann etwas vorbeiziehen.',
    fact:'In der Adria leben mehr als 450 verschiedene Fischarten – von fingerkleinen Grundeln bis zu Schwertfischen. Und manchmal kommt größerer Besuch vorbei: Delfine, die in Gruppen jagen, und Meeresschildkröten, die zum Luftholen auftauchen.',
-   hidden:{was:'Finde den Delfin, der aus dem Wasser springt', icon:'🐬', x:78, y:18, r:34},
+   hidden:{was:'Finde den Delfin, der aus dem Wasser springt', icon:'🐬', x:53.0, y:33.0, r:34},
    quiz:{q:'Welche großen Gäste ziehen manchmal durch die Adria?', a:1,
      o:['Pinguine und Eisbären','Delfine und Meeresschildkröten','Flusspferde und Krokodile']}},
-  {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:18, y:44, side:'right',
+  {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:37.2, y:56.0, side:'right',
    motifs:['Herz','Blume','Schmetterling','Regenbogen'],
    story:'Hinter den Dünen wird es still. Kein Weg führt gerade, kein Baum steht wie der andere. Was hier entsteht, muss niemandem gefallen außer dir.',
    fact:'Albarella ist eine Insel aus Bäumen: über zwei Millionen stehen hier, und sie gehören zu etwa 150 verschiedenen Arten – Pinien, Steineichen, Silberpappeln und viele mehr. Von oben sieht die Insel deshalb aus wie ein grünes Kissen im Meer.',
-   hidden:{was:'Finde den Reiher im Gras', icon:'🦩', x:26, y:56, r:32},
+   hidden:{was:'Finde den Reiher im Gras', icon:'🦩', x:44.0, y:64.0, r:32},
    quiz:{q:'Wie viele verschiedene Baumarten wachsen auf Albarella?', a:2,
      o:['Etwa 3','Etwa 15','Etwa 150']}},
-  {key:'nasch', nr:6, name:'Naschbucht', emoji:'🍦', x:40, y:24, side:'right',
+  {key:'nasch', nr:6, name:'Naschbucht', emoji:'🍦', x:30.0, y:30.0, side:'right',
    motifs:['Eis','Wassermelone','Pizza','Luftballons'],
    story:'Am Ende des Weges liegt der kleine Hafen, und dort gibt es Eis. Der alte Pirat, sagt man, hat hier nie widerstehen können.',
    fact:'Im Sommer wird das Wasser vor Albarella 24 bis 27 Grad warm – wie eine Badewanne, die nie kalt wird. Weiter draußen ist das Mittelmeer dafür tief: an seiner tiefsten Stelle über 5000 Meter. Da könnte man die höchsten Berge der Alpen hineinstellen, und oben wäre noch Wasser darüber.',
-   hidden:{was:'Finde die kleine Krabbe am Weg', icon:'🦀', x:30, y:34, r:26},
+   hidden:{was:'Finde die kleine Krabbe am Weg', icon:'🦀', x:35.0, y:23.0, r:26},
    quiz:{q:'Wie tief ist das Mittelmeer an seiner tiefsten Stelle?', a:1,
      o:['Über 50 Meter','Über 5000 Meter','Über 500 Meter']}}
 ];
@@ -2533,18 +2545,17 @@ const FRAGMENTS=[
    draussen, der Rehbock auch, solange nicht bestaetigt ist, dass es auf
    Albarella welche gibt. */
 const SPRITES=[
-  {datei:'sprite-muschel.png',      emoji:'🐚', x:66, y:74, w:52, h:45, min:1, atem:true},
-  {datei:'sprite-moewe.png',        emoji:'🕊️', x:94, y:52, w:50, h:54, min:2, bob:true},
-  {datei:'sprite-flamingo.png',     emoji:'🦩', x:41, y:44, w:60, h:88, min:3, atem:true},
-  {datei:'sprite-schildkroete.png', emoji:'🐢', x:44, y:32, w:62, h:32, min:5, bob:true}
+  {datei:'sprite-muschel.png',      emoji:'🐚', x:56.0, y:24.5, w:52, h:45, min:1, atem:true},
+  {datei:'sprite-schildkroete.png', emoji:'🐢', x:41.0, y:41.0, w:62, h:32, min:3, bob:true},
+  {datei:'sprite-reh.png',          emoji:'🦌', x:52.0, y:52.0, w:56, h:47, min:5, atem:true}
 ];
 
 /* Schatzpfad: Start unten links, über alle Buchten hinauf zum Capo Nord. */
-const ROUTE=[[10,88],[34,86],[60,83],[70,72],[74,60],[52,66],[22,67],[30,55],[46,48],[80,41],[52,40],[18,44],[26,32],[40,24],[50,18],[57,14]];
-const CHEST_XY=[57,14];
-const START_XY=[10,88];
+const ROUTE=[[63.1,77.7],[54.0,78.5],[45.1,76.7],[53.9,68.7],[64.6,63.4],[67.5,57.2],[72.0,52.0],[66.2,47.0],[62.0,40.5],[50.7,50.0],[37.2,56.0],[31.8,43.5],[30.0,30.0],[34.3,23.0],[40.4,17.5]];
+const CHEST_XY=[40.4,17.5];
+const START_XY=[63.1,77.7];
 /* Bis zu welchem Punkt der Pfad je freigeschalteter Bucht gezeichnet ist */
-const ROUTE_STOP=[2,4,6,9,11,13,15];
+const ROUTE_STOP=[2,4,6,8,10,12,14];
 
 let selBay=BAYS[0].key;
 let cameFromIsland=false;
@@ -2570,6 +2581,15 @@ function bayStats(b){
 /* Eine Bucht ist erst fertig, wenn alle Motive gemalt UND die Wissensfrage
    beantwortet ist. Das Verstecken-Suchen bleibt freiwillig. */
 function bayComplete(b){ return bayStats(b).full && star3Set().indexOf(b.key)>=0; }
+/* Eine Quelle fuer die Aufgabenzeile – Zettel und Hauptknopf duerfen nie
+   verschiedene Dinge sagen. */
+function naechsterSchritt(b){
+  const cc=islandCounts(), nx=b.motifs.find(n=>!cc[n]);
+  if(nx) return {text:'\u{1F449} Jetzt dran: '+nx+' malen', fertig:false};
+  if(factReadSet().indexOf(b.key)<0) return {text:'\u{1F4DC} Jetzt dran: \u201EWusstest du?\u201C lesen', fertig:false};
+  if(star3Set().indexOf(b.key)<0) return {text:'\u{1F9E0} Jetzt dran: die Wissensfrage', fertig:false};
+  return {text:'\u2713 Bucht geschafft!', fertig:true};
+}
 /* Nur die zusammenhaengende Reihe fertiger Buchten von vorne. */
 function baysDone(){
   let n=0;
@@ -2635,7 +2655,9 @@ function renderIsland(){
   const selOpen=bayUnlocked(selIdx);
 
   let h='';
-  h+='<img class="isl-basis" src="'+ISLAND_BASIS+'" alt="" onerror="this.style.display=\'none\'">';
+  h+='<img class="isl-basis" src="'+ISLAND_BASIS+'" alt="" '
+   + 'onload="this.parentNode.classList.add(\'mit-basisbild\')" '
+   + 'onerror="this.style.display=\'none\'">';
   h+=ISLAND_FALLBACK_SVG;
 
   const pts=routeVisiblePoints().map(p=>p[0]+','+p[1]).join(' ');
@@ -2655,7 +2677,7 @@ function renderIsland(){
   /* Delfin: taucht ganz langsam auf und wieder ab. Grosse Tuemmler ziehen
      tatsaechlich gelegentlich durch die Adria. */
   if(unlockedCount>=4){
-    h+='<div class="isl-delfin" style="left:88%;top:30%">'
+    h+='<div class="isl-delfin" style="left:91.5%;top:26.0%">'
      + '<img class="kringel" src="sprite-kringel.png" alt="" onerror="this.remove()">'
      + '<img class="auf" src="sprite-delfin-auf.png" alt="" onerror="this.remove()">'
      + '<img class="tauch" src="sprite-delfin-tauch.png" alt="" onerror="this.remove()">'
@@ -2668,8 +2690,8 @@ function renderIsland(){
   }
 
   h+='<div class="isl-start" style="left:'+START_XY[0]+'%;top:'+(START_XY[1]-2)+'%"><b>Start</b><i></i></div>';
-  h+='<div class="isl-place" style="left:57%;top:6%">Capo Nord</div>';
-  h+='<div class="isl-place" style="left:80.5%;top:88%">Marina</div>';
+  h+='<div class="isl-place" style="left:40%;top:8%">Capo Nord</div>';
+  h+='<div class="isl-place" style="left:72%;top:88%">Marina</div>';
 
   /* Verstecke: Solange nicht gefunden, ist NICHTS zu sehen – sonst gibt es
      nichts zu suchen. Gefundene Details bleiben als Schmuck auf der Karte. */
@@ -2694,7 +2716,7 @@ function renderIsland(){
 
   /* Capo Nord bleibt bis zum Schluss komplett im Nebel – nichts verraet, was dort wartet. */
   if(chestReady||found){
-    h+='<div class="isl-chest ready" id="islChestEl" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
+    h+='<div class="isl-chest ready'+(found?' gefunden':'')+'" id="islChestEl" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
      + '<div class="box kiste'+(found?' auf':' zu')+'" data-zustand="'+(found?'offen':'bereit')+'">'
      + '<img src="sprite-schatzkiste.png" alt="'+(found?'Offene Schatzkiste':'Schatzkiste, noch verschlossen')+'" '
      + 'onerror="this.replaceWith(Object.assign(document.createElement(\'em\'),{textContent:\''+(found?'🎁':'🔓')+'\'}))">'
@@ -2710,12 +2732,8 @@ function renderIsland(){
   /* Geschichten-Zettel oben links, wie im Entwurf */
   let noteTask='';
   if(selOpen){
-    const cc=islandCounts(), nx=sel.motifs.find(n=>!cc[n]);
-    const nextStep = nx ? '👉 Jetzt dran: '+nx+' malen'
-      : (factReadSet().indexOf(sel.key)<0 ? '📜 Jetzt dran: „Wusstest du?“ lesen'
-      : (star3Set().indexOf(sel.key)<0 ? '🧠 Jetzt dran: die Wissensfrage'
-      : '✓ Bucht geschafft!'));
-    noteTask = '<span class="isl-task'+(nx||!bayComplete(sel)?'':' done')+'">'+nextStep+'</span>';
+    const sr=naechsterSchritt(sel);
+    noteTask = '<span class="isl-task'+(sr.fertig?' done':'')+'">'+sr.text+'</span>';
   }
   h+='<div class="isl-note"><div class="hd"><span>'+(selOpen?sel.emoji:'🔒')+'</span><b>'
    + (selOpen?sel.name:'Noch im Nebel')+'</b></div><p>'
@@ -2831,13 +2849,18 @@ async function renderBaySide(){
   /* Auf schmalen Geräten wandert der Zettel hierher – auf der kleinen Karte verdeckt er zu viel. */
   const noteSide=document.createElement('div');
   noteSide.className='isl-note isl-nside';
-  const nx0=open?b.motifs.find(n=>!c[n]):null;
+
   noteSide.innerHTML='<div class="hd"><span>'+(open?b.emoji:'🔒')+'</span><b></b></div><p></p>'
-    + (open?'<span class="isl-task'+(nx0?'':' done')+'"></span>':'');
+    + (open?'<span class="isl-task"></span>':'');
   noteSide.querySelector('b').textContent=open?b.name:'Noch im Nebel';
   noteSide.querySelector('p').textContent=open?b.story
     :'Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die '+BAYS[i-1].name+' fertig.';
-  if(open) noteSide.querySelector('.isl-task').textContent = nx0 ? '👉 Jetzt dran: '+nx0+' malen' : '✓ Alle Motive gemalt!';
+  if(open){
+    const sr=naechsterSchritt(b);
+    const el=noteSide.querySelector('.isl-task');
+    el.textContent=sr.text;
+    el.classList.toggle('done', sr.fertig);
+  }
   host.appendChild(noteSide);
 
   const head=document.createElement('div');
