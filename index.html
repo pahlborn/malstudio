@@ -464,7 +464,9 @@
     background:linear-gradient(#3F9C6D,#2C7C54);box-shadow:0 4px 0 rgba(0,0,0,.16)}
   .isl-cta.gold{background:linear-gradient(#E0A636,#C1861D)}
 
-  /* ---------- Wissensseite ---------- */
+  
+
+/* ---------- Wissensseite ---------- */
   .wis-wrap{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:14px 16px 22px;
     background:linear-gradient(#FDF6E6,#F7ECD6);
     display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
@@ -518,6 +520,48 @@
   .foto-text{margin:8px 4px 0;font-family:var(--font-hand);font-weight:600;font-size:21px;
     line-height:1.2;color:#4A3620}
   .foto-quelle{margin:4px 4px 2px;font-family:'Nunito',sans-serif;font-size:10.5px;font-weight:700;color:#A2937A}
+
+  /* ---------- Einstellungen ---------- */
+  .icon-btn.flagge{font-size:19px;padding:6px 10px;line-height:1}
+  .isl-key.flagge{font-size:20px}
+  .ein-karte{width:min(94vw,780px);max-height:90vh;display:flex;flex-direction:column;
+    border-radius:16px;background:linear-gradient(#FDF6E6,#F4E7CC);border:3px solid #C39A63;
+    box-shadow:0 20px 50px rgba(10,30,45,.5);overflow:hidden}
+  .ein-kopf{display:flex;align-items:center;gap:10px;padding:13px 16px;flex:none;
+    background:linear-gradient(#F7ECD6,#EDDDBC);border-bottom:2px solid #DFC79A}
+  .ein-kopf span{font-size:23px}
+  .ein-kopf b{font-family:var(--font-map);font-weight:800;font-size:21px;color:#1E5F8C}
+  .ein-kopf button{margin-left:auto;width:36px;height:36px;border-radius:999px;border:0;
+    background:#E0CBA0;color:#6B5322;font-weight:800;font-size:16px;cursor:pointer}
+  .ein-inhalt{flex:1;min-height:0;overflow-y:auto;padding:13px 16px 18px;display:flex;
+    flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .ein-block{padding:12px 14px;border-radius:10px;background:rgba(255,253,245,.85);
+    border:2px solid #E5CF9D}
+  .ein-block.eltern{border-color:#DFA63A;background:rgba(255,248,230,.9)}
+  .ein-block h3{margin:0 0 9px;font-family:var(--font-map);font-weight:800;font-size:16px;color:#8F2F1F}
+  .ein-flaggen{display:flex;gap:10px}
+  .ein-flagge{flex:1;display:flex;align-items:center;justify-content:center;gap:9px;
+    padding:12px 10px;border-radius:12px;cursor:pointer;background:#FFFDF7;border:3px solid #E0D0AD;
+    font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:#6B5322}
+  .ein-flagge em{font-style:normal;font-size:28px;line-height:1}
+  .ein-flagge.an{border-color:#3F9C6D;background:#E6F1DE;color:#2C6B44}
+  .ein-zeile{display:flex;align-items:center;gap:10px;margin-bottom:9px;flex-wrap:wrap}
+  .ein-zeile.spalte{flex-direction:column;align-items:stretch;gap:5px}
+  .ein-zeile label{font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:#6B5322;flex:none}
+  .ein-zeile input,.ein-zeile textarea,.ein-zeile select{
+    font-family:'Nunito',sans-serif;font-size:14px;padding:8px 10px;border-radius:8px;
+    border:2px solid #DCC79B;background:#FFFDF7;color:#4A3620;width:100%}
+  .ein-zeile select{width:auto;flex:1;min-width:0}
+  .ein-knopfreihe{display:flex;gap:8px;flex-wrap:wrap}
+  .ein-btn{padding:9px 14px;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;
+    font-size:13px;font-weight:800;background:#FFF6DF;border:2px solid #E5CF9D;color:#6B5322}
+  .ein-btn:disabled{opacity:.45;cursor:default}
+  .ein-btn.an{background:#DFF0E4;border-color:#8FC7A0;color:#2C6B44}
+  .ein-btn.warn{background:#FBE3DC;border-color:#E0A79A;color:#8F2F1F}
+  .ein-hinweis{margin:0;font-family:'Nunito',sans-serif;font-size:11.5px;font-weight:700;color:#A2937A}
+  .ein-fotostatus{font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:800;color:#3F6B34;margin-right:auto}
+  .tsp-eltern-hinweis{margin:0;font-family:'Nunito',sans-serif;font-size:11.5px;font-weight:700;
+    color:#A2937A;text-align:center}
 
   /* ---------- Botschaft des Piraten ---------- */
   .frag-intro{margin:0 0 12px;font-family:var(--font-hand);font-weight:600;font-size:20px;
@@ -883,6 +927,8 @@
       <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
       <button class="icon-btn" id="fsBtn">⛶ Vollbild</button>
       <button class="icon-btn" id="voiceBtn">🔊 Stimme</button>
+      <button class="icon-btn flagge" id="langBtn" aria-label="Sprache umschalten">🇩🇪</button>
+      <button class="icon-btn" id="gearBtn" aria-label="Einstellungen">⚙️</button>
     </div>
     <p class="hint" id="homeGreeting"></p>
     <div class="progress-bar" id="homeBar"><div class="progress-bar-fill" id="homeBarFill"></div></div>
@@ -957,7 +1003,8 @@
       <div class="isl-sub" id="islSub">Insel-Abenteuer · Schatzsuche</div>
       <div style="flex:1"></div>
       <button class="isl-key" id="islWisBtn" title="Albarella-Wissen">📚</button>
-      <button class="isl-key" id="islHintBtn" title="Nur für Eltern">🔑</button>
+      <button class="isl-key flagge" id="islLangBtn" aria-label="Sprache umschalten">🇩🇪</button>
+      <button class="isl-key" id="islGearBtn" aria-label="Einstellungen">⚙️</button>
       <div class="isl-count"><span>🗺️</span><b id="islCount"></b></div>
     </div>
 
@@ -971,10 +1018,12 @@
   <section id="wissen" hidden>
     <div class="isl-top">
       <button class="isl-back" id="wisBack"><span>‹</span><span>Zurück</span></button>
-      <div class="isl-title">Albarella-Wissen</div>
-      <div class="isl-sub">Insel, Meer und alle Fragen</div>
+      <div class="isl-title" data-t>Albarella-Wissen</div>
+      <div class="isl-sub" data-t>Insel, Meer und alle Fragen</div>
       <div style="flex:1"></div>
+      <button class="isl-key flagge" id="wisLangBtn" aria-label="Sprache umschalten">🇩🇪</button>
       <button class="isl-key" id="wisSpeak" title="Vorlesen">🔊</button>
+      <button class="isl-key" id="wisGearBtn" aria-label="Einstellungen">⚙️</button>
     </div>
     <div class="wis-wrap" id="wisWrap"></div>
   </section>
@@ -1096,6 +1145,78 @@
   </div>
 </div>
 
+<div class="reward" id="einstellungen">
+  <div class="ein-karte">
+    <div class="ein-kopf">
+      <span>⚙️</span><b data-t>Einstellungen</b>
+      <button type="button" id="einZu" aria-label="Schließen">✕</button>
+    </div>
+    <div class="ein-inhalt">
+
+      <div class="ein-block">
+        <h3 data-t>🌍 Sprache</h3>
+        <div class="ein-flaggen">
+          <button type="button" class="ein-flagge" data-lang="de"><em>🇩🇪</em><span>Deutsch</span></button>
+          <button type="button" class="ein-flagge" data-lang="en"><em>🇬🇧</em><span>English</span></button>
+        </div>
+        <p class="ein-hinweis" data-t>Die Flagge oben in der Leiste macht dasselbe.</p>
+      </div>
+
+      <div class="ein-block">
+        <h3 data-t>🔊 Stimme und Ton</h3>
+        <div class="ein-zeile">
+          <label for="einVoiceSel" data-t>Vorlesestimme</label>
+          <select id="einVoiceSel"></select>
+        </div>
+        <div class="ein-knopfreihe">
+          <button type="button" class="ein-btn" id="einVoiceTest" data-t>▶︎ Probe hören</button>
+          <button type="button" class="ein-btn" id="einVoiceToggle"></button>
+          <button type="button" class="ein-btn" id="einFs" data-t>⛶ Vollbild</button>
+        </div>
+        <p class="ein-hinweis" id="einVoiceHinweis"></p>
+      </div>
+
+      <div class="ein-block eltern">
+        <h3 data-t>🔑 Nur für Eltern</h3>
+        <button type="button" class="ein-btn" id="einElternAuf" data-t>Bereich öffnen</button>
+        <div id="einElternInhalt" hidden>
+          <p class="ein-hinweis" data-t>Diese Angaben bleiben auf dem iPad. Sie werden nirgendwohin gesendet.</p>
+          <div class="ein-zeile spalte">
+            <label for="einHinweis" data-t>Hinweis zum echten Schatz</label>
+            <textarea id="einHinweis" rows="2"></textarea>
+          </div>
+          <div class="ein-zeile spalte">
+            <label for="einKoord" data-t>Koordinaten für den Weg-Knopf</label>
+            <input id="einKoord" type="text" placeholder="45.0877,12.3378">
+          </div>
+          <div class="ein-zeile">
+            <label data-t>Foto vom Fundort</label>
+            <span class="ein-fotostatus" id="einFotoStatus"></span>
+            <button type="button" class="ein-btn" id="einFotoWahl" data-t>Foto wählen</button>
+            <button type="button" class="ein-btn" id="einFotoWeg" data-t>Entfernen</button>
+          </div>
+          <div class="ein-zeile">
+            <label data-t>Schatzinsel zum Testen öffnen</label>
+            <span class="ein-hinweis" id="einTestWer"></span>
+            <button type="button" class="ein-btn" id="einTest"></button>
+          </div>
+          <div class="ein-zeile">
+            <label data-t>Schatzsuche zurücksetzen</label>
+            <span class="ein-hinweis" data-t>Bilder, Sterne und Medaillen bleiben</span>
+            <button type="button" class="ein-btn warn" id="einReset" data-t>Zurücksetzen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ein-block">
+        <h3 data-t>ℹ️ Über das Malstudio</h3>
+        <p class="ein-hinweis" id="einUeber"></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="reward" id="fotoGross">
   <div class="foto-rahmen">
     <button type="button" id="fotoZu" aria-label="Schließen">✕</button>
@@ -1130,10 +1251,7 @@
         </div>
         <a class="nav-btn" id="treasureMapLink" href="#" target="_blank" rel="noopener" style="display:none;text-decoration:none;text-align:center">📍 Ich zeige Dir den Weg</a>
         <button class="nav-btn primary" id="treasureOk">Juhu! 🎉</button>
-        <div class="tsp-eltern">
-          <button type="button" id="treasureSetBtn" class="treasure-parent" style="display:none">🔑 Fundort eintragen</button>
-          <button type="button" id="treasurePhotoBtn" class="treasure-parent">📸 Foto vom Fundort</button>
-        </div>
+        <p class="tsp-eltern-hinweis" id="treasureSetBtn">⚙️ Für Eltern: Fundort und Foto im Zahnrad oben eintragen.</p>
         <input type="file" id="treasurePhotoIn" accept="image/*" hidden>
       </div>
     </div>
@@ -1967,6 +2085,279 @@ const Music=(function(){
 /* ============================================================
    STIMME – große Schwester, viele Sätze, reagiert auf das Malen
    ============================================================ */
+/* ============================================================
+   SPRACHE – Deutsch/Englisch
+   Schluessel ist der deutsche Text selbst. Fehlt eine Uebersetzung,
+   erscheint automatisch das deutsche Original statt einer Luecke.
+   ============================================================ */
+let LANG='de';
+const EN={
+ "Einstellungen":"Settings",
+ "🌍 Sprache":"🌍 Language",
+ "Die Flagge oben in der Leiste macht dasselbe.":"The flag in the top bar does the same thing.",
+ "🔊 Stimme und Ton":"🔊 Voice and sound",
+ "Vorlesestimme":"Reading voice",
+ "▶︎ Probe hören":"▶︎ Hear a sample",
+ "⛶ Vollbild":"⛶ Full screen",
+ "🔊 Sprache an":"🔊 Voice on",
+ "🔇 Sprache aus":"🔇 Voice off",
+ "Bei englischer Flagge sucht die App eine englische Stimme.":"With the English flag the app looks for an English voice.",
+ "Dieses Gerät bietet gerade keine Stimmen an.":"This device is not offering any voices right now.",
+ "🔑 Nur für Eltern":"🔑 For grown-ups only",
+ "Bereich öffnen":"Open this section",
+ "Diese Angaben bleiben auf dem iPad. Sie werden nirgendwohin gesendet.":"Everything here stays on this iPad. Nothing is ever sent anywhere.",
+ "Hinweis zum echten Schatz":"Clue to the real treasure",
+ "Koordinaten für den Weg-Knopf":"Coordinates for the directions button",
+ "Foto vom Fundort":"Photo of the hiding place",
+ "Foto wählen":"Choose a photo",
+ "Entfernen":"Remove",
+ "hinterlegt ✓":"saved ✓",
+ "noch keins":"none yet",
+ "An":"On",
+ "Aus":"Off",
+ "gilt nur für":"applies only to",
+ "Schatzinsel zum Testen öffnen":"Open Treasure Island for testing",
+ "Schatzsuche zurücksetzen":"Reset the treasure hunt",
+ "Bilder, Sterne und Medaillen bleiben":"Pictures, stars and medals stay",
+ "Zurücksetzen":"Reset",
+ "Schatzsuche zurücksetzen?":"Reset the treasure hunt?",
+ "Alle Buchten liegen wieder im Nebel. Gemalte Bilder, Sterne und Medaillen bleiben.":"Every bay goes back into the fog. Pictures, stars and medals stay.",
+ "ℹ️ Über das Malstudio":"ℹ️ About Malstudio",
+ "Version":"Version",
+ "alles offline, keine Konten, keine Werbung, keine Daten verlassen dieses iPad.":"all offline, no accounts, no ads, no data ever leaves this iPad.",
+ "Hallo, ich bin es. So klinge ich.":"Hello, it's me. This is what I sound like.",
+ "📸 Foto ändern":"📸 Change photo",
+ "📸 Foto vom Fundort":"📸 Photo of the hiding place",
+ "Albarella":"Albarella",
+ "Start":"Start",
+ "Capo Nord":"Capo Nord",
+ "Marina":"Marina",
+ "Zurück":"Back",
+ "Buchten":"bays",
+ "von":"of",
+ "fertig":"done",
+ "im Nebel":"in the fog",
+ "Frage offen":"question open",
+ "Noch im Nebel":"Still in the fog",
+ "Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die Bucht davor fertig.":"The sea wind has not swept through here yet. Finish the bay before this one first.",
+ "Jetzt dran:":"Up next:",
+ "malen":"to draw",
+ "Jetzt dran: „Wusstest du?“ lesen":"Up next: read “Did you know?”",
+ "Jetzt dran: die Wissensfrage":"Up next: the quiz question",
+ "Bucht geschafft!":"Bay complete!",
+ "Dein Bild aus der Bucht":"Your picture from this bay",
+ "Hier erscheint dein Bild":"Your picture will appear here",
+ "Alle Motive gemalt":"All pictures drawn",
+ "Verstecktes Detail gefunden":"Hidden detail found",
+ "Wissensfrage beantwortet":"Quiz question answered",
+ "Bonus":"Bonus",
+ "Pflicht":"Required",
+ "Wusstest du?":"Did you know?",
+ "Gelesen":"Read it",
+ "Gelesen – die Wissensfrage ist offen":"Read – the quiz question is open now",
+ "Erst lesen":"Read it first",
+ "Wissensfrage":"Quiz question",
+ "Beantwortet":"Answered",
+ "Suchen":"Search",
+ "Suche läuft":"Searching",
+ "Gefunden":"Found",
+ "Tippe auf die Karte. Ich sage dir, ob du warm oder kalt bist.":"Tap the map. I will tell you if you are warm or cold.",
+ "Versuch":"try",
+ "Versuche":"tries",
+ "es leuchtet jetzt auf der Karte":"it is glowing on the map now",
+ "Ich finde es nicht – zeig es mir":"I cannot find it – show me",
+ "Weiter zur":"On to",
+ "Wissensfrage beantworten":"Answer the quiz question",
+ "„Wusstest du?“ lesen":"Read “Did you know?”",
+ "Kapitänsprüfung starten":"Start the captain's test",
+ "Schatzkiste gefunden!":"Treasure chest found!",
+ "Kapitänsprüfung":"Captain's test",
+ "Frage":"Question",
+ "Noch nicht gefunden":"Not found yet",
+ "Noch ist das Papier leer. Für jede fertige Bucht schreibt der alte Pirat dir eine Zeile.":"The paper is still empty. For every bay you finish, the old pirate writes you a line.",
+ "Der alte Pirat hat dir schon Zeilen geschrieben:":"The old pirate has written you some lines already:",
+ "Die Botschaft ist vollständig. Sie führt nach Capo Nord.":"The message is complete. It leads to Capo Nord.",
+ "Die Botschaft des Piraten":"The pirate's message",
+ "Die Schatzkiste ist offen":"The treasure chest is open",
+ "Du hast alle Hinweise gefunden! Jetzt beginnt die echte Suche – draußen, im Sand.":"You have found every clue! Now the real search begins – outside, in the sand.",
+ "Jetzt suchen wir den Schatz":"Now let's find the treasure",
+ "Frag Mama oder Papa – sie wissen, wo der Schatz liegt!":"Ask your mum or dad – they know where the treasure is!",
+ "Ich zeige Dir den Weg":"I'll show you the way",
+ "Juhu! 🎉":"Hooray! 🎉",
+ "⚙️ Für Eltern: Fundort und Foto im Zahnrad oben eintragen.":"⚙️ Grown-ups: enter the hiding place and photo behind the gear icon above.",
+ "Muschelbucht":"Shell Bay",
+ "Leuchtturmbucht":"Lighthouse Bay",
+ "Segelbucht":"Sailing Bay",
+ "Tiefseebucht":"Deep Sea Bay",
+ "Wunderbucht":"Wonder Bay",
+ "Naschbucht":"Treat Bay",
+ "Hier läuft das Meer nur knöcheltief an den Strand und legt ab, was es unterwegs gefunden hat. Der Weg um die Insel beginnt genau an dieser Stelle.":"Here the sea runs only ankle-deep onto the beach and drops off whatever it found along the way. The path around the island begins right at this spot.",
+ "Oben auf der Landzunge dreht sich ein Licht, immer die gleiche Runde. Für die Boote draußen heißt das: Hier ist Land, hier geht es nach Hause.":"Up on the headland a light turns, always the same round. For the boats out there it means: land is here, this is the way home.",
+ "Hier riecht die Luft nach Salz und nach warmem Holz. Die Boote liegen am Steg und klappern leise mit den Leinen, als könnten sie es kaum abwarten.":"Here the air smells of salt and warm wood. The boats lie at the jetty and rattle their lines softly, as if they could hardly wait.",
+ "Ein paar Schritte weiter draußen wird das Wasser dunkelblau, und der Boden verschwindet. Wer geduldig genug hinschaut, sieht irgendwann etwas vorbeiziehen.":"A few steps further out the water turns deep blue and the bottom disappears. If you watch patiently enough, sooner or later something swims past.",
+ "Hinter den Dünen wird es still. Kein Weg führt gerade, kein Baum steht wie der andere. Was hier entsteht, muss niemandem gefallen außer dir.":"Behind the dunes it goes quiet. No path runs straight, no tree stands like the next. Whatever you make here only has to please you.",
+ "Am Ende des Weges liegt der kleine Hafen, und dort gibt es Eis. Der alte Pirat, sagt man, hat hier nie widerstehen können.":"At the end of the path lies the little harbour, and there is ice cream there. The old pirate, they say, could never resist it.",
+ "Muscheln sind die Putzkolonne des Meeres: Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus. Krabben dagegen tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – die Krabbe steigt heraus und trägt darunter schon eine neue, noch ganz weiche.":"Mussels are the sea's cleaning crew: a single blue mussel pulls more than twenty litres of water through itself every day and lets it out cleaner. Crabs, on the other hand, wear their skeleton on the outside, like armour. When it gets too tight as they grow, it splits open – the crab climbs out, already wearing a new, still soft one underneath.",
+ "Der Name „Albarella“ kommt nicht vom Meer, sondern von einem Baum: der Silberpappel, auf Italienisch „albarella“. Ihre Blätter sind auf der Unterseite silbrig behaart – fährt der Wind hinein, wechselt der ganze Baum die Farbe.":"The name “Albarella” does not come from the sea but from a tree: the white poplar, “albarella” in Italian. Its leaves are silvery and downy underneath – when the wind runs through them, the whole tree changes colour.",
+ "Diese Insel hat kein Mensch gebaut, sondern ein Fluss. Vor etwa 400 Jahren suchte sich der Po ein neues Bett und schob dabei so viel Sand und Schlamm vor sich her, dass daraus neue Inseln entstanden – eine davon ist Albarella.":"No person built this island – a river did. About 400 years ago the river Po found itself a new bed and pushed so much sand and mud ahead of it that new islands formed. Albarella is one of them.",
+ "In der Adria leben mehr als 450 verschiedene Fischarten – von fingerkleinen Grundeln bis zu Schwertfischen. Und manchmal kommt größerer Besuch vorbei: Delfine, die in Gruppen jagen, und Meeresschildkröten, die zum Luftholen auftauchen.":"More than 450 different kinds of fish live in the Adriatic – from finger-sized gobies to swordfish. And sometimes bigger visitors come by: dolphins hunting in groups, and sea turtles surfacing for air.",
+ "Albarella ist eine Insel aus Bäumen: über zwei Millionen stehen hier, und sie gehören zu etwa 150 verschiedenen Arten – Pinien, Steineichen, Silberpappeln und viele mehr. Von oben sieht die Insel deshalb aus wie ein grünes Kissen im Meer.":"Albarella is an island made of trees: more than two million grow here, belonging to about 150 different kinds – stone pines, holm oaks, white poplars and many more. From above the island looks like a green cushion in the sea.",
+ "Im Sommer wird das Wasser vor Albarella 24 bis 27 Grad warm – wie eine Badewanne, die nie kalt wird. Weiter draußen ist das Mittelmeer dafür tief: an seiner tiefsten Stelle über 5000 Meter. Da könnte man die höchsten Berge der Alpen hineinstellen, und oben wäre noch Wasser darüber.":"In summer the water off Albarella reaches 24 to 27 degrees – like a bath that never goes cold. Further out, though, the Mediterranean is deep: over 5000 metres at its deepest point. You could stand the highest Alps in there and there would still be water above them.",
+ "Finde die kleine Muschel im Sand":"Find the little shell in the sand",
+ "Finde die Möwe am Himmel":"Find the gull in the sky",
+ "Finde das zweite, kleinere Boot am Horizont":"Find the second, smaller boat on the horizon",
+ "Finde den Delfin, der aus dem Wasser springt":"Find the dolphin leaping out of the water",
+ "Finde den Reiher im Gras":"Find the heron in the grass",
+ "Finde die kleine Krabbe am Weg":"Find the little crab by the path",
+ "Was passiert mit der Rüstung einer Krabbe, wenn sie wächst?":"What happens to a crab's armour when it grows?",
+ "Sie wächst einfach mit":"It simply grows with the crab",
+ "Sie platzt auf, und darunter wartet schon eine neue":"It splits open, and a new one is waiting underneath",
+ "Die Krabbe legt sie für immer ab":"The crab takes it off for good",
+ "Woher hat die Insel Albarella ihren Namen?":"Where does the island of Albarella get its name?",
+ "Von einem Seeräuber":"From a pirate",
+ "Von einer Muschelsorte":"From a kind of shell",
+ "Von einem Baum, der Silberpappel":"From a tree, the white poplar",
+ "Wer hat Albarella vor rund 400 Jahren geformt?":"Who shaped Albarella about 400 years ago?",
+ "Der Fluss Po, mit Sand und Schlamm":"The river Po, with sand and mud",
+ "Ein Vulkan unter dem Meer":"A volcano under the sea",
+ "Fischer, die Steine aufschütteten":"Fishermen piling up stones",
+ "Welche großen Gäste ziehen manchmal durch die Adria?":"Which big visitors sometimes pass through the Adriatic?",
+ "Pinguine und Eisbären":"Penguins and polar bears",
+ "Delfine und Meeresschildkröten":"Dolphins and sea turtles",
+ "Flusspferde und Krokodile":"Hippos and crocodiles",
+ "Wie viele verschiedene Baumarten wachsen auf Albarella?":"How many different kinds of tree grow on Albarella?",
+ "Etwa 3":"About 3",
+ "Etwa 15":"About 15",
+ "Etwa 150":"About 150",
+ "Wie tief ist das Mittelmeer an seiner tiefsten Stelle?":"How deep is the Mediterranean at its deepest point?",
+ "Über 50 Meter":"Over 50 metres",
+ "Über 5000 Meter":"Over 5000 metres",
+ "Über 500 Meter":"Over 500 metres",
+ "Woher hat Albarella seinen Namen?":"Where does Albarella get its name?",
+ "Von der Silberpappel":"From the white poplar",
+ "Von einer Muschel":"From a shell",
+ "Vom Fluss Po":"From the river Po",
+ "Wie viele Fischarten leben in der Adria?":"How many kinds of fish live in the Adriatic?",
+ "Etwa zehn":"About ten",
+ "Mehr als 450":"More than 450",
+ "Genau hundert":"Exactly one hundred",
+ "Was tut eine Krabbe, wenn ihre Rüstung zu eng wird?":"What does a crab do when its armour gets too tight?",
+ "Sie bleibt für immer klein":"It stays small forever",
+ "Sie streift sie ab – darunter wartet eine neue":"It sheds it – a new one is waiting underneath",
+ "Sie tauscht sie mit einer anderen Krabbe":"It swaps with another crab",
+ "Alle Wissensfragen":"All the quiz questions",
+ "Antwort:":"Answer:",
+ "noch nicht beantwortet":"not answered yet",
+ "Mehr im Internet":"More on the internet",
+ "Diese Knöpfe öffnen Wikipedia. Das geht nur, wenn das iPad im WLAN ist.":"These buttons open Wikipedia. That only works when the iPad is on Wi-Fi.",
+ "Bildnachweis":"Picture credits",
+ "Zahlen sind gerundet – Meere und Wälder lassen sich nicht auf den Meter genau zählen.":"Numbers are rounded – seas and forests cannot be counted to the metre.",
+ "Albarella-Wissen":"All about Albarella",
+ "Insel, Meer und alle Fragen":"Island, sea and all the questions",
+ "Kompass":"Compass",
+ "Schlüssel":"Key",
+ "Goldmünze":"Gold coin",
+ "Feder":"Feather",
+ "Kartenstück":"Map piece",
+ "Edelstein":"Gemstone",
+ "Deine Schatzfragmente":"Your treasure pieces",
+ "Beginne dort, wo die Boote liegen, und halte dich nach Norden.":"Begin where the boats lie, and keep heading north.",
+ "Folge dem Licht, das sich dreht. Es zeigt dir, wo Land ist.":"Follow the turning light. It shows you where the land is.",
+ "Wo die Segel klappern, führt der Weg an der Lagune vorbei.":"Where the sails rattle, the path leads past the lagoon.",
+ "Über der Tiefe kreisen die Vögel. Bleib an der Küste.":"Birds circle over the deep. Stay by the coast.",
+ "Hinter den Dünen wird die Insel schmal.":"Behind the dunes the island grows narrow.",
+ "Am spitzesten Ende, wo das Meer von zwei Seiten kommt: Capo Nord.":"At the sharpest tip, where the sea comes from both sides: Capo Nord.",
+ "Die Insel Albarella":"The island of Albarella",
+ "Das Mittelmeer":"The Mediterranean",
+ "Die Adria vor Albarella":"The Adriatic off Albarella",
+ "Tiere am Strand und im Wasser":"Animals on the beach and in the water",
+ "Pflanzen der Insel":"Plants of the island",
+ "Zahlen zum Staunen":"Numbers to marvel at",
+ "Albarella liegt im Po-Delta an der italienischen Adriaküste, ganz im Norden. Sie gehört zur Gemeinde Rosolina in der Region Veneto.":"Albarella lies in the Po delta on the Italian Adriatic coast, right up in the north. It belongs to the town of Rosolina in the Veneto region.",
+ "Die Insel ist klein: rund drei Quadratkilometer. Zu Fuß ist man an einem Tag überall gewesen.":"The island is small: about three square kilometres. On foot you can see all of it in a day.",
+ "Ihr Name kommt von der Silberpappel, auf Italienisch „albarella“. Deren Blätter sind unten silbrig – im Wind wechselt der Baum die Farbe.":"Its name comes from the white poplar, “albarella” in Italian. Its leaves are silvery underneath – in the wind the tree changes colour.",
+ "Auf Albarella wachsen über zwei Millionen Bäume, von etwa 150 verschiedenen Arten. Von oben sieht die Insel aus wie ein grünes Kissen im Meer.":"More than two million trees grow on Albarella, of about 150 different kinds. From above the island looks like a green cushion in the sea.",
+ "Der Sandstrand an der Meerseite ist etwa vier Kilometer lang.":"The sandy beach on the sea side is about four kilometres long.",
+ "Man kommt über eine Brücke auf die Insel. Autos sind selten – die meisten fahren Fahrrad.":"You reach the island over a bridge. Cars are rare – most people ride bicycles.",
+ "Das Mittelmeer liegt zwischen drei Erdteilen: Europa im Norden, Afrika im Süden, Asien im Osten.":"The Mediterranean lies between three continents: Europe to the north, Africa to the south, Asia to the east.",
+ "Es hängt nur an einer einzigen schmalen Stelle am großen Ozean: der Straße von Gibraltar. Sie ist an der engsten Stelle bloß etwa 14 Kilometer breit.":"It joins the great ocean at just one narrow place: the Strait of Gibraltar. At its narrowest it is only about 14 kilometres wide.",
+ "Im Schnitt ist das Mittelmeer rund 1500 Meter tief. An seiner tiefsten Stelle, dem Calypso-Tief westlich von Griechenland, über 5000 Meter.":"On average the Mediterranean is about 1500 metres deep. At its deepest point, the Calypso Deep west of Greece, over 5000 metres.",
+ "Weil dort so viel Wasser verdunstet, ist das Mittelmeer salziger als der Atlantik. Deshalb trägt es dich beim Schwimmen ein bisschen besser.":"Because so much water evaporates there, the Mediterranean is saltier than the Atlantic. That is why it carries you a little better when you swim.",
+ "Ebbe und Flut sind hier winzig – meist nur ein paar Handbreit. An der Nordadria fallen sie am stärksten aus. Darum steht Venedig manchmal unter Wasser.":"The tides here are tiny – usually just a few hand-widths. They are strongest in the northern Adriatic. That is why Venice sometimes stands under water.",
+ "Die Adria ist der Arm des Mittelmeers zwischen Italien und der Balkanhalbinsel.":"The Adriatic is the arm of the Mediterranean between Italy and the Balkan peninsula.",
+ "Vor dem Po-Delta ist sie flach: oft nur wenige Dutzend Meter tief. Deshalb wird das Wasser im Sommer so schnell warm – 24 bis 27 Grad.":"Off the Po delta it is shallow: often only a few dozen metres deep. That is why the water warms up so fast in summer – 24 to 27 degrees.",
+ "In der Adria leben mehr als 450 Fischarten. Von fingerkleinen Grundeln bis zu Schwertfischen.":"More than 450 kinds of fish live in the Adriatic. From finger-sized gobies to swordfish.",
+ "Größere Gäste ziehen manchmal vorbei: Große Tümmler (das sind Delfine) und Meeresschildkröten, die zum Luftholen auftauchen.":"Bigger visitors sometimes pass by: bottlenose dolphins and sea turtles surfacing for air.",
+ "Der Po ist der längste Fluss Italiens, rund 650 Kilometer. Er bringt Süßwasser, Sand und Schlamm ins Meer – daraus ist Albarella entstanden.":"The Po is Italy's longest river, about 650 kilometres. It carries fresh water, sand and mud into the sea – and that is what Albarella grew from.",
+ "Krabben tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – darunter wartet schon eine neue, noch weiche.":"Crabs wear their skeleton on the outside, like armour. When it gets too tight as they grow, it splits open – a new, still soft one is already waiting underneath.",
+ "Seesterne haben kein Gehirn, aber an jeder Armspitze winzige Augen, die Hell und Dunkel unterscheiden. Verliert ein Seestern einen Arm, wächst er nach.":"Starfish have no brain, but tiny eyes on every arm tip that tell light from dark. If a starfish loses an arm, it grows back.",
+ "Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus.":"A single blue mussel pulls more than twenty litres of water through itself every day and lets it out cleaner.",
+ "Möwen können Salzwasser trinken. Über den Augen haben sie kleine Drüsen, die das Salz wieder aussortieren.":"Gulls can drink sea water. Above their eyes sit little glands that sort the salt back out.",
+ "Seepferdchen sind Fische. Und bei ihnen tragen die Väter die Babys im Bauch, nicht die Mütter.":"Seahorses are fish. And with them the fathers carry the babies in their belly, not the mothers.",
+ "Flamingos werden erst durch ihr Futter rosa – kleine Krebstiere und Algen. Ein Flamingo, der nur Salat frisst, bleibt weiß.":"Flamingos only turn pink from their food – tiny shrimp and algae. A flamingo that eats only salad stays white.",
+ "Die Pinie hat lange Nadeln und dicke Zapfen. Darin stecken Pinienkerne – die kann man essen.":"The stone pine has long needles and fat cones. Inside are pine nuts – and you can eat those.",
+ "Strandhafer sieht aus wie zähes Gras, hält aber mit seinen Wurzeln ganze Dünen zusammen. Darum darf man ihn nicht ausreißen.":"Marram grass looks like tough grass, but its roots hold whole dunes together. That is why you must not pull it up.",
+ "Im Meer wachsen Wiesen: Neptungras. Es macht Sauerstoff, und Seepferdchen halten sich mit dem Schwanz daran fest.":"Meadows grow in the sea: Neptune grass. It makes oxygen, and seahorses hold on to it with their tails.",
+ "Die Stranddistel ist blaugrün und stachelig. Sie speichert Wasser, weil es im Sand kaum welches gibt.":"The sea holly is blue-green and prickly. It stores water, because there is hardly any in the sand.",
+ "Die tiefste Stelle des Mittelmeers ist über 5000 Meter tief. Man könnte die höchsten Alpengipfel hineinstellen – oben wäre noch Wasser darüber.":"The deepest point of the Mediterranean is over 5000 metres down. You could stand the highest Alpine peaks in it – and there would still be water above them.",
+ "Wasser vor Albarella im Sommer: 24 bis 27 Grad. Wie eine Badewanne, die nie kalt wird.":"The water off Albarella in summer: 24 to 27 degrees. Like a bath that never goes cold.",
+ "Bäume auf Albarella: über 2 000 000. Baumarten: etwa 150.":"Trees on Albarella: over 2,000,000. Kinds of tree: about 150.",
+ "Fischarten in der Adria: mehr als 450.":"Kinds of fish in the Adriatic: more than 450.",
+ "Alter der Insel: rund 400 Jahre. Für eine Insel ist das noch ein Baby.":"Age of the island: about 400 years. For an island that is still a baby.",
+ "Der Strand von Albarella":"The beach at Albarella",
+ "Das Po-Delta: Lagunen, Schilf und flaches Wasser":"The Po delta: lagoons, reeds and shallow water",
+ "Flamingos in den Lagunen bei Comacchio, gleich neben dem Po-Delta":"Flamingos in the lagoons near Comacchio, right next to the Po delta",
+ "Große Tümmler in der Adria":"Bottlenose dolphins in the Adriatic",
+ "Europäische Sumpfschildkröte":"European pond turtle",
+ "Roter Mittelmeer-Seestern":"Red Mediterranean starfish",
+ "Mittelmeer-Miesmuschel":"Mediterranean mussel",
+ "Langschnäuziges Seepferdchen":"Long-snouted seahorse",
+ "Pinien – ihre Kerne kann man essen":"Stone pines – you can eat their nuts",
+ "Silberpappel: unten silbrige Blätter. Sie gab Albarella den Namen":"White poplar: silvery leaves underneath. It gave Albarella its name",
+ "Strandhafer hält die Dünen zusammen":"Marram grass holds the dunes together",
+ "Neptungras-Wiese – macht Sauerstoff im Meer":"Neptune grass meadow – it makes oxygen in the sea",
+ "Mittelmeermöwe":"Yellow-legged gull",
+ "Mittelmeer-Strandkrabbe":"Mediterranean green crab",
+};
+function t(x){
+  if(LANG!=='en' || x==null) return x;
+  const s=String(x);
+  return Object.prototype.hasOwnProperty.call(EN,s) ? EN[s] : s;
+}
+/* Zweisprachig sprechen: nimmt den deutschen Text und sucht die Uebersetzung. */
+function sprich(text){ Voice.rawBoth(text, t(text)); }
+
+/* Statische Texte im HTML tragen data-t; ihr deutsches Original merken wir uns einmal. */
+function uebersetzeSeite(){
+  document.querySelectorAll('[data-t]').forEach(el=>{
+    if(!el.dataset.tOrig) el.dataset.tOrig=el.textContent.trim();
+    el.textContent=t(el.dataset.tOrig);
+  });
+  document.documentElement.lang = LANG;
+}
+async function setLang(l){
+  LANG = (l==='en') ? 'en' : 'de';
+  await Store.set('lang', LANG);
+  const f = LANG==='en' ? '\u{1F1EC}\u{1F1E7}' : '\u{1F1E9}\u{1F1EA}';
+  ['langBtn','islLangBtn','wisLangBtn'].forEach(id=>{ if($(id)) $(id).textContent=f; });
+  document.querySelectorAll('.ein-flagge').forEach(b=>b.classList.toggle('an', b.dataset.lang===LANG));
+  /* Passende Stimme suchen – sonst spricht eine deutsche Stimme englische Saetze. */
+  try{
+    const liste=Voice.list();
+    const passt=liste.find(v=>new RegExp('^'+LANG,'i').test(v.lang));
+    if(passt && !new RegExp('^'+LANG,'i').test((liste.find(v=>v.name===Voice.currentName())||{}).lang||'')){
+      Voice.setVoice(passt.name); Store.set('voiceName',passt.name);
+    }
+  }catch(e){}
+  uebersetzeSeite();
+  /* Alles neu zeichnen, was Text enthaelt */
+  if(typeof renderGreeting==='function' && profile) renderGreeting();
+  if(typeof renderPicker==='function') renderPicker();
+  if(!secIsland.hidden && typeof renderIsland==='function') renderIsland();
+  if(!secWissen.hidden && typeof renderWissen==='function') renderWissen();
+  if(typeof updateProgressChips==='function') updateProgressChips();
+}
+
 const Voice=(function(){
   const P={
     de:{
@@ -2646,10 +3037,10 @@ function bayComplete(b){ return bayStats(b).full && star3Set().indexOf(b.key)>=0
    verschiedene Dinge sagen. */
 function naechsterSchritt(b){
   const cc=islandCounts(), nx=b.motifs.find(n=>!cc[n]);
-  if(nx) return {text:'\u{1F449} Jetzt dran: '+nx+' malen', fertig:false};
-  if(factReadSet().indexOf(b.key)<0) return {text:'\u{1F4DC} Jetzt dran: \u201EWusstest du?\u201C lesen', fertig:false};
-  if(star3Set().indexOf(b.key)<0) return {text:'\u{1F9E0} Jetzt dran: die Wissensfrage', fertig:false};
-  return {text:'\u2713 Bucht geschafft!', fertig:true};
+  if(nx) return {text:'\u{1F449} '+t('Jetzt dran:')+' '+t(nx)+' '+t('malen'), fertig:false};
+  if(factReadSet().indexOf(b.key)<0) return {text:'\u{1F4DC} '+t('Jetzt dran: „Wusstest du?“ lesen'), fertig:false};
+  if(star3Set().indexOf(b.key)<0) return {text:'\u{1F9E0} '+t('Jetzt dran: die Wissensfrage'), fertig:false};
+  return {text:'\u2713 '+t('Bucht geschafft!'), fertig:true};
 }
 /* Nur die zusammenhaengende Reihe fertiger Buchten von vorne. */
 function baysDone(){
@@ -2754,7 +3145,7 @@ function renderIsland(){
     h+='<div class="isl-boot" aria-hidden="true"><em>⛵</em></div>';
   }
 
-  h+='<div class="isl-start" style="left:'+START_XY[0]+'%;top:'+(START_XY[1]-2)+'%"><b>Start</b><i></i></div>';
+  h+='<div class="isl-start" style="left:'+START_XY[0]+'%;top:'+(START_XY[1]-2)+'%"><b>'+t('Start')+'</b><i></i></div>';
   h+='<div class="isl-place" style="left:51%;top:10%">Capo Nord</div>';
   h+='<div class="isl-place" style="left:80%;top:84%">Marina</div>';
 
@@ -2801,8 +3192,8 @@ function renderIsland(){
     noteTask = '<span class="isl-task'+(sr.fertig?' done':'')+'">'+sr.text+'</span>';
   }
   h+='<div class="isl-note"><div class="hd"><span>'+(selOpen?sel.emoji:'🔒')+'</span><b>'
-   + (selOpen?sel.name:'Noch im Nebel')+'</b></div><p>'
-   + (selOpen ? sel.story : 'Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die '+BAYS[selIdx-1].name+' fertig.')
+   + (selOpen?t(sel.name):t('Noch im Nebel'))+'</b></div><p>'
+   + (selOpen ? t(sel.story) : t('Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die Bucht davor fertig.'))
    + '</p>'+noteTask+'</div>';
 
   let frag='<div class="isl-fragstrip" id="islFragStrip" role="button" '
@@ -2907,7 +3298,7 @@ async function renderBaySide(){
   const st=bayStats(b), open=bayUnlocked(i), c=islandCounts();
   const done=baysDone();
 
-  $('islCount').textContent=done+' von '+BAYS.length+' Buchten';
+  $('islCount').textContent=done+' '+t('von')+' '+BAYS.length+' '+t('Buchten');
   $('islSub').textContent=levelInfo(discoveredCount()).title+' · Schatzsuche';
 
   /* Kopfzeile: Bucht + Status */
@@ -2917,9 +3308,9 @@ async function renderBaySide(){
 
   noteSide.innerHTML='<div class="hd"><span>'+(open?b.emoji:'🔒')+'</span><b></b></div><p></p>'
     + (open?'<span class="isl-task"></span>':'');
-  noteSide.querySelector('b').textContent=open?b.name:'Noch im Nebel';
-  noteSide.querySelector('p').textContent=open?b.story
-    :'Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die '+BAYS[i-1].name+' fertig.';
+  noteSide.querySelector('b').textContent=open?t(b.name):t('Noch im Nebel');
+  noteSide.querySelector('p').textContent=open?t(b.story)
+    :t('Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die Bucht davor fertig.');
   if(open){
     const sr=naechsterSchritt(b);
     const el=noteSide.querySelector('.isl-task');
@@ -2930,10 +3321,10 @@ async function renderBaySide(){
 
   const head=document.createElement('div');
   head.className='isl-sidehead';
-  head.innerHTML='<span style="font-size:17px">'+(open?b.emoji:'🔒')+'</span><b>'+b.name+'</b>'
+  head.innerHTML='<span style="font-size:17px">'+(open?b.emoji:'🔒')+'</span><b>'+t(b.name)+'</b>'
     + '<span class="isl-status '+(bayComplete(b)?'done':'now')+'">'
-    + (bayComplete(b) ? 'fertig'
-       : (!open ? 'im Nebel' : (st.full ? 'Frage offen' : st.done+' von '+st.total)))+'</span>';
+    + (bayComplete(b) ? t('fertig')
+       : (!open ? t('im Nebel') : (st.full ? t('Frage offen') : st.done+' '+t('von')+' '+st.total)))+'</span>';
   host.appendChild(head);
 
   /* Holzrahmen mit dem gemalten Bild */
@@ -2945,7 +3336,7 @@ async function renderBaySide(){
   else{
     inner.innerHTML='<em></em><small></small>';
     inner.querySelector('em').textContent=open?b.emoji:'🔒';
-    inner.querySelector('small').textContent=st.full?'Dein Bild aus der Bucht':'Hier erscheint dein Bild';
+    inner.querySelector('small').textContent=st.full?t('Dein Bild aus der Bucht'):t('Hier erscheint dein Bild');
   }
   frame.appendChild(inner); host.appendChild(frame);
 
@@ -2961,13 +3352,13 @@ async function renderBaySide(){
     scroll.appendChild(p);
   }else{
     const earned=bayEarned(b,i);
-    const labels=['Alle Motive gemalt','Verstecktes Detail gefunden','Wissensfrage beantwortet'];
+    const labels=[t('Alle Motive gemalt'),t('Verstecktes Detail gefunden'),t('Wissensfrage beantwortet')];
     const stars=document.createElement('div');
     stars.className='isl-stars';
     labels.forEach((l,idx)=>{
       const row=document.createElement('div');
       row.className='isl-star-row'+(earned[idx]?' got':'');
-      row.innerHTML='<em>★</em><span>'+l+'</span><small>'+(earned[idx]?'✓':(idx===1?'Bonus':'Pflicht'))+'</small>';
+      row.innerHTML='<em>★</em><span>'+l+'</span><small>'+(earned[idx]?'✓':(idx===1?t('Bonus'):t('Pflicht')))+'</small>';
       stars.appendChild(row);
     });
     scroll.appendChild(stars);
@@ -2982,13 +3373,13 @@ async function renderBaySide(){
       fb.innerHTML='<div class="cl"><span>🔍</span><p></p>'
         + '<button type="button" class="sp" aria-label="Vorlesen">🔊</button></div>'
         + '<small></small>'
-        + (findTries>=5 && !findReveal ? '<button type="button" class="help">Ich finde es nicht – zeig es mir</button>' : '');
-      fb.querySelector('p').textContent=b.hidden.was;
+        + (findTries>=5 && !findReveal ? '<button type="button" class="help">'+t('Ich finde es nicht – zeig es mir')+'</button>' : '');
+      fb.querySelector('p').textContent=t(b.hidden.was);
       fb.querySelector('small').textContent = findTries===0
-        ? 'Tippe auf die Karte. Ich sage dir, ob du warm oder kalt bist.'
-        : findTries+' '+(findTries===1?'Versuch':'Versuche')
-          +(findReveal?' · es leuchtet jetzt auf der Karte':'');
-      fb.querySelector('.sp').addEventListener('click',()=>Voice.raw(b.hidden.was));
+        ? t('Tippe auf die Karte. Ich sage dir, ob du warm oder kalt bist.')
+        : findTries+' '+(findTries===1?t('Versuch'):t('Versuche'))
+          +(findReveal?' · '+t('es leuchtet jetzt auf der Karte'):'');
+      fb.querySelector('.sp').addEventListener('click',()=>sprich(b.hidden.was));
       const hb=fb.querySelector('.help');
       if(hb) hb.addEventListener('click',()=>{ findReveal=true; renderIsland(); });
       scroll.appendChild(fb);
@@ -2999,12 +3390,12 @@ async function renderBaySide(){
     const factRead=factReadSet().indexOf(b.key)>=0;
     const f=document.createElement('div');
     f.className='isl-fact'+(factRead?' read':'');
-    f.innerHTML='<div class="isl-fact-head"><span>📜</span><b>Wusstest du?</b>'
+    f.innerHTML='<div class="isl-fact-head"><span>📜</span><b>'+t('Wusstest du?')+'</b>'
       + '<button type="button" class="fspeak" aria-label="Vorlesen">🔊</button></div><p></p>'
-      + (factRead ? '<span class="isl-fact-ok">✓ Gelesen – die Wissensfrage ist offen</span>'
-                  : '<button type="button" class="isl-fact-done">Gelesen ✓</button>');
-    f.querySelector('p').textContent=b.fact;
-    f.querySelector('.fspeak').addEventListener('click',()=>Voice.raw(b.fact));
+      + (factRead ? '<span class="isl-fact-ok">✓ '+t('Gelesen – die Wissensfrage ist offen')+'</span>'
+                  : '<button type="button" class="isl-fact-done">'+t('Gelesen')+' ✓</button>');
+    f.querySelector('p').textContent=t(b.fact);
+    f.querySelector('.fspeak').addEventListener('click',()=>sprich(b.fact));
     const dn=f.querySelector('.isl-fact-done');
     if(dn) dn.addEventListener('click',()=>markFactRead(b.key));
     scroll.appendChild(f);
@@ -3018,12 +3409,12 @@ async function renderBaySide(){
     const quizBtn=document.createElement('button');
     quizBtn.innerHTML='<span>🧠</span><span></span>';
     const read=factReadSet().indexOf(b.key)>=0;
-    quizBtn.lastChild.textContent=earned[2]?'Beantwortet':(read?'Wissensfrage':'Erst lesen 📜');
+    quizBtn.lastChild.textContent=earned[2]?t('Beantwortet'):(read?t('Wissensfrage'):t('Erst lesen')+' \u{1F4DC}');
     quizBtn.disabled=earned[2]||!read;
     quizBtn.addEventListener('click',()=>openBayQuiz(b));
     const findBtn=document.createElement('button');
     findBtn.innerHTML='<span>🔍</span><span></span>';
-    findBtn.lastChild.textContent=earned[1]?'Gefunden':(findMode?'Suche läuft':'Suchen');
+    findBtn.lastChild.textContent=earned[1]?t('Gefunden'):(findMode?t('Suche läuft'):t('Suchen'));
     if(findMode) findBtn.classList.add('active');
     findBtn.disabled=earned[1];
     findBtn.addEventListener('click',()=>{
@@ -3040,39 +3431,39 @@ async function renderBaySide(){
   const cta=document.createElement('button');
   cta.className='isl-cta';
   if(!open){
-    cta.textContent='Weiter zur '+BAYS[done].name+' →';
+    cta.textContent=t('Weiter zur')+' '+t(BAYS[done].name)+' →';
     cta.addEventListener('click',()=>{ selBay=BAYS[done].key; findMode=false; renderIsland(); });
   }else if(!st.full){
     const next=b.motifs.find(n=>!c[n]);
-    cta.textContent=(next||b.name)+' malen →';
+    cta.textContent=t(next||b.name)+' '+t('malen')+' →';
     cta.addEventListener('click',()=>{
       const idx=allMotifs().findIndex(m=>m.name===next);
       if(idx>=0){ cameFromIsland=true; openMotif(idx); }
     });
   }else if(factReadSet().indexOf(b.key)<0){
     /* Gemalt ist alles – jetzt kommt das Wissen, dann die Pflichtfrage. */
-    cta.textContent='„Wusstest du?“ lesen 📜';
+    cta.textContent=t('„Wusstest du?“ lesen')+' \u{1F4DC}';
     cta.addEventListener('click',()=>{
-      Voice.raw(b.fact);
+      sprich(b.fact);
       const card=$('islSide').querySelector('.isl-fact');
       if(card){ card.scrollIntoView({block:'nearest'}); card.classList.add('pulse');
                 setTimeout(()=>card.classList.remove('pulse'),1400); }
     });
   }else if(star3Set().indexOf(b.key)<0){
-    cta.textContent='Wissensfrage beantworten →';
+    cta.textContent=t('Wissensfrage beantworten')+' →';
     cta.addEventListener('click',()=>openBayQuiz(b));
   }else{
     const nextIdx=BAYS.findIndex((x,n)=>n>i && !bayComplete(x));
     if(nextIdx>=0){
-      cta.textContent='Weiter zur '+BAYS[nextIdx].name+' →';
+      cta.textContent=t('Weiter zur')+' '+t(BAYS[nextIdx].name)+' →';
       cta.addEventListener('click',()=>{ selBay=BAYS[nextIdx].key; findMode=false; renderIsland(); });
     }else if(done===BAYS.length && !profile.treasureFound){
       cta.className='isl-cta gold';
-      cta.textContent='Kapitänsprüfung starten →';
+      cta.textContent=t('Kapitänsprüfung starten')+' →';
       cta.addEventListener('click',openCaptainQuiz);
     }else{
       cta.className='isl-cta gold';
-      cta.textContent='Schatzkiste gefunden! 🎁';
+      cta.textContent=t('Schatzkiste gefunden!')+' \u{1F381}';
       cta.addEventListener('click',showTreasureCard);
     }
   }
@@ -3186,8 +3577,8 @@ const WISSEN=[
 function zeigeFoto(key){
   const f=foto(key); if(!f) return;
   $('fotoGrossBild').src=f.datei;
-  $('fotoGrossBild').alt=f.text;
-  $('fotoGrossText').textContent=f.text;
+  $('fotoGrossBild').alt=t(f.text);
+  $('fotoGrossText').textContent=t(f.text);
   $('fotoGrossQuelle').textContent=f.urheber+' · '+f.lizenz+' · Wikimedia Commons (verkleinert)';
   $('fotoGross').classList.add('on');
 }
@@ -3207,7 +3598,7 @@ function renderWissen(){
   };
   const BILDER={"Die Insel Albarella": ["albarella", "silberpappel", "pinie"], "Das Mittelmeer": ["neptungras"], "Die Adria vor Albarella": ["podelta", "delfin"], "Tiere am Strand und im Wasser": ["krabbe", "seestern", "muschel", "seepferdchen", "moewe", "flamingo", "schildkroete"], "Pflanzen der Insel": ["strandhafer"], "Zahlen zum Staunen": []};
   WISSEN.forEach(w=>{
-    const c=mk(w.icon,w.titel,w.punkte);
+    const c=mk(w.icon,t(w.titel),w.punkte.map(t));
     const keys=BILDER[w.titel]||[];
     if(keys.length){
       const g=document.createElement('div');
@@ -3218,7 +3609,7 @@ function renderWissen(){
         b.type='button'; b.className='wis-bild';
         b.innerHTML='<img alt="" loading="lazy"><span></span>';
         b.querySelector('img').src=f.datei;
-        b.querySelector('span').textContent=f.text;
+        b.querySelector('span').textContent=t(f.text);
         b.addEventListener('click',()=>zeigeFoto(k));
         g.appendChild(b);
       });
@@ -3231,13 +3622,13 @@ function renderWissen(){
   const s3=star3Set();
   const fragen=document.createElement('div');
   fragen.className='wis-card wide';
-  fragen.innerHTML='<div class="wis-head"><em>🧠</em><b>Alle Wissensfragen</b></div>';
+  fragen.innerHTML='<div class="wis-head"><em>🧠</em><b>'+t('Alle Wissensfragen')+'</b></div>';
   BAYS.forEach(b=>{
     const q=document.createElement('div');
     q.className='wis-q';
-    q.innerHTML='<p></p><small></small>'+(s3.indexOf(b.key)>=0?'':'<span class="open">noch nicht beantwortet</span>');
-    q.querySelector('p').textContent=b.emoji+' '+b.quiz.q;
-    q.querySelector('small').textContent='Antwort: '+b.quiz.o[b.quiz.a]
+    q.innerHTML='<p></p><small></small>'+(s3.indexOf(b.key)>=0?'':'<span class="open">'+t('noch nicht beantwortet')+'</span>');
+    q.querySelector('p').textContent=b.emoji+' '+t(b.quiz.q);
+    q.querySelector('small').textContent=t('Antwort:')+' '+t(b.quiz.o[b.quiz.a])
       + (s3.indexOf(b.key)>=0?'  ✓':'');
     fragen.appendChild(q);
   });
@@ -3245,8 +3636,8 @@ function renderWissen(){
     const q=document.createElement('div');
     q.className='wis-q';
     q.innerHTML='<p></p><small></small>';
-    q.querySelector('p').textContent='🪜 '+k.q;
-    q.querySelector('small').textContent='Antwort: '+k.o[k.a];
+    q.querySelector('p').textContent='🪜 '+t(k.q);
+    q.querySelector('small').textContent=t('Antwort:')+' '+t(k.o[k.a]);
     fragen.appendChild(q);
   });
   host.appendChild(fragen);
@@ -3254,8 +3645,8 @@ function renderWissen(){
   /* Weiterlesen im Internet – offline funktionieren diese Knöpfe nicht. */
   const wk=document.createElement('div');
   wk.className='wis-card wide';
-  wk.innerHTML='<div class="wis-head"><em>\u{1F310}</em><b>Mehr im Internet</b></div>'
-    + '<p class="wis-hinweis">Diese Knöpfe öffnen Wikipedia. Das geht nur, wenn das iPad im WLAN ist.</p>'
+  wk.innerHTML='<div class="wis-head"><em>\u{1F310}</em><b>'+t('Mehr im Internet')+'</b></div>'
+    + '<p class="wis-hinweis">'+t('Diese Knöpfe öffnen Wikipedia. Das geht nur, wenn das iPad im WLAN ist.')+'</p>'
     + '<div class="wis-links"></div>';
   const lh=wk.querySelector('.wis-links');
   WIKI.forEach(([name,url])=>{
@@ -3269,36 +3660,123 @@ function renderWissen(){
   /* Bildnachweis – bei freien Lizenzen Pflicht. */
   const qc=document.createElement('div');
   qc.className='wis-card wide';
-  qc.innerHTML='<div class="wis-head"><em>\u{1F4F8}</em><b>Bildnachweis</b></div><ul class="wis-quellen"></ul>';
+  qc.innerHTML='<div class="wis-head"><em>\u{1F4F8}</em><b>'+t('Bildnachweis')+'</b></div><ul class="wis-quellen"></ul>';
   const ql=qc.querySelector('.wis-quellen');
   FOTOS.forEach(f=>{
     const li=document.createElement('li');
-    li.textContent=f.text+' – '+f.urheber+', '+f.lizenz+' (Wikimedia Commons, verkleinert)';
+    li.textContent=t(f.text)+' – '+f.urheber+', '+f.lizenz+' (Wikimedia Commons)';
     ql.appendChild(li);
   });
   host.appendChild(qc);
 
   const note=document.createElement('p');
   note.className='wis-note';
-  note.textContent='Zahlen sind gerundet – Meere und Wälder lassen sich nicht auf den Meter genau zählen.';
+  note.textContent=t('Zahlen sind gerundet – Meere und Wälder lassen sich nicht auf den Meter genau zählen.');
   host.appendChild(note);
 }
+
+
+/* ---------- Einstellungen ---------- */
+const APP_VERSION='v7-45';
+let elternFrei=false;
+async function einstellungenOeffnen(){
+  $('einUeber').textContent = t('Version')+' '+APP_VERSION+' · '
+    + t('alles offline, keine Konten, keine Werbung, keine Daten verlassen dieses iPad.');
+  document.querySelectorAll('.ein-flagge').forEach(b=>b.classList.toggle('an', b.dataset.lang===LANG));
+  const sel=$('einVoiceSel'); sel.innerHTML='';
+  Voice.list().forEach(v=>{
+    const o=document.createElement('option'); o.value=v.name; o.textContent=v.name; sel.appendChild(o);
+  });
+  sel.value=Voice.currentName();
+  $('einVoiceToggle').textContent = Voice.isOn() ? t('🔊 Sprache an') : t('🔇 Sprache aus');
+  $('einVoiceToggle').classList.toggle('an', Voice.isOn());
+  $('einVoiceHinweis').textContent = Voice.list().length
+    ? t('Bei englischer Flagge sucht die App eine englische Stimme.')
+    : t('Dieses Gerät bietet gerade keine Stimmen an.');
+  $('einElternInhalt').hidden = !elternFrei;
+  $('einElternAuf').hidden = elternFrei;
+  if(elternFrei) await elternFelderFuellen();
+  uebersetzeSeite();
+  $('einstellungen').classList.add('on');
+}
+async function elternFelderFuellen(){
+  $('einHinweis').value = (await Store.get('treasureHint')) || '';
+  $('einKoord').value   = (await Store.get('treasureCoords')) || '';
+  const foto = await Store.get('treasurePhoto');
+  $('einFotoStatus').textContent = foto ? t('hinterlegt ✓') : t('noch keins');
+  $('einFotoWeg').disabled = !foto;
+  $('einTest').textContent = islandTestMode() ? t('An') : t('Aus');
+  $('einTest').classList.toggle('an', islandTestMode());
+  $('einTestWer').textContent = profile ? t('gilt nur für')+' '+profile.name : '';
+}
+function einstellungenSchliessen(){ $('einstellungen').classList.remove('on'); }
+$('gearBtn').addEventListener('click',einstellungenOeffnen);
+$('islGearBtn').addEventListener('click',einstellungenOeffnen);
+$('einZu').addEventListener('click',einstellungenSchliessen);
+$('einstellungen').addEventListener('click',e=>{ if(e.target===$('einstellungen')) einstellungenSchliessen(); });
+$('einElternAuf').addEventListener('click',async()=>{
+  if(!parentGate()) return;
+  elternFrei=true; $('einElternAuf').hidden=true; $('einElternInhalt').hidden=false;
+  await elternFelderFuellen(); uebersetzeSeite();
+});
+/* Flaggen */
+$('langBtn').addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
+$('islLangBtn').addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
+$('wisLangBtn').addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
+$('wisGearBtn').addEventListener('click',einstellungenOeffnen);
+document.querySelectorAll('.ein-flagge').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+/* Stimme */
+$('einVoiceSel').addEventListener('change',e=>{ Voice.setVoice(e.target.value); Store.set('voiceName',e.target.value); });
+$('einVoiceTest').addEventListener('click',()=>sprich('Hallo, ich bin es. So klinge ich.'));
+$('einVoiceToggle').addEventListener('click',e=>{
+  const an=Voice.toggle(); Store.set('voiceOn',an?'1':'0');
+  e.target.textContent = an ? t('🔊 Sprache an') : t('🔇 Sprache aus');
+  e.target.classList.toggle('an',an);
+});
+$('einFs').addEventListener('click',()=>$('fsBtn').click());
+/* Elternangaben – speichern beim Tippen */
+$('einHinweis').addEventListener('input',e=>{
+  const v=e.target.value.trim();
+  if(v) Store.set('treasureHint',v); else Store.del('treasureHint');
+});
+$('einKoord').addEventListener('input',e=>{
+  const v=e.target.value.trim();
+  if(!v){ Store.del('treasureCoords'); e.target.style.borderColor='#DCC79B'; return; }
+  const dez=parseCoords(v);
+  e.target.style.borderColor = dez ? '#8FC7A0' : '#E0A79A';
+  if(dez) Store.set('treasureCoords',dez);
+});
+$('einFotoWahl').addEventListener('click',()=>$('treasurePhotoIn').click());
+$('einFotoWeg').addEventListener('click',async()=>{
+  await Store.del('treasurePhoto'); await elternFelderFuellen();
+});
+$('einTest').addEventListener('click',async e=>{
+  if(!profile) return;
+  profile.islandTest = profile.islandTest==='1' ? '0' : '1';
+  await saveProfiles(); renderGreeting(); await elternFelderFuellen();
+});
+$('einReset').addEventListener('click',()=>{
+  if(confirm(t('Schatzsuche zurücksetzen?')+'\n\n'
+    +t('Alle Buchten liegen wieder im Nebel. Gemalte Bilder, Sterne und Medaillen bleiben.'))){
+    resetIsland(); einstellungenSchliessen();
+  }
+});
 
 /* Jedes fertige Fragment gibt eine Zeile der Wegbeschreibung frei. */
 function showFragScroll(){
   const done=baysDone();
   $('fragIntro').textContent = done===0
-    ? 'Noch ist das Papier leer. Für jede fertige Bucht schreibt der alte Pirat dir eine Zeile.'
+    ? t('Noch ist das Papier leer. Für jede fertige Bucht schreibt der alte Pirat dir eine Zeile.')
     : (done<FRAGMENTS.length
-      ? 'Der alte Pirat hat dir '+done+' von '+FRAGMENTS.length+' Zeilen geschrieben. Der Rest fehlt noch.'
-      : 'Die Botschaft ist vollständig. Sie führt nach Capo Nord.');
+      ? t('Der alte Pirat hat dir schon Zeilen geschrieben:')+' '+done+' '+t('von')+' '+FRAGMENTS.length
+      : t('Die Botschaft ist vollständig. Sie führt nach Capo Nord.'));
   const host=$('fragLines'); host.textContent='';
   FRAGMENTS.forEach((f,i)=>{
     const row=document.createElement('div');
     row.className='frag-line'+(i<done?'':' locked');
     row.innerHTML='<em></em><span></span>';
     row.querySelector('em').textContent = i<done ? f.emoji : '·';
-    row.querySelector('span').textContent = i<done ? f.line : 'Noch nicht gefunden';
+    row.querySelector('span').textContent = i<done ? t(f.line) : t('Noch nicht gefunden');
     host.appendChild(row);
   });
   $('fragScroll').classList.add('on');
@@ -3320,10 +3798,10 @@ function islQuizShow(){
   const bay=ctx.kind==='bay'?BAYS.find(x=>x.key===ctx.bayKey):null;
   const q=ctx.kind==='captain'?CAPTAIN[ctx.step]:bay.quiz;
   $('islQuizTitle').textContent = ctx.kind==='captain'
-    ? 'Kapitänsprüfung · Frage '+(ctx.step+1)+' von 3'
+    ? t('Kapitänsprüfung')+' · '+t('Frage')+' '+(ctx.step+1)+' '+t('von')+' 3'
     : 'Wissensfrage · '+bay.name;
   islQuizRenderDots(ctx.kind==='captain'?3:1, ctx.step);
-  $('islQuizQ').textContent=q.q;
+  $('islQuizQ').textContent=t(q.q);
   const opts=$('islQuizOpts'); opts.innerHTML='';
   $('islQuizFeedback').textContent=''; $('islQuizFeedback').className='isl-quiz-feedback';
   q.o.forEach((t,idx)=>{
@@ -3392,14 +3870,14 @@ function openChestReveal(){
 async function showTreasureCard(){
   const hint=await Store.get('treasureHint');
   const coords=await Store.get('treasureCoords');
-  $('treasureHintText').textContent = hint || 'Frag Mama oder Papa – sie wissen, wo der Schatz liegt!';
+  $('treasureHintText').textContent = hint || t('Frag Mama oder Papa – sie wissen, wo der Schatz liegt!');
   const link=$('treasureMapLink');
   const ll0=parseCoords(coords);
   if(ll0){
     const ll=ll0;
     /* Apple Karten: ll setzt die Mitte, q beschriftet die Stecknadel. */
     link.href='https://maps.apple.com/?ll='+ll+'&q='+encodeURIComponent('Schatz')+'&t=m';
-    link.textContent='📍 Ich zeige Dir den Weg';
+    link.textContent='\u{1F4CD} '+t('Ich zeige Dir den Weg');
     link.style.display='block';
     $('treasureSetBtn').style.display='none';
   }else{
@@ -3410,7 +3888,7 @@ async function showTreasureCard(){
   const ph=$('treasurePhoto');
   if(foto){ ph.src=foto; $('tspBild').classList.add('da'); }
   else { ph.removeAttribute('src'); $('tspBild').classList.remove('da'); }
-  $('treasurePhotoBtn').textContent = foto ? '📸 Foto ändern' : '📸 Foto vom Fundort';
+  if($('treasurePhotoBtn')) $('treasurePhotoBtn').textContent = foto ? t('📸 Foto ändern') : t('📸 Foto vom Fundort');
 
   const coins=$('treasureCoins'); coins.innerHTML='';
   for(let k=0;k<22;k++){
@@ -3441,16 +3919,16 @@ $('wisBack').addEventListener('click',()=>{
 $('fotoZu').addEventListener('click',()=>$('fotoGross').classList.remove('on'));
 $('fotoGross').addEventListener('click',e=>{ if(e.target===$('fotoGross')) $('fotoGross').classList.remove('on'); });
 $('wisSpeak').addEventListener('click',()=>{
-  Voice.raw('Albarella-Wissen. '+WISSEN.map(w=>w.titel+'. '+w.punkte.join(' ')).join(' '));
+  Voice.raw(t('Albarella-Wissen')+'. '+WISSEN.map(w=>t(w.titel)+'. '+w.punkte.map(t).join(' ')).join(' '));
 });
 
 /* Foto vom Fundort: wird auf 1200 px verkleinert, sonst sprengt es den Speicher. */
-$('treasurePhotoBtn').addEventListener('click',async ()=>{
+if($('treasurePhotoBtn')) $('treasurePhotoBtn').addEventListener('click',async ()=>{
   if(!parentGate()) return;
   const hat=!!(await Store.get('treasurePhoto'));
   if(hat && confirm('Foto entfernen?\n\nAbbrechen = ein neues Foto auswählen.')){
     await Store.del('treasurePhoto');
-    await showTreasureCard();
+    if($('treasureReveal').classList.contains('on')) await showTreasureCard();
     return;
   }
   $('treasurePhotoIn').click();
@@ -3472,9 +3950,12 @@ $('treasurePhotoIn').addEventListener('change',async e=>{
     cv.width=Math.round(img.width*sc); cv.height=Math.round(img.height*sc);
     cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
     await Store.set('treasurePhoto', cv.toDataURL('image/jpeg',0.82));
-    toast('📸 Foto vom Fundort gespeichert');
-    await showTreasureCard();
-  }catch(err){ toast('⚠️ Foto konnte nicht gelesen werden'); }
+    toast(t('📸 Foto vom Fundort gespeichert'));
+    /* Nur auffrischen, wenn die Truhe gerade offen ist – sonst wuerde das
+       Auswaehlen eines Fotos aus den Einstellungen den Schlussbildschirm aufreissen. */
+    if($('treasureReveal').classList.contains('on')) await showTreasureCard();
+    if($('einstellungen').classList.contains('on')) await elternFelderFuellen();
+  }catch(err){ toast(t('⚠️ Foto konnte nicht gelesen werden')); }
 });
 
 $('fragClose').addEventListener('click',()=>$('fragScroll').classList.remove('on'));
@@ -3557,12 +4038,12 @@ async function askTreasureHint(){
   toast('🔑 Fundort gespeichert – der Kartenknopf ist da');
   return true;
 }
-$('islHintBtn').addEventListener('click',()=>{
+if($('islHintBtn')) $('islHintBtn').addEventListener('click',()=>{
   if(hintHeld){ hintHeld=false; return; }
   if(parentGate()) askTreasureHint();
 });
 /* Der gleiche Dialog direkt aus der Schatzkarte – dort wird er gebraucht. */
-$('treasureSetBtn').addEventListener('click',async ()=>{
+if($('treasureSetBtn') && $('treasureSetBtn').tagName==='BUTTON') $('treasureSetBtn').addEventListener('click',async ()=>{
   if(!parentGate()) return;
   await askTreasureHint();
   await showTreasureCard();
@@ -3584,7 +4065,7 @@ async function resetIsland(){
   toast('🔄 Schatzsuche zurückgesetzt – die Insel liegt wieder im Nebel');
 }
 (function(){
-  const b=$('islHintBtn'); let t=null;
+  const b=$('islHintBtn'); if(!b) return; let t=null;
   const start=()=>{ hintHeld=false; clearTimeout(t); t=setTimeout(()=>{
     hintHeld=true;
     if(!parentGate()) return;
@@ -4388,6 +4869,7 @@ layout();
   await loadProfiles();
   for(const p of profiles){ p.count=(await Store.keys('pic:'+p.id+':')).length; }
   renderProfiles();
+  await setLang((await Store.get('lang'))||'de');
   const vOn=await Store.get('voiceOn'); if(vOn==='0') Voice.setOn(false);
   const vName=await Store.get('voiceName'); if(vName) setTimeout(()=>Voice.setVoice(vName),400);
   syncVoiceButtons();
