@@ -357,6 +357,8 @@
   .isl-fact-head button{margin-left:auto;background:none;border:0;font-size:15px;cursor:pointer;padding:0}
   .isl-fact p{margin:0;font-family:var(--font-hand);font-weight:600;font-size:18px;
     color:#4A3620;line-height:1.25}
+  .isl-fact.pulse{animation:factPulse 1.4s ease-in-out}
+  @keyframes factPulse{0%,100%{box-shadow:none}30%,70%{box-shadow:0 0 0 4px rgba(223,166,58,.55)}}
   .isl-fact.read{border-color:#B9D8AB;background:rgba(246,252,242,.9)}
   .isl-fact-done{display:block;width:100%;margin-top:8px;padding:7px 10px;border-radius:7px;
     cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
@@ -375,6 +377,18 @@
     font-family:var(--font-map);font-weight:800;font-size:14px;color:#fff;cursor:pointer;
     background:linear-gradient(#3F9C6D,#2C7C54);box-shadow:0 4px 0 rgba(0,0,0,.16)}
   .isl-cta.gold{background:linear-gradient(#E0A636,#C1861D)}
+
+  /* ---------- Botschaft des Piraten ---------- */
+  .frag-intro{margin:0 0 12px;font-family:var(--font-hand);font-weight:600;font-size:20px;
+    line-height:1.25;color:#4A3620}
+  .frag-lines{display:flex;flex-direction:column;gap:8px;max-height:52vh;overflow-y:auto}
+  .frag-line{display:flex;align-items:flex-start;gap:10px;padding:9px 11px;border-radius:8px;
+    background:rgba(255,253,245,.85);border:2px solid #D9C193}
+  .frag-line.locked{background:rgba(255,253,245,.35);border-style:dashed;border-color:#C0A774}
+  .frag-line em{font-style:normal;font-size:20px;flex:none;line-height:1.1}
+  .frag-line span{font-family:var(--font-hand);font-weight:600;font-size:19px;line-height:1.2;color:#4A3620}
+  .frag-line.locked span{color:#A2937A}
+  .isl-fragstrip{cursor:pointer}
 
   /* ---------- Quiz ---------- */
   .isl-quiz-card{width:470px;max-width:92vw;padding:24px 26px 20px;border-radius:6px;
@@ -911,11 +925,20 @@
   </div>
 </div>
 
+<div class="reward" id="fragScroll">
+  <div class="isl-quiz-card">
+    <div class="isl-quiz-head"><span style="font-size:20px">🗺️</span><b>Die Botschaft des Piraten</b>
+      <button type="button" id="fragClose" aria-label="Schließen">✕</button></div>
+    <p class="frag-intro" id="fragIntro"></p>
+    <div class="frag-lines" id="fragLines"></div>
+  </div>
+</div>
+
 <div class="reward" id="treasureReveal">
   <div class="isl-coins" id="treasureCoins"></div>
   <div class="treasure-card">
-    <div class="treasure-head"><span style="font-size:26px">✖️</span><b>Der echte Schatz</b></div>
-    <p class="lead">Du hast alle Hinweise gefunden. Jetzt öffnet sich die Truhe.</p>
+    <div class="treasure-head"><span style="font-size:26px">✖️</span><b>Die Schatzkiste ist offen</b></div>
+    <p class="lead">Du hast alle Hinweise gefunden! Jetzt beginnt die echte Suche – draußen, im Sand.</p>
     <div class="treasure-body">
       <div class="treasure-hint">
         <small>Hinweis von Mama &amp; Papa</small>
@@ -2314,14 +2337,14 @@ const ISLAND_FALLBACK_SVG =
 /* Buchten in Freischalt-Reihenfolge. Koordinaten in % des Basisbildes (aus dem Design-Entwurf). */
 const BAYS=[
   {key:'muschel', nr:1, name:'Muschelbucht', emoji:'🐚', x:60, y:83, side:'right',
-   motifs:['Muschel','Seestern','Sandburg','Krabbe','Seepferdchen'],
+   motifs:['Muschel','Seestern','Sandburg','Krabbe'],
    story:'Hier läuft das Meer nur knöcheltief an den Strand und legt ab, was es unterwegs gefunden hat. Der Weg um die Insel beginnt genau an dieser Stelle.',
    fact:'Muscheln sind die Putzkolonne des Meeres: Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus. Krabben dagegen tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – die Krabbe steigt heraus und trägt darunter schon eine neue, noch ganz weiche.',
    hidden:{was:'Finde die kleine Muschel im Sand', icon:'🐚', x:80, y:73, r:30},
    quiz:{q:'Was passiert mit der Rüstung einer Krabbe, wenn sie wächst?', a:1,
      o:['Sie wächst einfach mit','Sie platzt auf, und darunter wartet schon eine neue','Die Krabbe legt sie für immer ab']}},
   {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:74, y:60, side:'left',
-   motifs:['Leuchtturm','Haus am Meer','Sonnenschirm','Strandkorb','Palme'],
+   motifs:['Leuchtturm','Haus am Meer','Strandkorb','Palme'],
    story:'Oben auf der Landzunge dreht sich ein Licht, immer die gleiche Runde. Für die Boote draußen heißt das: Hier ist Land, hier geht es nach Hause.',
    fact:'Der Name „Albarella“ kommt nicht vom Meer, sondern von einem Baum: der Silberpappel, auf Italienisch „albarella“. Ihre Blätter sind auf der Unterseite silbrig behaart – fährt der Wind hinein, wechselt der ganze Baum die Farbe.',
    hidden:{was:'Finde die Möwe am Himmel', icon:'🕊️', x:81, y:31, r:32},
@@ -2335,14 +2358,14 @@ const BAYS=[
    quiz:{q:'Wer hat Albarella vor rund 400 Jahren geformt?', a:0,
      o:['Der Fluss Po, mit Sand und Schlamm','Ein Vulkan unter dem Meer','Fischer, die Steine aufschütteten']}},
   {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:80, y:41, side:'left',
-   motifs:['Fisch','Delfin','Wal','Krake','Schildkröte'],
+   motifs:['Fisch','Delfin','Wal','Schildkröte'],
    story:'Ein paar Schritte weiter draußen wird das Wasser dunkelblau, und der Boden verschwindet. Wer geduldig genug hinschaut, sieht irgendwann etwas vorbeiziehen.',
    fact:'In der Adria leben mehr als 450 verschiedene Fischarten – von fingerkleinen Grundeln bis zu Schwertfischen. Und manchmal kommt größerer Besuch vorbei: Delfine, die in Gruppen jagen, und Meeresschildkröten, die zum Luftholen auftauchen.',
    hidden:{was:'Finde den Delfin, der aus dem Wasser springt', icon:'🐬', x:78, y:18, r:34},
    quiz:{q:'Welche großen Gäste ziehen manchmal durch die Adria?', a:1,
      o:['Pinguine und Eisbären','Delfine und Meeresschildkröten','Flusspferde und Krokodile']}},
   {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:18, y:44, side:'right',
-   motifs:['Herz','Blume','Schmetterling','Kätzchen','Regenbogen','Rakete'],
+   motifs:['Herz','Blume','Schmetterling','Regenbogen'],
    story:'Hinter den Dünen wird es still. Kein Weg führt gerade, kein Baum steht wie der andere. Was hier entsteht, muss niemandem gefallen außer dir.',
    fact:'Albarella ist eine Insel aus Bäumen: über zwei Millionen stehen hier, und sie gehören zu etwa 150 verschiedenen Arten – Pinien, Steineichen, Silberpappeln und viele mehr. Von oben sieht die Insel deshalb aus wie ein grünes Kissen im Meer.',
    hidden:{was:'Finde den Reiher im Gras', icon:'🦩', x:26, y:56, r:32},
@@ -2366,9 +2389,22 @@ const CAPTAIN=[
    o:['Sie bleibt für immer klein','Sie streift sie ab – darunter wartet eine neue','Sie tauscht sie mit einer anderen Krabbe']}
 ];
 
+/* Jedes Fragment ist eine Zeile der Wegbeschreibung des alten Piraten.
+   Zusammen fuehren die sechs Zeilen nach Capo Nord – den genauen Fundort
+   verraet erst der Hinweis der Eltern in der Truhe. */
 const FRAGMENTS=[
-  {emoji:'🧭', name:'Kompass'}, {emoji:'🗝️', name:'Schlüssel'}, {emoji:'🪙', name:'Goldmünze'},
-  {emoji:'🪶', name:'Feder'}, {emoji:'🧩', name:'Kartenstück'}, {emoji:'💎', name:'Edelstein'}
+  {emoji:'🧭', name:'Kompass',
+   line:'Beginne dort, wo die Boote liegen, und halte dich nach Norden.'},
+  {emoji:'🗝️', name:'Schlüssel',
+   line:'Folge dem Licht, das sich dreht. Es zeigt dir, wo Land ist.'},
+  {emoji:'🪙', name:'Goldmünze',
+   line:'Wo die Segel klappern, führt der Weg an der Lagune vorbei.'},
+  {emoji:'🪶', name:'Feder',
+   line:'Über der Tiefe kreisen die Vögel. Bleib an der Küste.'},
+  {emoji:'🧩', name:'Kartenstück',
+   line:'Hinter den Dünen wird die Insel schmal.'},
+  {emoji:'💎', name:'Edelstein',
+   line:'Am spitzesten Ende, wo das Meer von zwei Seiten kommt: Capo Nord.'}
 ];
 
 /* Lebendige Details. Solange die Sprite-Dateien fehlen, springt das Emoji ein. */
@@ -2407,10 +2443,13 @@ function bayStats(b){
   const done=b.motifs.filter(n=>c[n]).length;
   return {done:done, total:b.motifs.length, full:done>=b.motifs.length};
 }
+/* Eine Bucht ist erst fertig, wenn alle Motive gemalt UND die Wissensfrage
+   beantwortet ist. Das Verstecken-Suchen bleibt freiwillig. */
+function bayComplete(b){ return bayStats(b).full && star3Set().indexOf(b.key)>=0; }
 /* Nur die zusammenhaengende Reihe fertiger Buchten von vorne. */
 function baysDone(){
   let n=0;
-  for(let i=0;i<BAYS.length;i++){ if(bayStats(BAYS[i]).full) n++; else break; }
+  for(let i=0;i<BAYS.length;i++){ if(bayComplete(BAYS[i])) n++; else break; }
   return n;
 }
 /* Streng der Reihe nach: Bucht i oeffnet sich erst, wenn ALLE davor fertig sind.
@@ -2519,15 +2558,19 @@ function renderIsland(){
   let noteTask='';
   if(selOpen){
     const cc=islandCounts(), nx=sel.motifs.find(n=>!cc[n]);
-    noteTask = nx ? '<span class="isl-task">👉 Jetzt dran: '+nx+' malen</span>'
-                  : '<span class="isl-task done">✓ Alle Motive gemalt!</span>';
+    const nextStep = nx ? '👉 Jetzt dran: '+nx+' malen'
+      : (factReadSet().indexOf(sel.key)<0 ? '📜 Jetzt dran: „Wusstest du?“ lesen'
+      : (star3Set().indexOf(sel.key)<0 ? '🧠 Jetzt dran: die Wissensfrage'
+      : '✓ Bucht geschafft!'));
+    noteTask = '<span class="isl-task'+(nx||!bayComplete(sel)?'':' done')+'">'+nextStep+'</span>';
   }
   h+='<div class="isl-note"><div class="hd"><span>'+(selOpen?sel.emoji:'🔒')+'</span><b>'
    + (selOpen?sel.name:'Noch im Nebel')+'</b></div><p>'
    + (selOpen ? sel.story : 'Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die '+BAYS[selIdx-1].name+' fertig.')
    + '</p>'+noteTask+'</div>';
 
-  let frag='<div class="isl-fragstrip"><b>Deine Schatzfragmente</b><div>';
+  let frag='<div class="isl-fragstrip" id="islFragStrip" role="button" '
+    + 'aria-label="Botschaft des Piraten lesen"><b>Deine Schatzfragmente</b><div>';
   FRAGMENTS.forEach((f,i)=>{
     frag+='<div class="isl-frag'+(i<done?' got':'')+'" title="'+f.name+'">'+(i<done?f.emoji:'')+'</div>';
   });
@@ -2535,12 +2578,15 @@ function renderIsland(){
 
   map.innerHTML=h;
 
+  const strip=$('islFragStrip');
+  if(strip) strip.addEventListener('click',showFragScroll);
+
   /* Nur freigeschaltete Buchten erscheinen. Was noch im Nebel liegt, bleibt ein Geheimnis. */
   BAYS.forEach((b,i)=>{
     if(!bayUnlocked(i)) return;
     const st=bayStats(b), earned=bayEarned(b,i);
     const el=document.createElement('button');
-    el.className='isl-bay side-'+b.side+(st.full?' done':' active')+(selBay===b.key?' sel':'');
+    el.className='isl-bay side-'+b.side+(bayComplete(b)?' done':' active')+(selBay===b.key?' sel':'');
     el.style.left=b.x+'%'; el.style.top=b.y+'%';
     el.setAttribute('aria-label',b.name);
     el.innerHTML='<span class="isl-pin">'+b.emoji+'<i>'+b.nr+'</i></span>'
@@ -2613,7 +2659,9 @@ async function renderBaySide(){
   const head=document.createElement('div');
   head.className='isl-sidehead';
   head.innerHTML='<span style="font-size:17px">'+(open?b.emoji:'🔒')+'</span><b>'+b.name+'</b>'
-    + '<span class="isl-status '+(st.full?'done':'now')+'">'+(st.full?'fertig':(open?st.done+' von '+st.total:'im Nebel'))+'</span>';
+    + '<span class="isl-status '+(bayComplete(b)?'done':'now')+'">'
+    + (bayComplete(b) ? 'fertig'
+       : (!open ? 'im Nebel' : (st.full ? 'Frage offen' : st.done+' von '+st.total)))+'</span>';
   host.appendChild(head);
 
   /* Holzrahmen mit dem gemalten Bild */
@@ -2647,7 +2695,7 @@ async function renderBaySide(){
     labels.forEach((l,idx)=>{
       const row=document.createElement('div');
       row.className='isl-star-row'+(earned[idx]?' got':'');
-      row.innerHTML='<em>★</em><span>'+l+'</span><small>'+(earned[idx]?'✓':(idx===0?'':'Bonus'))+'</small>';
+      row.innerHTML='<em>★</em><span>'+l+'</span><small>'+(earned[idx]?'✓':(idx===1?'Bonus':'Pflicht'))+'</small>';
       stars.appendChild(row);
     });
     scroll.appendChild(stars);
@@ -2707,8 +2755,20 @@ async function renderBaySide(){
       const idx=allMotifs().findIndex(m=>m.name===next);
       if(idx>=0){ cameFromIsland=true; openMotif(idx); }
     });
+  }else if(factReadSet().indexOf(b.key)<0){
+    /* Gemalt ist alles – jetzt kommt das Wissen, dann die Pflichtfrage. */
+    cta.textContent='„Wusstest du?“ lesen 📜';
+    cta.addEventListener('click',()=>{
+      Voice.raw(b.fact);
+      const card=$('islSide').querySelector('.isl-fact');
+      if(card){ card.scrollIntoView({block:'nearest'}); card.classList.add('pulse');
+                setTimeout(()=>card.classList.remove('pulse'),1400); }
+    });
+  }else if(star3Set().indexOf(b.key)<0){
+    cta.textContent='Wissensfrage beantworten →';
+    cta.addEventListener('click',()=>openBayQuiz(b));
   }else{
-    const nextIdx=BAYS.findIndex((x,n)=>n>i && !bayStats(x).full);
+    const nextIdx=BAYS.findIndex((x,n)=>n>i && !bayComplete(x));
     if(nextIdx>=0){
       cta.textContent='Weiter zur '+BAYS[nextIdx].name+' →';
       cta.addEventListener('click',()=>{ selBay=BAYS[nextIdx].key; findMode=false; renderIsland(); });
@@ -2718,7 +2778,7 @@ async function renderBaySide(){
       cta.addEventListener('click',openCaptainQuiz);
     }else{
       cta.className='isl-cta gold';
-      cta.textContent='Schatz gefunden! 🎁';
+      cta.textContent='Schatzkiste gefunden! 🎁';
       cta.addEventListener('click',showTreasureCard);
     }
   }
@@ -2728,14 +2788,38 @@ async function renderBaySide(){
 /* Neuestes gespeichertes Bild, dessen Motiv zu dieser Bucht gehört */
 async function newestPicFor(b){
   if(!profile) return null;
+  /* Nur Bilder zu Motiven, die in diesem Durchgang schon zaehlen. Sonst haengt
+     im Rahmen ein altes Bild, waehrend die Aufgabe noch verlangt, es zu malen. */
+  const cc=islandCounts(), mine=b.motifs.filter(n=>cc[n]);
+  if(!mine.length) return null;
   const ks=(await Store.keys('pic:'+profile.id+':')).sort().reverse();
   for(const k of ks){
     try{
       const rec=JSON.parse(await Store.get(k));
-      if(rec && rec.img && b.motifs.indexOf(rec.motif)>=0) return rec.img;
+      if(rec && rec.img && mine.indexOf(rec.motif)>=0) return rec.img;
     }catch(e){}
   }
   return null;
+}
+
+/* Jedes fertige Fragment gibt eine Zeile der Wegbeschreibung frei. */
+function showFragScroll(){
+  const done=baysDone();
+  $('fragIntro').textContent = done===0
+    ? 'Noch ist das Papier leer. Für jede fertige Bucht schreibt der alte Pirat dir eine Zeile.'
+    : (done<FRAGMENTS.length
+      ? 'Der alte Pirat hat dir '+done+' von '+FRAGMENTS.length+' Zeilen geschrieben. Der Rest fehlt noch.'
+      : 'Die Botschaft ist vollständig. Sie führt nach Capo Nord.');
+  const host=$('fragLines'); host.textContent='';
+  FRAGMENTS.forEach((f,i)=>{
+    const row=document.createElement('div');
+    row.className='frag-line'+(i<done?'':' locked');
+    row.innerHTML='<em></em><span></span>';
+    row.querySelector('em').textContent = i<done ? f.emoji : '·';
+    row.querySelector('span').textContent = i<done ? f.line : 'Noch nicht gefunden';
+    host.appendChild(row);
+  });
+  $('fragScroll').classList.add('on');
 }
 
 /* ---------- Wissensfragen & Kapitänsprüfung ---------- */
@@ -2851,6 +2935,8 @@ async function showTreasureCard(){
   }
   $('treasureReveal').classList.add('on');
 }
+$('fragClose').addEventListener('click',()=>$('fragScroll').classList.remove('on'));
+$('fragScroll').addEventListener('click',e=>{ if(e.target===$('fragScroll')) $('fragScroll').classList.remove('on'); });
 $('treasureOk').addEventListener('click',()=>{
   $('treasureReveal').classList.remove('on');
   $('treasureCoins').innerHTML='';
@@ -2941,7 +3027,7 @@ $('islBtn').addEventListener('click',()=>{
     toast('🗺️ Noch '+need+' '+(need===1?'Motiv':'Motive')+' bis zur Goldmedaille – dann öffnet sich die Schatzinsel!');
     return;
   }
-  const i=BAYS.findIndex((b,n)=>bayUnlocked(n) && !bayStats(b).full);
+  const i=BAYS.findIndex((b,n)=>bayUnlocked(n) && !bayComplete(b));
   selBay=BAYS[i>=0?i:BAYS.length-1].key;
   findMode=false;
   showSection(secIsland);
