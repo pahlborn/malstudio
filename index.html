@@ -522,8 +522,6 @@
   .foto-quelle{margin:4px 4px 2px;font-family:'Nunito',sans-serif;font-size:10.5px;font-weight:700;color:#A2937A}
 
   /* ---------- Einstellungen ---------- */
-  .icon-btn.flagge{font-size:19px;padding:6px 10px;line-height:1}
-  .isl-key.flagge{font-size:20px}
   .ein-karte{width:min(94vw,780px);max-height:90vh;display:flex;flex-direction:column;
     border-radius:16px;background:linear-gradient(#FDF6E6,#F4E7CC);border:3px solid #C39A63;
     box-shadow:0 20px 50px rgba(10,30,45,.5);overflow:hidden}
@@ -928,8 +926,7 @@
       <button class="icon-btn" id="galBtn" data-t>🖼️ Galerie</button>
       <button class="icon-btn" id="fsBtn" data-t>⛶ Vollbild</button>
       <button class="icon-btn" id="voiceBtn" data-t>🔊 Ton</button>
-      <button class="icon-btn flagge" id="langBtn" aria-label="Sprache umschalten">🇩🇪</button>
-      <button class="icon-btn" id="gearBtn" aria-label="Einstellungen">⚙️</button>
+      <button class="icon-btn" id="gearBtn" data-ta aria-label="Einstellungen">⚙️</button>
     </div>
     <p class="hint" id="homeGreeting"></p>
     <div class="progress-bar" id="homeBar"><div class="progress-bar-fill" id="homeBarFill"></div></div>
@@ -993,9 +990,8 @@
       <div class="isl-title">Albarella</div>
       <div class="isl-sub" id="islSub">Insel-Abenteuer · Schatzsuche</div>
       <div style="flex:1"></div>
-      <button class="isl-key" id="islWisBtn" title="Albarella-Wissen">📚</button>
-      <button class="isl-key flagge" id="islLangBtn" aria-label="Sprache umschalten">🇩🇪</button>
-      <button class="isl-key" id="islGearBtn" aria-label="Einstellungen">⚙️</button>
+      <button class="isl-key" id="islWisBtn" data-tt title="Albarella-Wissen">📚</button>
+      <button class="isl-key" id="islGearBtn" data-ta aria-label="Einstellungen">⚙️</button>
       <div class="isl-count"><span>🗺️</span><b id="islCount"></b></div>
     </div>
 
@@ -1012,9 +1008,8 @@
       <div class="isl-title" data-t>Albarella-Wissen</div>
       <div class="isl-sub" data-t>Insel, Meer und alle Fragen</div>
       <div style="flex:1"></div>
-      <button class="isl-key flagge" id="wisLangBtn" aria-label="Sprache umschalten">🇩🇪</button>
-      <button class="isl-key" id="wisSpeak" title="Vorlesen">🔊</button>
-      <button class="isl-key" id="wisGearBtn" aria-label="Einstellungen">⚙️</button>
+      <button class="isl-key" id="wisSpeak" data-tt title="Vorlesen">🔊</button>
+      <button class="isl-key" id="wisGearBtn" data-ta aria-label="Einstellungen">⚙️</button>
     </div>
     <div class="wis-wrap" id="wisWrap"></div>
   </section>
@@ -1050,11 +1045,9 @@
       <button class="icon-btn" id="home-btn" data-t>◀︎ Motive</button>
       <h1 id="motifName"></h1>
       <div class="bubbles" id="bubbles"></div>
-      <span style="margin-left:auto"></span>
-      <button class="icon-btn flagge" id="drawLangBtn" aria-label="Sprache umschalten">🇩🇪</button>
     </div>
 
-    <div class="task" id="taskCard" title="Antippen zum Wiederholen">
+    <div class="task" id="taskCard" data-tt title="Antippen zum Wiederholen">
       <div class="emoji" id="taskEmoji">✏️</div>
       <div>
         <h2 id="taskTitle"></h2>
@@ -1080,10 +1073,10 @@
       <div class="side">
         <div class="side-scroll">
           <div class="tools3" id="tools3">
-            <button class="tool" id="tPen"   aria-pressed="true"  title="Stift"><em>✏️</em><b data-t>Stift</b></button>
-            <button class="tool" id="tMagic" aria-pressed="false" title="Zauberpinsel"><em>🪄</em><b data-t>Zauber</b></button>
-            <button class="tool" id="tFill"  aria-pressed="false" title="Farbeimer"><em>🪣</em><b data-t>Eimer</b></button>
-            <button class="tool" id="tErase" aria-pressed="false" title="Radiergummi"><em>🧽</em><b data-t>Radierer</b></button>
+            <button class="tool" id="tPen"   aria-pressed="true"  data-tt title="Stift"><em>✏️</em><b data-t>Stift</b></button>
+            <button class="tool" id="tMagic" aria-pressed="false" data-tt title="Zauberpinsel"><em>🪄</em><b data-t>Zauber</b></button>
+            <button class="tool" id="tFill"  aria-pressed="false" data-tt title="Farbeimer"><em>🪣</em><b data-t>Eimer</b></button>
+            <button class="tool" id="tErase" aria-pressed="false" data-tt title="Radiergummi"><em>🧽</em><b data-t>Radierer</b></button>
           </div>
           <div class="tool-card">
             <div class="tool-card-label" data-t>Farben</div>
@@ -1130,7 +1123,7 @@
 <div class="reward" id="islQuiz">
   <div class="isl-quiz-card">
     <div class="isl-quiz-head"><span style="font-size:20px">📜</span><b id="islQuizTitle"></b>
-      <button type="button" id="islQuizClose" aria-label="Schließen">✕</button></div>
+      <button type="button" id="islQuizClose" data-ta aria-label="Schließen">✕</button></div>
     <div class="isl-quiz-dots" id="islQuizDots"></div>
     <p class="isl-quiz-q" id="islQuizQ"></p>
     <div class="isl-quiz-opts" id="islQuizOpts"></div>
@@ -1142,7 +1135,7 @@
   <div class="ein-karte">
     <div class="ein-kopf">
       <span>⚙️</span><b data-t>Einstellungen</b>
-      <button type="button" id="einZu" aria-label="Schließen">✕</button>
+      <button type="button" id="einZu" data-ta aria-label="Schließen">✕</button>
     </div>
     <div class="ein-inhalt">
 
@@ -1151,8 +1144,9 @@
         <div class="ein-flaggen">
           <button type="button" class="ein-flagge" data-lang="de"><em>🇩🇪</em><span>Deutsch</span></button>
           <button type="button" class="ein-flagge" data-lang="en"><em>🇬🇧</em><span>English</span></button>
+          <button type="button" class="ein-flagge" data-lang="it"><em>🇮🇹</em><span>Italiano</span></button>
         </div>
-        <p class="ein-hinweis" data-t>Die Flagge oben in der Leiste macht dasselbe.</p>
+        <p class="ein-hinweis" data-t>Tippe auf eine Flagge – die ganze App wechselt mit.</p>
       </div>
 
       <div class="ein-block">
@@ -1212,7 +1206,7 @@
 
 <div class="reward" id="fotoGross">
   <div class="foto-rahmen">
-    <button type="button" id="fotoZu" aria-label="Schließen">✕</button>
+    <button type="button" id="fotoZu" data-ta aria-label="Schließen">✕</button>
     <img id="fotoGrossBild" alt="">
     <p class="foto-text" id="fotoGrossText"></p>
     <p class="foto-quelle" id="fotoGrossQuelle"></p>
@@ -1222,7 +1216,7 @@
 <div class="reward" id="fragScroll">
   <div class="isl-quiz-card">
     <div class="isl-quiz-head"><span style="font-size:20px">🗺️</span><b>Die Botschaft des Piraten</b>
-      <button type="button" id="fragClose" aria-label="Schließen">✕</button></div>
+      <button type="button" id="fragClose" data-ta aria-label="Schließen">✕</button></div>
     <p class="frag-intro" id="fragIntro"></p>
     <div class="frag-lines" id="fragLines"></div>
   </div>
@@ -1964,11 +1958,271 @@ const MOTIF_EN={
     {title:"The face",text:"A happy face in the middle."}
   ]}
 };
+/* ============================================================
+   MOTIVE AUF ITALIENISCH – Namen und Anleitungen.
+   ============================================================ */
+const MOTIF_IT={
+  "Herz":{name:"Cuore",steps:[
+    {title:"La metà sinistra",text:"Dal basso sali con una curva e torna al centro."},
+    {title:"La metà destra",text:"Uguale dall’altra parte – ecco un cuore."},
+    {title:"Il riflesso",text:"Due archetti in alto a sinistra – lì brilla."},
+    {title:"I cuoricini",text:"Un cuoricino a sinistra e uno a destra."},
+    {title:"Le scintille",text:"Alla fine due stelline che brillano."}
+  ]},
+  "Muschel":{name:"Conchiglia",steps:[
+    {title:"Il guscio",text:"Due archi che si incontrano in basso."},
+    {title:"Il bordo ondulato",text:"Tanti gobbetti lungo il bordo di sopra."},
+    {title:"Le scanalature",text:"Linee che salgono a ventaglio dal basso."},
+    {title:"La cerniera",text:"In basso un archetto – lì la conchiglia sta unita."},
+    {title:"Granelli di sabbia",text:"Qualche puntino intorno, nella sabbia."}
+  ]},
+  "Seestern":{name:"Stella marina",steps:[
+    {title:"Cinque braccia",text:"Una stella con cinque braccia grosse."},
+    {title:"Il centro",text:"Un cerchio proprio in mezzo alla stella."},
+    {title:"I puntini",text:"Due puntini su ogni braccio."},
+    {title:"Gli occhi",text:"Due occhi al centro."},
+    {title:"Il sorriso",text:"Un arco sotto – ecco il sorriso."}
+  ]},
+  "Eis":{name:"Gelato",steps:[
+    {title:"Il cono",text:"Un triangolo grande con la punta in giù."},
+    {title:"La cialda",text:"Tre linee di traverso sul cono."},
+    {title:"La prima pallina",text:"Una bella gobba sopra il cono."},
+    {title:"La seconda pallina",text:"Un’altra gobba più piccola sopra."},
+    {title:"La ciliegia",text:"Un cerchio in cima con il picciolo."},
+    {title:"I codetti",text:"Tante lineette sulle palline."}
+  ]},
+  "Wassermelone":{name:"Anguria",steps:[
+    {title:"Il bordo tondo",text:"Un grande arco come un arcobaleno."},
+    {title:"Il bordo dritto",text:"Sotto una linea da sinistra a destra."},
+    {title:"La buccia",text:"Un secondo arco poco più sotto."},
+    {title:"La polpa",text:"E ancora un arco – quello è il rosso."},
+    {title:"I semi",text:"Disegna tanti puntini dentro."},
+    {title:"Goccia e scintilla",text:"Una goccia d’acqua e una stellina accanto."}
+  ]},
+  "Fisch":{name:"Pesce",steps:[
+    {title:"Il corpo",text:"Un uovo grosso – appuntito davanti, tondo dietro."},
+    {title:"La coda",text:"Dietro due punte come una grande V."},
+    {title:"Le pinne",text:"Una pinna sopra e una piccola sotto la pancia."},
+    {title:"L’occhio",text:"Un cerchio davanti – e un puntino dentro."},
+    {title:"Bocca e branchie",text:"Un bacino davanti e un arco per le branchie."},
+    {title:"Squame e bollicine",text:"Archetti per le squame e qualche bollicina."}
+  ]},
+  "Krabbe":{name:"Granchio",steps:[
+    {title:"Il guscio",text:"Un uovo largo al centro."},
+    {title:"Gli occhi",text:"Due steli in su, con un cerchio in cima."},
+    {title:"Puntini e bocca",text:"Un puntino in ogni occhio e un bel sorrisone."},
+    {title:"Le chele",text:"A destra e a sinistra un braccio con una chela grossa."},
+    {title:"Le zampe",text:"Tre zampe a sinistra, tre a destra."},
+    {title:"Le macchioline",text:"Qualche puntino sul guscio."}
+  ]},
+  "Segelboot":{name:"Barca a vela",steps:[
+    {title:"Lo scafo",text:"Una conca come un grande sorriso."},
+    {title:"L’albero",text:"Una linea lunga verso l’alto."},
+    {title:"La vela grande",text:"A destra un triangolo curvo."},
+    {title:"La vela piccola",text:"A sinistra un altro triangolo."},
+    {title:"La bandierina",text:"In cima all’albero una bandierina."},
+    {title:"Le onde",text:"Onde sotto – adesso naviga."}
+  ]},
+  "Sandburg":{name:"Castello di sabbia",steps:[
+    {title:"Il muro",text:"Un rettangolo largo al centro."},
+    {title:"Le punte in cima",text:"In cima le punte, come in un castello vero."},
+    {title:"Le torri",text:"Una torre alta a sinistra e una a destra."},
+    {title:"Le punte delle torri",text:"Anche le torri hanno le loro punte."},
+    {title:"Porta e finestre",text:"Un portone nel muro e una finestra in ogni torre."},
+    {title:"La bandiera",text:"Un’asta con la bandiera in cima."}
+  ]},
+  "Luftballons":{name:"Palloncini",steps:[
+    {title:"Il palloncino grande",text:"Un uovo grosso in alto a sinistra."},
+    {title:"Il palloncino di mezzo",text:"Un altro accanto, un po’ più in alto."},
+    {title:"Il terzo palloncino",text:"E a destra il terzo."},
+    {title:"I nodini",text:"Sotto ogni palloncino un triangolino."},
+    {title:"I fili",text:"Tre fili che si incontrano in basso."},
+    {title:"Fiocco e riflessi",text:"Un fiocco alla fine e qualche riflesso sui palloncini."}
+  ]},
+  "Pizza":{name:"Pizza",steps:[
+    {title:"Il cornicione",text:"Un grande cerchio tondo."},
+    {title:"La mozzarella",text:"Un secondo cerchio poco più dentro."},
+    {title:"Le fette",text:"Tre linee per il centro – adesso sono sei fette."},
+    {title:"Il salame",text:"Cinque cerchi grossi di salame."},
+    {title:"Le olive",text:"Qualche cerchietto in mezzo."},
+    {title:"Il basilico",text:"Due foglioline sopra."}
+  ]},
+  "Sonnenschirm":{name:"Ombrellone",steps:[
+    {title:"Il tetto dell’ombrellone",text:"Un grande arco come una collina."},
+    {title:"Il bordo ondulato",text:"Quattro archetti lungo il bordo di sotto."},
+    {title:"Le strisce",text:"Dalla punta linee che scendono."},
+    {title:"Il palo",text:"Un palo lungo verso il basso, con un pomello in cima."},
+    {title:"Sabbia e telo",text:"Una linea di sabbia e un telo accanto."},
+    {title:"Sole e strisce",text:"Strisce sul telo e in più un sole."}
+  ]},
+  "Schmetterling":{name:"Farfalla",steps:[
+    {title:"Il corpo",text:"Un corpo stretto e lungo al centro."},
+    {title:"Le antenne",text:"Due archi verso l’alto, con un pallino in cima."},
+    {title:"Le ali grandi",text:"Un’ala grande in alto a sinistra e una a destra."},
+    {title:"Le ali piccole",text:"Sotto due ali più piccole."},
+    {title:"I pallini grandi",text:"Un cerchio grosso in ogni ala grande."},
+    {title:"I disegni",text:"Ancora qualche puntino sulle ali."}
+  ]},
+  "Palme":{name:"Palma",steps:[
+    {title:"Il tronco",text:"Due curve lunghe verso l’alto – il tronco."},
+    {title:"Gli anelli",text:"Qualche archetto di traverso sul tronco."},
+    {title:"Foglie a sinistra",text:"Due foglie grandi ricadono a sinistra."},
+    {title:"Foglie a destra",text:"E due a destra."},
+    {title:"Foglia in alto",text:"Una foglia punta verso l’alto."},
+    {title:"Le noci di cocco",text:"Tre palle sotto le foglie."},
+    {title:"Sabbia e sole",text:"Una duna di sabbia sotto e in più un sole."}
+  ]},
+  "Haus am Meer":{name:"Casa al mare",steps:[
+    {title:"I muri",text:"Un grande rettangolo – ecco la casa."},
+    {title:"Il tetto",text:"Un triangolo sopra."},
+    {title:"La porta",text:"Al centro una porta con l’arco tondo."},
+    {title:"Le finestre",text:"A sinistra e a destra una finestra con la croce."},
+    {title:"Il camino",text:"Un rettangolo stretto sul tetto."},
+    {title:"Sole e gabbiani",text:"Un sole e due gabbiani nel cielo."},
+    {title:"Il mare",text:"Due linee ondulate davanti – ecco la spiaggia."}
+  ]},
+  "Leuchtturm":{name:"Faro",steps:[
+    {title:"La torre",text:"Un rettangolo che si stringe verso l’alto."},
+    {title:"Le strisce",text:"Tre linee di traverso sulla torre."},
+    {title:"Il ballatoio",text:"In cima una passerella larga per girarci intorno."},
+    {title:"La lanterna",text:"Una cabina con la finestra a croce per la lampada."},
+    {title:"Tetto e punta",text:"Un tetto a punta con una pallina sopra."},
+    {title:"Porta e finestre",text:"In basso una porta e accanto due oblò."},
+    {title:"Luce e onde",text:"Due fasci di luce ai lati e onde in basso."}
+  ]},
+  "Delfin":{name:"Delfino",steps:[
+    {title:"Il corpo",text:"Un corpo lungo e curvo."},
+    {title:"Il muso",text:"Davanti a destra un muso appuntito."},
+    {title:"La pinna dorsale",text:"Sopra una pinna come una vela."},
+    {title:"La coda",text:"Dietro a sinistra due punte."},
+    {title:"La pinna laterale",text:"Sotto la pancia una pinna piccola."},
+    {title:"Occhio e sorriso",text:"Un occhio con il puntino e un sorriso."},
+    {title:"Acqua e spruzzo",text:"Onde sotto e gocce sopra la testa."}
+  ]},
+  "Möwe":{name:"Gabbiano",steps:[
+    {title:"Il corpo",text:"Un uovo coricato al centro."},
+    {title:"Testa e becco",text:"A sinistra una testa tonda e davanti un becco appuntito."},
+    {title:"L’ala di sopra",text:"Un grande arco verso l’alto."},
+    {title:"L’ala di sotto",text:"E uno verso il basso."},
+    {title:"Piume sopra",text:"Tre linee nell’ala di sopra."},
+    {title:"Piume sotto",text:"Tre linee nell’ala di sotto."},
+    {title:"Le penne della coda",text:"Dietro a destra due penne appuntite."},
+    {title:"Occhio e zampe",text:"Un occhio nella testa e due zampe sotto la pancia."}
+  ]},
+  "Wal":{name:"Balena",steps:[
+    {title:"Il corpo",text:"Un corpo enorme e tondo."},
+    {title:"La coda",text:"Dietro a destra due punte grandi."},
+    {title:"La bocca",text:"Un arco lungo dalla testa all’indietro."},
+    {title:"Le pieghe della pancia",text:"Quattro lineette sotto la bocca."},
+    {title:"La pinna",text:"Sulla pancia una pinna larga."},
+    {title:"L’occhio",text:"Un cerchio con il puntino sopra la bocca."},
+    {title:"Lo spruzzo",text:"Due archi verso l’alto e qualche goccia."},
+    {title:"Il mare",text:"Due linee ondulate sotto la balena."}
+  ]},
+  "Schildkröte":{name:"Tartaruga",steps:[
+    {title:"Il guscio",text:"Un uovo grande e tondo al centro."},
+    {title:"Il bordo del guscio",text:"Un secondo anello poco più dentro."},
+    {title:"La testa",text:"A destra spunta fuori la testa."},
+    {title:"Le zampe davanti",text:"Una zampa in alto a destra e una in basso a destra."},
+    {title:"Le zampe dietro",text:"E una in alto a sinistra e una in basso a sinistra."},
+    {title:"La coda",text:"A sinistra una codina appuntita."},
+    {title:"Le placche del guscio",text:"Un cerchio al centro e sei intorno."},
+    {title:"Occhio e sorriso",text:"Un occhio nella testa e un sorrisino."}
+  ]},
+  "Seepferdchen":{name:"Cavalluccio marino",steps:[
+    {title:"La testa",text:"In alto a destra una testa tonda."},
+    {title:"Il musetto",text:"Un tubetto lungo verso destra."},
+    {title:"La pancia",text:"Dalla testa scendi con una grande curva."},
+    {title:"La schiena",text:"La seconda linea dall’altra parte."},
+    {title:"La coda arrotolata",text:"In basso la coda si arrotola."},
+    {title:"Le punte sulla schiena",text:"Puntine lungo la schiena."},
+    {title:"Pinna e occhio",text:"Una pinnetta sulla pancia e poi l’occhio."},
+    {title:"Puntini e bollicine",text:"Macchioline sulla pancia e bollicine accanto."}
+  ]},
+  "Krake":{name:"Polpo",steps:[
+    {title:"La testa",text:"Una grande cupola in alto."},
+    {title:"Gli occhi",text:"Due grandi cerchi nella testa."},
+    {title:"Pupille e bocca",text:"Un puntino in ogni occhio e sotto un sorriso."},
+    {title:"I tentacoli di mezzo",text:"Due tentacoli che si arrotolano in basso."},
+    {title:"I tentacoli a sinistra",text:"Due tentacoli si allungano a sinistra."},
+    {title:"I tentacoli a destra",text:"E due a destra."},
+    {title:"Le ventose",text:"Cerchietti sui tentacoli."},
+    {title:"Macchie e bollicine",text:"Macchioline sulla testa e bollicine accanto."}
+  ]},
+  "Strandkorb":{name:"Sedia da spiaggia",steps:[
+    {title:"La cappottina",text:"Un rettangolo con il tetto tondo."},
+    {title:"Il sedile",text:"Una linea di traverso – lì ci si siede."},
+    {title:"Il cuscino",text:"Un rettangolo basso sul sedile."},
+    {title:"Le strisce",text:"Cinque linee dall’alto in basso."},
+    {title:"I poggiapiedi",text:"Sotto, davanti, due cassettini."},
+    {title:"La coperta",text:"Un arco: la coperta sopra il cuscino."},
+    {title:"Sabbia e sole",text:"Una linea di sabbia, un sole e qualche conchiglia."}
+  ]},
+  "Vespa":{name:"Vespa",steps:[
+    {title:"La ruota davanti",text:"A sinistra un cerchio grande con uno piccolo dentro."},
+    {title:"La ruota dietro",text:"A destra uguale."},
+    {title:"La carrozzeria",text:"La pancia curva tra le due ruote."},
+    {title:"Lo scudo",text:"Davanti un arco alto verso l’alto."},
+    {title:"Il sellino",text:"Un arco allungato: il sellino."},
+    {title:"Il manubrio",text:"Un’asta in su e di traverso l’impugnatura."},
+    {title:"Specchietto e parafango",text:"Uno specchietto in alto e un arco sopra la ruota davanti."},
+    {title:"Faro e marmitta",text:"Un faro davanti e dietro un tubo."}
+  ]},
+  "Piratenschiff":{name:"Nave dei pirati",steps:[
+    {title:"Lo scafo",text:"Una grande conca in basso."},
+    {title:"Il ponte",text:"Un rettangolo sopra lo scafo."},
+    {title:"Il bompresso",text:"Davanti a sinistra un’asta inclinata."},
+    {title:"L’albero grande",text:"Un albero alto con la traversa."},
+    {title:"La vela grande",text:"Sotto una vela gonfia."},
+    {title:"Il secondo albero",text:"A destra un altro albero con la vela."},
+    {title:"Bandiera e coffa",text:"In cima una bandiera e una coffa."},
+    {title:"Gli oblò",text:"Sei finestrini tondi nello scafo."},
+    {title:"Le onde",text:"Onde sotto la nave."}
+  ]},
+  "Kätzchen":{name:"Gattino",steps:[
+    {title:"La testa",text:"Una testa tonda al centro."},
+    {title:"Le orecchie",text:"Due triangoli appuntiti sopra."},
+    {title:"Gli occhi",text:"Due occhioni con il puntino."},
+    {title:"Naso e bocca",text:"Un triangolino per il naso e sotto due archetti."},
+    {title:"I baffi",text:"Tre lineette sottili a destra e a sinistra."},
+    {title:"Il corpo",text:"Un corpo tondo con la coda."}
+  ]},
+  "Regenbogen":{name:"Arcobaleno",steps:[
+    {title:"Il primo arco",text:"Un grande arco da sinistra a destra."},
+    {title:"Il secondo arco",text:"Un arco più piccolo poco sotto."},
+    {title:"Il terzo arco",text:"E un altro ancora sotto."},
+    {title:"Il quarto arco",text:"Archi sempre più piccoli."},
+    {title:"Le nuvole",text:"Una nuvola bella grossa a ogni estremità."},
+    {title:"Il sole",text:"In alto nell’angolo un piccolo sole."}
+  ]},
+  "Rakete":{name:"Razzo",steps:[
+    {title:"Il corpo",text:"Un corpo allungato, tondo in cima."},
+    {title:"La punta",text:"In cima un cappuccio appuntito."},
+    {title:"L’oblò",text:"Al centro un oblò tondo."},
+    {title:"Le alette",text:"In basso un’aletta a sinistra e una a destra."},
+    {title:"Le fiamme",text:"Sotto escono le fiamme."},
+    {title:"Le stelle",text:"Qualche stella nello spazio."}
+  ]},
+  "Blume":{name:"Fiore",steps:[
+    {title:"Il centro",text:"Un cerchio al centro."},
+    {title:"I primi petali",text:"Un petalo in alto, uno in basso, uno a sinistra e uno a destra."},
+    {title:"I petali in mezzo",text:"Un altro petalo in ogni spazio vuoto."},
+    {title:"Il gambo",text:"Una linea lunga verso il basso."},
+    {title:"Le foglie",text:"Due foglie sul gambo."},
+    {title:"Il visetto",text:"Un visetto allegro al centro."}
+  ]}
+};
+
 (function applyMotifTranslations(){
+  const tabellen={En:MOTIF_EN, It:MOTIF_IT};
   MOTIFS.forEach(m=>{
-    const t=MOTIF_EN[m.name]; if(!t) return;
-    m.nameEn=t.name;
-    m.steps.forEach((s,i)=>{ if(t.steps[i]){ s.titleEn=t.steps[i].title; s.textEn=t.steps[i].text; } });
+    for(const suf in tabellen){
+      const tr=tabellen[suf][m.name]; if(!tr) continue;
+      m['name'+suf]=tr.name;
+      m.steps.forEach((s,i)=>{
+        if(tr.steps[i]){ s['title'+suf]=tr.steps[i].title; s['text'+suf]=tr.steps[i].text; }
+      });
+    }
   });
 })();
 
@@ -2086,15 +2340,23 @@ const Music=(function(){
 let LANG='de';
 const EN={
  "Einstellungen":"Settings",
+ "Albarella-Wissen":"All about Albarella",
+ "Vorlesen":"Read aloud",
+ "Antippen zum Wiederholen":"Tap to hear it again",
+ "Zauberpinsel":"Magic brush",
+ "Farbeimer":"Paint bucket",
+ "Radiergummi":"Eraser",
+ "Schließen":"Close",
+ "Farbe {n}":"Colour {n}",
+ "Stiftdicke {n}":"Pen thickness {n}",
  "🌍 Sprache":"🌍 Language",
- "Die Flagge oben in der Leiste macht dasselbe.":"The flag in the top bar does the same thing.",
+ "Tippe auf eine Flagge – die ganze App wechselt mit.":"The flag in the top bar does the same thing.",
  "🔊 Stimme und Ton":"🔊 Voice and sound",
  "Vorlesestimme":"Reading voice",
  "▶︎ Probe hören":"▶︎ Hear a sample",
  "⛶ Vollbild":"⛶ Full screen",
  "🔊 Sprache an":"🔊 Voice on",
  "🔇 Sprache aus":"🔇 Voice off",
- "Bei englischer Flagge sucht die App eine englische Stimme.":"With the English flag the app looks for an English voice.",
  "Dieses Gerät bietet gerade keine Stimmen an.":"This device is not offering any voices right now.",
  "🔑 Nur für Eltern":"🔑 For grown-ups only",
  "Bereich öffnen":"Open this section",
@@ -2133,8 +2395,9 @@ const EN={
  "Frage offen":"question open",
  "Noch im Nebel":"Still in the fog",
  "Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die Bucht davor fertig.":"The sea wind has not swept through here yet. Finish the bay before this one first.",
- "Jetzt dran:":"Up next:",
- "malen":"to draw",
+ "👉 Jetzt dran: {m} malen":"👉 Up next: draw {m}",
+ "{m} malen →":"Draw {m} →",
+ "Weiter zur {b} →":"On to {b} →",
  "Jetzt dran: „Wusstest du?“ lesen":"Up next: read “Did you know?”",
  "Jetzt dran: die Wissensfrage":"Up next: the quiz question",
  "Bucht geschafft!":"Bay complete!",
@@ -2159,7 +2422,6 @@ const EN={
  "Versuche":"tries",
  "es leuchtet jetzt auf der Karte":"it is glowing on the map now",
  "Ich finde es nicht – zeig es mir":"I cannot find it – show me",
- "Weiter zur":"On to",
  "Wissensfrage beantworten":"Answer the quiz question",
  "„Wusstest du?“ lesen":"Read “Did you know?”",
  "Kapitänsprüfung starten":"Start the captain's test",
@@ -2245,8 +2507,8 @@ const EN={
  "Diese Knöpfe öffnen Wikipedia. Das geht nur, wenn das iPad im WLAN ist.":"These buttons open Wikipedia. That only works when the iPad is on Wi-Fi.",
  "Bildnachweis":"Picture credits",
  "Zahlen sind gerundet – Meere und Wälder lassen sich nicht auf den Meter genau zählen.":"Numbers are rounded – seas and forests cannot be counted to the metre.",
- "Albarella-Wissen":"All about Albarella",
  "Insel, Meer und alle Fragen":"Island, sea and all the questions",
+ "Schatzsuche":"Treasure hunt",
  "Kompass":"Compass",
  "Schlüssel":"Key",
  "Goldmünze":"Gold coin",
@@ -2435,6 +2697,7 @@ const EN={
  "Stimmen mit „Premium“ oder „Erweitert“ klingen am freundlichsten.":"Voices marked “Premium” or “Enhanced” sound the friendliest.",
  "Für Deutsch ist auf diesem iPad keine Stimme installiert. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.":"No German voice is installed on this iPad. You can add one under Settings → Accessibility → Spoken Content → Voices.",
  "Für Englisch ist auf diesem iPad keine Stimme installiert. Die Texte sind englisch, vorgelesen wird nichts. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.":"No English voice is installed on this iPad. The texts are in English, but nothing will be read aloud. You can add one under Settings → Accessibility → Spoken Content → Voices.",
+ "Für Italienisch ist auf diesem iPad keine Stimme installiert. Die Texte sind italienisch, vorgelesen wird nichts. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.":"No Italian voice is installed on this iPad. The texts are in Italian, but nothing will be read aloud. You can add one under Settings → Accessibility → Spoken Content → Voices.",
  "Strandkind":"Beach Explorer",
  "Muschelkind":"Shell Collector",
  "Wellenkind":"Wave Rider",
@@ -2443,29 +2706,427 @@ const EN={
  "Riffkind":"Reef Diver",
  "Tiefseekind":"Deep Sea Diver",
  "Ozeankind":"Ocean Master",
+ /* ---- nur gesprochen, steht nirgends auf dem Schirm ---- */
+ "Wow! Ihr habt Albarella entdeckt!":"Wow! You discovered Albarella!",
+ "Wow! Du hast die {m} gewonnen!":"Wow! You won the {m}!",
+ "Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!":"Your picture is saved. Now everyone can trace it!",
+ "Für echtes Vollbild tippe unten auf Teilen und dann auf Zum Home-Bildschirm.":"For real fullscreen, tap Share and then Add to Home Screen.",
 };
+/* ============================================================
+   ITALIENISCH – gleiche Bauart: der deutsche Text ist der Schluessel.
+   ============================================================ */
+const IT={
+ "Einstellungen":"Impostazioni",
+ "Albarella-Wissen":"Tutto su Albarella",
+ "Vorlesen":"Leggi ad alta voce",
+ "Antippen zum Wiederholen":"Tocca per riascoltare",
+ "Zauberpinsel":"Pennello magico",
+ "Farbeimer":"Secchiello",
+ "Radiergummi":"Gomma",
+ "Schließen":"Chiudi",
+ "Farbe {n}":"Colore {n}",
+ "Stiftdicke {n}":"Spessore {n}",
+ "🌍 Sprache":"🌍 Lingua",
+ "Tippe auf eine Flagge – die ganze App wechselt mit.":"Tocca una bandiera – tutta l’app cambia con te.",
+ "🔊 Stimme und Ton":"🔊 Voce e suono",
+ "Vorlesestimme":"Voce che legge",
+ "▶︎ Probe hören":"▶︎ Ascolta un esempio",
+ "⛶ Vollbild":"⛶ Schermo intero",
+ "🔊 Sprache an":"🔊 Voce attiva",
+ "🔇 Sprache aus":"🔇 Voce spenta",
+ "Dieses Gerät bietet gerade keine Stimmen an.":"Al momento questo dispositivo non offre nessuna voce.",
+ "🔑 Nur für Eltern":"🔑 Solo per i grandi",
+ "Bereich öffnen":"Apri questa sezione",
+ "Diese Angaben bleiben auf dem iPad. Sie werden nirgendwohin gesendet.":"Questi dati restano su questo iPad. Non vengono inviati da nessuna parte.",
+ "Hinweis zum echten Schatz":"Indizio per il tesoro vero",
+ "Koordinaten für den Weg-Knopf":"Coordinate per il pulsante del percorso",
+ "Foto vom Fundort":"Foto del nascondiglio",
+ "Foto wählen":"Scegli una foto",
+ "Entfernen":"Rimuovi",
+ "hinterlegt ✓":"salvata ✓",
+ "noch keins":"ancora nessuna",
+ "An":"Attivo",
+ "Aus":"Spento",
+ "gilt nur für":"vale solo per",
+ "Schatzinsel zum Testen öffnen":"Apri l’Isola del Tesoro per provare",
+ "Schatzsuche zurücksetzen":"Azzera la caccia al tesoro",
+ "Bilder, Sterne und Medaillen bleiben":"Disegni, stelle e medaglie restano",
+ "Zurücksetzen":"Azzera",
+ "Schatzsuche zurücksetzen?":"Azzerare la caccia al tesoro?",
+ "Alle Buchten liegen wieder im Nebel. Gemalte Bilder, Sterne und Medaillen bleiben.":"Tutte le baie tornano nella nebbia. Disegni, stelle e medaglie restano.",
+ "ℹ️ Über das Malstudio":"ℹ️ Su Malstudio",
+ "Version":"Versione",
+ "alles offline, keine Konten, keine Werbung, keine Daten verlassen dieses iPad.":"tutto offline, nessun account, nessuna pubblicità, nessun dato esce da questo iPad.",
+ "Hallo, ich bin es. So klinge ich.":"Ciao, sono io. La mia voce è così.",
+ "📸 Foto ändern":"📸 Cambia foto",
+ "📸 Foto vom Fundort":"📸 Foto del nascondiglio",
+ "Albarella":"Albarella",
+ "Start":"Partenza",
+ "Capo Nord":"Capo Nord",
+ "Marina":"Marina",
+ "Zurück":"Indietro",
+ "Buchten":"baie",
+ "von":"di",
+ "fertig":"fatte",
+ "im Nebel":"nella nebbia",
+ "Frage offen":"domanda in sospeso",
+ "Noch im Nebel":"Ancora nella nebbia",
+ "Der Meereswind hat hier noch nicht durchgeblasen. Mal zuerst die Bucht davor fertig.":"Qui il vento del mare non è ancora passato. Prima finisci la baia precedente.",
+ "👉 Jetzt dran: {m} malen":"👉 Adesso tocca a te: disegna {m}",
+ "{m} malen →":"Disegna {m} →",
+ "Weiter zur {b} →":"Vai alla {b} →",
+ "Jetzt dran: „Wusstest du?“ lesen":"Adesso tocca a te: leggi «Lo sapevi?»",
+ "Jetzt dran: die Wissensfrage":"Adesso tocca a te: la domanda",
+ "Bucht geschafft!":"Baia completata!",
+ "Dein Bild aus der Bucht":"Il tuo disegno di questa baia",
+ "Hier erscheint dein Bild":"Qui comparirà il tuo disegno",
+ "Alle Motive gemalt":"Tutti i disegni fatti",
+ "Verstecktes Detail gefunden":"Dettaglio nascosto trovato",
+ "Wissensfrage beantwortet":"Domanda risolta",
+ "Bonus":"Bonus",
+ "Pflicht":"Obbligatoria",
+ "Wusstest du?":"Lo sapevi?",
+ "Gelesen":"Letto",
+ "Gelesen – die Wissensfrage ist offen":"Letto – manca ancora la domanda",
+ "Erst lesen":"Prima leggi",
+ "Wissensfrage":"Domanda",
+ "Beantwortet":"Risolta",
+ "Suchen":"Cerca",
+ "Suche läuft":"Ricerca in corso",
+ "Gefunden":"Trovato",
+ "Tippe auf die Karte. Ich sage dir, ob du warm oder kalt bist.":"Tocca la mappa. Ti dico se sei caldo o freddo.",
+ "Versuch":"tentativo",
+ "Versuche":"tentativi",
+ "es leuchtet jetzt auf der Karte":"adesso brilla sulla mappa",
+ "Ich finde es nicht – zeig es mir":"Non lo trovo – mostramelo",
+ "Wissensfrage beantworten":"Rispondi alla domanda",
+ "„Wusstest du?“ lesen":"Leggi «Lo sapevi?»",
+ "Kapitänsprüfung starten":"Inizia la prova del capitano",
+ "Schatzkiste gefunden!":"Forziere trovato!",
+ "Kapitänsprüfung":"Prova del capitano",
+ "Frage":"Domanda",
+ "Noch nicht gefunden":"Non ancora trovato",
+ "Noch ist das Papier leer. Für jede fertige Bucht schreibt der alte Pirat dir eine Zeile.":"Il foglio è ancora vuoto. Per ogni baia completata il vecchio pirata ti scrive una riga.",
+ "Der alte Pirat hat dir schon Zeilen geschrieben:":"Il vecchio pirata ti ha già scritto qualche riga:",
+ "Die Botschaft ist vollständig. Sie führt nach Capo Nord.":"Il messaggio è completo. Porta a Capo Nord.",
+ "Die Botschaft des Piraten":"Il messaggio del pirata",
+ "Die Schatzkiste ist offen":"Il forziere è aperto",
+ "Du hast alle Hinweise gefunden! Jetzt beginnt die echte Suche – draußen, im Sand.":"Hai trovato tutti gli indizi! Adesso comincia la caccia vera – fuori, nella sabbia.",
+ "Jetzt suchen wir den Schatz":"Adesso cerchiamo il tesoro",
+ "Frag Mama oder Papa – sie wissen, wo der Schatz liegt!":"Chiedi alla mamma o al papà – loro sanno dov’è il tesoro!",
+ "Ich zeige Dir den Weg":"Ti mostro la strada",
+ "Juhu! 🎉":"Evviva! 🎉",
+ "⚙️ Für Eltern: Fundort und Foto im Zahnrad oben eintragen.":"⚙️ Per i grandi: inserite luogo e foto nell’ingranaggio in alto.",
+ "Muschelbucht":"Baia delle Conchiglie",
+ "Leuchtturmbucht":"Baia del Faro",
+ "Segelbucht":"Baia delle Vele",
+ "Tiefseebucht":"Baia del Mare Profondo",
+ "Wunderbucht":"Baia delle Meraviglie",
+ "Naschbucht":"Baia dei Golosi",
+ "Hier läuft das Meer nur knöcheltief an den Strand und legt ab, was es unterwegs gefunden hat. Der Weg um die Insel beginnt genau an dieser Stelle.":"Qui il mare arriva sulla spiaggia appena fino alle caviglie e lascia lì quello che ha trovato per strada. Il giro dell’isola comincia proprio da questo punto.",
+ "Oben auf der Landzunge dreht sich ein Licht, immer die gleiche Runde. Für die Boote draußen heißt das: Hier ist Land, hier geht es nach Hause.":"Lassù sulla punta gira una luce, sempre lo stesso giro. Per le barche là fuori vuol dire: qui c’è terra, qui si torna a casa.",
+ "Hier riecht die Luft nach Salz und nach warmem Holz. Die Boote liegen am Steg und klappern leise mit den Leinen, als könnten sie es kaum abwarten.":"Qui l’aria sa di sale e di legno caldo. Le barche stanno al pontile e fanno tintinnare piano le cime, come se non vedessero l’ora di partire.",
+ "Ein paar Schritte weiter draußen wird das Wasser dunkelblau, und der Boden verschwindet. Wer geduldig genug hinschaut, sieht irgendwann etwas vorbeiziehen.":"Poco più al largo l’acqua diventa blu scuro e il fondo sparisce. Chi guarda con abbastanza pazienza, prima o poi vede passare qualcosa.",
+ "Hinter den Dünen wird es still. Kein Weg führt gerade, kein Baum steht wie der andere. Was hier entsteht, muss niemandem gefallen außer dir.":"Dietro le dune c’è silenzio. Nessun sentiero è dritto, nessun albero è uguale a un altro. Quello che nasce qui non deve piacere a nessuno tranne che a te.",
+ "Am Ende des Weges liegt der kleine Hafen, und dort gibt es Eis. Der alte Pirat, sagt man, hat hier nie widerstehen können.":"In fondo al cammino c’è il porticciolo, e lì c’è il gelato. Il vecchio pirata, dicono, non è mai riuscito a resistere.",
+ "Muscheln sind die Putzkolonne des Meeres: Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus. Krabben dagegen tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – die Krabbe steigt heraus und trägt darunter schon eine neue, noch ganz weiche.":"Le cozze sono gli spazzini del mare: una sola cozza filtra ogni giorno più di venti litri d’acqua e la restituisce più pulita. I granchi invece portano lo scheletro fuori, come un’armatura. Quando crescendo diventa troppo stretta, si spacca – il granchio esce e sotto ne ha già una nuova, ancora tutta morbida.",
+ "Der Name „Albarella“ kommt nicht vom Meer, sondern von einem Baum: der Silberpappel, auf Italienisch „albarella“. Ihre Blätter sind auf der Unterseite silbrig behaart – fährt der Wind hinein, wechselt der ganze Baum die Farbe.":"Il nome «Albarella» non viene dal mare ma da un albero: il pioppo bianco, in italiano «albarella». Le sue foglie hanno sotto una peluria argentata – quando ci entra il vento, tutto l’albero cambia colore.",
+ "Diese Insel hat kein Mensch gebaut, sondern ein Fluss. Vor etwa 400 Jahren suchte sich der Po ein neues Bett und schob dabei so viel Sand und Schlamm vor sich her, dass daraus neue Inseln entstanden – eine davon ist Albarella.":"Quest’isola non l’ha costruita nessun uomo, ma un fiume. Circa 400 anni fa il Po si è cercato un letto nuovo e ha spinto avanti tanta sabbia e tanto fango da far nascere isole nuove – una di queste è Albarella.",
+ "In der Adria leben mehr als 450 verschiedene Fischarten – von fingerkleinen Grundeln bis zu Schwertfischen. Und manchmal kommt größerer Besuch vorbei: Delfine, die in Gruppen jagen, und Meeresschildkröten, die zum Luftholen auftauchen.":"Nell’Adriatico vivono più di 450 specie di pesci – dai ghiozzi grandi come un dito ai pesci spada. E ogni tanto arriva visita più grossa: delfini che cacciano in gruppo e tartarughe marine che salgono a respirare.",
+ "Albarella ist eine Insel aus Bäumen: über zwei Millionen stehen hier, und sie gehören zu etwa 150 verschiedenen Arten – Pinien, Steineichen, Silberpappeln und viele mehr. Von oben sieht die Insel deshalb aus wie ein grünes Kissen im Meer.":"Albarella è un’isola fatta di alberi: qui ce ne sono più di due milioni, di circa 150 specie diverse – pini, lecci, pioppi bianchi e molti altri. Per questo dall’alto l’isola sembra un cuscino verde in mezzo al mare.",
+ "Im Sommer wird das Wasser vor Albarella 24 bis 27 Grad warm – wie eine Badewanne, die nie kalt wird. Weiter draußen ist das Mittelmeer dafür tief: an seiner tiefsten Stelle über 5000 Meter. Da könnte man die höchsten Berge der Alpen hineinstellen, und oben wäre noch Wasser darüber.":"D’estate l’acqua davanti ad Albarella arriva a 24-27 gradi – come una vasca da bagno che non diventa mai fredda. Più al largo, invece, il Mediterraneo è profondo: nel punto più fondo oltre 5000 metri. Ci si potrebbero infilare le montagne più alte delle Alpi, e sopra ci sarebbe ancora acqua.",
+ "Finde die kleine Muschel im Sand":"Trova la conchiglietta nella sabbia",
+ "Finde die Möwe am Himmel":"Trova il gabbiano nel cielo",
+ "Finde das zweite, kleinere Boot am Horizont":"Trova la seconda barca, più piccola, all’orizzonte",
+ "Finde den Delfin, der aus dem Wasser springt":"Trova il delfino che salta fuori dall’acqua",
+ "Finde den Reiher im Gras":"Trova l’airone nell’erba",
+ "Finde die kleine Krabbe am Weg":"Trova il granchietto lungo il sentiero",
+ "Was passiert mit der Rüstung einer Krabbe, wenn sie wächst?":"Che cosa succede all’armatura del granchio quando cresce?",
+ "Sie wächst einfach mit":"Cresce insieme a lui",
+ "Sie platzt auf, und darunter wartet schon eine neue":"Si spacca, e sotto ce n’è già una nuova",
+ "Die Krabbe legt sie für immer ab":"Il granchio la butta via per sempre",
+ "Woher hat die Insel Albarella ihren Namen?":"Da dove viene il nome dell’isola di Albarella?",
+ "Von einem Seeräuber":"Da un pirata",
+ "Von einer Muschelsorte":"Da un tipo di conchiglia",
+ "Von einem Baum, der Silberpappel":"Da un albero, il pioppo bianco",
+ "Wer hat Albarella vor rund 400 Jahren geformt?":"Chi ha formato Albarella circa 400 anni fa?",
+ "Der Fluss Po, mit Sand und Schlamm":"Il fiume Po, con sabbia e fango",
+ "Ein Vulkan unter dem Meer":"Un vulcano sotto il mare",
+ "Fischer, die Steine aufschütteten":"Dei pescatori che ammucchiarono pietre",
+ "Welche großen Gäste ziehen manchmal durch die Adria?":"Quali ospiti grandi passano ogni tanto nell’Adriatico?",
+ "Pinguine und Eisbären":"Pinguini e orsi polari",
+ "Delfine und Meeresschildkröten":"Delfini e tartarughe marine",
+ "Flusspferde und Krokodile":"Ippopotami e coccodrilli",
+ "Wie viele verschiedene Baumarten wachsen auf Albarella?":"Quante specie di alberi diverse crescono ad Albarella?",
+ "Etwa 3":"Circa 3",
+ "Etwa 15":"Circa 15",
+ "Etwa 150":"Circa 150",
+ "Wie tief ist das Mittelmeer an seiner tiefsten Stelle?":"Quanto è profondo il Mediterraneo nel suo punto più fondo?",
+ "Über 50 Meter":"Più di 50 metri",
+ "Über 5000 Meter":"Più di 5000 metri",
+ "Über 500 Meter":"Più di 500 metri",
+ "Woher hat Albarella seinen Namen?":"Da dove viene il nome di Albarella?",
+ "Von der Silberpappel":"Dal pioppo bianco",
+ "Von einer Muschel":"Da una conchiglia",
+ "Vom Fluss Po":"Dal fiume Po",
+ "Wie viele Fischarten leben in der Adria?":"Quante specie di pesci vivono nell’Adriatico?",
+ "Etwa zehn":"Circa dieci",
+ "Mehr als 450":"Più di 450",
+ "Genau hundert":"Esattamente cento",
+ "Was tut eine Krabbe, wenn ihre Rüstung zu eng wird?":"Che cosa fa il granchio quando l’armatura gli sta stretta?",
+ "Sie bleibt für immer klein":"Resta piccolo per sempre",
+ "Sie streift sie ab – darunter wartet eine neue":"Se la sfila – sotto ce n’è già una nuova",
+ "Sie tauscht sie mit einer anderen Krabbe":"La scambia con un altro granchio",
+ "Alle Wissensfragen":"Tutte le domande",
+ "Antwort:":"Risposta:",
+ "noch nicht beantwortet":"non ancora risolta",
+ "Mehr im Internet":"Altro su internet",
+ "Diese Knöpfe öffnen Wikipedia. Das geht nur, wenn das iPad im WLAN ist.":"Questi pulsanti aprono Wikipedia. Funzionano solo se l’iPad è collegato al wi-fi.",
+ "Bildnachweis":"Crediti delle immagini",
+ "Zahlen sind gerundet – Meere und Wälder lassen sich nicht auf den Meter genau zählen.":"I numeri sono arrotondati – mari e boschi non si contano al metro.",
+ "Insel, Meer und alle Fragen":"L’isola, il mare e tutte le domande",
+ "Schatzsuche":"Caccia al tesoro",
+ "Kompass":"Bussola",
+ "Schlüssel":"Chiave",
+ "Goldmünze":"Moneta d’oro",
+ "Feder":"Piuma",
+ "Kartenstück":"Pezzo di mappa",
+ "Edelstein":"Pietra preziosa",
+ "Deine Schatzfragmente":"I tuoi pezzi del tesoro",
+ "Beginne dort, wo die Boote liegen, und halte dich nach Norden.":"Comincia dove stanno le barche e tieni la rotta verso nord.",
+ "Folge dem Licht, das sich dreht. Es zeigt dir, wo Land ist.":"Segui la luce che gira. Ti mostra dov’è la terra.",
+ "Wo die Segel klappern, führt der Weg an der Lagune vorbei.":"Dove tintinnano le vele, la strada passa accanto alla laguna.",
+ "Über der Tiefe kreisen die Vögel. Bleib an der Küste.":"Sopra il fondale profondo volteggiano gli uccelli. Resta lungo la costa.",
+ "Hinter den Dünen wird die Insel schmal.":"Dietro le dune l’isola si fa stretta.",
+ "Am spitzesten Ende, wo das Meer von zwei Seiten kommt: Capo Nord.":"All’estremità più aguzza, dove il mare arriva da due lati: Capo Nord.",
+ "Die Insel Albarella":"L’isola di Albarella",
+ "Das Mittelmeer":"Il Mar Mediterraneo",
+ "Die Adria vor Albarella":"L’Adriatico davanti ad Albarella",
+ "Tiere am Strand und im Wasser":"Animali della spiaggia e del mare",
+ "Pflanzen der Insel":"Le piante dell’isola",
+ "Zahlen zum Staunen":"Numeri da restare a bocca aperta",
+ "Albarella liegt im Po-Delta an der italienischen Adriaküste, ganz im Norden. Sie gehört zur Gemeinde Rosolina in der Region Veneto.":"Albarella si trova nel Delta del Po, sulla costa adriatica italiana, all’estremo nord. Fa parte del comune di Rosolina, in Veneto.",
+ "Die Insel ist klein: rund drei Quadratkilometer. Zu Fuß ist man an einem Tag überall gewesen.":"L’isola è piccola: circa tre chilometri quadrati. A piedi in un giorno la si gira tutta.",
+ "Ihr Name kommt von der Silberpappel, auf Italienisch „albarella“. Deren Blätter sind unten silbrig – im Wind wechselt der Baum die Farbe.":"Il suo nome viene dal pioppo bianco, in italiano «albarella». Le sue foglie sono argentate di sotto – nel vento l’albero cambia colore.",
+ "Auf Albarella wachsen über zwei Millionen Bäume, von etwa 150 verschiedenen Arten. Von oben sieht die Insel aus wie ein grünes Kissen im Meer.":"Ad Albarella crescono più di due milioni di alberi, di circa 150 specie diverse. Dall’alto l’isola sembra un cuscino verde in mezzo al mare.",
+ "Der Sandstrand an der Meerseite ist etwa vier Kilometer lang.":"La spiaggia di sabbia sul lato del mare è lunga circa quattro chilometri.",
+ "Man kommt über eine Brücke auf die Insel. Autos sind selten – die meisten fahren Fahrrad.":"Sull’isola si arriva da un ponte. Le auto sono rare – quasi tutti vanno in bicicletta.",
+ "Das Mittelmeer liegt zwischen drei Erdteilen: Europa im Norden, Afrika im Süden, Asien im Osten.":"Il Mediterraneo sta tra tre continenti: l’Europa a nord, l’Africa a sud, l’Asia a est.",
+ "Es hängt nur an einer einzigen schmalen Stelle am großen Ozean: der Straße von Gibraltar. Sie ist an der engsten Stelle bloß etwa 14 Kilometer breit.":"È attaccato al grande oceano in un solo punto stretto: lo Stretto di Gibilterra. Nel punto più stretto è largo appena 14 chilometri.",
+ "Im Schnitt ist das Mittelmeer rund 1500 Meter tief. An seiner tiefsten Stelle, dem Calypso-Tief westlich von Griechenland, über 5000 Meter.":"In media il Mediterraneo è profondo circa 1500 metri. Nel punto più fondo, la Fossa Calipso a ovest della Grecia, oltre 5000 metri.",
+ "Weil dort so viel Wasser verdunstet, ist das Mittelmeer salziger als der Atlantik. Deshalb trägt es dich beim Schwimmen ein bisschen besser.":"Siccome lì evapora tantissima acqua, il Mediterraneo è più salato dell’Atlantico. Per questo, quando nuoti, ti tiene su un pochino meglio.",
+ "Ebbe und Flut sind hier winzig – meist nur ein paar Handbreit. An der Nordadria fallen sie am stärksten aus. Darum steht Venedig manchmal unter Wasser.":"Qui la marea è piccolissima – di solito solo qualche palmo. Nell’alto Adriatico è la più forte. Per questo ogni tanto Venezia finisce sott’acqua.",
+ "Die Adria ist der Arm des Mittelmeers zwischen Italien und der Balkanhalbinsel.":"L’Adriatico è il braccio del Mediterraneo tra l’Italia e la penisola balcanica.",
+ "Vor dem Po-Delta ist sie flach: oft nur wenige Dutzend Meter tief. Deshalb wird das Wasser im Sommer so schnell warm – 24 bis 27 Grad.":"Davanti al Delta del Po è basso: spesso solo qualche decina di metri. Per questo d’estate l’acqua si scalda in fretta – 24-27 gradi.",
+ "In der Adria leben mehr als 450 Fischarten. Von fingerkleinen Grundeln bis zu Schwertfischen.":"Nell’Adriatico vivono più di 450 specie di pesci. Dai ghiozzi grandi come un dito ai pesci spada.",
+ "Größere Gäste ziehen manchmal vorbei: Große Tümmler (das sind Delfine) und Meeresschildkröten, die zum Luftholen auftauchen.":"Ogni tanto passano ospiti più grandi: i tursiopi (cioè i delfini) e le tartarughe marine, che salgono a respirare.",
+ "Der Po ist der längste Fluss Italiens, rund 650 Kilometer. Er bringt Süßwasser, Sand und Schlamm ins Meer – daraus ist Albarella entstanden.":"Il Po è il fiume più lungo d’Italia, circa 650 chilometri. Porta in mare acqua dolce, sabbia e fango – ed è così che è nata Albarella.",
+ "Krabben tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – darunter wartet schon eine neue, noch weiche.":"I granchi portano lo scheletro fuori, come un’armatura. Quando crescendo diventa troppo stretta, si spacca – e sotto ce n’è già una nuova, ancora morbida.",
+ "Seesterne haben kein Gehirn, aber an jeder Armspitze winzige Augen, die Hell und Dunkel unterscheiden. Verliert ein Seestern einen Arm, wächst er nach.":"Le stelle marine non hanno cervello, ma sulla punta di ogni braccio hanno occhietti minuscoli che distinguono il chiaro dallo scuro. Se una stella marina perde un braccio, le ricresce.",
+ "Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus.":"Una sola cozza filtra ogni giorno più di venti litri d’acqua e la restituisce più pulita.",
+ "Möwen können Salzwasser trinken. Über den Augen haben sie kleine Drüsen, die das Salz wieder aussortieren.":"I gabbiani possono bere acqua salata. Sopra gli occhi hanno piccole ghiandole che tolgono di nuovo il sale.",
+ "Seepferdchen sind Fische. Und bei ihnen tragen die Väter die Babys im Bauch, nicht die Mütter.":"I cavallucci marini sono pesci. E da loro sono i papà a portare i piccoli nella pancia, non le mamme.",
+ "Flamingos werden erst durch ihr Futter rosa – kleine Krebstiere und Algen. Ein Flamingo, der nur Salat frisst, bleibt weiß.":"I fenicotteri diventano rosa solo grazie a quello che mangiano – piccoli crostacei e alghe. Un fenicottero che mangia solo insalata resta bianco.",
+ "Die Pinie hat lange Nadeln und dicke Zapfen. Darin stecken Pinienkerne – die kann man essen.":"Il pino domestico ha aghi lunghi e pigne grosse. Dentro ci sono i pinoli – si possono mangiare.",
+ "Strandhafer sieht aus wie zähes Gras, hält aber mit seinen Wurzeln ganze Dünen zusammen. Darum darf man ihn nicht ausreißen.":"L’ammofila sembra erba dura, ma con le sue radici tiene insieme intere dune. Per questo non si deve strappare.",
+ "Im Meer wachsen Wiesen: Neptungras. Es macht Sauerstoff, und Seepferdchen halten sich mit dem Schwanz daran fest.":"In mare crescono i prati: la posidonia. Produce ossigeno, e i cavallucci marini ci si aggrappano con la coda.",
+ "Die Stranddistel ist blaugrün und stachelig. Sie speichert Wasser, weil es im Sand kaum welches gibt.":"Il cardo marino è verde-azzurro e pungente. Immagazzina acqua, perché nella sabbia ce n’è pochissima.",
+ "Die tiefste Stelle des Mittelmeers ist über 5000 Meter tief. Man könnte die höchsten Alpengipfel hineinstellen – oben wäre noch Wasser darüber.":"Il punto più fondo del Mediterraneo supera i 5000 metri. Ci si potrebbero infilare le cime più alte delle Alpi – e sopra ci sarebbe ancora acqua.",
+ "Wasser vor Albarella im Sommer: 24 bis 27 Grad. Wie eine Badewanne, die nie kalt wird.":"Acqua davanti ad Albarella d’estate: 24-27 gradi. Come una vasca da bagno che non diventa mai fredda.",
+ "Bäume auf Albarella: über 2 000 000. Baumarten: etwa 150.":"Alberi ad Albarella: più di 2 000 000. Specie di alberi: circa 150.",
+ "Fischarten in der Adria: mehr als 450.":"Specie di pesci nell’Adriatico: più di 450.",
+ "Alter der Insel: rund 400 Jahre. Für eine Insel ist das noch ein Baby.":"Età dell’isola: circa 400 anni. Per un’isola è ancora una neonata.",
+ "Der Strand von Albarella":"La spiaggia di Albarella",
+ "Das Po-Delta: Lagunen, Schilf und flaches Wasser":"Il Delta del Po: lagune, canneti e acqua bassa",
+ "Flamingos in den Lagunen bei Comacchio, gleich neben dem Po-Delta":"Fenicotteri nelle valli di Comacchio, subito accanto al Delta del Po",
+ "Große Tümmler in der Adria":"Tursiopi nell’Adriatico",
+ "Europäische Sumpfschildkröte":"Testuggine palustre europea",
+ "Roter Mittelmeer-Seestern":"Stella marina rossa del Mediterraneo",
+ "Mittelmeer-Miesmuschel":"Cozza del Mediterraneo",
+ "Langschnäuziges Seepferdchen":"Cavalluccio marino dal muso lungo",
+ "Pinien – ihre Kerne kann man essen":"Pini domestici – i loro pinoli si possono mangiare",
+ "Silberpappel: unten silbrige Blätter. Sie gab Albarella den Namen":"Pioppo bianco: foglie argentate di sotto. Ha dato il nome ad Albarella",
+ "Strandhafer hält die Dünen zusammen":"L’ammofila tiene insieme le dune",
+ "Neptungras-Wiese – macht Sauerstoff im Meer":"Prateria di posidonia – produce ossigeno nel mare",
+ "Mittelmeermöwe":"Gabbiano reale mediterraneo",
+ "Mittelmeer-Strandkrabbe":"Granchio verde mediterraneo",
+ "Wer malt <span>heute</span>?":"Chi disegna <span>oggi</span>?",
+ "Was malen wir <span>heute</span>?":"Cosa disegniamo <span>oggi</span>?",
+ "Name":"Nome",
+ "Fertig":"Fatto",
+ "Abbrechen":"Annulla",
+ "✏️ Eigenes Motiv":"✏️ Un disegno mio",
+ "🗺️ Schatzinsel":"🗺️ Isola del Tesoro",
+ "📚 Albarella-Wissen":"📚 Tutto su Albarella",
+ "🖼️ Galerie":"🖼️ Galleria",
+ "⛶ Vollbild?":"⛶ Schermo intero?",
+ "🔊 Ton":"🔊 Suono",
+ "✏️ Nachmalen":"✏️ Ricopia",
+ "🎨 Ausmalen":"🎨 Colora",
+ "Links steht die Vorlage – im weißen Feld malst du sie nach.":"A sinistra c’è il modello – nello spazio bianco lo ricopi.",
+ "Hallo {name}! {e} Heute wartet dein nächstes Abenteuer.":"Ciao {name}! {e} Oggi ti aspetta la tua prossima avventura.",
+ "⭐ Du hast {n} Stern.":"⭐ Hai {n} stella.",
+ "⭐ Du hast {n} Sterne.":"⭐ Hai {n} stelle.",
+ "🏆 Noch {n} Motive bis zur {m}.":"🏆 Ancora {n} disegni e arrivi alla {m}.",
+ "🏆 Du hast alle Medaillen gewonnen!":"🏆 Hai vinto tutte le medaglie!",
+ "◀︎ Zurück":"◀︎ Indietro",
+ "Galerie von {name}":"La galleria di {name}",
+ "Meine Bilder":"I miei disegni",
+ "Bilder gespeichert":"disegni salvati",
+ "Sterne":"stelle",
+ "Meine Auszeichnungen":"I miei premi",
+ "Nächstes Motiv →":"Prossimo disegno →",
+ "Auf dem Weg zur {m} 🏆":"Verso la {m} 🏆",
+ "🏆 Alle Medaillen gewonnen!":"🏆 Tutte le medaglie vinte!",
+ "Alle Medaillen gewonnen! 🏆":"Tutte le medaglie vinte! 🏆",
+ "{a} von {b} Motiven bis zur {m}":"{a} di {b} disegni verso la {m}",
+ "noch {n} Motiv bis zur Medaille":"ancora {n} disegno per la medaglia",
+ "noch {n} Motive bis zur Medaille":"ancora {n} disegni per la medaglia",
+ "Alle Motive entdeckt!":"Tutti i disegni scoperti!",
+ "Geschafft! ✓":"Fatto! ✓",
+ "noch {n} Motiv":"ne manca {n}",
+ "noch {n} Motive":"ne mancano {n}",
+ "Noch keine Bilder. Mal eins und tippe auf „Galerie\"!":"Ancora nessun disegno. Fanne uno e tocca «Galleria»!",
+ "Bild":"Disegno",
+ "Löschen?":"Cancellare?",
+ "Medaille geschafft!":"Medaglia conquistata!",
+ "Juhu!":"Evviva!",
+ "{m} geschafft! Schau in deiner Galerie vorbei.":"{m} conquistata! Fai un salto nella tua galleria.",
+ "◀︎ Motive":"◀︎ Disegni",
+ "◀︎ Insel":"◀︎ Isola",
+ "Schritt {n}":"Passo {n}",
+ "{m} wartet auf Farbe!":"{m} aspetta i colori!",
+ "Tippe mit dem Farbeimer in die Flächen – so bunt du magst.":"Tocca dentro le forme con il secchiello – colorato quanto vuoi.",
+ "Vorlage":"Modello",
+ "Rot ist der Strich, der jetzt dran ist. Male ihn rechts nach.":"La linea rossa è quella di adesso. Ricopiala a destra.",
+ "Stift":"Matita",
+ "Zauber":"Magia",
+ "Eimer":"Secchiello",
+ "Radierer":"Gomma",
+ "Farben":"Colori",
+ "↩︎ Zurück":"↩︎ Annulla",
+ "🗑️ Alles":"🗑️ Cancella",
+ "🫥 Hilfslinien":"🫥 Linee guida",
+ "👁️ Linien aus":"👁️ Linee via",
+ "🎵 Musik":"🎵 Musica",
+ "🔊 Stimme":"🔊 Voce",
+ "Weiter ▶︎":"Avanti ▶︎",
+ "Fertig! 🎉":"Finito! 🎉",
+ "Fertig! Dein Bild ist gespeichert. 🖼️":"Finito! Il tuo disegno è salvato. 🖼️",
+ "🗺️ Zurück zur Insel":"🗺️ Torna all’isola",
+ "✏️ Nächstes Motiv":"✏️ Prossimo disegno",
+ "🖼️ Ist schon in deiner Galerie!":"🖼️ È già nella tua galleria!",
+ "⭐ Geschafft! Bild in der Galerie gespeichert":"⭐ Bravo! Disegno salvato nella galleria",
+ "Eigenes Motiv":"Un disegno mio",
+ "↩︎ Strich weg":"↩︎ Togli la linea",
+ "✓ Schritt fertig":"✓ Passo fatto",
+ "💾 Motiv speichern":"💾 Salva il disegno",
+ "Male einen Teil deines Bildes und tippe dann auf „Schritt fertig“. So entstehen die Schritte, die später nachgemalt werden.":"Disegna una parte del tuo disegno e poi tocca «Passo fatto». Così nascono i passi che gli altri ricopieranno.",
+ "Name des Motivs":"Nome del disegno",
+ "Speichern":"Salva",
+ "Erst etwas malen 🙂":"Prima disegna qualcosa 🙂",
+ "Noch nichts zu speichern":"Non c’è ancora niente da salvare",
+ "✏️ Motiv gespeichert":"✏️ Disegno salvato",
+ "Mein Motiv":"Il mio disegno",
+ "Weg?":"Togliere?",
+ "leicht":"facile",
+ "mittel":"medio",
+ "schwer":"difficile",
+ "von mir":"mio",
+ "Diese Bucht liegt noch im Nebel. Mal zuerst die {b} fertig.":"Questa baia è ancora nella nebbia. Prima finisci la {b}.",
+ "⭐ Verstecktes Detail gefunden!":"⭐ Dettaglio nascosto trovato!",
+ "Versuch’s nochmal!":"Riprova!",
+ "Richtig! Stern verdient ⭐":"Giusto! Stella meritata ⭐",
+ "Richtig! Nächste Frage.":"Giusto! Prossima domanda.",
+ "Richtig! Alle Fragen geschafft!":"Giusto! Tutte le domande risolte!",
+ "📜 Lies erst das Kärtchen „Wusstest du?“":"📜 Prima leggi il cartoncino «Lo sapevi?»",
+ "🗺️ Noch {n} Motiv bis zur Goldmedaille – dann öffnet sich die Schatzinsel!":"🗺️ Ancora {n} disegno per la medaglia d’oro – poi si apre l’Isola del Tesoro!",
+ "🗺️ Noch {n} Motive bis zur Goldmedaille – dann öffnet sich die Schatzinsel!":"🗺️ Ancora {n} disegni per la medaglia d’oro – poi si apre l’Isola del Tesoro!",
+ "Nur für Eltern.":"Solo per i grandi.",
+ "Wie viel ist":"Quanto fa",
+ "🔒 Leider falsch – das ist nur für Eltern.":"🔒 Purtroppo no – questo è solo per i grandi.",
+ "Foto entfernen?":"Rimuovere la foto?",
+ "Abbrechen = ein neues Foto auswählen.":"Annulla = scegli una foto nuova.",
+ "1 von 2 – Hinweis für die Kinder, in Worten":"1 di 2 – l’indizio per i bambini, a parole",
+ " (einer ist gespeichert)":" (ne è salvato uno)",
+ " (noch keiner gespeichert)":" (non ancora salvato)",
+ " (welche sind gespeichert)":" (ne sono salvate)",
+ " (noch keine gespeichert)":" (non ancora salvate)",
+ "Zum Beispiel: „Am dritten Pfahl hinter der Düne, drei Schritte Richtung Wasser.“":"Per esempio: «Al terzo palo dietro la duna, tre passi verso l’acqua.»",
+ "Leer lassen = unverändert. Ein Minuszeichen löscht ihn.":"Lascia vuoto = non cambia niente. Un segno meno lo cancella.",
+ "2 von 2 – Koordinaten für den Knopf „Ich zeige Dir den Weg\"":"2 di 2 – coordinate per il pulsante «Ti mostro la strada»",
+ "Leer lassen = unverändert, Minuszeichen löscht sie.":"Lascia vuoto = non cambia niente, il segno meno le cancella.",
+ "oder":"oppure",
+ "🔑 Hinweis gespeichert":"🔑 Indizio salvato",
+ "🔑 Gespeichert – Kartenlink entfernt":"🔑 Salvato – link alla mappa rimosso",
+ "⚠️ Koordinaten nicht erkannt – Beispiel:":"⚠️ Coordinate non riconosciute – esempio:",
+ "🔑 Fundort gespeichert – der Kartenknopf ist da":"🔑 Luogo salvato – il pulsante della mappa c’è",
+ "🔄 Schatzsuche zurückgesetzt – die Insel liegt wieder im Nebel":"🔄 Caccia al tesoro azzerata – l’isola è di nuovo nella nebbia",
+ "Schatzsuche für {name} zurücksetzen?":"Azzerare la caccia al tesoro di {name}?",
+ "Alle Buchten liegen wieder im Nebel, Bonussterne und Truhe sind zurückgesetzt.":"Tutte le baie tornano nella nebbia, le stelle bonus e il forziere si azzerano.",
+ "Gemalte Bilder, Sterne und Medaillen bleiben erhalten.":"Disegni, stelle e medaglie restano.",
+ "🔓 Testzugang an – Schatzinsel offen für {name}":"🔓 Accesso di prova attivo – Isola del Tesoro aperta per {name}",
+ "🔒 Testzugang aus für {name}":"🔒 Accesso di prova spento per {name}",
+ "📸 Foto vom Fundort gespeichert":"📸 Foto del nascondiglio salvata",
+ "⚠️ Foto konnte nicht gelesen werden":"⚠️ Non è stato possibile leggere la foto",
+ "Tipp: Teilen ▸ „Zum Home-Bildschirm\" – dann startet die App randlos.":"Consiglio: Condividi ▸ «Aggiungi a Home» – così l’app parte a tutto schermo.",
+ "Stimmen mit „Premium“ oder „Erweitert“ klingen am freundlichsten.":"Le voci «Premium» o «Avanzata» sono le più simpatiche.",
+ "Für Deutsch ist auf diesem iPad keine Stimme installiert. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.":"Su questo iPad non è installata nessuna voce tedesca. Puoi aggiungerla in Impostazioni → Accessibilità → Contenuto pronunciato → Voci.",
+ "Für Englisch ist auf diesem iPad keine Stimme installiert. Die Texte sind englisch, vorgelesen wird nichts. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.":"Su questo iPad non è installata nessuna voce inglese. I testi sono in inglese, ma non verranno letti. Puoi aggiungerla in Impostazioni → Accessibilità → Contenuto pronunciato → Voci.",
+ "Für Italienisch ist auf diesem iPad keine Stimme installiert. Die Texte sind italienisch, vorgelesen wird nichts. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.":"Su questo iPad non è installata nessuna voce italiana. I testi sono in italiano, ma non verranno letti. Puoi aggiungerla in Impostazioni → Accessibilità → Contenuto pronunciato → Voci.",
+ "Strandkind":"Bimbo di spiaggia",
+ "Muschelkind":"Cercatore di conchiglie",
+ "Wellenkind":"Cavalcaonde",
+ "Sandburgkind":"Costruttore di castelli",
+ "Inselkind":"Bimbo dell’isola",
+ "Riffkind":"Esploratore di scogliere",
+ "Tiefseekind":"Sommozzatore",
+ "Ozeankind":"Signore dell’oceano",
+ "Wow! Ihr habt Albarella entdeckt!":"Wow! Avete scoperto Albarella!",
+ "Wow! Du hast die {m} gewonnen!":"Wow! Hai vinto la {m}!",
+ "Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!":"Il tuo disegno è salvato. Adesso tutti possono ricopiarlo!",
+ "Für echtes Vollbild tippe unten auf Teilen und dann auf Zum Home-Bildschirm.":"Per il vero schermo intero tocca Condividi in basso e poi Aggiungi a Home.",
+};
+/* Deutsch ist die Quelle und braucht kein Woerterbuch. Jede weitere Sprache
+   bekommt eines dazu; fehlt ein Eintrag, erscheint das deutsche Original. */
+const DICT={en:EN, it:IT};
+/* Die Uebersetzungen an Motiven, Schritten und Medaillen heissen nameEn/nameIt,
+   titleEn/titleIt und so weiter. Diese Tabelle macht aus der Sprache das Anhaengsel. */
+const SUF={en:'En', it:'It'};
+const LANGS=['de','en','it'];
 function t(x){
-  if(LANG!=='en' || x==null) return x;
+  const d=DICT[LANG];
+  if(!d || x==null) return x;
   const s=String(x);
-  return Object.prototype.hasOwnProperty.call(EN,s) ? EN[s] : s;
+  return Object.prototype.hasOwnProperty.call(d,s) ? d[s] : s;
 }
 /* Die Motivnamen sind eindeutig – sie duerfen ins Woerterbuch, damit Insel,
    Galerie und Medaillen sie ganz normal ueber t() uebersetzen koennen.
    Die Schritt-Ueberschriften bleiben bewusst draussen: „Der Rumpf" heisst beim
    Boot anders als bei der Rakete. Dafuer gibt es tTitle()/tText() am Schritt. */
-MOTIFS.forEach(m=>{ if(m.nameEn && !EN[m.name]) EN[m.name]=m.nameEn; });
+MOTIFS.forEach(m=>{
+  for(const l in SUF){
+    const n=m['name'+SUF[l]];
+    if(n && !DICT[l][m.name]) DICT[l][m.name]=n;
+  }
+});
 /* Eigene Motive der Kinder haben keine Uebersetzung – dann bleibt ihr Name stehen. */
-function tName(m){ return (LANG==='en' && m && m.nameEn) ? m.nameEn : (m?m.name:''); }
+function tName(m){ const k=SUF[LANG]; return (k && m && m['name'+k]) ? m['name'+k] : (m?m.name:''); }
 function tTitle(s){
   if(!s) return '';
-  if(LANG!=='en') return s.title;
-  if(s.titleEn) return s.titleEn;
+  const k=SUF[LANG];
+  if(!k) return s.title;
+  if(s['title'+k]) return s['title'+k];
   /* Selbstgemalte Motive speichern „Schritt 3" als Ueberschrift. */
   const m=/^Schritt (\d+)$/.exec(s.title||'');
-  return m ? 'Step '+m[1] : t(s.title);
+  return m ? t('Schritt {n}').split('{n}').join(m[1]) : t(s.title);
 }
-function tText(s){ return (LANG==='en' && s) ? (s.textEn || t(s.text)) : (s?s.text:''); }
-function tLabel(o){ return (LANG==='en' && o && o.labelEn) ? o.labelEn : (o?o.label:''); }
+function tText(s){
+  if(!s) return '';
+  const k=SUF[LANG];
+  return k ? (s['text'+k] || t(s.text)) : s.text;
+}
+function tLabel(o){ const k=SUF[LANG]; return (k && o && o['label'+k]) ? o['label'+k] : (o?o.label:''); }
 /* Saetze mit Zahlen oder Namen darin: der ganze Satz steht im Woerterbuch,
    die Luecken heissen {n}, {m}, {name}. So darf die englische Fassung eine
    voellig andere Wortstellung haben – Fragmente aneinanderkleben ginge schief. */
@@ -2475,7 +3136,7 @@ function tf(de, vals){
   return s;
 }
 /* Zweisprachig sprechen: nimmt den deutschen Text und sucht die Uebersetzung. */
-function sprich(text){ Voice.rawBoth(text, t(text)); }
+function sprich(text){ Voice.raw(t(text)); }
 
 /* Statische Texte im HTML tragen data-t; ihr deutsches Original merken wir uns einmal. */
 function uebersetzeSeite(){
@@ -2489,15 +3150,24 @@ function uebersetzeSeite(){
     if(!el.dataset.tOrig) el.dataset.tOrig=el.innerHTML.trim();
     el.innerHTML=t(el.dataset.tOrig);
   });
-  /* data-tp: Platzhalter in Eingabefeldern. */
-  document.querySelectorAll('[data-tp]').forEach(el=>{
-    if(!el.dataset.tOrig) el.dataset.tOrig=el.getAttribute('placeholder')||'';
-    el.setAttribute('placeholder', t(el.dataset.tOrig));
-  });
+  /* Beschriftungen, die man nicht sieht, aber hoert: aria-label (data-ta),
+     title (data-tt) und Platzhalter (data-tp). Ein Kind, das sich die Oberflaeche
+     vorlesen laesst, soll nicht ploetzlich Deutsch hoeren. */
+  [['data-ta','aria-label','tOrigA'],['data-tt','title','tOrigT'],['data-tp','placeholder','tOrigP']]
+    .forEach(([flag,attr,merker])=>{
+      document.querySelectorAll('['+flag+']').forEach(el=>{
+        if(el.dataset[merker]===undefined) el.dataset[merker]=el.getAttribute(attr)||'';
+        el.setAttribute(attr, t(el.dataset[merker]));
+      });
+    });
+  /* Durchnummerierte Beschriftungen: „Farbe 1" steht so in keinem Woerterbuch,
+     die Zahl kommt erst beim Zeichnen dazu. Also hier neu setzen. */
+  document.querySelectorAll('#colors .swatch').forEach((b,i)=>b.setAttribute('aria-label',tf('Farbe {n}',{n:i+1})));
+  document.querySelectorAll('#sizes .size').forEach((b,i)=>b.setAttribute('aria-label',tf('Stiftdicke {n}',{n:i+1})));
   document.documentElement.lang = LANG;
 }
 async function setLang(l, nurAnzeigen){
-  LANG = (l==='en') ? 'en' : 'de';
+  LANG = LANGS.indexOf(l)>=0 ? l : 'de';
   /* Die Sprache gehoert zum Kind. Der Geraetewert ist nur die Vorgabe fuer
      neu angelegte Profile und fuer den Start ohne Profil. */
   if(!nurAnzeigen){
@@ -2509,8 +3179,6 @@ async function setLang(l, nurAnzeigen){
     const ziel = (gemerkt && passend.some(v=>v.name===gemerkt)) ? gemerkt : (Voice.bestFor(LANG)||{}).name;
     if(ziel){ Voice.setVoice(ziel); await Store.set('voice.'+LANG, ziel); }
   }
-  const f = LANG==='en' ? '\u{1F1EC}\u{1F1E7}' : '\u{1F1E9}\u{1F1EA}';
-  ['langBtn','islLangBtn','wisLangBtn','drawLangBtn'].forEach(id=>{ if($(id)) $(id).textContent=f; });
   document.querySelectorAll('.ein-flagge').forEach(b=>b.classList.toggle('an', b.dataset.lang===LANG));
   uebersetzeSeite();
   /* Alles neu zeichnen, was Text enthaelt */
@@ -2710,13 +3378,97 @@ const Voice=(function(){
         "Dive in and add some color to {m}!",
         "Here we go! Make {m} as colorful as you like."
       ]
+    },
+    it:{
+      hello:[
+        "Ciao! Che bello che tu sia qui. Scegli un disegno, ti aiuto io.",
+        "Eccoti! Ho già preparato le matite.",
+        "Ehilà! Oggi disegniamo qualcosa di bello."
+      ],
+      start:[
+        "Oh, {m}! Questo mi piace tanto.",
+        "{m}, ottima scelta! Ce la fai di sicuro.",
+        "Allora {m}. Guarda il modello a sinistra, ti dico passo dopo passo cosa fare.",
+        "{m}! Prenditi tutto il tempo che vuoi, non abbiamo nessuna fretta.",
+        "Cominciamo con {m}. La linea rossa ti mostra sempre cosa viene adesso."
+      ],
+      step:[
+        "{t}","Adesso tocca a: {t}","Si continua con: {t}","E ora: {t}","Il prossimo è: {t}",
+        "Guarda bene, adesso viene il bello: {t}","Attenzione, arriva la mia parte preferita: {t}"
+      ],
+      praise:[
+        "Sta venendo proprio bene!","Wow, sei bravo in questo.","Perfetto, continua così!",
+        "Oh, questo mi piace!","Proprio come me l'immaginavo.",
+        "Hai la mano ferma, lo sai?","Bravissimo!",
+        "Diventerà un disegno bellissimo.","Molto bello, sono impressionata.",
+        "Sì! Proprio così.","Bravo, non era per niente facile.",
+        "Ti viene facile facile.","Guarda un po', è venuto davvero bene.",
+        "Fantastico. Non saprei fare di meglio.","Che bravo, sei un vero artista.",
+        "C'è da esserne fieri!","Continua così, è un piacere guardarti."
+      ],
+      encourage:[
+        "Coraggio, non deve venire perfetto.",
+        "Anche le linee storte sono belle, davvero.",
+        "Fai con calma, io aspetto qui.",
+        "Se qualcosa va storto, basta premere Indietro.",
+        "Provaci, il foglio non morde.",
+        "Secondo me stai andando benissimo.",
+        "Vuoi che ti mostri le linee guida? Il pulsante è a destra.",
+        "Fai un bel respiro e poi si continua – con tutta calma."
+      ],
+      fill:[
+        "Che bel colore!","Oh, che colori! Mi piacciono.","Questo colore ci sta benissimo.",
+        "Mmh, sembra un tramonto.","Deciso! Che coraggio.","Come brilla!"
+      ],
+      undo:[
+        "Nessun problema, capita a tutti.","Via così, si ricomincia.",
+        "Ops! Ma per questo c'è il pulsante.","Non fa niente, riprova pure."
+      ],
+      clear:[
+        "Un foglio nuovo. Si comincia!","Tutto via. Nuovo tentativo!","Pulito pulito. E adesso via."
+      ],
+      finish:[
+        "Finito! Ed è venuto bellissimo.",
+        "Incredibile, ce l'hai fatta! Devi assolutamente farlo vedere a qualcuno.",
+        "Finito! Sono davvero fiera di te.",
+        "Questo è il tuo disegno, ed è venuto benissimo.",
+        "Ce l'hai fatta! Lo vuoi mettere nella tua galleria?",
+        "Bravo! Non era per niente facile, e ci sei riuscito."
+      ],
+      gallery:[
+        "Subito nella tua galleria!","Salvato. Puoi guardarlo quando vuoi.",
+        "Nella galleria, insieme agli altri tuoi disegni."
+      ],
+      creator:[
+        "Disegna un disegno tutto tuo! Quando una parte è pronta, tocca Passo fatto.",
+        "Adesso la maestra sei tu. Disegna quello che gli altri dovranno ricopiare."
+      ],
+      creatorStep:[
+        "Passo salvato. Cosa viene adesso?",
+        "Bene! E ora la parte successiva.",
+        "Segnato. Continua pure."
+      ],
+      magic:[
+        "Magia! Bella dritta.",
+        "Preso in pieno!",
+        "Questa è precisa.",
+        "Fatto con un tocco di magia.",
+        "Dritta come un fuso!"
+      ],
+      colorStart:[
+        "{m} aspetta i colori! Comincia pure.",
+        "Prendi il secchiello e riempi {m} di colori!",
+        "Fammi vedere i tuoi colori preferiti su {m}!",
+        "Tuffati e riempi {m} di colore!",
+        "Si comincia! Fai {m} colorato quanto vuoi."
+      ]
     }
   };
   const last={};
   let on=true, voice=null, lastSpoke=0;
   /* Regel 1: Die Flagge fuehrt. Frueher leitete sich die Sprache aus der gewaehlten
      Stimme ab – dann konnte englischer Text mit deutscher Stimme gesprochen werden. */
-  function currentLang(){ return (typeof LANG!=='undefined' && LANG==='en') ? 'en' : 'de'; }
+  function currentLang(){ return (typeof LANG!=='undefined' && P[LANG]) ? LANG : 'de'; }
   function pick(pool,vars){
     const a=(P[currentLang()]||P.de)[pool]; if(!a||!a.length) return '';
     let t, tries=0;
@@ -2725,14 +3477,16 @@ const Voice=(function(){
     if(vars) Object.keys(vars).forEach(k=>{ t=t.split('{'+k+'}').join(vars[k]); });
     return t;
   }
-  const FEMALE=['anna','helena','petra','marlene','katja','vicki','amelie','google deutsch','deutschland'];
+  /* Freundlich klingende Stimmen zuerst – die Namen unterscheiden sich je Sprache. */
+  const FEMALE=['anna','helena','petra','marlene','katja','vicki','amelie','google deutsch','deutschland',
+                'alice','federica','elsa','chiara','emma','google italiano','italia'];
   function germanVoices(){
     if(!('speechSynthesis' in window)) return [];
     return speechSynthesis.getVoices().filter(v=>/^de/i.test(v.lang));
   }
   function usableVoices(){
     if(!('speechSynthesis' in window)) return [];
-    return speechSynthesis.getVoices().filter(v=>/^(de|en)/i.test(v.lang));
+    return speechSynthesis.getVoices().filter(v=>/^(de|en|it)/i.test(v.lang));
   }
   /* Regel 2: Nur Stimmen der aktuellen Sprache stehen zur Wahl. */
   function voicesFor(l){
@@ -2782,7 +3536,6 @@ const Voice=(function(){
   return {
     say(pool,vars,force){ speak(pick(pool,vars),force); },
     raw(t){ speak(t,true); },
-    rawBoth(de,en){ speak(currentLang()==='en'?en:de, true); },
     lang:currentLang,
     list:usableVoices,
     listFor:voicesFor,
@@ -2926,9 +3679,9 @@ $('profileChip').addEventListener('click',()=>{ renderProfiles(); showSection(se
 
 /* ---------- Sterne & Medaillen ---------- */
 const TROPHIES=[
-  {key:'bronze', n:5,  emoji:'🥉', label:'Bronzemedaille', labelEn:'Bronze Medal'},
-  {key:'silber', n:10, emoji:'🥈', label:'Silbermedaille', labelEn:'Silver Medal'},
-  {key:'gold',   n:20, emoji:'🥇', label:'Goldmedaille',   labelEn:'Gold Medal'}
+  {key:'bronze', n:5,  emoji:'🥉', label:'Bronzemedaille', labelEn:'Bronze Medal',  labelIt:'Medaglia di bronzo'},
+  {key:'silber', n:10, emoji:'🥈', label:'Silbermedaille', labelEn:'Silver Medal',  labelIt:'Medaglia d’argento'},
+  {key:'gold',   n:20, emoji:'🥇', label:'Goldmedaille',   labelEn:'Gold Medal',    labelIt:'Medaglia d’oro'}
 ];
 function trophyTier(count){ let t=null; for(const x of TROPHIES) if(count>=x.n) t=x; return t; }
 function nextTrophy(count){ return TROPHIES.find(x=>count<x.n)||null; }
@@ -3248,7 +4001,7 @@ function bayComplete(b){ return bayStats(b).full && star3Set().indexOf(b.key)>=0
    verschiedene Dinge sagen. */
 function naechsterSchritt(b){
   const cc=islandCounts(), nx=b.motifs.find(n=>!cc[n]);
-  if(nx) return {text:'\u{1F449} '+t('Jetzt dran:')+' '+t(nx)+' '+t('malen'), fertig:false};
+  if(nx) return {text:tf('\u{1F449} Jetzt dran: {m} malen',{m:t(nx)}), fertig:false};
   if(factReadSet().indexOf(b.key)<0) return {text:'\u{1F4DC} '+t('Jetzt dran: „Wusstest du?“ lesen'), fertig:false};
   if(star3Set().indexOf(b.key)<0) return {text:'\u{1F9E0} '+t('Jetzt dran: die Wissensfrage'), fertig:false};
   return {text:'\u2713 '+t('Bucht geschafft!'), fertig:true};
@@ -3370,7 +4123,7 @@ function renderIsland(){
     if(!shown) return;
     h+='<button type="button" class="isl-hidden'+(got?' got':' hint')+'" data-hidden="'+b.key+'" '
      + 'style="left:'+b.hidden.x+'%;top:'+b.hidden.y+'%;width:'+(b.hidden.r*2)+'px;height:'+(b.hidden.r*2)+'px;'
-     + 'margin:'+(-b.hidden.r)+'px 0 0 '+(-b.hidden.r)+'px" aria-label="'+b.hidden.was+'">'
+     + 'margin:'+(-b.hidden.r)+'px 0 0 '+(-b.hidden.r)+'px" aria-label="'+t(b.hidden.was)+'">'
      + '<em>'+b.hidden.icon+'</em></button>';
   });
   /* Suchfeld: waehrend der Suche nimmt eine Ebene ueber der Karte jeden Tipp an. */
@@ -3408,9 +4161,9 @@ function renderIsland(){
    + '</p>'+noteTask+'</div>';
 
   let frag='<div class="isl-fragstrip" id="islFragStrip" role="button" '
-    + 'aria-label="Botschaft des Piraten lesen"><b>Deine Schatzfragmente</b><div>';
+    + 'aria-label="'+t('Die Botschaft des Piraten')+'"><b>'+t('Deine Schatzfragmente')+'</b><div>';
   FRAGMENTS.forEach((f,i)=>{
-    frag+='<div class="isl-frag'+(i<done?' got':'')+'" title="'+f.name+'">'+(i<done?f.emoji:'')+'</div>';
+    frag+='<div class="isl-frag'+(i<done?' got':'')+'" title="'+t(f.name)+'">'+(i<done?f.emoji:'')+'</div>';
   });
   h+=frag+'</div></div>';
 
@@ -3428,9 +4181,9 @@ function renderIsland(){
     const el=document.createElement('button');
     el.className='isl-bay side-'+b.side+(bayComplete(b)?' done':' active')+(selBay===b.key?' sel':'');
     el.style.left=b.x+'%'; el.style.top=b.y+'%';
-    el.setAttribute('aria-label',b.name);
+    el.setAttribute('aria-label',t(b.name));
     el.innerHTML='<span class="isl-pin">'+b.emoji+'<i>'+b.nr+'</i></span>'
-      + '<span class="isl-baylabel"><b>'+b.name+'</b>'
+      + '<span class="isl-baylabel"><b>'+t(b.name)+'</b>'
       + '<span class="isl-baystars">'+earned.map(e=>'<i class="'+(e?'on':'')+'">★</i>').join('')+'</span></span>';
     el.addEventListener('click',()=>{ selBay=b.key; findMode=false; renderIsland(); });
     map.appendChild(el);
@@ -3510,7 +4263,7 @@ async function renderBaySide(){
   const done=baysDone();
 
   $('islCount').textContent=done+' '+t('von')+' '+BAYS.length+' '+t('Buchten');
-  $('islSub').textContent=levelInfo(discoveredCount()).title+' · Schatzsuche';
+  $('islSub').textContent=t(levelInfo(discoveredCount()).title)+' · '+t('Schatzsuche');
 
   /* Kopfzeile: Bucht + Status */
   /* Auf schmalen Geräten wandert der Zettel hierher – auf der kleinen Karte verdeckt er zu viel. */
@@ -3582,7 +4335,7 @@ async function renderBaySide(){
       const fb=document.createElement('div');
       fb.className='isl-findbar';
       fb.innerHTML='<div class="cl"><span>🔍</span><p></p>'
-        + '<button type="button" class="sp" aria-label="Vorlesen">🔊</button></div>'
+        + '<button type="button" class="sp" aria-label="'+t('Vorlesen')+'">🔊</button></div>'
         + '<small></small>'
         + (findTries>=5 && !findReveal ? '<button type="button" class="help">'+t('Ich finde es nicht – zeig es mir')+'</button>' : '');
       fb.querySelector('p').textContent=t(b.hidden.was);
@@ -3602,7 +4355,7 @@ async function renderBaySide(){
     const f=document.createElement('div');
     f.className='isl-fact'+(factRead?' read':'');
     f.innerHTML='<div class="isl-fact-head"><span>📜</span><b>'+t('Wusstest du?')+'</b>'
-      + '<button type="button" class="fspeak" aria-label="Vorlesen">🔊</button></div><p></p>'
+      + '<button type="button" class="fspeak" aria-label="'+t('Vorlesen')+'">🔊</button></div><p></p>'
       + (factRead ? '<span class="isl-fact-ok">✓ '+t('Gelesen – die Wissensfrage ist offen')+'</span>'
                   : '<button type="button" class="isl-fact-done">'+t('Gelesen')+' ✓</button>');
     f.querySelector('p').textContent=t(b.fact);
@@ -3642,11 +4395,11 @@ async function renderBaySide(){
   const cta=document.createElement('button');
   cta.className='isl-cta';
   if(!open){
-    cta.textContent=t('Weiter zur')+' '+t(BAYS[done].name)+' →';
+    cta.textContent=tf('Weiter zur {b} →',{b:t(BAYS[done].name)});
     cta.addEventListener('click',()=>{ selBay=BAYS[done].key; findMode=false; renderIsland(); });
   }else if(!st.full){
     const next=b.motifs.find(n=>!c[n]);
-    cta.textContent=t(next||b.name)+' '+t('malen')+' →';
+    cta.textContent=tf('{m} malen →',{m:t(next||b.name)});
     cta.addEventListener('click',()=>{
       const idx=allMotifs().findIndex(m=>m.name===next);
       if(idx>=0){ cameFromIsland=true; openMotif(idx); }
@@ -3666,7 +4419,7 @@ async function renderBaySide(){
   }else{
     const nextIdx=BAYS.findIndex((x,n)=>n>i && !bayComplete(x));
     if(nextIdx>=0){
-      cta.textContent=t('Weiter zur')+' '+t(BAYS[nextIdx].name)+' →';
+      cta.textContent=tf('Weiter zur {b} →',{b:t(BAYS[nextIdx].name)});
       cta.addEventListener('click',()=>{ selBay=BAYS[nextIdx].key; findMode=false; renderIsland(); });
     }else if(done===BAYS.length && !profile.treasureFound){
       cta.className='isl-cta gold';
@@ -3723,36 +4476,51 @@ function foto(key){ return FOTOS.find(f=>f.key===key); }
 
 /* Nur mit Internet erreichbar – deshalb als eigener Abschnitt gekennzeichnet. */
 const WIKI=[
-  ['Albarella','https://de.wikipedia.org/wiki/Albarella',
-   'Albarella (in German)','https://de.wikipedia.org/wiki/Albarella'],
-  ['Po-Delta','https://de.wikipedia.org/wiki/Po-Delta',
-   'Po Delta','https://en.wikipedia.org/wiki/Po_(river)#Po_Delta'],
-  ['Adriatisches Meer','https://de.wikipedia.org/wiki/Adriatisches_Meer',
-   'Adriatic Sea','https://en.wikipedia.org/wiki/Adriatic_Sea'],
-  ['Mittelmeer','https://de.wikipedia.org/wiki/Mittelmeer',
-   'Mediterranean Sea','https://en.wikipedia.org/wiki/Mediterranean_Sea'],
-  ['Rosaflamingo','https://de.wikipedia.org/wiki/Rosaflamingo',
-   'Greater flamingo','https://en.wikipedia.org/wiki/Greater_flamingo'],
-  ['Gro\u00dfer T\u00fcmmler','https://de.wikipedia.org/wiki/Gro\u00dfer_T\u00fcmmler',
-   'Bottlenose dolphin','https://en.wikipedia.org/wiki/Common_bottlenose_dolphin'],
-  ['Europ\u00e4ische Sumpfschildkr\u00f6te','https://de.wikipedia.org/wiki/Europ\u00e4ische_Sumpfschildkr\u00f6te',
-   'European pond turtle','https://en.wikipedia.org/wiki/European_pond_turtle'],
-  ['Seesterne','https://de.wikipedia.org/wiki/Seesterne',
-   'Starfish','https://en.wikipedia.org/wiki/Starfish'],
-  ['Seepferdchen','https://de.wikipedia.org/wiki/Seepferdchen',
-   'Seahorse','https://en.wikipedia.org/wiki/Seahorse'],
-  ['Miesmuscheln','https://de.wikipedia.org/wiki/Miesmuscheln',
-   'Mussels','https://en.wikipedia.org/wiki/Mussel'],
-  ['Pinie','https://de.wikipedia.org/wiki/Pinie',
-   'Stone pine','https://en.wikipedia.org/wiki/Pinus_pinea'],
-  ['Silberpappel','https://de.wikipedia.org/wiki/Silber-Pappel',
-   'White poplar','https://en.wikipedia.org/wiki/White_poplar'],
-  ['Strandhafer','https://de.wikipedia.org/wiki/Gew\u00f6hnlicher_Strandhafer',
-   'Marram grass','https://en.wikipedia.org/wiki/Ammophila_(plant)'],
-  ['Neptungras','https://de.wikipedia.org/wiki/Neptungras',
-   'Neptune grass','https://en.wikipedia.org/wiki/Posidonia_oceanica'],
-  ['Po','https://de.wikipedia.org/wiki/Po_(Fluss)',
-   'Po (river)','https://en.wikipedia.org/wiki/Po_(river)']
+  {de:['Albarella',            'https://de.wikipedia.org/wiki/Albarella'],
+   en:['Albarella (in Italian)','https://it.wikipedia.org/wiki/Isola_di_Albarella'],
+   it:['Isola di Albarella',   'https://it.wikipedia.org/wiki/Isola_di_Albarella']},
+  {de:['Po-Delta',   'https://de.wikipedia.org/wiki/Po-Delta'],
+   en:['Po Delta',   'https://en.wikipedia.org/wiki/Po_(river)#Po_Delta'],
+   it:['Delta del Po','https://it.wikipedia.org/wiki/Delta_del_Po']},
+  {de:['Adriatisches Meer','https://de.wikipedia.org/wiki/Adriatisches_Meer'],
+   en:['Adriatic Sea',     'https://en.wikipedia.org/wiki/Adriatic_Sea'],
+   it:['Mare Adriatico',   'https://it.wikipedia.org/wiki/Mare_Adriatico']},
+  {de:['Mittelmeer',       'https://de.wikipedia.org/wiki/Mittelmeer'],
+   en:['Mediterranean Sea','https://en.wikipedia.org/wiki/Mediterranean_Sea'],
+   it:['Mar Mediterraneo', 'https://it.wikipedia.org/wiki/Mar_Mediterraneo']},
+  {de:['Rosaflamingo',    'https://de.wikipedia.org/wiki/Rosaflamingo'],
+   en:['Greater flamingo','https://en.wikipedia.org/wiki/Greater_flamingo'],
+   it:['Fenicottero rosa','https://it.wikipedia.org/wiki/Fenicottero_rosa']},
+  {de:['Gro\u00dfer T\u00fcmmler',  'https://de.wikipedia.org/wiki/Gro\u00dfer_T\u00fcmmler'],
+   en:['Bottlenose dolphin','https://en.wikipedia.org/wiki/Common_bottlenose_dolphin'],
+   it:['Tursiope',          'https://it.wikipedia.org/wiki/Tursiope']},
+  {de:['Europ\u00e4ische Sumpfschildkr\u00f6te','https://de.wikipedia.org/wiki/Europ\u00e4ische_Sumpfschildkr\u00f6te'],
+   en:['European pond turtle',          'https://en.wikipedia.org/wiki/European_pond_turtle'],
+   it:['Testuggine palustre europea',   'https://it.wikipedia.org/wiki/Testuggine_palustre_europea']},
+  {de:['Seesterne',    'https://de.wikipedia.org/wiki/Seesterne'],
+   en:['Starfish',     'https://en.wikipedia.org/wiki/Starfish'],
+   it:['Stella marina','https://it.wikipedia.org/wiki/Stella_marina']},
+  {de:['Seepferdchen',      'https://de.wikipedia.org/wiki/Seepferdchen'],
+   en:['Seahorse',          'https://en.wikipedia.org/wiki/Seahorse'],
+   it:['Cavalluccio marino','https://it.wikipedia.org/wiki/Cavalluccio_marino']},
+  {de:['Miesmuscheln','https://de.wikipedia.org/wiki/Miesmuscheln'],
+   en:['Mussels',     'https://en.wikipedia.org/wiki/Mussel'],
+   it:['Cozza',       'https://it.wikipedia.org/wiki/Cozza']},
+  {de:['Pinie',        'https://de.wikipedia.org/wiki/Pinie'],
+   en:['Stone pine',   'https://en.wikipedia.org/wiki/Pinus_pinea'],
+   it:['Pino domestico','https://it.wikipedia.org/wiki/Pino_domestico']},
+  {de:['Silberpappel', 'https://de.wikipedia.org/wiki/Silber-Pappel'],
+   en:['White poplar', 'https://en.wikipedia.org/wiki/White_poplar'],
+   it:['Pioppo bianco','https://it.wikipedia.org/wiki/Pioppo_bianco']},
+  {de:['Strandhafer',  'https://de.wikipedia.org/wiki/Gew\u00f6hnlicher_Strandhafer'],
+   en:['Marram grass', 'https://en.wikipedia.org/wiki/Ammophila_(plant)'],
+   it:['Ammofila',     'https://it.wikipedia.org/wiki/Ammofila']},
+  {de:['Neptungras',   'https://de.wikipedia.org/wiki/Neptungras'],
+   en:['Neptune grass','https://en.wikipedia.org/wiki/Posidonia_oceanica'],
+   it:['Posidonia',    'https://it.wikipedia.org/wiki/Posidonia']},
+  {de:['Po',        'https://de.wikipedia.org/wiki/Po_(Fluss)'],
+   en:['Po (river)','https://en.wikipedia.org/wiki/Po_(river)'],
+   it:['Po',        'https://it.wikipedia.org/wiki/Po']}
 ];
 
 const WISSEN=[
@@ -3814,7 +4582,7 @@ function renderWissen(){
     const c=document.createElement('div');
     c.className='wis-card';
     c.innerHTML='<div class="wis-head"><em></em><b></b>'
-      + '<button type="button" aria-label="Vorlesen">🔊</button></div><ul></ul>';
+      + '<button type="button" aria-label="'+t('Vorlesen')+'">🔊</button></div><ul></ul>';
     c.querySelector('em').textContent=icon;
     c.querySelector('b').textContent=titel;
     const ul=c.querySelector('ul');
@@ -3875,12 +4643,13 @@ function renderWissen(){
     + '<p class="wis-hinweis">'+t('Diese Knöpfe öffnen Wikipedia. Das geht nur, wenn das iPad im WLAN ist.')+'</p>'
     + '<div class="wis-links"></div>';
   const lh=wk.querySelector('.wis-links');
-  /* Auf Englisch fuehren die Knoepfe in die englische Wikipedia – ein deutscher
-     Artikel hinter einem englischen Wort waere eine Falle. */
-  WIKI.forEach(([name,url,nameEn,urlEn])=>{
+  /* Jede Sprache bekommt ihre eigene Wikipedia – ein deutscher Artikel hinter
+     einem italienischen Wort waere eine Falle. Albarella hat nur it und de. */
+  WIKI.forEach(w=>{
+    const [name,url]=w[LANG]||w.de;
     const a=document.createElement('a');
-    a.href=(LANG==='en'&&urlEn)?urlEn:url; a.target='_blank'; a.rel='noopener';
-    a.textContent=(LANG==='en'&&nameEn)?nameEn:name;
+    a.href=url; a.target='_blank'; a.rel='noopener';
+    a.textContent=name;
     lh.appendChild(a);
   });
   host.appendChild(wk);
@@ -3905,7 +4674,7 @@ function renderWissen(){
 
 
 /* ---------- Einstellungen ---------- */
-const APP_VERSION='v7-47';
+const APP_VERSION='v7-48';
 let elternFrei=false;
 async function einstellungenOeffnen(){
   $('einUeber').textContent = t('Version')+' '+APP_VERSION+' · '
@@ -3923,11 +4692,14 @@ async function einstellungenOeffnen(){
   $('einVoiceToggle').textContent = Voice.isOn() ? t('🔊 Sprache an') : t('🔇 Sprache aus');
   $('einVoiceToggle').classList.toggle('an', Voice.isOn());
   /* Regel 4: Fehlt eine Stimme, sagen wir es – statt still die falsche zu nehmen. */
+  const fehlt={
+    de:'Für Deutsch ist auf diesem iPad keine Stimme installiert. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.',
+    en:'Für Englisch ist auf diesem iPad keine Stimme installiert. Die Texte sind englisch, vorgelesen wird nichts. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.',
+    it:'Für Italienisch ist auf diesem iPad keine Stimme installiert. Die Texte sind italienisch, vorgelesen wird nichts. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.'
+  };
   $('einVoiceHinweis').textContent = passend.length
     ? t('Stimmen mit „Premium“ oder „Erweitert“ klingen am freundlichsten.')
-    : (LANG==='en'
-        ? t('Für Englisch ist auf diesem iPad keine Stimme installiert. Die Texte sind englisch, vorgelesen wird nichts. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.')
-        : t('Für Deutsch ist auf diesem iPad keine Stimme installiert. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.'));
+    : t(fehlt[LANG] || fehlt.de);
   $('einElternInhalt').hidden = !elternFrei;
   $('einElternAuf').hidden = elternFrei;
   if(elternFrei) await elternFelderFuellen();
@@ -3953,10 +4725,6 @@ $('einElternAuf').addEventListener('click',async()=>{
   if(!parentGate()) return;
   elternFrei=true; $('einElternAuf').hidden=true; $('einElternInhalt').hidden=false;
   await elternFelderFuellen(); uebersetzeSeite();
-});
-/* Flaggen – auf jedem Bildschirm dieselbe, damit das Kind ueberall wechseln kann. */
-['langBtn','islLangBtn','wisLangBtn','drawLangBtn'].forEach(id=>{
-  const b=$(id); if(b) b.addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
 });
 $('wisGearBtn').addEventListener('click',einstellungenOeffnen);
 document.querySelectorAll('.ein-flagge').forEach(b=>b.addEventListener('click',async()=>{
@@ -4105,7 +4873,7 @@ function openChestReveal(){
   setTimeout(()=>{
     renderIsland();
     showTreasureCard();
-    Voice.rawBoth('Wow! Ihr habt Albarella entdeckt!','Wow! You discovered Albarella!');
+    sprich('Wow! Ihr habt Albarella entdeckt!');
   },1600);
 }
 async function showTreasureCard(){
@@ -4454,20 +5222,13 @@ $('home-btn').addEventListener('click',()=>{
   else showSection(secHome);
 });
 
-/* ---- Sprachausgabe: Motiv-/Schritt-Texte je nach gewählter Stimme (DE/EN) ---- */
-function motifSpokenName(m){ return Voice.lang()==='en' ? (m.nameEn||m.name) : m.name; }
-function stepSpokenBody(s){
-  return Voice.lang()==='en' ? (s.titleEn||s.title)+'. '+(s.textEn||s.text) : s.title+'. '+s.text;
-}
-function stepSpokenFull(s,i){
-  return Voice.lang()==='en'
-    ? 'Step '+(i+1)+': '+(s.titleEn||s.title)+'. '+(s.textEn||s.text)
-    : 'Schritt '+(i+1)+': '+s.title+'. '+s.text;
-}
+/* ---- Sprachausgabe: Vorgelesen wird, was auch auf dem Schirm steht. ---- */
+function motifSpokenName(m){ return tName(m); }
+function stepSpokenBody(s){ return tTitle(s)+'. '+tText(s); }
+function stepSpokenFull(s,i){ return tf('Schritt {n}',{n:i+1})+': '+tTitle(s)+'. '+tText(s); }
 function colorTaskSpokenFull(m){
-  return Voice.lang()==='en'
-    ? (m.nameEn||m.name)+' is waiting for color! Tap inside the shapes with the paint bucket – as colorful as you like.'
-    : m.name+' wartet auf Farbe! Tippe mit dem Farbeimer in die Flächen – so bunt du magst.';
+  return tf('{m} wartet auf Farbe!',{m:tName(m)})+' '
+       + t('Tippe mit dem Farbeimer in die Flächen – so bunt du magst.');
 }
 
 function show(i,silent){
@@ -4616,7 +5377,7 @@ function showTrophyPopup(tier){
   $('rewardText').textContent=tf('{m} geschafft! Schau in deiner Galerie vorbei.',{m:tLabel(tier)});
   $('reward').classList.add('on');
   celebrate();
-  Voice.rawBoth('Wow! Du hast die '+tier.label+' gewonnen!', 'Wow! You won the '+tier.labelEn+'!');
+  Voice.raw(tf('Wow! Du hast die {m} gewonnen!',{m:tLabel(tier)}));
 }
 $('rewardOk').addEventListener('click',()=>$('reward').classList.remove('on'));
 
@@ -4633,7 +5394,7 @@ const colorsBox=$('colors');
 COLORS.forEach((c,i)=>{
   const b=document.createElement('button');
   b.className='swatch'; b.style.background=c;
-  b.setAttribute('aria-label','Farbe '+(i+1));
+  b.setAttribute('aria-label',tf('Farbe {n}',{n:i+1}));
   b.setAttribute('aria-pressed',i===0?'true':'false');
   b.addEventListener('click',()=>{
     color=c;
@@ -4647,7 +5408,7 @@ const sizesBox=$('sizes');
 SIZES.forEach((s,i)=>{
   const b=document.createElement('button');
   b.className='size';
-  b.setAttribute('aria-label','Stiftdicke '+(i+1));
+  b.setAttribute('aria-label',tf('Stiftdicke {n}',{n:i+1}));
   b.setAttribute('aria-pressed',i===1?'true':'false');
   const dot=document.createElement('i'); const px=8+i*7;
   dot.style.width=px+'px'; dot.style.height=px+'px'; b.appendChild(dot);
@@ -5008,7 +5769,7 @@ $('cFinish').addEventListener('click',async()=>{
   await Store.set('motif:'+profile.id+':'+Date.now(),JSON.stringify(m));
   await loadCustoms(); renderPicker(); showSection(secHome);
   toast(t('✏️ Motiv gespeichert'));
-  Voice.rawBoth('Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!', 'Your picture is saved. Now everyone can trace it!');
+  sprich('Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!');
 });
 $('newMotif').addEventListener('click',()=>{ cReset(); cNewLiveGroup(); showSection(secCreator); Voice.say('creator',null,true); });
 $('cBack').addEventListener('click',()=>showSection(secHome));
@@ -5024,8 +5785,7 @@ $('cBack').addEventListener('click',()=>showSection(secHome));
     btn.textContent=t('⛶ Vollbild?');
     btn.addEventListener('click',()=>{
       toast(t('Tipp: Teilen ▸ „Zum Home-Bildschirm" – dann startet die App randlos.'));
-      Voice.rawBoth('Für echtes Vollbild tippe unten auf Teilen und dann auf Zum Home-Bildschirm.',
-        'For real fullscreen, tap Share and then Add to Home Screen.');
+      sprich('Für echtes Vollbild tippe unten auf Teilen und dann auf Zum Home-Bildschirm.');
     });
     return;
   }
