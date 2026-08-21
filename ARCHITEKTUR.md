@@ -61,12 +61,60 @@ Schlüssel-Schema:
 - `Music` (~Z.944): erzeugt live eine leise Bossa-Nova + Meeresrauschen über
   die Web Audio API. `start/stop/toggle/duck`. Startet erst nach erster
   Nutzerinteraktion (Browser-Regel).
-- `Voice` (~Z.1014): Sprachausgabe über Web Speech API. Großes Satz-Repertoire
-  nach Kategorien (`hello, start, step, praise, encourage, fill, undo, clear,
-  finish, gallery, creator, creatorStep`), zieht zufällig ohne Wiederholung.
-  Wählt automatisch eine deutsche, möglichst weibliche/Premium-Gerätestimme.
-  **Klang hängt vom iPad ab** – nicht per Code steuerbar, nur Auswahl + Rate/
-  Pitch. `say(pool,vars,force)`, `raw(text)`, `toggle`, `setVoice`.
+- `Voice`: Sprachausgabe über Web Speech API. Großes Satz-Repertoire nach
+  Kategorien (`hello, start, step, praise, encourage, fill, undo, clear,
+  finish, gallery, creator, creatorStep, magic, colorStart`), zieht zufällig
+  ohne Wiederholung. Das Repertoire liegt einmal je Sprache vor (`P.de`,
+  `P.en`, `P.it`). **Klang hängt vom iPad ab** – nicht per Code steuerbar, nur
+  Auswahl + Rate/Pitch. `say(pool,vars,force)`, `raw(text)`, `toggle`,
+  `setVoice`, `listFor(l)`, `bestFor(l)`.
+
+  Vier Regeln, die nicht aufgeweicht werden sollten:
+  1. **Die Flagge führt.** Was gesprochen wird, folgt der eingestellten
+     Sprache – nicht umgekehrt. (Früher leitete sich die Sprache aus der
+     gewählten Stimme ab; dann las eine deutsche Stimme englischen Text vor.)
+  2. **Nur passende Stimmen zur Wahl.** Die Liste im Zahnrad zeigt
+     ausschließlich Stimmen der aktuellen Sprache.
+  3. **Pro Sprache gemerkt.** `voice.de`, `voice.en`, `voice.it` im `Store`.
+  4. **Lieber schweigen als falsch sprechen.** Fehlt für die eingestellte
+     Sprache jede Stimme, wird nichts vorgelesen und der Dialog sagt warum.
+     Keine Aushilfe in einer anderen Sprache.
+
+## Sprachen (Deutsch, Englisch, Italienisch)
+
+Deutsch ist die Quelle. **Schlüssel ist der deutsche Satz selbst** – fehlt eine
+Übersetzung, erscheint automatisch das deutsche Original statt einer Lücke.
+
+- `EN` / `IT`: je ein Wörterbuch `{deutscher Satz: Übersetzung}`, zusammengefasst
+  in `DICT={en:EN, it:IT}`. `LANGS` listet die Sprachen, `SUF={en:'En',it:'It'}`
+  macht aus der Sprache das Feld-Anhängsel.
+- `t(x)` übersetzt einen Satz. `tf(x, {n:…})` einen Satz **mit Lücken**: der
+  ganze Satz steht im Wörterbuch, die Lücken heißen `{n}`, `{m}`, `{name}`.
+  Fragmente aneinanderkleben geht schief, sobald eine Sprache die Wortstellung
+  ändert – deshalb immer `tf()`, nie `t('Noch ')+n+t(' Motive')`.
+- Motive, Schritte und Medaillen tragen ihre Übersetzung am Objekt:
+  `nameEn/nameIt`, `titleEn/titleIt`, `textEn/textIt`, `labelEn/labelIt`.
+  Zugriff über `tName(m)`, `tTitle(s)`, `tText(s)`, `tLabel(o)`.
+  **Schritt-Überschriften gehören bewusst nicht ins Wörterbuch**: „Der Rumpf"
+  heißt beim Boot anders als bei der Rakete. Motivnamen dagegen sind eindeutig
+  und werden beim Start in die Wörterbücher eingehängt, damit Insel, Galerie
+  und Medaillen sie ganz normal über `t()` bekommen.
+- Statisches HTML markiert man mit Attributen, `uebersetzeSeite()` erledigt den
+  Rest: `data-t` (Textinhalt), `data-th` (Inhalt **mit** Markup, z. B. eine
+  Überschrift mit farbigem `<span>`), `data-tp` (placeholder), `data-ta`
+  (aria-label), `data-tt` (title). Das Original wird beim ersten Mal gemerkt,
+  damit mehrfaches Umschalten nichts zerstört.
+- `setLang(l, nurAnzeigen)` schaltet um und zeichnet alles neu, was Text
+  enthält. **Die Sprache gehört zum Kind** (`profile.lang`); der Gerätewert
+  `lang` ist nur die Vorgabe für neue Profile und für den Start ohne Profil.
+- Eingestellt wird die Sprache **im Zahnrad**, mit drei Flaggen. Der Dialog
+  öffnet ohne Elternschranke, damit Kinder selbst umschalten können.
+
+**Eine vierte Sprache hinzufügen:** Wörterbuch nach dem Muster von `IT` anlegen,
+in `DICT`, `LANGS` und `SUF` eintragen, `MOTIF_xx` schreiben und in
+`applyMotifTranslations` ergänzen, `P.xx` im `Voice`-Modul, `labelXx` an den
+`TROPHIES`, die Sprachspalte in `WIKI`, eine Flagge im Zahnrad. Die Prüfskripte
+im Scratchpad laufen über alle Bildschirme und melden fremdsprachige Reste.
 
 ## Zeichen-Engine (Phase 1, das Herzstück)
 
@@ -160,4 +208,6 @@ Vorher/nachher im Browser testen (Netzwerk aus → muss weiter laufen).
 - [ ] Modus Nachmalen **und** Ausmalen.
 - [ ] Speichern → Galerie → Sticker; Profile getrennt.
 - [ ] Offline (Netzwerk aus) weiterhin lauffähig.
-- [ ] `sw.js` `CACHE` erhöht.
+- [ ] Alle drei Sprachen: keine fremdsprachigen Reste, auch nicht in
+      aria-label/title (die hört ein Kind, das sich vorlesen lässt).
+- [ ] `sw.js` `CACHE` **und** `APP_VERSION` in `index.html` erhöht.

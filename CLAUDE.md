@@ -32,7 +32,12 @@ umgekehrt.* Am Ende sollen Eltern sagen: „Das hat mein Kind gemalt?"
   Niemals Namen/Fotos an irgendwen senden. Keine Analytics.
 - **iPad zuerst.** Touch, `pointer`-Events, `touch-action:none`, Safe-Area,
   Quer- und Hochformat. Immer beides bedenken.
-- **Sprache der Oberfläche: Deutsch.** Freundlich, kindgerecht.
+- **Sprache der Oberfläche: Deutsch, Englisch, Italienisch.** Freundlich,
+  kindgerecht. Deutsch ist die Quelle – neue Texte werden auf Deutsch
+  geschrieben und dann übersetzt; fehlt eine Übersetzung, erscheint das
+  deutsche Original statt einer Lücke. Umgestellt wird im Zahnrad, mit
+  Flaggen, ohne Elternschranke: Kinder dürfen das selbst. Details in
+  ARCHITEKTUR.md, Abschnitt „Sprachen".
 
 ## Wichtige Design-/Produktentscheidungen (bereits getroffen, bitte respektieren)
 
