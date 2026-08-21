@@ -688,6 +688,7 @@
   .level-legend{display:flex;align-items:center;gap:16px;flex:none;flex-wrap:wrap;
     font-family:var(--font-body);font-weight:700;font-size:12.5px;color:var(--sub)}
   .level-legend span{display:inline-flex;align-items:center;gap:6px}
+  .level-legend b{font-weight:inherit}
   .lv-dot{width:13px;height:13px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(7,59,76,.15)}
   .lv-dot.lv-leicht{background:var(--kelp)}
   .lv-dot.lv-mittel{background:var(--sand)}
@@ -900,14 +901,14 @@
 
   <!-- ============ PROFILE ============ -->
   <section id="profiles">
-    <h1>Wer malt <span>heute</span>?</h1>
+    <h1 data-th>Wer malt <span>heute</span>?</h1>
     <div class="plist" id="plist"></div>
     <div class="maker" id="maker" hidden>
       <div class="maker-card">
         <div class="row">
-          <input id="pname" type="text" placeholder="Name" maxlength="14" autocomplete="off">
-          <button class="icon-btn go" id="pcreate">Fertig</button>
-          <button class="icon-btn" id="pcancel">Abbrechen</button>
+          <input id="pname" type="text" placeholder="Name" data-tp maxlength="14" autocomplete="off">
+          <button class="icon-btn go" id="pcreate" data-t>Fertig</button>
+          <button class="icon-btn" id="pcancel" data-t>Abbrechen</button>
         </div>
         <div class="avatars" id="avatars"></div>
       </div>
@@ -918,29 +919,29 @@
   <section id="home" hidden>
     <div class="row">
       <button class="chip" id="profileChip"></button>
-      <h1>Was malen wir <span>heute</span>?</h1>
+      <h1 data-th>Was malen wir <span>heute</span>?</h1>
       <span class="progress-chip" data-chip></span>
       <span style="margin-left:auto"></span>
-      <button class="icon-btn" id="newMotif">✏️ Eigenes Motiv</button>
+      <button class="icon-btn" id="newMotif" data-t>✏️ Eigenes Motiv</button>
       <button class="icon-btn" id="islBtn">🗺️ Schatzinsel</button>
-      <button class="icon-btn" id="wisBtn">📚 Albarella-Wissen</button>
-      <button class="icon-btn" id="galBtn">🖼️ Galerie</button>
-      <button class="icon-btn" id="fsBtn">⛶ Vollbild</button>
-      <button class="icon-btn" id="voiceBtn">🔊 Ton</button>
+      <button class="icon-btn" id="wisBtn" data-t>📚 Albarella-Wissen</button>
+      <button class="icon-btn" id="galBtn" data-t>🖼️ Galerie</button>
+      <button class="icon-btn" id="fsBtn" data-t>⛶ Vollbild</button>
+      <button class="icon-btn" id="voiceBtn" data-t>🔊 Ton</button>
       <button class="icon-btn flagge" id="langBtn" aria-label="Sprache umschalten">🇩🇪</button>
       <button class="icon-btn" id="gearBtn" aria-label="Einstellungen">⚙️</button>
     </div>
     <p class="hint" id="homeGreeting"></p>
     <div class="progress-bar" id="homeBar"><div class="progress-bar-fill" id="homeBarFill"></div></div>
     <div class="modes" id="modes">
-      <button class="modebtn on" id="modeDraw" aria-pressed="true">✏️ Nachmalen</button>
-      <button class="modebtn" id="modeColor" aria-pressed="false">🎨 Ausmalen</button>
+      <button class="modebtn on" id="modeDraw" aria-pressed="true" data-t>✏️ Nachmalen</button>
+      <button class="modebtn" id="modeColor" aria-pressed="false" data-t>🎨 Ausmalen</button>
     </div>
-    <p class="hint" id="homeHint">Links steht die Vorlage – im weißen Feld malst du sie nach.</p>
+    <p class="hint" id="homeHint" data-t>Links steht die Vorlage – im weißen Feld malst du sie nach.</p>
     <div class="level-legend">
-      <span><i class="lv-dot lv-leicht"></i>leicht</span>
-      <span><i class="lv-dot lv-mittel"></i>mittel</span>
-      <span><i class="lv-dot lv-schwer"></i>schwer</span>
+      <span><i class="lv-dot lv-leicht"></i><b data-t>leicht</b></span>
+      <span><i class="lv-dot lv-mittel"></i><b data-t>mittel</b></span>
+      <span><i class="lv-dot lv-schwer"></i><b data-t>schwer</b></span>
     </div>
     <div class="picker" id="picker"></div>
   </section>
@@ -949,7 +950,7 @@
   <!-- ============ GALERIE ============ -->
   <section id="gallery" hidden>
     <div class="row">
-      <button class="icon-btn" id="galBack">◀︎ Zurück</button>
+      <button class="icon-btn" id="galBack" data-t>◀︎ Zurück</button>
       <h1 id="galTitle">Galerie</h1>
       <span class="progress-chip" data-chip></span>
     </div>
@@ -958,7 +959,7 @@
     <div class="gal-layout">
       <div class="motif-card">
         <div class="motif-card-head">
-          <b>Meine Bilder</b>
+          <b data-t>Meine Bilder</b>
         </div>
         <div class="motif-grid" id="galMotifGrid"></div>
       </div>
@@ -971,16 +972,16 @@
         </div>
 
         <div class="stats2">
-          <div class="stat-tile"><em>🖼️</em><b id="galStatPictures"></b><small>Bilder gespeichert</small></div>
-          <div class="stat-tile"><em>⭐</em><b id="galStatStars"></b><small>Sterne</small></div>
+          <div class="stat-tile"><em>🖼️</em><b id="galStatPictures"></b><small data-t>Bilder gespeichert</small></div>
+          <div class="stat-tile"><em>⭐</em><b id="galStatStars"></b><small data-t>Sterne</small></div>
         </div>
 
         <div class="awards-card">
-          <b>Meine Auszeichnungen</b>
+          <b data-t>Meine Auszeichnungen</b>
           <div class="trophy-list" id="galTrophyList"></div>
         </div>
 
-        <button class="nav-btn primary" id="trophyCTA">Nächstes Motiv →</button>
+        <button class="nav-btn primary" id="trophyCTA" data-t>Nächstes Motiv →</button>
       </div>
     </div>
   </section>
@@ -988,7 +989,7 @@
   <!-- ============ SCHATZINSEL (zusätzlich, ersetzt nichts) ============ -->
   <section id="island" hidden>
     <div class="isl-top">
-      <button class="isl-back" id="islBack"><span>‹</span><span>Zurück</span></button>
+      <button class="isl-back" id="islBack"><span>‹</span><span data-t>Zurück</span></button>
       <div class="isl-title">Albarella</div>
       <div class="isl-sub" id="islSub">Insel-Abenteuer · Schatzsuche</div>
       <div style="flex:1"></div>
@@ -1007,7 +1008,7 @@
   <!-- ============ WISSENSSEITE ============ -->
   <section id="wissen" hidden>
     <div class="isl-top">
-      <button class="isl-back" id="wisBack"><span>‹</span><span>Zurück</span></button>
+      <button class="isl-back" id="wisBack"><span>‹</span><span data-t>Zurück</span></button>
       <div class="isl-title" data-t>Albarella-Wissen</div>
       <div class="isl-sub" data-t>Insel, Meer und alle Fragen</div>
       <div style="flex:1"></div>
@@ -1021,20 +1022,20 @@
   <!-- ============ WERKSTATT ============ -->
   <section id="creator" hidden>
     <div class="row">
-      <button class="icon-btn" id="cBack">◀︎ Zurück</button>
-      <h1>Eigenes Motiv <span id="cStepLabel"></span></h1>
+      <button class="icon-btn" id="cBack" data-t>◀︎ Zurück</button>
+      <h1><span data-t>Eigenes Motiv</span> <span id="cStepLabel"></span></h1>
       <span style="margin-left:auto"></span>
-      <button class="icon-btn" id="cUndo">↩︎ Strich weg</button>
-      <button class="icon-btn" id="cStep">✓ Schritt fertig</button>
-      <button class="icon-btn go" id="cSave">💾 Motiv speichern</button>
+      <button class="icon-btn" id="cUndo" data-t>↩︎ Strich weg</button>
+      <button class="icon-btn" id="cStep" data-t>✓ Schritt fertig</button>
+      <button class="icon-btn go" id="cSave" data-t>💾 Motiv speichern</button>
     </div>
-    <p class="hint">Male einen Teil deines Bildes und tippe dann auf „Schritt fertig“. So entstehen die Schritte, die später nachgemalt werden.</p>
+    <p class="hint" data-t>Male einen Teil deines Bildes und tippe dann auf „Schritt fertig“. So entstehen die Schritte, die später nachgemalt werden.</p>
     <div class="panel" id="cNaming" hidden>
       <div class="row">
-        <input id="cName" type="text" placeholder="Name des Motivs" maxlength="16" autocomplete="off"
+        <input id="cName" type="text" placeholder="Name des Motivs" data-tp maxlength="16" autocomplete="off"
                style="font-family:var(--font);font-size:17px;font-weight:700;color:var(--deep);border:3px solid var(--ghost);border-radius:12px;padding:8px 12px;width:200px;outline:none">
-        <button class="icon-btn go" id="cFinish">Speichern</button>
-        <button class="icon-btn" id="cCancel">Abbrechen</button>
+        <button class="icon-btn go" id="cFinish" data-t>Speichern</button>
+        <button class="icon-btn" id="cCancel" data-t>Abbrechen</button>
       </div>
       <div class="avatars" id="cAvatars"></div>
     </div>
@@ -1046,9 +1047,11 @@
   <!-- ============ MALEN ============ -->
   <section id="draw" hidden>
     <div class="row">
-      <button class="icon-btn" id="home-btn">◀︎ Motive</button>
+      <button class="icon-btn" id="home-btn" data-t>◀︎ Motive</button>
       <h1 id="motifName"></h1>
       <div class="bubbles" id="bubbles"></div>
+      <span style="margin-left:auto"></span>
+      <button class="icon-btn flagge" id="drawLangBtn" aria-label="Sprache umschalten">🇩🇪</button>
     </div>
 
     <div class="task" id="taskCard" title="Antippen zum Wiederholen">
@@ -1062,9 +1065,9 @@
 
     <div class="stage">
       <aside class="ref">
-        <div class="ref-label">Vorlage</div>
+        <div class="ref-label" data-t>Vorlage</div>
         <div class="ref-frame"><svg id="ref" viewBox="0 0 800 600" aria-hidden="true"></svg></div>
-        <p class="ref-note">Rot ist der Strich, der jetzt dran ist. Male ihn rechts nach.</p>
+        <p class="ref-note" data-t>Rot ist der Strich, der jetzt dran ist. Male ihn rechts nach.</p>
       </aside>
 
       <div class="board" id="board">
@@ -1077,30 +1080,30 @@
       <div class="side">
         <div class="side-scroll">
           <div class="tools3" id="tools3">
-            <button class="tool" id="tPen"   aria-pressed="true"  title="Stift"><em>✏️</em><b>Stift</b></button>
-            <button class="tool" id="tMagic" aria-pressed="false" title="Zauberpinsel"><em>🪄</em><b>Zauber</b></button>
-            <button class="tool" id="tFill"  aria-pressed="false" title="Farbeimer"><em>🪣</em><b>Eimer</b></button>
-            <button class="tool" id="tErase" aria-pressed="false" title="Radiergummi"><em>🧽</em><b>Radierer</b></button>
+            <button class="tool" id="tPen"   aria-pressed="true"  title="Stift"><em>✏️</em><b data-t>Stift</b></button>
+            <button class="tool" id="tMagic" aria-pressed="false" title="Zauberpinsel"><em>🪄</em><b data-t>Zauber</b></button>
+            <button class="tool" id="tFill"  aria-pressed="false" title="Farbeimer"><em>🪣</em><b data-t>Eimer</b></button>
+            <button class="tool" id="tErase" aria-pressed="false" title="Radiergummi"><em>🧽</em><b data-t>Radierer</b></button>
           </div>
           <div class="tool-card">
-            <div class="tool-card-label">Farben</div>
+            <div class="tool-card-label" data-t>Farben</div>
             <div class="colors" id="colors"></div>
           </div>
           <div class="tool-card">
             <div class="sizes" id="sizes"></div>
           </div>
           <div class="grid2">
-            <button class="icon-btn" id="undo">↩︎ Zurück</button>
-            <button class="icon-btn" id="clear">🗑️ Alles</button>
-            <button class="icon-btn" id="helper">🫥 Hilfslinien</button>
-            <button class="icon-btn go" id="keep">🖼️ Galerie</button>
-            <button class="icon-btn" id="musicBtn">🎵 Musik</button>
-            <button class="icon-btn" id="voiceBtn2">🔊 Stimme</button>
+            <button class="icon-btn" id="undo" data-t>↩︎ Zurück</button>
+            <button class="icon-btn" id="clear" data-t>🗑️ Alles</button>
+            <button class="icon-btn" id="helper" data-t>🫥 Hilfslinien</button>
+            <button class="icon-btn go" id="keep" data-t>🖼️ Galerie</button>
+            <button class="icon-btn" id="musicBtn" data-t>🎵 Musik</button>
+            <button class="icon-btn" id="voiceBtn2" data-t>🔊 Stimme</button>
           </div>
         </div>
         <div class="navrow">
-          <button class="nav-btn" id="back">◀︎ Zurück</button>
-          <button class="nav-btn primary" id="next">Weiter ▶︎</button>
+          <button class="nav-btn" id="back" data-t>◀︎ Zurück</button>
+          <button class="nav-btn primary" id="next" data-t>Weiter ▶︎</button>
         </div>
       </div>
     </div>
@@ -1112,13 +1115,13 @@
 <div class="reward" id="reward">
   <div class="reward-card">
     <p class="big" id="rewardEmoji">🏆</p>
-    <p id="rewardText">Medaille geschafft!</p>
-    <button class="nav-btn primary" id="rewardOk">Juhu!</button>
+    <p id="rewardText" data-t>Medaille geschafft!</p>
+    <button class="nav-btn primary" id="rewardOk" data-t>Juhu!</button>
   </div>
 </div>
 <div class="reward" id="doneCard">
   <div class="done-card">
-    <b>Fertig! Dein Bild ist gespeichert. 🖼️</b>
+    <b data-t>Fertig! Dein Bild ist gespeichert. 🖼️</b>
     <div class="done-frame"><img id="doneImg" src="" alt=""></div>
     <button class="nav-btn primary" id="doneOk"></button>
   </div>
@@ -2308,11 +2311,168 @@ const EN={
  "Neptungras-Wiese – macht Sauerstoff im Meer":"Neptune grass meadow – it makes oxygen in the sea",
  "Mittelmeermöwe":"Yellow-legged gull",
  "Mittelmeer-Strandkrabbe":"Mediterranean green crab",
+ /* ---- Oberflaeche: Start, Malen, Galerie, Werkstatt ---- */
+ "Wer malt <span>heute</span>?":"Who is painting <span>today</span>?",
+ "Was malen wir <span>heute</span>?":"What shall we paint <span>today</span>?",
+ "Name":"Name",
+ "Fertig":"Done",
+ "Abbrechen":"Cancel",
+ "✏️ Eigenes Motiv":"✏️ My own picture",
+ "🗺️ Schatzinsel":"🗺️ Treasure Island",
+ "📚 Albarella-Wissen":"📚 All about Albarella",
+ "🖼️ Galerie":"🖼️ Gallery",
+ "⛶ Vollbild?":"⛶ Full screen?",
+ "🔊 Ton":"🔊 Sound",
+ "✏️ Nachmalen":"✏️ Trace it",
+ "🎨 Ausmalen":"🎨 Colour it in",
+ "Links steht die Vorlage – im weißen Feld malst du sie nach.":"The picture to copy is on the left – trace it in the white area.",
+ "Hallo {name}! {e} Heute wartet dein nächstes Abenteuer.":"Hello {name}! {e} Your next adventure is waiting today.",
+ "⭐ Du hast {n} Stern.":"⭐ You have {n} star.",
+ "⭐ Du hast {n} Sterne.":"⭐ You have {n} stars.",
+ "🏆 Noch {n} Motive bis zur {m}.":"🏆 {n} more pictures until the {m}.",
+ "🏆 Du hast alle Medaillen gewonnen!":"🏆 You have won every medal!",
+ "◀︎ Zurück":"◀︎ Back",
+ "Galerie von {name}":"{name}'s gallery",
+ "Meine Bilder":"My pictures",
+ "Bilder gespeichert":"pictures saved",
+ "Sterne":"stars",
+ "Meine Auszeichnungen":"My awards",
+ "Nächstes Motiv →":"Next picture →",
+ "Auf dem Weg zur {m} 🏆":"On the way to the {m} 🏆",
+ "🏆 Alle Medaillen gewonnen!":"🏆 Every medal won!",
+ "Alle Medaillen gewonnen! 🏆":"Every medal won! 🏆",
+ "{a} von {b} Motiven bis zur {m}":"{a} of {b} pictures towards the {m}",
+ "noch {n} Motiv bis zur Medaille":"{n} more picture until the medal",
+ "noch {n} Motive bis zur Medaille":"{n} more pictures until the medal",
+ "Alle Motive entdeckt!":"Every picture discovered!",
+ "Geschafft! ✓":"Done! ✓",
+ "noch {n} Motiv":"{n} to go",
+ "noch {n} Motive":"{n} to go",
+ "Noch keine Bilder. Mal eins und tippe auf „Galerie\"!":"No pictures yet. Paint one and tap “Gallery”!",
+ "Bild":"Picture",
+ "Löschen?":"Delete?",
+ "Medaille geschafft!":"Medal earned!",
+ "Juhu!":"Hooray!",
+ "{m} geschafft! Schau in deiner Galerie vorbei.":"{m} earned! Take a look in your gallery.",
+ "◀︎ Motive":"◀︎ Pictures",
+ "◀︎ Insel":"◀︎ Island",
+ "Schritt {n}":"Step {n}",
+ "{m} wartet auf Farbe!":"{m} is waiting for colour!",
+ "Tippe mit dem Farbeimer in die Flächen – so bunt du magst.":"Tap inside the shapes with the paint bucket – as colourful as you like.",
+ "Vorlage":"Copy this",
+ "Rot ist der Strich, der jetzt dran ist. Male ihn rechts nach.":"The red line is the one to do now. Trace it on the right.",
+ "Stift":"Pen",
+ "Zauber":"Magic",
+ "Eimer":"Bucket",
+ "Radierer":"Eraser",
+ "Farben":"Colours",
+ "↩︎ Zurück":"↩︎ Undo",
+ "🗑️ Alles":"🗑️ Clear",
+ "🫥 Hilfslinien":"🫥 Guide lines",
+ "👁️ Linien aus":"👁️ Lines off",
+ "🎵 Musik":"🎵 Music",
+ "🔊 Stimme":"🔊 Voice",
+ "Weiter ▶︎":"Next ▶︎",
+ "Fertig! 🎉":"Done! 🎉",
+ "Fertig! Dein Bild ist gespeichert. 🖼️":"All done! Your picture is saved. 🖼️",
+ "🗺️ Zurück zur Insel":"🗺️ Back to the island",
+ "✏️ Nächstes Motiv":"✏️ Next picture",
+ "🖼️ Ist schon in deiner Galerie!":"🖼️ It is already in your gallery!",
+ "⭐ Geschafft! Bild in der Galerie gespeichert":"⭐ Well done! Picture saved in the gallery",
+ "Eigenes Motiv":"My own picture",
+ "↩︎ Strich weg":"↩︎ Undo line",
+ "✓ Schritt fertig":"✓ Step done",
+ "💾 Motiv speichern":"💾 Save picture",
+ "Male einen Teil deines Bildes und tippe dann auf „Schritt fertig“. So entstehen die Schritte, die später nachgemalt werden.":"Paint one part of your picture, then tap “Step done”. That is how the steps are made for others to trace later.",
+ "Name des Motivs":"Name of the picture",
+ "Speichern":"Save",
+ "Erst etwas malen 🙂":"Paint something first 🙂",
+ "Noch nichts zu speichern":"Nothing to save yet",
+ "✏️ Motiv gespeichert":"✏️ Picture saved",
+ "Mein Motiv":"My picture",
+ "Weg?":"Remove?",
+ "leicht":"easy",
+ "mittel":"medium",
+ "schwer":"tricky",
+ "von mir":"by me",
+ "Diese Bucht liegt noch im Nebel. Mal zuerst die {b} fertig.":"This bay is still in the fog. Finish {b} first.",
+ "⭐ Verstecktes Detail gefunden!":"⭐ Hidden detail found!",
+ "Versuch’s nochmal!":"Try again!",
+ "Richtig! Stern verdient ⭐":"Correct! A star for you ⭐",
+ "Richtig! Nächste Frage.":"Correct! Next question.",
+ "Richtig! Alle Fragen geschafft!":"Correct! All questions answered!",
+ "📜 Lies erst das Kärtchen „Wusstest du?“":"📜 Read the “Did you know?” card first",
+ "🗺️ Noch {n} Motiv bis zur Goldmedaille – dann öffnet sich die Schatzinsel!":"🗺️ {n} more picture until the Gold Medal – then Treasure Island opens!",
+ "🗺️ Noch {n} Motive bis zur Goldmedaille – dann öffnet sich die Schatzinsel!":"🗺️ {n} more pictures until the Gold Medal – then Treasure Island opens!",
+ "Nur für Eltern.":"For grown-ups only.",
+ "Wie viel ist":"How much is",
+ "🔒 Leider falsch – das ist nur für Eltern.":"🔒 Not quite – this part is for grown-ups.",
+ "Foto entfernen?":"Remove the photo?",
+ "Abbrechen = ein neues Foto auswählen.":"Cancel = pick a new photo instead.",
+ "1 von 2 – Hinweis für die Kinder, in Worten":"1 of 2 – the clue for the children, in words",
+ " (einer ist gespeichert)":" (one is saved)",
+ " (noch keiner gespeichert)":" (none saved yet)",
+ " (welche sind gespeichert)":" (some are saved)",
+ " (noch keine gespeichert)":" (none saved yet)",
+ "Zum Beispiel: „Am dritten Pfahl hinter der Düne, drei Schritte Richtung Wasser.“":"For example: “At the third post behind the dune, three steps towards the water.”",
+ "Leer lassen = unverändert. Ein Minuszeichen löscht ihn.":"Leave empty = unchanged. A minus sign deletes it.",
+ "2 von 2 – Koordinaten für den Knopf „Ich zeige Dir den Weg\"":"2 of 2 – coordinates for the “I'll show you the way” button",
+ "Leer lassen = unverändert, Minuszeichen löscht sie.":"Leave empty = unchanged, a minus sign deletes them.",
+ "oder":"or",
+ "🔑 Hinweis gespeichert":"🔑 Clue saved",
+ "🔑 Gespeichert – Kartenlink entfernt":"🔑 Saved – map link removed",
+ "⚠️ Koordinaten nicht erkannt – Beispiel:":"⚠️ Coordinates not recognised – example:",
+ "🔑 Fundort gespeichert – der Kartenknopf ist da":"🔑 Location saved – the map button is there",
+ "🔄 Schatzsuche zurückgesetzt – die Insel liegt wieder im Nebel":"🔄 Treasure hunt reset – the island is back in the fog",
+ "Schatzsuche für {name} zurücksetzen?":"Reset the treasure hunt for {name}?",
+ "Alle Buchten liegen wieder im Nebel, Bonussterne und Truhe sind zurückgesetzt.":"Every bay goes back into the fog; bonus stars and the chest are reset.",
+ "Gemalte Bilder, Sterne und Medaillen bleiben erhalten.":"Painted pictures, stars and medals are kept.",
+ "🔓 Testzugang an – Schatzinsel offen für {name}":"🔓 Test access on – Treasure Island open for {name}",
+ "🔒 Testzugang aus für {name}":"🔒 Test access off for {name}",
+ "📸 Foto vom Fundort gespeichert":"📸 Photo of the hiding place saved",
+ "⚠️ Foto konnte nicht gelesen werden":"⚠️ The photo could not be read",
+ "Tipp: Teilen ▸ „Zum Home-Bildschirm\" – dann startet die App randlos.":"Tip: Share ▸ “Add to Home Screen” – then the app starts edge to edge.",
+ "Stimmen mit „Premium“ oder „Erweitert“ klingen am freundlichsten.":"Voices marked “Premium” or “Enhanced” sound the friendliest.",
+ "Für Deutsch ist auf diesem iPad keine Stimme installiert. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.":"No German voice is installed on this iPad. You can add one under Settings → Accessibility → Spoken Content → Voices.",
+ "Für Englisch ist auf diesem iPad keine Stimme installiert. Die Texte sind englisch, vorgelesen wird nichts. Nachladen unter Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen.":"No English voice is installed on this iPad. The texts are in English, but nothing will be read aloud. You can add one under Settings → Accessibility → Spoken Content → Voices.",
+ "Strandkind":"Beach Explorer",
+ "Muschelkind":"Shell Collector",
+ "Wellenkind":"Wave Rider",
+ "Sandburgkind":"Castle Builder",
+ "Inselkind":"Island Child",
+ "Riffkind":"Reef Diver",
+ "Tiefseekind":"Deep Sea Diver",
+ "Ozeankind":"Ocean Master",
 };
 function t(x){
   if(LANG!=='en' || x==null) return x;
   const s=String(x);
   return Object.prototype.hasOwnProperty.call(EN,s) ? EN[s] : s;
+}
+/* Die Motivnamen sind eindeutig – sie duerfen ins Woerterbuch, damit Insel,
+   Galerie und Medaillen sie ganz normal ueber t() uebersetzen koennen.
+   Die Schritt-Ueberschriften bleiben bewusst draussen: „Der Rumpf" heisst beim
+   Boot anders als bei der Rakete. Dafuer gibt es tTitle()/tText() am Schritt. */
+MOTIFS.forEach(m=>{ if(m.nameEn && !EN[m.name]) EN[m.name]=m.nameEn; });
+/* Eigene Motive der Kinder haben keine Uebersetzung – dann bleibt ihr Name stehen. */
+function tName(m){ return (LANG==='en' && m && m.nameEn) ? m.nameEn : (m?m.name:''); }
+function tTitle(s){
+  if(!s) return '';
+  if(LANG!=='en') return s.title;
+  if(s.titleEn) return s.titleEn;
+  /* Selbstgemalte Motive speichern „Schritt 3" als Ueberschrift. */
+  const m=/^Schritt (\d+)$/.exec(s.title||'');
+  return m ? 'Step '+m[1] : t(s.title);
+}
+function tText(s){ return (LANG==='en' && s) ? (s.textEn || t(s.text)) : (s?s.text:''); }
+function tLabel(o){ return (LANG==='en' && o && o.labelEn) ? o.labelEn : (o?o.label:''); }
+/* Saetze mit Zahlen oder Namen darin: der ganze Satz steht im Woerterbuch,
+   die Luecken heissen {n}, {m}, {name}. So darf die englische Fassung eine
+   voellig andere Wortstellung haben – Fragmente aneinanderkleben ginge schief. */
+function tf(de, vals){
+  let s=t(de);
+  for(const k in vals) s=s.split('{'+k+'}').join(vals[k]);
+  return s;
 }
 /* Zweisprachig sprechen: nimmt den deutschen Text und sucht die Uebersetzung. */
 function sprich(text){ Voice.rawBoth(text, t(text)); }
@@ -2322,6 +2482,17 @@ function uebersetzeSeite(){
   document.querySelectorAll('[data-t]').forEach(el=>{
     if(!el.dataset.tOrig) el.dataset.tOrig=el.textContent.trim();
     el.textContent=t(el.dataset.tOrig);
+  });
+  /* data-th: Ueberschriften mit einem farbigen <span> darin. Die Uebersetzung im
+     Woerterbuch traegt dasselbe Markup – die Texte stammen alle von uns. */
+  document.querySelectorAll('[data-th]').forEach(el=>{
+    if(!el.dataset.tOrig) el.dataset.tOrig=el.innerHTML.trim();
+    el.innerHTML=t(el.dataset.tOrig);
+  });
+  /* data-tp: Platzhalter in Eingabefeldern. */
+  document.querySelectorAll('[data-tp]').forEach(el=>{
+    if(!el.dataset.tOrig) el.dataset.tOrig=el.getAttribute('placeholder')||'';
+    el.setAttribute('placeholder', t(el.dataset.tOrig));
   });
   document.documentElement.lang = LANG;
 }
@@ -2339,7 +2510,7 @@ async function setLang(l, nurAnzeigen){
     if(ziel){ Voice.setVoice(ziel); await Store.set('voice.'+LANG, ziel); }
   }
   const f = LANG==='en' ? '\u{1F1EC}\u{1F1E7}' : '\u{1F1E9}\u{1F1EA}';
-  ['langBtn','islLangBtn','wisLangBtn'].forEach(id=>{ if($(id)) $(id).textContent=f; });
+  ['langBtn','islLangBtn','wisLangBtn','drawLangBtn'].forEach(id=>{ if($(id)) $(id).textContent=f; });
   document.querySelectorAll('.ein-flagge').forEach(b=>b.classList.toggle('an', b.dataset.lang===LANG));
   uebersetzeSeite();
   /* Alles neu zeichnen, was Text enthaelt */
@@ -2347,6 +2518,26 @@ async function setLang(l, nurAnzeigen){
   if(typeof renderPicker==='function') renderPicker();
   if(!secIsland.hidden && typeof renderIsland==='function') renderIsland();
   if(!secWissen.hidden && typeof renderWissen==='function') renderWissen();
+  /* Wird gerade gemalt, muessen Motivname, Aufgabe und Schrittpunkte mitwechseln. */
+  if(typeof secDraw!=='undefined' && !secDraw.hidden && typeof motif!=='undefined' && motif){
+    $('home-btn').textContent = cameFromIsland ? t('◀︎ Insel') : t('◀︎ Motive');
+    $('motifName').textContent=motif.emoji+' '+tName(motif);
+    buildBubbles();
+    if(mode==='color'){
+      $('taskTitle').textContent=tf('{m} wartet auf Farbe!',{m:tName(motif)});
+      $('taskText').textContent=t('Tippe mit dem Farbeimer in die Flächen – so bunt du magst.');
+      $('next').textContent=t('Fertig! 🎉');
+    }else{
+      const s=motif.steps[step];
+      $('taskTitle').textContent=tf('Schritt {n}',{n:step+1})+': '+tTitle(s);
+      $('taskText').textContent=tText(s);
+      $('next').textContent = step===motif.steps.length-1 ? t('Fertig! 🎉') : t('Weiter ▶︎');
+      [...bubbles.children].forEach((x,n)=>{
+        if(n<step) x.classList.add('done');
+        if(n===step) x.classList.add('now');
+      });
+    }
+  }
   if(typeof updateProgressChips==='function') updateProgressChips();
 }
 
@@ -2694,7 +2885,7 @@ function renderProfiles(){
         for(const k of await Store.keys('motifpic:'+p.id+':')) await Store.del(k);
         for(const k of await Store.keys('motif:'+p.id+':')) await Store.del(k);
         profiles=profiles.filter(q=>q.id!==p.id); await saveProfiles(); renderProfiles();
-      }else{ x.classList.add('armed'); x.textContent='Löschen?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
+      }else{ x.classList.add('armed'); x.textContent=t('Löschen?'); setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
     });
     c.appendChild(x); list.appendChild(c);
   });
@@ -2750,14 +2941,15 @@ function renderGreeting(){
   if(!profile) return;
   const stars=profile.stars||0, disc=discoveredCount(), nt=nextTrophy(disc);
   const trophyLine = nt
-    ? '🏆 Noch '+(nt.n-disc)+' Motive bis zur '+nt.label+'.'
-    : '🏆 Du hast alle Medaillen gewonnen!';
-  $('homeGreeting').textContent='Hallo '+profile.name+'! '+profile.emoji+' Heute wartet dein nächstes Abenteuer. '
-    +'⭐ Du hast '+stars+' '+(stars===1?'Stern':'Sterne')+'. '+trophyLine;
+    ? tf('🏆 Noch {n} Motive bis zur {m}.',{n:nt.n-disc, m:tLabel(nt)})
+    : t('🏆 Du hast alle Medaillen gewonnen!');
+  $('homeGreeting').textContent=
+    tf('Hallo {name}! {e} Heute wartet dein nächstes Abenteuer.',{name:profile.name, e:profile.emoji})+' '
+    +tf(stars===1?'⭐ Du hast {n} Stern.':'⭐ Du hast {n} Sterne.',{n:stars})+' '+trophyLine;
   $('homeBarFill').style.width=trophyProgress(disc).pct+'%';
   const islBtn=$('islBtn');
-  if(islandUnlocked()){ islBtn.textContent='🗺️ Schatzinsel'; islBtn.classList.remove('off'); }
-  else{ islBtn.textContent='🗺️ Schatzinsel 🔒'; islBtn.classList.add('off'); }
+  if(islandUnlocked()){ islBtn.textContent=t('🗺️ Schatzinsel'); islBtn.classList.remove('off'); }
+  else{ islBtn.textContent=t('🗺️ Schatzinsel')+' 🔒'; islBtn.classList.add('off'); }
 }
 function updateProgressChips(){
   const stars=profile?(profile.stars||0):0;
@@ -2767,34 +2959,36 @@ function updateProgressChips(){
 }
 function trophyProgress(count){
   const nt=nextTrophy(count);
-  if(!nt) return {pct:100,label:'🏆 Alle Medaillen gewonnen!'};
+  if(!nt) return {pct:100,label:t('🏆 Alle Medaillen gewonnen!')};
   const prevN=TROPHIES[TROPHIES.indexOf(nt)-1]?TROPHIES[TROPHIES.indexOf(nt)-1].n:0;
   const pct=Math.max(0,Math.min(100,Math.round((count-prevN)/(nt.n-prevN)*100)));
-  return {pct:pct,label:count+' von '+nt.n+' Motiven bis zur '+nt.label};
+  return {pct:pct,label:tf('{a} von {b} Motiven bis zur {m}',{a:count, b:nt.n, m:tLabel(nt)})};
 }
 async function renderTrophyPanel(){
   if(!profile) return;
   const stars=profile.stars||0, disc=discoveredCount();
   const lvl=levelInfo(disc);
-  $('galLevelLine').textContent=lvl.title+' · Level '+lvl.level;
+  $('galLevelLine').textContent=t(lvl.title)+' · Level '+lvl.level;
 
   const nt=nextTrophy(disc);
-  $('galBarTitle').textContent = nt ? 'Auf dem Weg zur '+nt.label+' 🏆' : 'Alle Medaillen gewonnen! 🏆';
+  $('galBarTitle').textContent = nt ? tf('Auf dem Weg zur {m} 🏆',{m:tLabel(nt)}) : t('Alle Medaillen gewonnen! 🏆');
   const prog=trophyProgress(disc);
   $('galBarFill').style.width=prog.pct+'%';
   $('galBarLabel').textContent = nt
-    ? 'noch '+(nt.n-disc)+' '+(nt.n-disc===1?'Motiv':'Motive')+' bis zur Medaille'
-    : 'Alle Motive entdeckt!';
+    ? tf(nt.n-disc===1?'noch {n} Motiv bis zur Medaille':'noch {n} Motive bis zur Medaille',{n:nt.n-disc})
+    : t('Alle Motive entdeckt!');
 
   $('galStatPictures').textContent=profile.count||0;
   $('galStatStars').textContent=stars;
 
   const list=$('galTrophyList'); list.textContent='';
-  [...TROPHIES].reverse().forEach(t=>{
-    const got=disc>=t.n;
+  [...TROPHIES].reverse().forEach(tr=>{
+    const got=disc>=tr.n;
     const row=document.createElement('div');
-    row.className='trophy-row '+(got?'got':(t===nt?'next':'locked'));
-    row.innerHTML='<em>'+t.emoji+'</em><div><b>'+t.label+'</b><small>'+(got?'Geschafft! ✓':'noch '+(t.n-disc)+' Motive')+'</small></div>';
+    row.className='trophy-row '+(got?'got':(tr===nt?'next':'locked'));
+    const stand = got ? t('Geschafft! ✓')
+                      : tf(tr.n-disc===1?'noch {n} Motiv':'noch {n} Motive',{n:tr.n-disc});
+    row.innerHTML='<em>'+tr.emoji+'</em><div><b>'+tLabel(tr)+'</b><small>'+stand+'</small></div>';
     list.appendChild(row);
   });
 
@@ -2805,7 +2999,7 @@ async function renderMotifGrid(){
   const list=allMotifs();
   const ks=(await Store.keys('pic:'+profile.id+':')).sort().reverse();
   if(!ks.length){
-    grid.innerHTML='<p class="gal-empty">Noch keine Bilder. Mal eins und tippe auf „Galerie"!</p>';
+    grid.innerHTML='<p class="gal-empty">'+t('Noch keine Bilder. Mal eins und tippe auf „Galerie"!')+'</p>';
   }
   for(const k of ks){
     let rec; try{ rec=JSON.parse(await Store.get(k)); }catch(e){ continue; }
@@ -2813,7 +3007,7 @@ async function renderMotifGrid(){
     const idx=list.findIndex(m=>m.name===rec.motif);
     const d=document.createElement('button');
     d.className='motif-tile got';
-    d.setAttribute('aria-label', rec.motif||'Bild');
+    d.setAttribute('aria-label', rec.motif?t(rec.motif):t('Bild'));
     d.innerHTML = rec.img ? '<img src="'+rec.img+'" alt="">' : '<span>'+(rec.emoji||'🎨')+'</span>';
     d.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; if(idx>=0) openMotif(idx); });
     const x=document.createElement('button'); x.className='x'; x.textContent='✕';
@@ -2826,7 +3020,7 @@ async function renderMotifGrid(){
         updateProgressChips();
         renderTrophyPanel();
       }else{
-        x.classList.add('armed'); x.textContent='Löschen?';
+        x.classList.add('armed'); x.textContent=t('Löschen?');
         setTimeout(()=>{ x.classList.remove('armed'); x.textContent='✕'; },2600);
       }
     });
@@ -3294,7 +3488,7 @@ function tapSearch(e){
   mark.style.left=px+'px'; mark.style.top=py+'px';
   layer.appendChild(mark);
   setTimeout(()=>mark.remove(),1800);
-  toast(step.emoji+' '+step.text);
+  toast(step.emoji+' '+t(step.text));
   const bar=$('islSide').querySelector('.isl-findbar');
   if(bar) renderBaySide();
 }
@@ -3305,7 +3499,7 @@ function tapHidden(key){
   profile.islandStar2=JSON.stringify(s2);
   saveProfiles();
   selBay=key; findMode=false; findTries=0; findReveal=false;
-  toast('⭐ Verstecktes Detail gefunden!');
+  toast(t('⭐ Verstecktes Detail gefunden!'));
   renderIsland();
 }
 
@@ -3365,7 +3559,7 @@ async function renderBaySide(){
   if(!open){
     const p=document.createElement('p');
     p.className='isl-lock-note';
-    p.textContent='Diese Bucht liegt noch im Nebel. Mal zuerst die '+BAYS[i-1].name+' fertig.';
+    p.textContent=tf('Diese Bucht liegt noch im Nebel. Mal zuerst die {b} fertig.',{b:t(BAYS[i-1].name)});
     scroll.appendChild(p);
   }else{
     const earned=bayEarned(b,i);
@@ -3529,21 +3723,36 @@ function foto(key){ return FOTOS.find(f=>f.key===key); }
 
 /* Nur mit Internet erreichbar – deshalb als eigener Abschnitt gekennzeichnet. */
 const WIKI=[
-  ['Albarella','https://de.wikipedia.org/wiki/Albarella'],
-  ['Po-Delta','https://de.wikipedia.org/wiki/Po-Delta'],
-  ['Adriatisches Meer','https://de.wikipedia.org/wiki/Adriatisches_Meer'],
-  ['Mittelmeer','https://de.wikipedia.org/wiki/Mittelmeer'],
-  ['Rosaflamingo','https://de.wikipedia.org/wiki/Rosaflamingo'],
-  ['Gro\u00dfer T\u00fcmmler','https://de.wikipedia.org/wiki/Gro\u00dfer_T\u00fcmmler'],
-  ['Europ\u00e4ische Sumpfschildkr\u00f6te','https://de.wikipedia.org/wiki/Europ\u00e4ische_Sumpfschildkr\u00f6te'],
-  ['Seesterne','https://de.wikipedia.org/wiki/Seesterne'],
-  ['Seepferdchen','https://de.wikipedia.org/wiki/Seepferdchen'],
-  ['Miesmuscheln','https://de.wikipedia.org/wiki/Miesmuscheln'],
-  ['Pinie','https://de.wikipedia.org/wiki/Pinie'],
-  ['Silberpappel','https://de.wikipedia.org/wiki/Silber-Pappel'],
-  ['Strandhafer','https://de.wikipedia.org/wiki/Gew\u00f6hnlicher_Strandhafer'],
-  ['Neptungras','https://de.wikipedia.org/wiki/Neptungras'],
-  ['Po','https://de.wikipedia.org/wiki/Po_(Fluss)']
+  ['Albarella','https://de.wikipedia.org/wiki/Albarella',
+   'Albarella (in German)','https://de.wikipedia.org/wiki/Albarella'],
+  ['Po-Delta','https://de.wikipedia.org/wiki/Po-Delta',
+   'Po Delta','https://en.wikipedia.org/wiki/Po_(river)#Po_Delta'],
+  ['Adriatisches Meer','https://de.wikipedia.org/wiki/Adriatisches_Meer',
+   'Adriatic Sea','https://en.wikipedia.org/wiki/Adriatic_Sea'],
+  ['Mittelmeer','https://de.wikipedia.org/wiki/Mittelmeer',
+   'Mediterranean Sea','https://en.wikipedia.org/wiki/Mediterranean_Sea'],
+  ['Rosaflamingo','https://de.wikipedia.org/wiki/Rosaflamingo',
+   'Greater flamingo','https://en.wikipedia.org/wiki/Greater_flamingo'],
+  ['Gro\u00dfer T\u00fcmmler','https://de.wikipedia.org/wiki/Gro\u00dfer_T\u00fcmmler',
+   'Bottlenose dolphin','https://en.wikipedia.org/wiki/Common_bottlenose_dolphin'],
+  ['Europ\u00e4ische Sumpfschildkr\u00f6te','https://de.wikipedia.org/wiki/Europ\u00e4ische_Sumpfschildkr\u00f6te',
+   'European pond turtle','https://en.wikipedia.org/wiki/European_pond_turtle'],
+  ['Seesterne','https://de.wikipedia.org/wiki/Seesterne',
+   'Starfish','https://en.wikipedia.org/wiki/Starfish'],
+  ['Seepferdchen','https://de.wikipedia.org/wiki/Seepferdchen',
+   'Seahorse','https://en.wikipedia.org/wiki/Seahorse'],
+  ['Miesmuscheln','https://de.wikipedia.org/wiki/Miesmuscheln',
+   'Mussels','https://en.wikipedia.org/wiki/Mussel'],
+  ['Pinie','https://de.wikipedia.org/wiki/Pinie',
+   'Stone pine','https://en.wikipedia.org/wiki/Pinus_pinea'],
+  ['Silberpappel','https://de.wikipedia.org/wiki/Silber-Pappel',
+   'White poplar','https://en.wikipedia.org/wiki/White_poplar'],
+  ['Strandhafer','https://de.wikipedia.org/wiki/Gew\u00f6hnlicher_Strandhafer',
+   'Marram grass','https://en.wikipedia.org/wiki/Ammophila_(plant)'],
+  ['Neptungras','https://de.wikipedia.org/wiki/Neptungras',
+   'Neptune grass','https://en.wikipedia.org/wiki/Posidonia_oceanica'],
+  ['Po','https://de.wikipedia.org/wiki/Po_(Fluss)',
+   'Po (river)','https://en.wikipedia.org/wiki/Po_(river)']
 ];
 
 const WISSEN=[
@@ -3609,7 +3818,7 @@ function renderWissen(){
     c.querySelector('em').textContent=icon;
     c.querySelector('b').textContent=titel;
     const ul=c.querySelector('ul');
-    punkte.forEach(t=>{ const li=document.createElement('li'); li.textContent=t; ul.appendChild(li); });
+    punkte.forEach(zeile=>{ const li=document.createElement('li'); li.textContent=zeile; ul.appendChild(li); });
     c.querySelector('button').addEventListener('click',()=>Voice.raw(titel+'. '+punkte.join(' ')));
     return c;
   };
@@ -3666,10 +3875,12 @@ function renderWissen(){
     + '<p class="wis-hinweis">'+t('Diese Knöpfe öffnen Wikipedia. Das geht nur, wenn das iPad im WLAN ist.')+'</p>'
     + '<div class="wis-links"></div>';
   const lh=wk.querySelector('.wis-links');
-  WIKI.forEach(([name,url])=>{
+  /* Auf Englisch fuehren die Knoepfe in die englische Wikipedia – ein deutscher
+     Artikel hinter einem englischen Wort waere eine Falle. */
+  WIKI.forEach(([name,url,nameEn,urlEn])=>{
     const a=document.createElement('a');
-    a.href=url; a.target='_blank'; a.rel='noopener';
-    a.textContent=name;
+    a.href=(LANG==='en'&&urlEn)?urlEn:url; a.target='_blank'; a.rel='noopener';
+    a.textContent=(LANG==='en'&&nameEn)?nameEn:name;
     lh.appendChild(a);
   });
   host.appendChild(wk);
@@ -3694,7 +3905,7 @@ function renderWissen(){
 
 
 /* ---------- Einstellungen ---------- */
-const APP_VERSION='v7-46';
+const APP_VERSION='v7-47';
 let elternFrei=false;
 async function einstellungenOeffnen(){
   $('einUeber').textContent = t('Version')+' '+APP_VERSION+' · '
@@ -3743,10 +3954,10 @@ $('einElternAuf').addEventListener('click',async()=>{
   elternFrei=true; $('einElternAuf').hidden=true; $('einElternInhalt').hidden=false;
   await elternFelderFuellen(); uebersetzeSeite();
 });
-/* Flaggen */
-$('langBtn').addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
-$('islLangBtn').addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
-$('wisLangBtn').addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
+/* Flaggen – auf jedem Bildschirm dieselbe, damit das Kind ueberall wechseln kann. */
+['langBtn','islLangBtn','wisLangBtn','drawLangBtn'].forEach(id=>{
+  const b=$(id); if(b) b.addEventListener('click',()=>setLang(LANG==='de'?'en':'de'));
+});
 $('wisGearBtn').addEventListener('click',einstellungenOeffnen);
 document.querySelectorAll('.ein-flagge').forEach(b=>b.addEventListener('click',async()=>{
   await setLang(b.dataset.lang);
@@ -3834,11 +4045,11 @@ function islQuizShow(){
   $('islQuizQ').textContent=t(q.q);
   const opts=$('islQuizOpts'); opts.innerHTML='';
   $('islQuizFeedback').textContent=''; $('islQuizFeedback').className='isl-quiz-feedback';
-  q.o.forEach((t,idx)=>{
+  q.o.forEach((opt,idx)=>{
     const btn=document.createElement('button');
     btn.type='button'; btn.className='isl-quiz-opt';
     btn.innerHTML='<i>'+String.fromCharCode(65+idx)+'</i><span></span>';
-    btn.querySelector('span').textContent=t;
+    btn.querySelector('span').textContent=t(opt);
     btn.addEventListener('click',()=>islQuizPick(idx));
     opts.appendChild(btn);
   });
@@ -3850,7 +4061,7 @@ function islQuizPick(idx){
   const opts=[...$('islQuizOpts').children];
   if(idx!==q.a){
     opts[idx].classList.add('wrong');
-    $('islQuizFeedback').textContent='Versuch’s nochmal!';
+    $('islQuizFeedback').textContent=t('Versuch’s nochmal!');
     $('islQuizFeedback').className='isl-quiz-feedback retry';
     setTimeout(()=>opts[idx].classList.remove('wrong'),700);
     return;
@@ -3858,21 +4069,21 @@ function islQuizPick(idx){
   opts[idx].classList.add('right');
   opts.forEach(o=>o.disabled=true);
   if(ctx.kind==='bay'){
-    $('islQuizFeedback').textContent='Richtig! Stern verdient ⭐';
+    $('islQuizFeedback').textContent=t('Richtig! Stern verdient ⭐');
     const s3=star3Set();
     if(s3.indexOf(ctx.bayKey)<0){ s3.push(ctx.bayKey); profile.islandStar3=JSON.stringify(s3); saveProfiles(); }
     setTimeout(()=>{ $('islQuiz').classList.remove('on'); renderIsland(); },900);
   }else if(ctx.step<2){
-    $('islQuizFeedback').textContent='Richtig! Nächste Frage.';
+    $('islQuizFeedback').textContent=t('Richtig! Nächste Frage.');
     setTimeout(()=>{ islQuizCtx.step++; islQuizShow(); },700);
   }else{
-    $('islQuizFeedback').textContent='Richtig! Alle Fragen geschafft!';
+    $('islQuizFeedback').textContent=t('Richtig! Alle Fragen geschafft!');
     setTimeout(()=>{ $('islQuiz').classList.remove('on'); openChestReveal(); },900);
   }
 }
 function openBayQuiz(b){
   /* Nie fragen, bevor erklaert wurde. */
-  if(factReadSet().indexOf(b.key)<0){ toast('📜 Lies erst das Kärtchen „Wusstest du?“'); return; }
+  if(factReadSet().indexOf(b.key)<0){ toast(t('📜 Lies erst das Kärtchen „Wusstest du?“')); return; }
   islQuizCtx={kind:'bay', bayKey:b.key, step:0};
   islQuizShow();
   $('islQuiz').classList.add('on');
@@ -3956,7 +4167,7 @@ $('wisSpeak').addEventListener('click',()=>{
 if($('treasurePhotoBtn')) $('treasurePhotoBtn').addEventListener('click',async ()=>{
   if(!parentGate()) return;
   const hat=!!(await Store.get('treasurePhoto'));
-  if(hat && confirm('Foto entfernen?\n\nAbbrechen = ein neues Foto auswählen.')){
+  if(hat && confirm(t('Foto entfernen?')+'\n\n'+t('Abbrechen = ein neues Foto auswählen.'))){
     await Store.del('treasurePhoto');
     if($('treasureReveal').classList.contains('on')) await showTreasureCard();
     return;
@@ -4004,9 +4215,9 @@ let parentOkUntil=0;
 function parentGate(){
   if(Date.now()<parentOkUntil) return true;
   const a=6+Math.floor(Math.random()*7), b=7+Math.floor(Math.random()*7);
-  const t=prompt('Nur für Eltern.\n\nWie viel ist '+a+' × '+b+'?','');
-  if(t===null) return false;
-  if(parseInt(t,10)!==a*b){ toast('🔒 Leider falsch – das ist nur für Eltern.'); return false; }
+  const ein=prompt(t('Nur für Eltern.')+'\n\n'+t('Wie viel ist')+' '+a+' × '+b+'?','');
+  if(ein===null) return false;
+  if(parseInt(ein,10)!==a*b){ toast(t('🔒 Leider falsch – das ist nur für Eltern.')); return false; }
   parentOkUntil=Date.now()+5*60*1000;   /* fuenf Minuten Ruhe, damit man nicht dreimal rechnet */
   return true;
 }
@@ -4044,28 +4255,28 @@ async function askTreasureHint(){
   /* Nie vorausgefuellt – aber der Elternteil soll sehen, ob schon etwas hinterlegt ist. */
   const hasHint=!!(await Store.get('treasureHint'));
   const hasCo=!!(await Store.get('treasureCoords'));
-  const t=prompt('1 von 2 – Hinweis für die Kinder, in Worten'
-    +(hasHint?' (einer ist gespeichert)':' (noch keiner gespeichert)')
-    +':\n\nZum Beispiel: „Am dritten Pfahl hinter der Düne, drei Schritte Richtung Wasser.“\n'
-    +'Leer lassen = unverändert. Ein Minuszeichen löscht ihn.','');
-  if(t===null) return;
-  if(t.trim()==='-'){ await Store.del('treasureHint'); }
-  else if(t.trim()){ await Store.set('treasureHint',t.trim()); }
+  const hin=prompt(t('1 von 2 – Hinweis für die Kinder, in Worten')
+    +t(hasHint?' (einer ist gespeichert)':' (noch keiner gespeichert)')
+    +':\n\n'+t('Zum Beispiel: „Am dritten Pfahl hinter der Düne, drei Schritte Richtung Wasser.“')+'\n'
+    +t('Leer lassen = unverändert. Ein Minuszeichen löscht ihn.'),'');
+  if(hin===null) return;
+  if(hin.trim()==='-'){ await Store.del('treasureHint'); }
+  else if(hin.trim()){ await Store.set('treasureHint',hin.trim()); }
 
-  const co=prompt('2 von 2 – Koordinaten für den Knopf „Ich zeige Dir den Weg"'
-    +(hasCo?' (welche sind gespeichert)':' (noch keine gespeichert)')
-    +':\n\n45.0877,12.3378  oder  45°05\'15.82"N 12°20\'16.19"E\n'
-    +'Leer lassen = unverändert, Minuszeichen löscht sie.','');
-  if(co===null){ toast('🔑 Hinweis gespeichert'); return true; }
-  if(co.trim()==='-'){ await Store.del('treasureCoords'); toast('🔑 Gespeichert – Kartenlink entfernt'); return true; }
-  if(!co.trim()){ toast('🔑 Hinweis gespeichert'); return true; }
+  const co=prompt(t('2 von 2 – Koordinaten für den Knopf „Ich zeige Dir den Weg"')
+    +t(hasCo?' (welche sind gespeichert)':' (noch keine gespeichert)')
+    +':\n\n45.0877,12.3378  '+t('oder')+'  45°05\'15.82"N 12°20\'16.19"E\n'
+    +t('Leer lassen = unverändert, Minuszeichen löscht sie.'),'');
+  if(co===null){ toast(t('🔑 Hinweis gespeichert')); return true; }
+  if(co.trim()==='-'){ await Store.del('treasureCoords'); toast(t('🔑 Gespeichert – Kartenlink entfernt')); return true; }
+  if(!co.trim()){ toast(t('🔑 Hinweis gespeichert')); return true; }
   const dez=parseCoords(co);
   if(!dez){
-    toast('⚠️ Koordinaten nicht erkannt – 45.0877,12.3378 oder 45°05\'15.8"N 12°20\'16.2"E');
+    toast(t('⚠️ Koordinaten nicht erkannt – Beispiel:')+' 45.0877,12.3378');
     return true;
   }
   await Store.set('treasureCoords',dez);
-  toast('🔑 Fundort gespeichert – der Kartenknopf ist da');
+  toast(t('🔑 Fundort gespeichert – der Kartenknopf ist da'));
   return true;
 }
 if($('islHintBtn')) $('islHintBtn').addEventListener('click',()=>{
@@ -4092,36 +4303,37 @@ async function resetIsland(){
   selBay = BAYS[0].key;
   findMode = false;
   renderIsland();
-  toast('🔄 Schatzsuche zurückgesetzt – die Insel liegt wieder im Nebel');
+  toast(t('🔄 Schatzsuche zurückgesetzt – die Insel liegt wieder im Nebel'));
 }
 (function(){
-  const b=$('islHintBtn'); if(!b) return; let t=null;
-  const start=()=>{ hintHeld=false; clearTimeout(t); t=setTimeout(()=>{
+  const b=$('islHintBtn'); if(!b) return; let tid=null;
+  const start=()=>{ hintHeld=false; clearTimeout(tid); tid=setTimeout(()=>{
     hintHeld=true;
     if(!parentGate()) return;
-    if(confirm('Schatzsuche für '+(profile?profile.name:'')+' zurücksetzen?\n\n'
-      +'Alle Buchten liegen wieder im Nebel, Bonussterne und Truhe sind zurückgesetzt.\n'
-      +'Gemalte Bilder, Sterne und Medaillen bleiben erhalten.')) resetIsland();
+    if(confirm(tf('Schatzsuche für {name} zurücksetzen?',{name:profile?profile.name:''})+'\n\n'
+      +t('Alle Buchten liegen wieder im Nebel, Bonussterne und Truhe sind zurückgesetzt.')+'\n'
+      +t('Gemalte Bilder, Sterne und Medaillen bleiben erhalten.'))) resetIsland();
   },1200); };
-  const stop=()=>clearTimeout(t);
+  const stop=()=>clearTimeout(tid);
   b.addEventListener('pointerdown',start);
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,stop));
 })();
 
 /* Langes Drücken (1,2 s) schaltet den Testzugang um – für Kinder praktisch unauffindbar. */
 (function(){
-  const b=$('islBtn'); let t=null, held=false;
-  const start=()=>{ held=false; clearTimeout(t); t=setTimeout(async()=>{
+  const b=$('islBtn'); let tid=null, held=false;
+  const start=()=>{ held=false; clearTimeout(tid); tid=setTimeout(async()=>{
     held=true;
     if(!parentGate()) return;
     if(!profile) return;
     profile.islandTest = profile.islandTest==='1' ? '0' : '1';
     await saveProfiles();
     renderGreeting();
-    toast(islandTestMode() ? '🔓 Testzugang an – Schatzinsel offen für '+profile.name
-                           : '🔒 Testzugang aus für '+profile.name);
+    toast(islandTestMode()
+      ? tf('🔓 Testzugang an – Schatzinsel offen für {name}',{name:profile.name})
+      : tf('🔒 Testzugang aus für {name}',{name:profile.name}));
   },1200); };
-  const stop=()=>clearTimeout(t);
+  const stop=()=>clearTimeout(tid);
   b.addEventListener('pointerdown',start);
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,stop));
   /* Nach einem langen Druck darf der anschliessende Klick die Insel nicht auch noch oeffnen. */
@@ -4130,7 +4342,9 @@ async function resetIsland(){
 $('islBtn').addEventListener('click',()=>{
   if(!islandUnlocked()){
     const need=goldTierN()-discoveredCount();
-    toast('🗺️ Noch '+need+' '+(need===1?'Motiv':'Motive')+' bis zur Goldmedaille – dann öffnet sich die Schatzinsel!');
+    toast(tf(need===1
+      ? '🗺️ Noch {n} Motiv bis zur Goldmedaille – dann öffnet sich die Schatzinsel!'
+      : '🗺️ Noch {n} Motive bis zur Goldmedaille – dann öffnet sich die Schatzinsel!',{n:need}));
     return;
   }
   const i=BAYS.findIndex((b,n)=>bayUnlocked(n) && !bayComplete(b));
@@ -4161,14 +4375,14 @@ function renderPicker(){
   items.forEach(({m,i})=>{
     const b=document.createElement('button');
     b.className='tile'+(m._key?' mine':' lv-'+m.level);
-    b.innerHTML='<em>'+m.emoji+'</em>'+m.name+(m._key?'<b>'+m.level+'</b>':'');
+    b.innerHTML='<em>'+m.emoji+'</em>'+tName(m)+(m._key?'<b>'+t(m.level)+'</b>':'');
     b.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; cameFromIsland=false; openMotif(i); });
     if(m._key){
       const x=document.createElement('button'); x.className='x'; x.textContent='✕';
       x.addEventListener('click',async e=>{
         e.stopPropagation();
         if(x.classList.contains('armed')){ await Store.del(m._key); await loadCustoms(); renderPicker(); }
-        else{ x.classList.add('armed'); x.textContent='Weg?'; setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
+        else{ x.classList.add('armed'); x.textContent=t('Weg?'); setTimeout(()=>{x.classList.remove('armed');x.textContent='✕';},2500); }
       });
       b.appendChild(x);
     }
@@ -4198,7 +4412,7 @@ function buildBubbles(){
   motif.steps.forEach((s,i)=>{
     const b=document.createElement('button');
     b.className='bub'; b.textContent=i+1;
-    b.setAttribute('aria-label','Schritt '+(i+1)+': '+s.title);
+    b.setAttribute('aria-label',tf('Schritt {n}',{n:i+1})+': '+tTitle(s));
     b.addEventListener('click',()=>{ show(i); });
     bubbles.appendChild(b);
   });
@@ -4206,11 +4420,11 @@ function buildBubbles(){
 function openMotif(i){
   motif=allMotifs()[i];
   motifCounted=false;
-  $('home-btn').textContent = cameFromIsland ? '◀︎ Insel' : '◀︎ Motive';
-  $('motifName').textContent=motif.emoji+' '+motif.name;
+  $('home-btn').textContent = cameFromIsland ? t('◀︎ Insel') : t('◀︎ Motive');
+  $('motifName').textContent=motif.emoji+' '+tName(motif);
   buildArt(); buildBubbles(); undoStack=[];
   $('board').classList.remove('party');
-  ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
+  ghost.classList.remove('on'); helper.textContent=t('🫥 Hilfslinien');
   secDraw.classList.toggle('mode-color', mode==='color');
   showSection(secDraw); Music.start();
   pokeIdle();
@@ -4218,11 +4432,11 @@ function openMotif(i){
     // Ausmalen: kompletten Umriss vorzeichnen, Farbeimer aktiv, keine Schritte
     setTool('fill');
     $('taskEmoji').textContent='🎨';
-    $('taskTitle').textContent=motif.name+' wartet auf Farbe!';
-    $('taskText').textContent='Tippe mit dem Farbeimer in die Flächen – so bunt du magst.';
+    $('taskTitle').textContent=tf('{m} wartet auf Farbe!',{m:tName(motif)});
+    $('taskText').textContent=t('Tippe mit dem Farbeimer in die Flächen – so bunt du magst.');
     /* Im Ausmal-Modus beendet der Knopf sofort – er muss also auch „Fertig" heißen,
        sonst speichert ein vermeintliches „Weiter" das Bild ungewollt ab. */
-    $('next').textContent='Fertig! 🎉';
+    $('next').textContent=t('Fertig! 🎉');
     [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
     Voice.say('colorStart',{m:motifSpokenName(motif)},true);
     requestAnimationFrame(()=>{ layout(); outlineToCanvas(); });
@@ -4260,8 +4474,8 @@ function show(i,silent){
   step=i;
   const s=motif.steps[i];
   $('taskEmoji').textContent=s.emoji;
-  $('taskTitle').textContent='Schritt '+(i+1)+': '+s.title;
-  $('taskText').textContent=s.text;
+  $('taskTitle').textContent=tf('Schritt {n}',{n:i+1})+': '+tTitle(s);
+  $('taskText').textContent=tText(s);
   [...ref.children].forEach((g,n)=>{
     g.classList.remove('done','now','draw');
     [...g.children].forEach(el=>el.style.animationDelay='');
@@ -4275,7 +4489,7 @@ function show(i,silent){
   [...ghost.children].forEach((g,n)=>g.classList.toggle('show',n<=i));
   [...bubbles.children].forEach((b,n)=>{ b.classList.toggle('done',n<i); b.classList.toggle('now',n===i); });
   $('back').disabled=i===0;
-  $('next').textContent = i===motif.steps.length-1 ? 'Fertig! 🎉' : 'Weiter ▶︎';
+  $('next').textContent = i===motif.steps.length-1 ? t('Fertig! 🎉') : t('Weiter ▶︎');
   if(!silent) setTimeout(()=>Voice.say('step',{t:stepSpokenBody(s)},true), 900);
   pokeIdle();
 }
@@ -4335,7 +4549,7 @@ function completeMotif(){
    Ein evtl. verdienter Medaillen-Popup kommt erst danach dran, nie gleichzeitig. */
 function showDoneCard(pendingTier){
   $('doneImg').src=thumb();
-  $('doneOk').textContent = cameFromIsland ? '🗺️ Zurück zur Insel' : '✏️ Nächstes Motiv';
+  $('doneOk').textContent = cameFromIsland ? t('🗺️ Zurück zur Insel') : t('✏️ Nächstes Motiv');
   $('doneOk').onclick=()=>{
     $('doneCard').classList.remove('on');
     if(cameFromIsland){
@@ -4350,7 +4564,7 @@ function showDoneCard(pendingTier){
   $('doneCard').classList.add('on');
 }
 async function finish(){
-  ghost.classList.remove('on'); helper.textContent='🫥 Hilfslinien';
+  ghost.classList.remove('on'); helper.textContent=t('🫥 Hilfslinien');
   const b=$('board'); b.classList.remove('party'); void b.offsetWidth; b.classList.add('party');
   [...ref.children].forEach(g=>{g.classList.remove('now','draw');g.classList.add('done');});
   [...bubbles.children].forEach(x=>{x.classList.remove('now');x.classList.add('done');});
@@ -4399,7 +4613,7 @@ async function finishColor(){
 
 function showTrophyPopup(tier){
   $('rewardEmoji').textContent=tier.emoji;
-  $('rewardText').textContent=tier.label+' geschafft! Schau in deiner Galerie vorbei.';
+  $('rewardText').textContent=tf('{m} geschafft! Schau in deiner Galerie vorbei.',{m:tLabel(tier)});
   $('reward').classList.add('on');
   celebrate();
   Voice.rawBoth('Wow! Du hast die '+tier.label+' gewonnen!', 'Wow! You won the '+tier.labelEn+'!');
@@ -4653,7 +4867,7 @@ $('undo').addEventListener('click',undoDraw);
 $('clear').addEventListener('click',()=>{ snapshot(); clearArt(); Voice.say('clear',null,true); });
 helper.addEventListener('click',()=>{
   const on=ghost.classList.toggle('on');
-  helper.textContent = on ? '👁️ Linien aus' : '🫥 Hilfslinien';
+  helper.textContent = on ? t('👁️ Linien aus') : t('🫥 Hilfslinien');
 });
 $('musicBtn').addEventListener('click',e=>{
   const on=Music.toggle();
@@ -4700,12 +4914,12 @@ async function saveCurrentPicture(){
 }
 async function keepPicture(){
   if(!profile) return;
-  if(pictureSaved){ toast('🖼️ Ist schon in deiner Galerie!'); return; }
+  if(pictureSaved){ toast(t('🖼️ Ist schon in deiner Galerie!')); return; }
   /* Wer sein Bild speichert, hat das Motiv geschafft – sonst zaehlt der Fortschritt nicht,
      obwohl das Kind fertig ist. Der Schutz in completeMotif verhindert Doppelzaehlung. */
   const tier=completeMotif();
   await saveCurrentPicture();
-  toast('⭐ Geschafft! Bild in der Galerie gespeichert');
+  toast(t('⭐ Geschafft! Bild in der Galerie gespeichert'));
   Voice.say('gallery',null,true);
   if(tier) setTimeout(()=>showTrophyPopup(tier),500);
 }
@@ -4715,7 +4929,7 @@ $('galBack').addEventListener('click',()=>showSection(secHome));
 
 async function openGallery(){
   showSection(secGallery);
-  $('galTitle').textContent='Galerie von '+(profile?profile.name:'');
+  $('galTitle').textContent=tf('Galerie von {name}',{name:profile?profile.name:''});
   await renderTrophyPanel();
 }
 
@@ -4735,7 +4949,7 @@ AVATARS.forEach((a,i)=>{
   });
   $('cAvatars').appendChild(b);
 });
-function cLabel(){ $('cStepLabel').textContent='– Schritt '+(cSteps.length+1); }
+function cLabel(){ $('cStepLabel').textContent='– '+tf('Schritt {n}',{n:cSteps.length+1}); }
 function cReset(){
   cSteps=[]; cCurrent=[]; cart.textContent=''; cLiveG=null; cLabel();
   $('cNaming').hidden=true; $('cName').value='';
@@ -4776,7 +4990,7 @@ $('cUndo').addEventListener('click',()=>{
   }
 });
 $('cStep').addEventListener('click',()=>{
-  if(!cCurrent.length){ toast('Erst etwas malen 🙂'); return; }
+  if(!cCurrent.length){ toast(t('Erst etwas malen 🙂')); return; }
   cSteps.push({emoji:'✏️',title:'Schritt '+(cSteps.length+1),text:'Male den roten Strich nach.',shapes:cCurrent.slice()});
   if(cLiveG) cLiveG.setAttribute('class','');
   cCurrent=[]; cNewLiveGroup(); cLabel();
@@ -4784,16 +4998,16 @@ $('cStep').addEventListener('click',()=>{
 });
 $('cSave').addEventListener('click',()=>{
   if(cCurrent.length) $('cStep').click();
-  if(!cSteps.length){ toast('Noch nichts zu speichern'); return; }
+  if(!cSteps.length){ toast(t('Noch nichts zu speichern')); return; }
   $('cNaming').hidden=false; $('cName').focus();
 });
 $('cCancel').addEventListener('click',()=>{ $('cNaming').hidden=true; });
 $('cFinish').addEventListener('click',async()=>{
-  const name=($('cName').value||'').trim()||'Mein Motiv';
+  const name=($('cName').value||'').trim()||t('Mein Motiv');
   const m={name:name,emoji:cAvatar,level:'von mir',steps:cSteps};
   await Store.set('motif:'+profile.id+':'+Date.now(),JSON.stringify(m));
   await loadCustoms(); renderPicker(); showSection(secHome);
-  toast('✏️ Motiv gespeichert');
+  toast(t('✏️ Motiv gespeichert'));
   Voice.rawBoth('Dein Motiv ist gespeichert. Jetzt kann es jeder nachmalen!', 'Your picture is saved. Now everyone can trace it!');
 });
 $('newMotif').addEventListener('click',()=>{ cReset(); cNewLiveGroup(); showSection(secCreator); Voice.say('creator',null,true); });
@@ -4807,9 +5021,9 @@ $('cBack').addEventListener('click',()=>showSection(secHome));
   const canFS = el.requestFullscreen || el.webkitRequestFullscreen;
   if(standalone){ btn.style.display='none'; return; }
   if(!canFS){
-    btn.textContent='⛶ Vollbild?';
+    btn.textContent=t('⛶ Vollbild?');
     btn.addEventListener('click',()=>{
-      toast('Tipp: Teilen ▸ „Zum Home-Bildschirm" – dann startet die App randlos.');
+      toast(t('Tipp: Teilen ▸ „Zum Home-Bildschirm" – dann startet die App randlos.'));
       Voice.rawBoth('Für echtes Vollbild tippe unten auf Teilen und dann auf Zum Home-Bildschirm.',
         'For real fullscreen, tap Share and then Add to Home Screen.');
     });
@@ -4851,6 +5065,10 @@ window.addEventListener('orientationchange',()=>setTimeout(()=>{ layout(); sizeI
 layout();
 
 (async function(){
+  /* Sprache zuerst, noch vor Service Worker und Profilen: sonst sieht ein
+     englisch eingestelltes Kind kurz die deutsche Oberflaeche aufblitzen.
+     „nurAnzeigen" heisst: nichts speichern, nur umschriften. */
+  try{ await setLang((await Store.get('lang'))||'de', true); }catch(e){}
   if('serviceWorker' in navigator){
     try{
       const reg=await navigator.serviceWorker.register('sw.js');
