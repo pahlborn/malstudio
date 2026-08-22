@@ -200,6 +200,32 @@ Beim Aufteilen: alle neuen Dateien in `sw.js` → `ASSETS` eintragen **und**
 `CACHE` hochzählen, sonst lädt die installierte App die alten Teile.
 Vorher/nachher im Browser testen (Netzwerk aus → muss weiter laufen).
 
+## Schriften
+
+Die vier Familien (Baloo 2, Caveat, Grandstander, Nunito) liegen **lokal** in
+`fonts.css` – elf Schnitte als Daten-URI, jeweils nur der Schnitt `latin`, der
+Deutsch mit Umlauten und ß, Englisch und Italienisch abdeckt. Lizenz: SIL Open
+Font License, das Einbetten ist ausdrücklich erlaubt.
+
+Vorher kamen sie bei jedem Start von `fonts.googleapis.com`. Das hatte zwei
+Folgen: Google erfuhr die IP-Adresse des Geräts, und ohne Netz fiel die App auf
+Systemschriften zurück. Der Service Worker konnte das nicht auffangen – eine
+fremde Herkunft liefert eine *opake* Antwort, und die lässt sich nicht in den
+Cache legen. Ohne die `@font-face`-Regeln half auch die zwischengespeicherte
+Schriftdatei nichts.
+
+- **`fonts.css` ist erzeugt, nicht von Hand geschrieben.** Neu bauen mit
+  `node tools/gen-fonts.js`. Das Skript holt die Schriften einmalig von Google,
+  nimmt nur `latin` (sonst kämen Devanagari und Kyrillisch mit) und schreibt die
+  Datei neu. Es läuft nur von Hand, nie beim Ausliefern.
+- **Schrift wechseln:** `SOURCE` im Skript anpassen, Skript laufen lassen, die
+  Familiennamen in den CSS-Variablen `--font`, `--font-hand`, `--font-map`,
+  `--font-body` in `index.html` nachziehen.
+- `fonts.css` steht in `sw.js` → `ASSETS`. Der `fetch`-Handler würde sie zwar
+  ohnehin beim ersten Laden mitnehmen, aber der Eintrag macht sie zum festen
+  Bestandteil des Vorrats: schon beim Installieren da, und nach jedem
+  Versionswechsel garantiert wieder drin.
+
 ## Testchecklist (nach jeder Änderung)
 
 - [ ] `index.html` lädt ohne Konsolenfehler.
@@ -208,6 +234,9 @@ Vorher/nachher im Browser testen (Netzwerk aus → muss weiter laufen).
 - [ ] Modus Nachmalen **und** Ausmalen.
 - [ ] Speichern → Galerie → Sticker; Profile getrennt.
 - [ ] Offline (Netzwerk aus) weiterhin lauffähig.
+- [ ] Kein Abruf nach außen. Im Testbrowser alles außer `file://` und `data:`
+      abwürgen – es darf nichts blockiert werden.
+- [ ] Neue Datei? Dann auch in `sw.js` → `ASSETS` eintragen.
 - [ ] Alle drei Sprachen: keine fremdsprachigen Reste, auch nicht in
       aria-label/title (die hört ein Kind, das sich vorlesen lässt).
 - [ ] `sw.js` `CACHE` **und** `APP_VERSION` in `index.html` erhöht.
