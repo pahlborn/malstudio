@@ -2,6 +2,7 @@
 const CACHE = 'malstudio-v7-48';
 const ASSETS = [
   './index.html',
+  './fonts.css',
   './manifest.webmanifest',
   './icon-152.png',
   './icon-167.png',

@@ -22,8 +22,13 @@ umgekehrt.* Am Ende sollen Eltern sagen: „Das hat mein Kind gemalt?"
 
 - **Alles offline, alles im Browser.** Keine externen API-Aufrufe zur Laufzeit,
   keine KI-Dienste, keine Server. Formerkennung etc. mit klassischen
-  Algorithmen. Einzige externe Ressource: Google-Fonts-Link (wird vom Service
-  Worker gecacht) – der darf auch weg, wenn die Schrift lokal eingebettet wird.
+  Algorithmen. **Keine externen Ressourcen mehr:** Die vier Schriften liegen
+  seit v7-48 lokal in `fonts.css` (Daten-URI, SIL Open Font License, erzeugt
+  von `tools/gen-fonts.js`). Die App macht damit keinen einzigen automatischen
+  Abruf nach außen. Bitte auch keinen wieder einbauen – kein CDN, kein
+  Analytics-Schnipsel, keine nachgeladene Schrift. Es bleibt genau eine
+  Verbindung, und die ist gewollt: Haben Eltern einen Fundort für die
+  Schatzsuche hinterlegt, öffnet ein Antippen Apple Karten.
 - **Kein `localStorage` in Artifact-Umgebungen** war eine frühere Einschränkung;
   hier als echte PWA ist `localStorage` erlaubt und wird über die `Store`-Abstraktion
   genutzt (siehe ARCHITEKTUR.md). Nicht auf ein bestimmtes Speicher-Backend
