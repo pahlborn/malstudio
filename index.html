@@ -544,6 +544,14 @@
   .ein-flagge.an{border-color:#3F9C6D;background:#E6F1DE;color:#2C6B44}
   .ein-zeile{display:flex;align-items:center;gap:10px;margin-bottom:9px;flex-wrap:wrap}
   .ein-zeile.spalte{flex-direction:column;align-items:stretch;gap:5px}
+  /* Kleine Vorschau im Elternbereich: zeigt, was fuer ein Foto gemeint ist.
+     Faellt die Datei aus, blendet der Code sie aus. */
+  .ein-beispiel{display:none;gap:10px;align-items:center;margin:2px 0 10px}
+  .ein-beispiel.da{display:flex}
+  .ein-beispiel img{width:92px;height:62px;object-fit:cover;border-radius:7px;
+    border:2px solid #C39A63;flex:none}
+  .ein-beispiel small{font-family:'Nunito',sans-serif;font-size:11.5px;
+    font-weight:700;color:#8A7550;line-height:1.4}
   .ein-zeile label{font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:#6B5322;flex:none}
   .ein-zeile input,.ein-zeile textarea,.ein-zeile select{
     font-family:'Nunito',sans-serif;font-size:14px;padding:8px 10px;border-radius:8px;
@@ -611,8 +619,19 @@
   /* Zwei Spalten, damit alles ohne Scrollen und ohne Drehen sichtbar bleibt:
      links das Foto vom Fundort, rechts Hinweis und Knoepfe. */
   .treasure-spalten{display:flex;gap:20px;align-items:stretch;min-height:0}
-  .tsp-bild{flex:0 1 44%;min-width:0;display:none}
+  .tsp-bild{flex:0 1 44%;min-width:0;display:none;position:relative}
   .tsp-bild.da{display:block}
+  /* Solange kein eigenes Foto hinterlegt ist, steht hier ein Beispiel. Es
+     MUSS als solches erkennbar sein - sonst sucht ein Kind nach einem Stock,
+     den es an seinem Strand nicht gibt. */
+  .tsp-bild .beispiel-marke{display:none}
+  .tsp-bild.ist-beispiel .beispiel-marke{
+    display:block;position:absolute;left:10px;top:10px;
+    padding:4px 10px;border-radius:999px;
+    background:rgba(255,253,243,.92);border:2px solid #C39A63;
+    font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;
+    letter-spacing:.6px;color:#8A7550;text-transform:uppercase}
+  .tsp-bild.ist-beispiel img{opacity:.82}
   .tsp-bild img{width:100%;height:100%;max-height:64vh;object-fit:cover;display:block;
     border-radius:9px;border:3px solid #C39A63;box-shadow:0 4px 10px rgba(90,70,40,.3)}
   .tsp-text{flex:1 1 56%;min-width:0;display:flex;flex-direction:column;gap:10px}
@@ -1181,6 +1200,11 @@
             <button type="button" class="ein-btn" id="einFotoWahl" data-t>Foto wählen</button>
             <button type="button" class="ein-btn" id="einFotoWeg" data-t>Entfernen</button>
           </div>
+          <!-- Was fuer ein Foto gemeint ist: eine Stelle, kein Panorama. -->
+          <div class="ein-beispiel" id="einBeispiel">
+            <img id="einBeispielBild" alt="">
+            <small data-t>So ist es gemeint: die Stelle selbst, mit etwas Auffälligem daneben. Solange Sie nichts hinterlegen, steht dieses Bild als Beispiel in der Schatzkiste.</small>
+          </div>
           <!-- Die beiden Wege nach draussen. Ab Werk zu; hier gibt man sie
                frei. Sie stehen im Elternbereich, also schon hinter der
                Rechenaufgabe. -->
@@ -1241,6 +1265,7 @@
     <div class="treasure-spalten">
       <div class="tsp-bild" id="tspBild">
         <img id="treasurePhoto" alt="Foto vom Fundort">
+        <span class="beispiel-marke" id="tspBeispiel" data-t>Beispiel</span>
       </div>
       <div class="tsp-text">
         <p class="lead">Du hast alle Hinweise gefunden! Jetzt beginnt die echte Suche – draußen, im Sand.</p>
@@ -2375,7 +2400,6 @@ const EN={
  "Diese Angaben bleiben auf dem iPad. Sie werden nirgendwohin gesendet.":"Everything here stays on this iPad. Nothing is ever sent anywhere.",
  "Hinweis zum echten Schatz":"Clue to the real treasure",
  "Koordinaten für den Weg-Knopf":"Coordinates for the directions button",
- "Foto vom Fundort":"Photo of the hiding place",
  "Foto wählen":"Choose a photo",
  "Entfernen":"Remove",
  "hinterlegt ✓":"saved ✓",
@@ -2388,6 +2412,10 @@ const EN={
  "Beides führt aus der App heraus. Ab Werk ist es zu – hier geben Sie es frei.":"Both of these lead out of the app. They are closed to begin with – you open them here.",
  "Freigegeben":"Allowed",
  "Gesperrt":"Closed",
+ "Beispiel":"Example",
+ "Beispiel: So könnte ein Foto vom Fundort aussehen.":"Example: this is what a photo of the hiding place could look like.",
+ "So ist es gemeint: die Stelle selbst, mit etwas Auffälligem daneben. Solange Sie nichts hinterlegen, steht dieses Bild als Beispiel in der Schatzkiste.":"This is the idea: the spot itself, with something noticeable beside it. Until you add one of your own, this picture stands in the treasure chest as an example.",
+ "Foto vom Fundort":"Photo of the hiding place",
  "Schatzinsel zum Testen öffnen":"Open Treasure Island for testing",
  "Schatzsuche zurücksetzen":"Reset the treasure hunt",
  "Bilder, Sterne und Medaillen bleiben":"Pictures, stars and medals stay",
@@ -2757,7 +2785,6 @@ const IT={
  "Diese Angaben bleiben auf dem iPad. Sie werden nirgendwohin gesendet.":"Questi dati restano su questo iPad. Non vengono inviati da nessuna parte.",
  "Hinweis zum echten Schatz":"Indizio per il tesoro vero",
  "Koordinaten für den Weg-Knopf":"Coordinate per il pulsante del percorso",
- "Foto vom Fundort":"Foto del nascondiglio",
  "Foto wählen":"Scegli una foto",
  "Entfernen":"Rimuovi",
  "hinterlegt ✓":"salvata ✓",
@@ -2770,6 +2797,10 @@ const IT={
  "Beides führt aus der App heraus. Ab Werk ist es zu – hier geben Sie es frei.":"Tutti e due portano fuori dall’app. All’inizio sono chiusi – qui li aprite voi.",
  "Freigegeben":"Consentito",
  "Gesperrt":"Chiuso",
+ "Beispiel":"Esempio",
+ "Beispiel: So könnte ein Foto vom Fundort aussehen.":"Esempio: così potrebbe essere una foto del nascondiglio.",
+ "So ist es gemeint: die Stelle selbst, mit etwas Auffälligem daneben. Solange Sie nichts hinterlegen, steht dieses Bild als Beispiel in der Schatzkiste.":"L’idea è questa: il punto preciso, con qualcosa che salta all’occhio accanto. Finché non ne mettete una vostra, questa foto resta nel forziere come esempio.",
+ "Foto vom Fundort":"Foto del nascondiglio",
  "Schatzinsel zum Testen öffnen":"Apri l’Isola del Tesoro per provare",
  "Schatzsuche zurücksetzen":"Azzera la caccia al tesoro",
  "Bilder, Sterne und Medaillen bleiben":"Disegni, stelle e medaglie restano",
@@ -4069,6 +4100,16 @@ function islandTestMode(){ return !!profile && profile.islandTest==='1'; }
    Als Merker im Speicher und nicht am Profil: Es ist eine Entscheidung der
    Eltern ueber das Geraet, nicht eine Eigenschaft eines Kindes. Zwei
    Geschwister sollen nicht verschiedene Regeln haben. */
+/* Ein Beispiel dafuer, was ein Foto vom Fundort zeigen soll: eine Stelle,
+   kein Panorama. Es erscheint, solange die Eltern kein eigenes hinterlegt
+   haben - deutlich als Beispiel gekennzeichnet.
+
+   Die Datei darf fehlen. Dann bleibt die Bildspalte einfach leer, so wie
+   frueher auch. Deshalb steht sie auch nicht im Pflichtvorrat des Service
+   Workers: addAll() bricht bei einer einzigen fehlenden Datei ab und nimmt
+   den ganzen Offline-Betrieb mit. */
+const BEISPIEL_FOTO = 'foto-fundort-beispiel.jpg';
+
 let wikiFrei = false, karteFrei = false;
 
 async function freigabenLaden(){
@@ -4727,7 +4768,7 @@ function renderWissen(){
 
 
 /* ---------- Einstellungen ---------- */
-const APP_VERSION='v7-49';
+const APP_VERSION='v7-50';
 let elternFrei=false;
 async function einstellungenOeffnen(){
   $('einUeber').textContent = t('Version')+' '+APP_VERSION+' · '
@@ -4765,6 +4806,12 @@ async function elternFelderFuellen(){
   const foto = await Store.get('treasurePhoto');
   $('einFotoStatus').textContent = foto ? t('hinterlegt ✓') : t('noch keins');
   $('einFotoWeg').disabled = !foto;
+  /* Die Vorschau nur zeigen, solange kein eigenes Foto da ist - danach ist
+     sie ein Beispiel fuer etwas, das schon erledigt ist. */
+  const bsp=$('einBeispiel'), bspBild=$('einBeispielBild');
+  bspBild.onerror=function(){ bsp.classList.remove('da'); };
+  if(foto){ bsp.classList.remove('da'); }
+  else { bspBild.src=BEISPIEL_FOTO; bsp.classList.add('da'); }
   $('einFreiWiki').textContent = wikiFrei ? t('Freigegeben') : t('Gesperrt');
   $('einFreiWiki').classList.toggle('an', wikiFrei);
   $('einFreiKarte').textContent = karteFrei ? t('Freigegeben') : t('Gesperrt');
@@ -4962,8 +5009,18 @@ async function showTreasureCard(){
   }
   const foto=await Store.get('treasurePhoto');
   const ph=$('treasurePhoto');
-  if(foto){ ph.src=foto; $('tspBild').classList.add('da'); }
-  else { ph.removeAttribute('src'); $('tspBild').classList.remove('da'); }
+  const bild=$('tspBild');
+  /* Faellt das Bild aus - Datei fehlt, Pfad falsch -, verschwindet die Spalte
+     still. Ein zerbrochenes Bildsymbol in der Schatzkiste waere schlimmer als
+     gar keines. */
+  ph.onerror=function(){ bild.classList.remove('da','ist-beispiel'); };
+  if(foto){
+    ph.src=foto; bild.classList.add('da'); bild.classList.remove('ist-beispiel');
+    ph.alt=t('Foto vom Fundort');
+  }else{
+    ph.src=BEISPIEL_FOTO; bild.classList.add('da','ist-beispiel');
+    ph.alt=t('Beispiel: So könnte ein Foto vom Fundort aussehen.');
+  }
   if($('treasurePhotoBtn')) $('treasurePhotoBtn').textContent = foto ? t('📸 Foto ändern') : t('📸 Foto vom Fundort');
 
   const coins=$('treasureCoins'); coins.innerHTML='';
