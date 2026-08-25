@@ -2416,6 +2416,11 @@ const EN={
  "Beispiel: So könnte ein Foto vom Fundort aussehen.":"Example: this is what a photo of the hiding place could look like.",
  "So ist es gemeint: die Stelle selbst, mit etwas Auffälligem daneben. Solange Sie nichts hinterlegen, steht dieses Bild als Beispiel in der Schatzkiste.":"This is the idea: the spot itself, with something noticeable beside it. Until you add one of your own, this picture stands in the treasure chest as an example.",
  "Foto vom Fundort":"Photo of the hiding place",
+ "⛶ Vollbild aus":"⛶ Leave full screen",
+ "Neues Kind":"New child",
+ "Tippe ein Motiv an – dann kannst du es mit dem Farbeimer bunt ausmalen.":"Tap a picture – then you can fill it with colour using the bucket.",
+ "{n} Bild":"{n} picture",
+ "{n} Bilder":"{n} pictures",
  "Schatzinsel zum Testen öffnen":"Open Treasure Island for testing",
  "Schatzsuche zurücksetzen":"Reset the treasure hunt",
  "Bilder, Sterne und Medaillen bleiben":"Pictures, stars and medals stay",
@@ -2801,6 +2806,11 @@ const IT={
  "Beispiel: So könnte ein Foto vom Fundort aussehen.":"Esempio: così potrebbe essere una foto del nascondiglio.",
  "So ist es gemeint: die Stelle selbst, mit etwas Auffälligem daneben. Solange Sie nichts hinterlegen, steht dieses Bild als Beispiel in der Schatzkiste.":"L’idea è questa: il punto preciso, con qualcosa che salta all’occhio accanto. Finché non ne mettete una vostra, questa foto resta nel forziere come esempio.",
  "Foto vom Fundort":"Foto del nascondiglio",
+ "⛶ Vollbild aus":"⛶ Esci da schermo intero",
+ "Neues Kind":"Nuovo bambino",
+ "Tippe ein Motiv an – dann kannst du es mit dem Farbeimer bunt ausmalen.":"Tocca un disegno – poi puoi colorarlo con il secchiello.",
+ "{n} Bild":"{n} disegno",
+ "{n} Bilder":"{n} disegni",
  "Schatzinsel zum Testen öffnen":"Apri l’Isola del Tesoro per provare",
  "Schatzsuche zurücksetzen":"Azzera la caccia al tesoro",
  "Bilder, Sterne und Medaillen bleiben":"Disegni, stelle e medaglie restano",
@@ -3235,6 +3245,10 @@ async function setLang(l, nurAnzeigen){
   document.querySelectorAll('.ein-flagge').forEach(b=>b.classList.toggle('an', b.dataset.lang===LANG));
   uebersetzeSeite();
   /* Alles neu zeichnen, was Text enthaelt */
+  /* Die Kinderauswahl fehlte hier. Sie ist der erste Bildschirm ueberhaupt,
+     und auf ihr stehen „Neues Kind" und „N Bilder" - beide blieben nach einem
+     Sprachwechsel deutsch, weil sie schon gezeichnet waren. */
+  if(typeof renderProfiles==='function') renderProfiles();
   if(typeof renderGreeting==='function' && profile) renderGreeting();
   if(typeof renderPicker==='function') renderPicker();
   if(!secIsland.hidden && typeof renderIsland==='function') renderIsland();
@@ -3681,7 +3695,11 @@ function renderProfiles(){
   profiles.forEach(p=>{
     const c=document.createElement('button');
     c.className='pcard';
-    c.innerHTML='<em>'+p.emoji+'</em>'+p.name+'<small>'+(p.count||0)+' Bilder</small>';
+    /* tf() statt zusammenkleben: Im Italienischen steht die Zahl anders im
+       Satz, und „1 Bild" ist nicht „2 Bilder". */
+    const zahl = (p.count||0);
+    c.innerHTML='<em>'+p.emoji+'</em>'+p.name+'<small>'
+      + tf(zahl===1 ? '{n} Bild' : '{n} Bilder', {n:zahl}) + '</small>';
     c.addEventListener('click',e=>{ if(e.target.classList.contains('x')) return; pickProfile(p); });
     const x=document.createElement('button'); x.className='x'; x.textContent='✕';
     x.addEventListener('click',async e=>{
@@ -3696,7 +3714,7 @@ function renderProfiles(){
     c.appendChild(x); list.appendChild(c);
   });
   const add=document.createElement('button');
-  add.className='pcard new'; add.innerHTML='<em>＋</em>Neues Kind';
+  add.className='pcard new'; add.innerHTML='<em>＋</em>'+t('Neues Kind');
   add.addEventListener('click',()=>{ $('maker').hidden=false; $('pname').focus(); });
   list.appendChild(add);
 }
@@ -4768,7 +4786,7 @@ function renderWissen(){
 
 
 /* ---------- Einstellungen ---------- */
-const APP_VERSION='v7-50';
+const APP_VERSION='v7-51';
 let elternFrei=false;
 async function einstellungenOeffnen(){
   $('einUeber').textContent = t('Version')+' '+APP_VERSION+' · '
@@ -5466,9 +5484,14 @@ function setMode(m){
   const d=m==='draw';
   $('modeDraw').classList.toggle('on',d);  $('modeDraw').setAttribute('aria-pressed',d?'true':'false');
   $('modeColor').classList.toggle('on',!d); $('modeColor').setAttribute('aria-pressed',!d?'true':'false');
-  $('homeHint').textContent = d
+  /* Auch hier: durch t(), und die gemerkte Vorlage mitziehen. Der Hinweis
+     traegt data-t und wechselt mit Nachmalen/Ausmalen - ohne das Mitziehen
+     stuende nach einem Sprachwechsel der Satz der jeweils anderen Betriebsart. */
+  const hinweis = d
     ? 'Links steht die Vorlage – im weißen Feld malst du sie nach.'
     : 'Tippe ein Motiv an – dann kannst du es mit dem Farbeimer bunt ausmalen.';
+  $('homeHint').dataset.tOrig = hinweis;
+  $('homeHint').textContent = t(hinweis);
   Store.set('mode',m);
 }
 $('modeDraw').addEventListener('click',()=>setMode('draw'));
@@ -5918,7 +5941,22 @@ $('cBack').addEventListener('click',()=>showSection(secHome));
     if(isFS()){ (document.exitFullscreen||document.webkitExitFullscreen).call(document); }
     else{ (el.requestFullscreen||el.webkitRequestFullscreen).call(el); }
   });
-  const sync=()=>{ btn.textContent = isFS() ? '⛶ Vollbild aus' : '⛶ Vollbild'; setTimeout(()=>{ if(typeof layout==='function') layout(); },150); };
+  /* Zwei Dinge auf einmal, und das zweite ist der Grund, warum es hier
+     umstaendlich aussieht:
+
+     Erstens durch t(). Vorher stand hier rohes Deutsch - der Knopf war beim
+     Start uebersetzt und fiel beim ersten Vollbild-Wechsel zurueck.
+
+     Zweitens wird dataset.tOrig mitgefuehrt. Der Knopf traegt data-t, und
+     uebersetzeSeite() merkt sich beim ersten Mal seinen deutschen Text. Wer
+     im Vollbild die Sprache wechselt, bekaeme sonst wieder "Vollbild" statt
+     "Vollbild aus": Die gemerkte Vorlage wuesste nichts vom Zustand. */
+  const sync=()=>{
+    const roh = isFS() ? '⛶ Vollbild aus' : '⛶ Vollbild';
+    btn.dataset.tOrig = roh;
+    btn.textContent = t(roh);
+    setTimeout(()=>{ if(typeof layout==='function') layout(); },150);
+  };
   document.addEventListener('fullscreenchange',sync);
   document.addEventListener('webkitfullscreenchange',sync);
 })();
