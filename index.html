@@ -1181,6 +1181,19 @@
             <button type="button" class="ein-btn" id="einFotoWahl" data-t>Foto wählen</button>
             <button type="button" class="ein-btn" id="einFotoWeg" data-t>Entfernen</button>
           </div>
+          <!-- Die beiden Wege nach draussen. Ab Werk zu; hier gibt man sie
+               frei. Sie stehen im Elternbereich, also schon hinter der
+               Rechenaufgabe. -->
+          <div class="ein-zeile">
+            <label data-t>Wikipedia im Wissensteil</label>
+            <button type="button" class="ein-btn" id="einFreiWiki"></button>
+          </div>
+          <div class="ein-zeile">
+            <label data-t>Weg-Knopf zur Karte</label>
+            <button type="button" class="ein-btn" id="einFreiKarte"></button>
+          </div>
+          <p class="ein-hinweis" data-t>Beides führt aus der App heraus. Ab Werk ist es zu – hier geben Sie es frei.</p>
+
           <div class="ein-zeile">
             <label data-t>Schatzinsel zum Testen öffnen</label>
             <span class="ein-hinweis" id="einTestWer"></span>
@@ -2370,6 +2383,11 @@ const EN={
  "An":"On",
  "Aus":"Off",
  "gilt nur für":"applies only to",
+ "Wikipedia im Wissensteil":"Wikipedia in the knowledge part",
+ "Weg-Knopf zur Karte":"Map button to the treasure",
+ "Beides führt aus der App heraus. Ab Werk ist es zu – hier geben Sie es frei.":"Both of these lead out of the app. They are closed to begin with – you open them here.",
+ "Freigegeben":"Allowed",
+ "Gesperrt":"Closed",
  "Schatzinsel zum Testen öffnen":"Open Treasure Island for testing",
  "Schatzsuche zurücksetzen":"Reset the treasure hunt",
  "Bilder, Sterne und Medaillen bleiben":"Pictures, stars and medals stay",
@@ -2747,6 +2765,11 @@ const IT={
  "An":"Attivo",
  "Aus":"Spento",
  "gilt nur für":"vale solo per",
+ "Wikipedia im Wissensteil":"Wikipedia nella parte del sapere",
+ "Weg-Knopf zur Karte":"Pulsante mappa verso il tesoro",
+ "Beides führt aus der App heraus. Ab Werk ist es zu – hier geben Sie es frei.":"Tutti e due portano fuori dall’app. All’inizio sono chiusi – qui li aprite voi.",
+ "Freigegeben":"Consentito",
+ "Gesperrt":"Chiuso",
  "Schatzinsel zum Testen öffnen":"Apri l’Isola del Tesoro per provare",
  "Schatzsuche zurücksetzen":"Azzera la caccia al tesoro",
  "Bilder, Sterne und Medaillen bleiben":"Disegni, stelle e medaglie restano",
@@ -4030,6 +4053,33 @@ function goldTierN(){ return TROPHIES.find(t=>t.key==='gold').n; }
    Speicher – damit war die Insel fuer alle Kinder offen, sobald ein Elternteil
    sie fuer eines freigeschaltet hatte. */
 function islandTestMode(){ return !!profile && profile.islandTest==='1'; }
+
+/* ---------- Freigaben der Eltern ------------------------------------------
+
+   Es gibt genau zwei Wege aus dieser App heraus: die Wikipedia-Verweise im
+   Wissensteil und der Weg-Knopf der Schatzkiste, der die Karten-App oeffnet.
+   Beide sind ab Werk ZU. Eltern geben sie im Zahnrad frei, hinter der
+   Rechenaufgabe, die den Elternbereich ohnehin schuetzt.
+
+   Warum ueberhaupt: Apples Richtlinie 1.3 laesst in der Kinder-Kategorie
+   Links nach draussen nur "behind a parental gate" zu. Ohne diese Kategorie
+   waere es nicht noetig - aber es schadet auch dort nicht, wenn Eltern
+   entscheiden, was ihr Kind antippen kann.
+
+   Als Merker im Speicher und nicht am Profil: Es ist eine Entscheidung der
+   Eltern ueber das Geraet, nicht eine Eigenschaft eines Kindes. Zwei
+   Geschwister sollen nicht verschiedene Regeln haben. */
+let wikiFrei = false, karteFrei = false;
+
+async function freigabenLaden(){
+  wikiFrei  = (await Store.get('freiWiki'))  === '1';
+  karteFrei = (await Store.get('freiKarte')) === '1';
+}
+
+async function freigabeSetzen(name, an){
+  await Store.set(name, an ? '1' : '0');
+  await freigabenLaden();
+}
 function islandUnlocked(){ return islandTestMode() || discoveredCount()>=goldTierN(); }
 function bayEarned(b,i){
   const st=bayStats(b);
@@ -4635,7 +4685,10 @@ function renderWissen(){
   });
   host.appendChild(fragen);
 
-  /* Weiterlesen im Internet – offline funktionieren diese Knöpfe nicht. */
+  /* Weiterlesen im Internet – offline funktionieren diese Knöpfe nicht.
+     Und sie erscheinen ueberhaupt nur, wenn die Eltern sie freigegeben
+     haben: Es sind Links aus der App heraus. */
+  if(wikiFrei){
   const wk=document.createElement('div');
   wk.className='wis-card wide';
   wk.innerHTML='<div class="wis-head"><em>\u{1F310}</em><b>'+t('Mehr im Internet')+'</b></div>'
@@ -4652,6 +4705,7 @@ function renderWissen(){
     lh.appendChild(a);
   });
   host.appendChild(wk);
+  }
 
   /* Bildnachweis – bei freien Lizenzen Pflicht. */
   const qc=document.createElement('div');
@@ -4673,7 +4727,7 @@ function renderWissen(){
 
 
 /* ---------- Einstellungen ---------- */
-const APP_VERSION='v7-48';
+const APP_VERSION='v7-49';
 let elternFrei=false;
 async function einstellungenOeffnen(){
   $('einUeber').textContent = t('Version')+' '+APP_VERSION+' · '
@@ -4711,6 +4765,10 @@ async function elternFelderFuellen(){
   const foto = await Store.get('treasurePhoto');
   $('einFotoStatus').textContent = foto ? t('hinterlegt ✓') : t('noch keins');
   $('einFotoWeg').disabled = !foto;
+  $('einFreiWiki').textContent = wikiFrei ? t('Freigegeben') : t('Gesperrt');
+  $('einFreiWiki').classList.toggle('an', wikiFrei);
+  $('einFreiKarte').textContent = karteFrei ? t('Freigegeben') : t('Gesperrt');
+  $('einFreiKarte').classList.toggle('an', karteFrei);
   $('einTest').textContent = islandTestMode() ? t('An') : t('Aus');
   $('einTest').classList.toggle('an', islandTestMode());
   $('einTestWer').textContent = profile ? t('gilt nur für')+' '+profile.name : '';
@@ -4753,6 +4811,14 @@ $('einKoord').addEventListener('input',e=>{
   const dez=parseCoords(v);
   e.target.style.borderColor = dez ? '#8FC7A0' : '#E0A79A';
   if(dez) Store.set('treasureCoords',dez);
+});
+$('einFreiWiki').addEventListener('click',async()=>{
+  await freigabeSetzen('freiWiki', !wikiFrei);
+  await elternFelderFuellen(); uebersetzeSeite();
+});
+$('einFreiKarte').addEventListener('click',async()=>{
+  await freigabeSetzen('freiKarte', !karteFrei);
+  await elternFelderFuellen(); uebersetzeSeite();
 });
 $('einFotoWahl').addEventListener('click',()=>$('treasurePhotoIn').click());
 $('einFotoWeg').addEventListener('click',async()=>{
@@ -4880,7 +4946,9 @@ async function showTreasureCard(){
   const coords=await Store.get('treasureCoords');
   $('treasureHintText').textContent = hint || t('Frag Mama oder Papa – sie wissen, wo der Schatz liegt!');
   const link=$('treasureMapLink');
-  const ll0=parseCoords(coords);
+  /* Der Weg-Knopf braucht beides: einen Ort UND die Freigabe der Eltern.
+     Er oeffnet die Karten-App, und das ist ein Weg aus dieser App heraus. */
+  const ll0=karteFrei ? parseCoords(coords) : null;
   if(ll0){
     const ll=ll0;
     /* Apple Karten: ll setzt die Mitte, q beschriftet die Stecknadel. */
@@ -5854,6 +5922,15 @@ layout();
     if(profile && profile.islandTest!=='1'){ profile.islandTest='1'; await saveProfiles(); }
     await Store.del('islandTest');
   }
+  /* Wer vor dieser Fassung schon Koordinaten hinterlegt hatte, hat den
+     Weg-Knopf benutzt. Ihn stillschweigend abzuschalten waere ein Rueckschritt,
+     den niemand bestellt hat - deshalb gilt er dort einmalig als freigegeben.
+     Danach steht ein Wert im Speicher und diese Zeile greift nie wieder. */
+  if((await Store.get('freiKarte'))===null && (await Store.get('treasureCoords'))){
+    await Store.set('freiKarte','1');
+  }
+  await freigabenLaden();
+
   const last=await Store.get('lastProfile');
   const found=profiles.find(p=>p.id===last);
   if(found) pickProfile(found); else showSection(secProfiles);
