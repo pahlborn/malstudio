@@ -1740,7 +1740,129 @@ const MOTIFS=[
           "M400,450 C444,432 480,442 484,474 C448,486 412,478 400,462"]},
  {emoji:"😊",title:"Das Gesicht",text:"Ein fröhliches Gesicht in die Mitte.",
   shapes:[[382,232,7],[418,232,7],"M378,256 C388,270 412,270 422,256"]}
-]}
+]},
+
+/* ---- Die sechs Fundstuecke der Schatzsuche ------------------------------
+   Sie stehen NICHT in der Motivliste. Man kommt an sie nur ueber die
+   Schatzinsel, eines je Bucht, als letzter Schritt. Vorher hing im
+   Bilderrahmen der Insel irgendein Bild, das nebenbei entstanden war -
+   das hatte mit der Schatzsuche nichts zu tun.
+   Jedes ist eine kleine Szene an seiner Bucht, kein einzelnes Ding:
+   die Truhe steht am Strand, der Schluessel liegt vor dem Leuchtturm.  */
+  {name:"Kompass am Strand",emoji:"🧭",level:"schwer",schatz:true,steps:[
+    {emoji:"🏖️",title:"Der Sand",text:"Eine ruhige Linie quer über das Blatt. Darunter ist Strand.",
+     shapes:["M40,434 C170,422 280,444 400,434 C520,424 640,442 764,430"]},
+    {emoji:"⭕",title:"Das Gehäuse",text:"Ein großer Kreis, der auf dem Sand liegt.",
+     shapes:[[280,300,130]]},
+    {emoji:"💿",title:"Der innere Ring",text:"Noch ein Kreis, ein Stück kleiner.",
+     shapes:[[280,300,102]]},
+    {emoji:"✳️",title:"Die vier Richtungen",text:"Oben, unten, links und rechts je ein kurzer Strich.",
+     shapes:["M280,170 L280,198","M280,402 L280,430","M150,300 L178,300","M382,300 L410,300"]},
+    {emoji:"🔺",title:"Die Nadel",text:"Eine lange Raute. Ihre Spitze zeigt nach oben rechts.",
+     shapes:["M352,218 L300,318 L208,388 L260,288 Z"]},
+    {emoji:"⚫",title:"Die Mitte",text:"Ein Punkt, um den sich die Nadel dreht.",
+     shapes:[[280,300,11]]},
+    {emoji:"🪵",title:"Der Stock",text:"Rechts steht ein Stock im Sand. Er zeigt nach Norden.",
+     shapes:["M668,436 C674,340 672,244 662,146","M666,254 C688,240 706,246 716,262"]},
+    {emoji:"🐚",title:"Die Muschel",text:"Eine Muschel im Sand, dazu ein paar Körner.",
+     shapes:["M436,438 C448,478 478,498 508,502 C538,498 568,478 580,438","M436,438 Q450,406 470,420 Q488,394 508,410 Q528,394 546,420 Q566,406 580,438",[150,486,7],[344,506,6],[746,468,6],[622,486,5]]}
+  ]},
+  {name:"Truhe am Strand",emoji:"🪙",level:"schwer",schatz:true,steps:[
+    {emoji:"🌊",title:"Das Meer",text:"Weit hinten zwei Wellenlinien.",
+     shapes:["M60,128 C124,118 162,136 228,128 C290,120 326,136 384,130","M424,160 C490,150 528,168 594,160 C654,152 694,168 750,162"]},
+    {emoji:"🟫",title:"Der Kasten",text:"Ein breiter Kasten mit runden Ecken unten. Das ist die Truhe.",
+     shapes:["M208,382 L208,466 C208,486 222,498 242,498 L558,498 C578,498 592,486 592,466 L592,382","M208,382 L592,382"]},
+    {emoji:"👀",title:"Die Öffnung",text:"Ein Bogen nach hinten. Jetzt kann man in die Truhe sehen.",
+     shapes:["M208,382 C250,336 330,322 400,322 C470,322 550,336 592,382"]},
+    {emoji:"🎩",title:"Der Deckel",text:"Er ist nach hinten geklappt. Unten die Kante, an der er hängt.",
+     shapes:["M248,318 L552,318","M248,318 C248,238 316,212 400,212 C484,212 552,238 552,318","M286,318 C288,268 336,250 400,250 C464,250 512,268 514,318"]},
+    {emoji:"🪙",title:"Das Gold",text:"Drei Münzen liegen in der Truhe.",
+     shapes:[[302,358,28],[400,348,28],[498,358,28],[302,358,16],[400,348,16],[498,358,16]]},
+    {emoji:"➖",title:"Die Beschläge",text:"Zwei Bänder aus Eisen laufen über die Vorderseite.",
+     shapes:["M272,382 L272,498","M528,382 L528,498"]},
+    {emoji:"🔒",title:"Das Schloss",text:"Vorne in der Mitte ein Schloss mit einem Loch.",
+     shapes:["M364,406 L436,406 L436,460 L364,460 Z",[400,428,12]]},
+    {emoji:"✨",title:"Sand und was herausfiel",text:"Links und rechts der Strand, davor zwei Münzen.",
+     shapes:["M40,484 C88,476 142,488 208,484","M592,484 C650,488 704,476 764,482",[122,520,30],[122,520,17],[678,514,30],[678,514,17],[258,544,6],[544,548,6]]}
+  ]},
+  {name:"Schlüssel am Leuchtturm",emoji:"🗝️",level:"schwer",schatz:true,steps:[
+    {emoji:"🏖️",title:"Der Boden",text:"Eine ruhige Linie quer über das Blatt.",
+     shapes:["M40,470 C160,462 260,478 400,472 C540,466 650,480 764,470"]},
+    {emoji:"🗼",title:"Der Turm",text:"Zwei Striche, die nach oben schmaler werden.",
+     shapes:["M150,474 L188,214","M290,474 L252,214"]},
+    {emoji:"➖",title:"Die Ringe",text:"Zwei Striche quer über den Turm. Da ist er bunt gestreift.",
+     shapes:["M162,390 L278,390","M175,300 L265,300"]},
+    {emoji:"💡",title:"Die Laterne",text:"Oben eine Platte, darauf das Lampenhaus mit spitzem Dach.",
+     shapes:["M166,210 L274,210","M188,208 L188,160 L252,160 L252,208","M176,160 L220,122 L264,160",[220,112,8]]},
+    {emoji:"✨",title:"Das Licht",text:"Drei Strahlen gehen nach rechts hinaus.",
+     shapes:["M294,166 L364,146","M296,182 L372,182","M294,198 L364,218"]},
+    {emoji:"🚪",title:"Die Tür",text:"Unten im Turm eine Tür mit rundem Kopf.",
+     shapes:["M192,474 L192,414 C192,394 205,384 220,384 C235,384 248,394 248,414 L248,474",[238,432,7]]},
+    {emoji:"🌾",title:"Das Gras",text:"Links und rechts vom Turm ein paar Halme.",
+     shapes:["M108,470 C114,442 110,422 100,406","M130,472 C140,448 140,428 134,410","M330,472 C338,446 336,426 326,410","M352,474 C362,450 362,430 356,414"]},
+    {emoji:"⭕",title:"Der Kopf vom Schlüssel",text:"Ganz vorne im Sand liegt ein Ring. Ring in Ring.",
+     shapes:[[360,528,42],[360,528,23]]},
+    {emoji:"🔑",title:"Schaft und Bart",text:"Vom Ring ein langer Strich nach rechts, am Ende der Bart mit einer Kerbe.",
+     shapes:["M402,528 L726,528","M660,528 L660,584 L724,584 L724,528","M692,584 L692,554",[96,512,7],[520,586,6],[762,500,6]]}
+  ]},
+  {name:"Feder über dem Meer",emoji:"🪶",level:"schwer",schatz:true,steps:[
+    {emoji:"🌊",title:"Das Meer",text:"Zwei Linien ganz unten. Das ist das Wasser.",
+     shapes:["M40,494 C170,482 280,504 400,492 C520,480 640,502 764,490","M60,538 C180,528 300,546 420,536 C540,526 660,544 748,534"]},
+    {emoji:"☀️",title:"Die Sonne",text:"Links oben ein Kreis mit Strahlen.",
+     shapes:[[122,128,52],"M122,50 L122,26","M122,206 L122,230","M44,128 L20,128","M200,128 L224,128","M67,73 L50,56","M177,183 L194,200"]},
+    {emoji:"🕊️",title:"Die Möwe",text:"Rechts oben fliegt ein Vogel.",
+     shapes:["M556,120 C580,96 606,96 628,120","M628,120 C650,96 676,96 700,120"]},
+    {emoji:"📏",title:"Der Kiel",text:"Unten links ein Strich, der nach oben rechts wandert.",
+     shapes:["M212,462 C258,442 300,418 344,392"]},
+    {emoji:"➰",title:"Der Stiel",text:"Er geht weiter bis hinauf zur Spitze.",
+     shapes:["M344,392 C420,346 530,268 616,190"]},
+    {emoji:"🌙",title:"Die schmale Fahne",text:"Über dem Stiel ein Bogen. Diese Seite ist schmal.",
+     shapes:["M344,392 C388,320 486,222 616,190"]},
+    {emoji:"🌘",title:"Die breite Fahne",text:"Unter dem Stiel ein weiterer Bogen. Diese Seite ist breiter.",
+     shapes:["M344,392 C416,462 528,378 616,190"]},
+    {emoji:"📶",title:"Die Rippen",text:"Kurze Striche vom Stiel nach außen, alle zur Spitze geneigt.",
+     shapes:["M384,366 L382,330","M426,336 L426,300","M470,304 L474,270","M514,270 L520,242","M556,238 L564,216","M394,378 L410,412","M436,348 L452,382","M480,316 L496,348","M524,282 L540,310","M566,250 L578,272"]},
+    {emoji:"🫧",title:"Wind und Tropfen",text:"Ein paar Striche in der Luft und Punkte darüber.",
+     shapes:["M642,300 C676,290 704,296 732,290","M656,340 C688,330 714,336 740,330","M84,318 C114,308 138,314 164,308",[252,232,7],[692,412,6],[150,420,6],[624,458,5]]}
+  ]},
+  {name:"Kartenstück in den Dünen",emoji:"🧩",level:"schwer",schatz:true,steps:[
+    {emoji:"📄",title:"Das Papier",text:"Drei Kanten: links, oben, unten. Rechts bleibt es offen.",
+     shapes:["M216,234 L470,214","M216,234 L234,398","M234,398 L488,378"]},
+    {emoji:"✂️",title:"Die Risskante",text:"Rechts ist das Papier abgerissen. Lauter kleine Zacken.",
+     shapes:["M470,214 L452,238 L478,256 L456,280 L482,298 L458,322 L484,340 L466,360 L488,378"]},
+    {emoji:"🏝️",title:"Die Küste darauf",text:"Auf dem Papier eine Linie wie ein Ufer.",
+     shapes:["M252,308 C284,278 318,294 350,272 C382,250 414,262 446,254"]},
+    {emoji:"❌",title:"Das Kreuz",text:"Ein Kreuz. Da liegt der Schatz.",
+     shapes:["M400,288 L432,320","M432,288 L400,320"]},
+    {emoji:"⋯",title:"Die Spur",text:"Kleine Striche als Weg zum Kreuz.",
+     shapes:["M276,342 L294,338","M310,332 L328,328","M344,322 L362,318","M376,314 L392,310"]},
+    {emoji:"⛰️",title:"Der Sand",text:"Links und rechts der Sand. Das Papier steckt darin.",
+     shapes:["M40,430 C104,410 158,424 231,370","M484,340 C560,366 650,346 764,362"]},
+    {emoji:"🌾",title:"Das Dünengras",text:"An den Rändern wachsen Halme.",
+     shapes:["M238,412 C232,382 236,362 246,346","M264,418 C264,388 270,370 280,356","M524,352 C534,324 534,304 524,286","M552,348 C564,320 566,300 558,282","M646,354 C638,322 642,302 654,284"]},
+    {emoji:"🕊️",title:"Möwe und Körner",text:"Hoch oben ein Vogel, unten ein paar Sandkörner.",
+     shapes:["M596,150 C614,130 636,130 654,150","M654,150 C672,130 694,130 712,150",[120,292,7],[716,442,6],[344,486,6],[600,500,5]]}
+  ]},
+  {name:"Flaschenpost in der Brandung",emoji:"🍾",level:"schwer",schatz:true,steps:[
+    {emoji:"🫙",title:"Der Bauch",text:"Zwei gerade Seiten und ein runder Boden. Das ist die Flasche.",
+     shapes:["M336,466 L336,306 C336,278 358,262 358,228","M464,466 L464,306 C464,278 442,262 442,228","M336,466 C336,482 348,490 364,490 L436,490 C452,490 464,482 464,466"]},
+    {emoji:"🔼",title:"Der Hals",text:"Oben ein schmaler Hals.",
+     shapes:["M358,228 L358,196","M442,228 L442,196"]},
+    {emoji:"🟤",title:"Der Korken",text:"Und darauf ein Korken.",
+     shapes:["M352,196 L448,196 L448,158 L352,158 Z"]},
+    {emoji:"📜",title:"Die Rolle darin",text:"Schräg in der Flasche liegt ein gerolltes Blatt.",
+     shapes:["M358,354 L436,330","M368,412 L446,388","M358,354 C346,362 352,402 368,412","M436,330 C450,338 454,378 446,388"]},
+    {emoji:"🌀",title:"Das Ende der Rolle",text:"Vorne sieht man, wie das Blatt gerollt ist.",
+     shapes:[[366,382,15]]},
+    {emoji:"🧵",title:"Die Schnur",text:"Zwei Schnüre halten die Rolle zusammen.",
+     shapes:["M392,344 L400,402","M414,338 L422,396"]},
+    {emoji:"🌊",title:"Die Brandung",text:"Links und rechts das Wasser. Die Flasche steht mittendrin.",
+     shapes:["M40,452 C130,442 240,458 336,450","M464,450 C560,458 660,442 764,452","M232,452 C250,432 274,432 292,452","M508,450 C526,430 552,430 570,450"]},
+    {emoji:"🫧",title:"Der Schaum",text:"Ein paar Blasen um die Flasche herum.",
+     shapes:[[170,482,10],[630,476,10],[276,496,7],[540,500,7],[400,528,6]]},
+    {emoji:"🕊️",title:"Zwei Möwen",text:"Weit hinten fliegen zwei Vögel.",
+     shapes:["M128,178 C144,162 162,162 178,178","M178,178 C194,162 212,162 228,178","M584,140 C598,126 614,126 628,140","M628,140 C642,126 658,126 672,140"]}
+  ]}
 ];
 
 /* ---- Englische Übersetzungen für die Sprachausgabe (nur Vorlesen, UI bleibt Deutsch) ---- */
@@ -1993,6 +2115,69 @@ const MOTIF_EN={
     {title:"The stem",text:"A long line going down."},
     {title:"The leaves",text:"Two leaves on the stem."},
     {title:"The face",text:"A happy face in the middle."}
+  ]},
+  "Kompass am Strand":{name:"Compass on the Beach",steps:[
+    {title:"The sand",text:"A calm line right across the paper. Below it is the beach."},
+    {title:"The case",text:"A big circle lying on the sand."},
+    {title:"The inner ring",text:"Another circle, a little smaller."},
+    {title:"The four directions",text:"A short line at the top, at the bottom, on the left and on the right."},
+    {title:"The needle",text:"A long diamond. Its point looks up to the right."},
+    {title:"The middle",text:"A dot for the needle to turn around."},
+    {title:"The stick",text:"On the right a stick stands in the sand. It points north."},
+    {title:"The shell",text:"A shell in the sand, and a few grains as well."}
+  ]},
+  "Truhe am Strand":{name:"Chest on the Beach",steps:[
+    {title:"The sea",text:"Two wavy lines far behind."},
+    {title:"The box",text:"A wide box with round corners at the bottom. That is the chest."},
+    {title:"The opening",text:"A curve towards the back. Now you can see into the chest."},
+    {title:"The lid",text:"It is folded back. Underneath, the edge it hangs from."},
+    {title:"The gold",text:"Three coins lie in the chest."},
+    {title:"The iron bands",text:"Two iron bands run across the front."},
+    {title:"The lock",text:"A lock with a keyhole in the middle at the front."},
+    {title:"Sand, and what fell out",text:"The beach on the left and right, two coins in front."}
+  ]},
+  "Schlüssel am Leuchtturm":{name:"The Key at the Lighthouse",steps:[
+    {title:"The ground",text:"A calm line right across the paper."},
+    {title:"The tower",text:"Two lines that come closer together towards the top."},
+    {title:"The stripes",text:"Two lines across the tower. That is where it is striped."},
+    {title:"The lantern",text:"A platform on top, and on it the lamp room with a pointed roof."},
+    {title:"The light",text:"Three beams go out to the right."},
+    {title:"The door",text:"A door with a round top at the foot of the tower."},
+    {title:"The grass",text:"A few blades left and right of the tower."},
+    {title:"The bow of the key",text:"Right at the front a ring lies in the sand. Ring inside ring."},
+    {title:"Shaft and bit",text:"A long line to the right from the ring, and at the end the bit with a notch."}
+  ]},
+  "Feder über dem Meer":{name:"Feather over the Sea",steps:[
+    {title:"The sea",text:"Two lines at the very bottom. That is the water."},
+    {title:"The sun",text:"A circle with beams at the top left."},
+    {title:"The seagull",text:"A bird flies at the top right."},
+    {title:"The quill",text:"A line at the bottom left, travelling up to the right."},
+    {title:"The shaft",text:"It carries on all the way up to the tip."},
+    {title:"The narrow side",text:"A curve above the shaft. This side is narrow."},
+    {title:"The wide side",text:"Another curve below the shaft. This side is wider."},
+    {title:"The barbs",text:"Short lines from the shaft outwards, all leaning towards the tip."},
+    {title:"Wind and drops",text:"A few lines in the air and some dots above."}
+  ]},
+  "Kartenstück in den Dünen":{name:"Piece of the Map in the Dunes",steps:[
+    {title:"The paper",text:"Three edges: left, top, bottom. The right stays open."},
+    {title:"The torn edge",text:"On the right the paper is torn. Lots of little points."},
+    {title:"The coast on it",text:"A line on the paper, like a shore."},
+    {title:"The cross",text:"A cross. That is where the treasure lies."},
+    {title:"The trail",text:"Little dashes as a path to the cross."},
+    {title:"The sand",text:"Sand to the left and to the right. The paper is stuck in it."},
+    {title:"The dune grass",text:"Blades of grass grow along the edges."},
+    {title:"Seagull and grains",text:"A bird high above, a few grains of sand below."}
+  ]},
+  "Flaschenpost in der Brandung":{name:"Message in a Bottle in the Surf",steps:[
+    {title:"The body",text:"Two straight sides and a round bottom. That is the bottle."},
+    {title:"The neck",text:"A narrow neck on top."},
+    {title:"The cork",text:"And a cork on top of that."},
+    {title:"The scroll inside",text:"A rolled-up sheet lies at an angle in the bottle."},
+    {title:"The end of the scroll",text:"At the front you can see how the sheet is rolled."},
+    {title:"The string",text:"Two strings hold the scroll together."},
+    {title:"The surf",text:"Water to the left and to the right. The bottle stands in the middle of it."},
+    {title:"The foam",text:"A few bubbles around the bottle."},
+    {title:"Two seagulls",text:"Two birds fly far in the distance."}
   ]}
 };
 /* ============================================================
@@ -2247,6 +2432,69 @@ const MOTIF_IT={
     {title:"Il gambo",text:"Una linea lunga verso il basso."},
     {title:"Le foglie",text:"Due foglie sul gambo."},
     {title:"Il visetto",text:"Un visetto allegro al centro."}
+  ]},
+  "Kompass am Strand":{name:"La bussola sulla spiaggia",steps:[
+    {title:"La sabbia",text:"Una linea tranquilla attraverso il foglio. Sotto c’è la spiaggia."},
+    {title:"La cassa",text:"Un cerchio grande appoggiato sulla sabbia."},
+    {title:"L’anello interno",text:"Un altro cerchio, un po’ più piccolo."},
+    {title:"Le quattro direzioni",text:"Un trattino in alto, uno in basso, uno a sinistra e uno a destra."},
+    {title:"L’ago",text:"Un rombo lungo. La punta guarda in alto a destra."},
+    {title:"Il centro",text:"Un punto attorno a cui gira l’ago."},
+    {title:"Il bastone",text:"A destra un bastone piantato nella sabbia. Indica il nord."},
+    {title:"La conchiglia",text:"Una conchiglia nella sabbia e qualche granello."}
+  ]},
+  "Truhe am Strand":{name:"Il baule sulla spiaggia",steps:[
+    {title:"Il mare",text:"Due onde lontane, in fondo."},
+    {title:"La cassa",text:"Una cassa larga con gli angoli tondi in basso. È il baule."},
+    {title:"L’apertura",text:"Un arco verso il fondo. Adesso si vede dentro il baule."},
+    {title:"Il coperchio",text:"È ribaltato all’indietro. Sotto, il bordo a cui è attaccato."},
+    {title:"L’oro",text:"Tre monete dentro al baule."},
+    {title:"Le fasce di ferro",text:"Due fasce di ferro sul davanti."},
+    {title:"La serratura",text:"Al centro, davanti, una serratura con il buco."},
+    {title:"La sabbia e ciò che è caduto",text:"La spiaggia a destra e a sinistra, davanti due monete."}
+  ]},
+  "Schlüssel am Leuchtturm":{name:"La chiave al faro",steps:[
+    {title:"Il terreno",text:"Una linea tranquilla attraverso il foglio."},
+    {title:"La torre",text:"Due linee che salgono avvicinandosi."},
+    {title:"Le righe",text:"Due righe sulla torre. Lì è a strisce."},
+    {title:"La lanterna",text:"In cima una piattaforma e sopra la lanterna con il tetto a punta."},
+    {title:"La luce",text:"Tre raggi vanno verso destra."},
+    {title:"La porta",text:"In basso una porta con la cima tonda."},
+    {title:"L’erba",text:"Qualche filo d’erba a destra e a sinistra della torre."},
+    {title:"L’anello della chiave",text:"Davanti, nella sabbia, un anello. Anello dentro anello."},
+    {title:"Il gambo e l’ingegno",text:"Dall’anello una linea lunga verso destra e in fondo l’ingegno con una tacca."}
+  ]},
+  "Feder über dem Meer":{name:"La piuma sopra il mare",steps:[
+    {title:"Il mare",text:"Due linee in fondo. È l’acqua."},
+    {title:"Il sole",text:"In alto a sinistra un cerchio con i raggi."},
+    {title:"Il gabbiano",text:"In alto a destra vola un uccello."},
+    {title:"Il calamo",text:"In basso a sinistra una linea che sale verso destra."},
+    {title:"Lo stelo",text:"Continua fino alla punta."},
+    {title:"Il lato stretto",text:"Sopra lo stelo un arco. Questo lato è stretto."},
+    {title:"Il lato largo",text:"Sotto lo stelo un altro arco. Questo lato è più largo."},
+    {title:"Le barbe",text:"Trattini dallo stelo verso fuori, tutti inclinati verso la punta."},
+    {title:"Vento e gocce",text:"Qualche trattino nell’aria e dei puntini."}
+  ]},
+  "Kartenstück in den Dünen":{name:"Il pezzo di mappa tra le dune",steps:[
+    {title:"La carta",text:"Tre bordi: a sinistra, sopra e sotto. A destra resta aperto."},
+    {title:"Il bordo strappato",text:"A destra la carta è strappata. Tanti dentini."},
+    {title:"La costa disegnata",text:"Sulla carta una linea come una riva."},
+    {title:"La croce",text:"Una croce. Lì c’è il tesoro."},
+    {title:"La traccia",text:"Trattini come sentiero verso la croce."},
+    {title:"La sabbia",text:"Sabbia a destra e a sinistra. La carta è infilata dentro."},
+    {title:"L’erba delle dune",text:"Ai bordi crescono i fili d’erba."},
+    {title:"Gabbiano e granelli",text:"In alto un uccello, in basso qualche granello."}
+  ]},
+  "Flaschenpost in der Brandung":{name:"Il messaggio in bottiglia tra le onde",steps:[
+    {title:"Il corpo",text:"Due lati dritti e il fondo tondo. È la bottiglia."},
+    {title:"Il collo",text:"In cima un collo stretto."},
+    {title:"Il tappo",text:"E sopra il tappo di sughero."},
+    {title:"Il rotolo dentro",text:"Dentro, di traverso, un foglio arrotolato."},
+    {title:"La fine del rotolo",text:"Davanti si vede come è arrotolato il foglio."},
+    {title:"Lo spago",text:"Due spaghi tengono chiuso il rotolo."},
+    {title:"Le onde",text:"L’acqua a destra e a sinistra. La bottiglia sta in mezzo."},
+    {title:"La schiuma",text:"Qualche bolla attorno alla bottiglia."},
+    {title:"Due gabbiani",text:"Lontano volano due uccelli."}
   ]}
 };
 
@@ -2456,6 +2704,7 @@ const EN={
  "Alle Motive gemalt":"All pictures drawn",
  "Verstecktes Detail gefunden":"Hidden detail found",
  "Wissensfrage beantwortet":"Quiz question answered",
+ "Das Fundstück gemalt":"Treasure piece painted",
  "Bonus":"Bonus",
  "Pflicht":"Required",
  "Wusstest du?":"Did you know?",
@@ -2564,7 +2813,7 @@ const EN={
  "Goldmünze":"Gold coin",
  "Feder":"Feather",
  "Kartenstück":"Map piece",
- "Edelstein":"Gemstone",
+ "Flaschenpost":"Message in a bottle",
  "Deine Schatzfragmente":"Your treasure pieces",
  "Beginne dort, wo die Boote liegen, und halte dich nach Norden.":"Begin where the boats lie, and keep heading north.",
  "Folge dem Licht, das sich dreht. Es zeigt dir, wo Land ist.":"Follow the turning light. It shows you where the land is.",
@@ -2846,6 +3095,7 @@ const IT={
  "Alle Motive gemalt":"Tutti i disegni fatti",
  "Verstecktes Detail gefunden":"Dettaglio nascosto trovato",
  "Wissensfrage beantwortet":"Domanda risolta",
+ "Das Fundstück gemalt":"Pezzo del tesoro dipinto",
  "Bonus":"Bonus",
  "Pflicht":"Obbligatoria",
  "Wusstest du?":"Lo sapevi?",
@@ -2954,7 +3204,7 @@ const IT={
  "Goldmünze":"Moneta d’oro",
  "Feder":"Piuma",
  "Kartenstück":"Pezzo di mappa",
- "Edelstein":"Pietra preziosa",
+ "Flaschenpost":"Messaggio in bottiglia",
  "Deine Schatzfragmente":"I tuoi pezzi del tesoro",
  "Beginne dort, wo die Boote liegen, und halte dich nach Norden.":"Comincia dove stanno le barche e tieni la rotta verso nord.",
  "Folge dem Licht, das sich dreht. Es zeigt dir, wo Land ist.":"Segui la luce che gira. Ti mostra dov’è la terra.",
@@ -3854,7 +4104,7 @@ async function renderMotifGrid(){
 }
 $('trophyCTA').addEventListener('click',()=>{
   const list=allMotifs(), counts=motifCounts();
-  const idx=list.findIndex(m=>!counts[m.name]);
+  const idx=list.findIndex(m=>!m.schatz && !counts[m.name]);
   cameFromIsland=false;
   if(idx>=0) openMotif(idx); else showSection(secHome);
 });
@@ -3954,6 +4204,7 @@ const ISLAND_FALLBACK_SVG =
 const BAYS=[
   {key:'muschel', nr:1, name:'Muschelbucht', emoji:'🐚', x:53.2, y:69.3, side:'right',
    motifs:['Muschel','Seestern','Sandburg','Krabbe'],
+   fund:'Kompass am Strand',
    story:'Hier läuft das Meer nur knöcheltief an den Strand und legt ab, was es unterwegs gefunden hat. Der Weg um die Insel beginnt genau an dieser Stelle.',
    fact:'Muscheln sind die Putzkolonne des Meeres: Eine einzige Miesmuschel zieht am Tag über zwanzig Liter Wasser durch sich hindurch und lässt es sauberer wieder heraus. Krabben dagegen tragen ihr Skelett außen, wie eine Rüstung. Wird sie beim Wachsen zu eng, platzt sie auf – die Krabbe steigt heraus und trägt darunter schon eine neue, noch ganz weiche.',
    hidden:{was:'Finde die kleine Muschel im Sand', icon:'🐚', x:59, y:76, r:30},
@@ -3961,6 +4212,7 @@ const BAYS=[
      o:['Sie wächst einfach mit','Sie platzt auf, und darunter wartet schon eine neue','Die Krabbe legt sie für immer ab']}},
   {key:'leuchtturm', nr:2, name:'Leuchtturmbucht', emoji:'🗼', x:60.4, y:81.4, side:'right',
    motifs:['Leuchtturm','Haus am Meer','Strandkorb','Palme'],
+   fund:'Schlüssel am Leuchtturm',
    story:'Oben auf der Landzunge dreht sich ein Licht, immer die gleiche Runde. Für die Boote draußen heißt das: Hier ist Land, hier geht es nach Hause.',
    fact:'Der Name „Albarella“ kommt nicht vom Meer, sondern von einem Baum: der Silberpappel, auf Italienisch „albarella“. Ihre Blätter sind auf der Unterseite silbrig behaart – fährt der Wind hinein, wechselt der ganze Baum die Farbe.',
    hidden:{was:'Finde die Möwe am Himmel', icon:'🕊️', x:68, y:86, r:32},
@@ -3968,6 +4220,7 @@ const BAYS=[
      o:['Von einem Seeräuber','Von einer Muschelsorte','Von einem Baum, der Silberpappel']}},
   {key:'segel', nr:3, name:'Segelbucht', emoji:'⛵', x:74.1, y:62.4, side:'left',
    motifs:['Segelboot','Piratenschiff','Vespa','Möwe'],
+   fund:'Truhe am Strand',
    story:'Hier riecht die Luft nach Salz und nach warmem Holz. Die Boote liegen am Steg und klappern leise mit den Leinen, als könnten sie es kaum abwarten.',
    fact:'Diese Insel hat kein Mensch gebaut, sondern ein Fluss. Vor etwa 400 Jahren suchte sich der Po ein neues Bett und schob dabei so viel Sand und Schlamm vor sich her, dass daraus neue Inseln entstanden – eine davon ist Albarella.',
    hidden:{was:'Finde das zweite, kleinere Boot am Horizont', icon:'⛵', x:69, y:55, r:30},
@@ -3975,6 +4228,7 @@ const BAYS=[
      o:['Der Fluss Po, mit Sand und Schlamm','Ein Vulkan unter dem Meer','Fischer, die Steine aufschütteten']}},
   {key:'tiefsee', nr:4, name:'Tiefseebucht', emoji:'🐬', x:77.3, y:49.9, side:'left',
    motifs:['Fisch','Delfin','Wal','Schildkröte'],
+   fund:'Feder über dem Meer',
    story:'Ein paar Schritte weiter draußen wird das Wasser dunkelblau, und der Boden verschwindet. Wer geduldig genug hinschaut, sieht irgendwann etwas vorbeiziehen.',
    fact:'In der Adria leben mehr als 450 verschiedene Fischarten – von fingerkleinen Grundeln bis zu Schwertfischen. Und manchmal kommt größerer Besuch vorbei: Delfine, die in Gruppen jagen, und Meeresschildkröten, die zum Luftholen auftauchen.',
    hidden:{was:'Finde den Delfin, der aus dem Wasser springt', icon:'🐬', x:66, y:42, r:34},
@@ -3982,6 +4236,7 @@ const BAYS=[
      o:['Pinguine und Eisbären','Delfine und Meeresschildkröten','Flusspferde und Krokodile']}},
   {key:'wunder', nr:5, name:'Wunderbucht', emoji:'🌈', x:49.1, y:56.0, side:'right',
    motifs:['Herz','Blume','Schmetterling','Regenbogen'],
+   fund:'Kartenstück in den Dünen',
    story:'Hinter den Dünen wird es still. Kein Weg führt gerade, kein Baum steht wie der andere. Was hier entsteht, muss niemandem gefallen außer dir.',
    fact:'Albarella ist eine Insel aus Bäumen: über zwei Millionen stehen hier, und sie gehören zu etwa 150 verschiedenen Arten – Pinien, Steineichen, Silberpappeln und viele mehr. Von oben sieht die Insel deshalb aus wie ein grünes Kissen im Meer.',
    hidden:{was:'Finde den Reiher im Gras', icon:'🦩', x:44, y:62, r:32},
@@ -3989,6 +4244,7 @@ const BAYS=[
      o:['Etwa 3','Etwa 15','Etwa 150']}},
   {key:'nasch', nr:6, name:'Naschbucht', emoji:'🍦', x:61.4, y:24.3, side:'left',
    motifs:['Eis','Wassermelone','Pizza','Luftballons'],
+   fund:'Flaschenpost in der Brandung',
    story:'Am Ende des Weges liegt der kleine Hafen, und dort gibt es Eis. Der alte Pirat, sagt man, hat hier nie widerstehen können.',
    fact:'Im Sommer wird das Wasser vor Albarella 24 bis 27 Grad warm – wie eine Badewanne, die nie kalt wird. Weiter draußen ist das Mittelmeer dafür tief: an seiner tiefsten Stelle über 5000 Meter. Da könnte man die höchsten Berge der Alpen hineinstellen, und oben wäre noch Wasser darüber.',
    hidden:{was:'Finde die kleine Krabbe am Weg', icon:'🦀', x:56, y:30, r:26},
@@ -4019,7 +4275,7 @@ const FRAGMENTS=[
    line:'Über der Tiefe kreisen die Vögel. Bleib an der Küste.'},
   {emoji:'🧩', name:'Kartenstück',
    line:'Hinter den Dünen wird die Insel schmal.'},
-  {emoji:'💎', name:'Edelstein',
+  {emoji:'🍾', name:'Flaschenpost',
    line:'Am spitzesten Ende, wo das Meer von zwei Seiten kommt: Capo Nord.'}
 ];
 
@@ -4060,6 +4316,29 @@ function islandCounts(){
   return out;
 }
 
+/* ---------- Das Fundstueck ------------------------------------------------
+
+   Jede Bucht hat ein eigenes Motiv, das es in der Motivliste nicht gibt.
+   Es ist der letzte Schritt der Bucht; erst wenn es gemalt ist, schreibt der
+   alte Pirat seine Zeile. Vorher zeigte der Bilderrahmen der Insel das
+   neueste Bild der Bucht - eines, das mit der Schatzsuche nichts zu tun
+   hatte und oft lange vorher entstanden war. */
+function fundBonusSet(){ try{ return JSON.parse(profile.islandFund||'[]'); }catch(e){ return []; } }
+function fundDone(b){ return !!islandCounts()[b.fund] || fundBonusSet().indexOf(b.key)>=0; }
+/* Einmalige Umstellung: Wer eine Bucht schon fertig hatte, bevor es das
+   Fundstueck gab, behaelt sie fertig. Sonst waeren Zeilen wieder verschwunden,
+   die ein Kind sich laengst erarbeitet hat. */
+async function fundMigrieren(){
+  if(!profile || profile.islandFundMigriert==='1') return;
+  const habe=fundBonusSet(), st3=star3Set();
+  BAYS.forEach(b=>{
+    if(bayStats(b).full && st3.indexOf(b.key)>=0 && habe.indexOf(b.key)<0) habe.push(b.key);
+  });
+  profile.islandFund=JSON.stringify(habe);
+  profile.islandFundMigriert='1';
+  await saveProfiles();
+}
+
 function bayStats(b){
   const c=islandCounts();
   const done=b.motifs.filter(n=>c[n]).length;
@@ -4067,7 +4346,7 @@ function bayStats(b){
 }
 /* Eine Bucht ist erst fertig, wenn alle Motive gemalt UND die Wissensfrage
    beantwortet ist. Das Verstecken-Suchen bleibt freiwillig. */
-function bayComplete(b){ return bayStats(b).full && star3Set().indexOf(b.key)>=0; }
+function bayComplete(b){ return bayStats(b).full && star3Set().indexOf(b.key)>=0 && fundDone(b); }
 /* Eine Quelle fuer die Aufgabenzeile – Zettel und Hauptknopf duerfen nie
    verschiedene Dinge sagen. */
 function naechsterSchritt(b){
@@ -4075,6 +4354,7 @@ function naechsterSchritt(b){
   if(nx) return {text:tf('\u{1F449} Jetzt dran: {m} malen',{m:t(nx)}), fertig:false};
   if(factReadSet().indexOf(b.key)<0) return {text:'\u{1F4DC} '+t('Jetzt dran: „Wusstest du?“ lesen'), fertig:false};
   if(star3Set().indexOf(b.key)<0) return {text:'\u{1F9E0} '+t('Jetzt dran: die Wissensfrage'), fertig:false};
+  if(!fundDone(b)) return {text:tf('\u{1F449} Jetzt dran: {m} malen',{m:t(b.fund)}), fertig:false};
   return {text:'\u2713 '+t('Bucht geschafft!'), fertig:true};
 }
 /* Nur die zusammenhaengende Reihe fertiger Buchten von vorne. */
@@ -4142,7 +4422,7 @@ async function freigabeSetzen(name, an){
 function islandUnlocked(){ return islandTestMode() || discoveredCount()>=goldTierN(); }
 function bayEarned(b,i){
   const st=bayStats(b);
-  return [st.full, star2Set().indexOf(b.key)>=0, star3Set().indexOf(b.key)>=0];
+  return [st.full, star2Set().indexOf(b.key)>=0, star3Set().indexOf(b.key)>=0, fundDone(b)];
 }
 
 /* Marker skalieren mit der Kartenbreite (Design-Basis: 800px breit) */
@@ -4424,7 +4704,7 @@ async function renderBaySide(){
     scroll.appendChild(p);
   }else{
     const earned=bayEarned(b,i);
-    const labels=[t('Alle Motive gemalt'),t('Verstecktes Detail gefunden'),t('Wissensfrage beantwortet')];
+    const labels=[t('Alle Motive gemalt'),t('Verstecktes Detail gefunden'),t('Wissensfrage beantwortet'),t('Das Fundstück gemalt')];
     const stars=document.createElement('div');
     stars.className='isl-stars';
     labels.forEach((l,idx)=>{
@@ -4524,6 +4804,14 @@ async function renderBaySide(){
   }else if(star3Set().indexOf(b.key)<0){
     cta.textContent=t('Wissensfrage beantworten')+' →';
     cta.addEventListener('click',()=>openBayQuiz(b));
+  }else if(!fundDone(b)){
+    /* Die Belohnung der Bucht: ein Bild, das es sonst nirgends gibt. */
+    cta.className='isl-cta gold';
+    cta.textContent=tf('{m} malen →',{m:t(b.fund)});
+    cta.addEventListener('click',()=>{
+      const idx=allMotifs().findIndex(m=>m.name===b.fund);
+      if(idx>=0){ cameFromIsland=true; openMotif(idx); }
+    });
   }else{
     const nextIdx=BAYS.findIndex((x,n)=>n>i && !bayComplete(x));
     if(nextIdx>=0){
@@ -4548,15 +4836,20 @@ async function newestPicFor(b){
   /* Nur Bilder zu Motiven, die in diesem Durchgang schon zaehlen. Sonst haengt
      im Rahmen ein altes Bild, waehrend die Aufgabe noch verlangt, es zu malen. */
   const cc=islandCounts(), mine=b.motifs.filter(n=>cc[n]);
-  if(!mine.length) return null;
+  const fund=!!cc[b.fund];
+  if(!mine.length && !fund) return null;
   const ks=(await Store.keys('pic:'+profile.id+':')).sort().reverse();
+  let ersatz=null;
   for(const k of ks){
     try{
       const rec=JSON.parse(await Store.get(k));
-      if(rec && rec.img && mine.indexOf(rec.motif)>=0) return rec.img;
+      if(!rec || !rec.img) continue;
+      /* Das Fundstueck gehoert in den Rahmen, sobald es da ist. */
+      if(fund && rec.motif===b.fund) return rec.img;
+      if(!ersatz && mine.indexOf(rec.motif)>=0) ersatz=rec.img;
     }catch(e){}
   }
-  return null;
+  return ersatz;
 }
 
 /* ---------- Wissensseite ----------
@@ -4786,7 +5079,7 @@ function renderWissen(){
 
 
 /* ---------- Einstellungen ---------- */
-const APP_VERSION='v7-51';
+const APP_VERSION='v7-52';
 let elternFrei=false;
 async function einstellungenOeffnen(){
   $('einUeber').textContent = t('Version')+' '+APP_VERSION+' · '
@@ -5208,6 +5501,10 @@ async function resetIsland(){
   profile.islandStar2 = '[]';
   profile.islandStar3 = '[]';
   profile.islandFacts = '[]';
+  /* Auch die Gutschrift aus der Umstellung faellt weg: Sonst waeren nach dem
+     Zuruecksetzen sechs Fundstuecke schon abgehakt, ohne dass eines gemalt ist. */
+  profile.islandFund = '[]';
+  profile.islandFundMigriert = '1';
   profile.treasureFound = false;
   await saveProfiles();
   selBay = BAYS[0].key;
@@ -5249,7 +5546,7 @@ async function resetIsland(){
   /* Nach einem langen Druck darf der anschliessende Klick die Insel nicht auch noch oeffnen. */
   b.addEventListener('click',e=>{ if(held){ e.stopImmediatePropagation(); held=false; } },true);
 })();
-$('islBtn').addEventListener('click',()=>{
+$('islBtn').addEventListener('click',async ()=>{
   if(!islandUnlocked()){
     const need=goldTierN()-discoveredCount();
     toast(tf(need===1
@@ -5257,6 +5554,7 @@ $('islBtn').addEventListener('click',()=>{
       : '🗺️ Noch {n} Motive bis zur Goldmedaille – dann öffnet sich die Schatzinsel!',{n:need}));
     return;
   }
+  await fundMigrieren();
   const i=BAYS.findIndex((b,n)=>bayUnlocked(n) && !bayComplete(b));
   selBay=BAYS[i>=0?i:BAYS.length-1].key;
   findMode=false;
@@ -5280,7 +5578,9 @@ const LEVEL_ORDER={leicht:0,mittel:1,schwer:2};
 function levelRank(lv){ return LEVEL_ORDER.hasOwnProperty(lv) ? LEVEL_ORDER[lv] : 3; }
 function renderPicker(){
   picker.textContent='';
-  const items=allMotifs().map((m,i)=>({m,i}));
+  /* Die Fundstuecke der Schatzsuche stehen hier nicht: Man kommt an sie nur
+     ueber die Insel, sonst waere die Belohnung schon vorher aufgebraucht. */
+  const items=allMotifs().map((m,i)=>({m,i})).filter(x=>!x.m.schatz);
   items.sort((a,b)=>levelRank(a.m.level)-levelRank(b.m.level));
   items.forEach(({m,i})=>{
     const b=document.createElement('button');
