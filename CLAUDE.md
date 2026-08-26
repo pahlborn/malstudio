@@ -65,7 +65,8 @@ umgekehrt.* Am Ende sollen Eltern sagen: „Das hat mein Kind gemalt?"
 ## Aktueller Stand (Ausgangspunkt für Claude Code)
 
 `index.html` ist die App (eine große Einzeldatei, ~2000 Zeilen). Sie enthält:
-- 30 Motive (Schritt-für-Schritt, plus „Familie" und eigene Motive der Kinder)
+- 29 Motive in der Motivliste, dazu sechs Fundstücke, die es nur auf der
+  Schatzinsel gibt (`schatz:true`), und die eigenen Motive der Kinder
 - Zwei Modi: **Nachmalen** (Schritt für Schritt mit Vorlage links) und
   **Ausmalen** (kompletter Umriss vorgezeichnet, Tap-to-fill)
 - Profile pro Kind, Galerie pro Kind, Sticker-Sammelalbum (24 Sticker)

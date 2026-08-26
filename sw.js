@@ -1,5 +1,5 @@
 /* Service Worker – speichert die App fürs Offline-Malen */
-const CACHE = 'malstudio-v7-48';
+const CACHE = 'malstudio-v7-52';
 const ASSETS = [
   './index.html',
   './fonts.css',
@@ -36,8 +36,18 @@ const ASSETS = [
   './sprite-kringel.png'
 ];
 
+/* Darf fehlen. Das Beispielfoto ist keine Pflicht - fehlt die Datei, laeuft
+   die App trotzdem offline. Es steht deshalb NICHT in ASSETS: addAll() bricht
+   bei einer einzigen fehlenden Datei ab und nimmt den ganzen Vorrat mit. */
+const KANN_FEHLEN = ['./foto-fundort-beispiel.jpg'];
+
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(c => c.addAll(ASSETS).then(() =>
+        Promise.all(KANN_FEHLEN.map(u => c.add(u).catch(() => {})))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', e => {

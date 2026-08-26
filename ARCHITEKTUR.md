@@ -41,6 +41,9 @@ Jeweils `<section>` mit `hidden`-Umschaltung über `showSection(sec)`:
   ein Kreis als Array `[cx, cy, r]`. Koordinatensystem: **viewBox 800×600**.
   `level` ∈ {leicht, mittel, schwer, Familie}. Eigene Motive der Kinder tragen
   `level:"von mir"` und ein `_key` (Storage-Schlüssel).
+  Sechs Motive tragen `schatz:true`: die Fundstücke der Schatzsuche. Sie
+  stehen nicht im Picker (`renderPicker()` filtert sie heraus); man kommt an
+  sie nur über die Insel, als letzten Schritt einer Bucht (`BAYS[i].fund`).
 - `COLORS` (~Z.913): 36 Farben (Hex). `SIZES` (~Z.922): 4 Stiftbreiten
   (relativ zur Blatthöhe).
 - `STICKERS` (~Z.1432): 24 Emoji-Sticker.
