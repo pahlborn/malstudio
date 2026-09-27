@@ -125,8 +125,11 @@ mehr Formen erkennen. **Ohne KI/Server** – klassische Geometrie. Ziel:
 1. **Kleine, stabile Schritte.** Ein Feature pro Iteration, lauffähig lassen.
 2. **Nach jeder Änderung testen** – im Browser öffnen, auf dem iPad prüfen
    (Touch, beide Ausrichtungen), erst dann weiter.
-3. **Bei jedem Release** die Cache-Version in `sw.js` erhöhen
-   (`const CACHE = 'malstudio-vX-Y'`), sonst lädt das iPad die alte Fassung.
+3. **Bei jedem Release** die Fassungsnummer erhöhen – an **beiden** Stellen:
+   `sw.js` (`const CACHE = 'malstudio-vX-Y'`) und `index.html`
+   (`const APP_VERSION='vX-Y'`, sichtbar im Zahnrad). Sonst lädt das iPad die
+   alte Fassung, oder es zeigt eine Nummer an, die nicht stimmt. Die
+   Werkzeuge brechen ab, wenn die beiden auseinandergehen.
 4. **Refactoring willkommen, aber vorsichtig.** Die Einzeldatei darf in Module
    aufgeteilt werden (siehe ARCHITEKTUR.md, Abschnitt „Modularisierung") –
    aber die PWA muss offline lauffähig bleiben und die Pfade in `sw.js` müssen
@@ -138,6 +141,46 @@ mehr Formen erkennen. **Ohne KI/Server** – klassische Geometrie. Ziel:
    Druck oder Sucht erzeugt. Kindeswohl vor Engagement.
 7. Wenn etwas nur mit Server/KI/Bezahlung ginge: **sagen, nicht heimlich
    einbauen.** Offline-First ist Gesetz.
+
+## Fassungen und das Regal
+
+Jede Fassung wird **eingefroren** und bleibt danach für immer erreichbar:
+`v/v7-52/` ist Malstudio v7-52, heute und in zwei Jahren. Damit ist „zurück
+auf die vorige Fassung" ein Link statt eines Auftrags – wichtig genau dann,
+wenn es darauf ankommt: im Urlaub, ohne Rechner, wenn eine neue Fassung etwas
+kaputt gemacht hat und die Kinder trotzdem weitermalen wollen.
+
+**Beim Veröffentlichen, in dieser Reihenfolge:**
+
+1. Nummer erhöhen – in `sw.js` **und** in `index.html`.
+2. `npm run einfrieren` – stellt die Fassung nach `v/<nummer>/`.
+3. `npm run fassungen` – schreibt `fassungen.html` neu (aus der Git-Geschichte,
+   nicht von Hand gepflegt).
+4. `npm run test:regal` – prüft das Regal im echten Browser, in Sekunden.
+5. Committen und pushen.
+
+**Zwei Dinge sind daran nicht verhandelbar**, sonst richtet das Regal Schaden
+an – beides ist nachgesehen, nicht vermutet:
+
+- **Kein Service Worker in einer Regalfassung.** Der Worker dieser App löscht
+  in seinem `activate` **jeden** fremden Cache, nicht nur seine eigenen
+  älteren (`sw.js`: `keys.filter(k => k !== CACHE)`). Eine eingefrorene
+  Fassung mit eigenem Worker würde also den Offline-Vorrat der laufenden App
+  vollständig löschen. Regalfassungen laufen nur online; das ist ihr Zweck.
+- **Eigener Speicher.** Die Bilder der Kinder liegen unter
+  `pic:<Profil>:<Nr>` im `localStorage`, dazu `profiles`, `motif:`,
+  `motifpic:` – alle ohne Präfix, alle auf demselben Origin. Ohne Stempel
+  läse und **überschriebe** eine alte Fassung dieselben Schlüssel und nähme
+  beim Löschen eines Profils gemalte Bilder mit. `tools/einfrieren.js`
+  umschließt deshalb `Store` als Ganzes; einzelne Schlüsselnamen umzuschreiben
+  reicht nicht, weil sie zur Laufzeit zusammengesetzt werden.
+
+`tools/einfrieren.js` erledigt beides. `npm run test:regal` misst nach, dass
+es auch geschehen ist – und dass die Regalfassung überhaupt **läuft**: Der
+erste Anlauf legte die Worker-Anmeldung mit einem Versprechen still, das nie
+eingelöst wird, und fror damit den ganzen Startlauf ein. Lautlos, ohne Fehler
+in der Konsole, weil hier `await navigator.serviceWorker.register(...)` mitten
+im Start steht. Die Attrappe lehnt seither ab, statt zu hängen.
 
 ## Deployment
 

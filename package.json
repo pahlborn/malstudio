@@ -1,0 +1,16 @@
+{
+  "name": "malstudio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Malstudio – Zeichnen lernen durch Spielen. Offline im Browser, zur Laufzeit ohne Abhängigkeiten. Die Werkzeuge hier laufen nur beim Bauen.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "einfrieren": "node tools/einfrieren.js",
+    "fassungen": "node tools/fassungen.js",
+    "test:regal": "node tools/test-regal.js",
+    "fonts": "node tools/gen-fonts.js"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.49.0"
+  }
+}
