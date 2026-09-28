@@ -8,14 +8,13 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Malstudio">
 <meta name="theme-color" content="#118AB2">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
-<link rel="apple-touch-icon" sizes="167x167" href="icon-167.png">
-<link rel="apple-touch-icon" sizes="152x152" href="icon-152.png">
-<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../icon-180.png">
+<link rel="apple-touch-icon" sizes="167x167" href="../../icon-167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="../../icon-152.png">
+<link rel="icon" href="../../icon-192.png">
 <title>Sommer am Meer – Malstudio</title>
 <!-- Schriften liegen lokal, kein Abruf nach außen. Neu erzeugen: node tools/gen-fonts.js -->
-<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="../../fonts.css">
 <style>
   :root{
     --deep:#073B4C; --sea:#118AB2; --foam:#EAF6F8; --sand:#FFD166;
@@ -940,6 +939,8 @@
 </style>
 </head>
 <body>
+<div style="position:fixed;left:0;right:0;top:0;z-index:99999;padding:3px 10px;font:11px/1.4 system-ui,sans-serif;text-align:center;color:#4a4236;background:rgba(255,228,150,.96);padding-top:calc(3px + env(safe-area-inset-top))">Malstudio v7-53 &middot; Fassung aus dem Regal, nur zum Nachsehen &middot; <a href="../../index.html" style="color:inherit">zur heutigen App</a></div>
+
 <div class="app">
 
   <!-- ============ PROFILE ============ -->
@@ -1324,6 +1325,25 @@
 </div>
 
 <script>
+/* Im Regal ohne Service Worker - siehe tools/einfrieren.js. Eine
+   eingefrorene Fassung darf keinen anmelden: Ihr activate löscht JEDEN
+   fremden Cache und damit den Offline-Vorrat der laufenden App.
+
+   Die Attrappe LEHNT AB, sie hängt nicht. Das Atelier gibt an dieser
+   Stelle ein Versprechen zurück, das nie eingelöst wird - dort wird die
+   Anmeldung nebenbei abgeschickt, das genügt. Hier steht ein await davor,
+   mitten im Startlauf (index.html, "const reg=await ...register"). Ein
+   hängendes Versprechen fror den ganzen Start ein, und zwar lautlos: Die
+   Seite zeigte nur das Regalband, kein Fehler in der Konsole, weil das
+   umgebende catch gar nicht erst erreicht wurde. Eine Ablehnung fängt
+   genau dieses catch - der Code ist auf eine gescheiterte Anmeldung
+   ohnehin vorbereitet. */
+if (typeof navigator !== 'undefined' && navigator.serviceWorker) {
+  navigator.serviceWorker.register = function () {
+    return Promise.reject(new Error('Regalfassung: ohne Service Worker'));
+  };
+}
+
 (function(){
 /* ============================================================
    MOTIVE
@@ -2569,7 +2589,7 @@ const PAPER="#FFFFFF";
 /* ============================================================
    SPEICHER
    ============================================================ */
-const Store=(function(){
+let Store=(function(){
   const api=(typeof window!=='undefined' && window.storage && window.storage.get)?window.storage:null;
   const mem={};
   return {
@@ -2579,6 +2599,22 @@ const Store=(function(){
     async keys(p){ try{ if(api){const r=await api.list(p,false);return r&&r.keys?r.keys:[];} return Object.keys(localStorage).filter(k=>k.indexOf(p)===0);}catch(e){return Object.keys(mem).filter(k=>k.indexOf(p)===0);} }
   };
 })();
+
+/* Regal: eigener Speicher. Jeder Schlüssel dieser Fassung trägt ihre
+   Nummer, damit sie der laufenden App nicht in die Galerie schreibt.
+   Was keys() zurückgibt, wird wieder entstempelt - die Aufrufer reichen
+   diese Schlüssel an get() und del() weiter. */
+Store = (function (echt, marke) {
+  return {
+    get:  function (k)    { return echt.get(marke + k); },
+    set:  function (k, v) { return echt.set(marke + k, v); },
+    del:  function (k)    { return echt.del(marke + k); },
+    keys: function (p)    { return Promise.resolve(echt.keys(marke + p))
+            .then(function (l) { return l.map(function (k) {
+              return k.slice(marke.length); }); }); }
+  };
+})(Store, 'regal-v7-53:');
+
 
 /* ============================================================
    MUSIK
@@ -4183,7 +4219,7 @@ function discoveredCount(){ return Object.keys(motifCounts()).length; }
 /* Insel Albarella. Gezeichnet im viewBox 900x800 (= Seitenverhaeltnis der Karte).
    Wird von albarella-basis.jpg ueberlagert: die echte Inselform, aus OpenStreetMap-Geometrie
    (ODbL) selbst gezeichnet. Faellt das Bild aus, greift diese Zeichnung. */
-const ISLAND_BASIS='albarella-basis.jpg';
+const ISLAND_BASIS='../../albarella-basis.jpg';
 const ISLAND_FALLBACK_SVG =
  '<svg class="isl-fallback" viewBox="0 0 900 800" aria-hidden="true">'
 +'<defs>'
@@ -4349,11 +4385,11 @@ const FRAGMENTS=[
    draussen, der Rehbock auch, solange nicht bestaetigt ist, dass es auf
    Albarella welche gibt. */
 const SPRITES=[
-  {datei:'sprite-muschel.png',      emoji:'🐚', x:68.5, y:31.0, w:48, h:42, min:1, atem:true},
+  {datei:'../../sprite-muschel.png',      emoji:'🐚', x:68.5, y:31.0, w:48, h:42, min:1, atem:true},
   {datei:null,                      emoji:'⛵', x:92.5, y:83.5, w:54, h:54, min:1, bob:true},
-  {datei:'sprite-schildkroete.png', emoji:'🐢', x:40.0, y:44.5, w:54, h:28, min:2, bob:true},
-  {datei:'sprite-flamingo.png',     emoji:'🦩', x:52.0, y:40.5, w:32, h:47, min:3, atem:true},
-  {datei:'sprite-reh.png',          emoji:'🦌', x:63.0, y:49.5, w:50, h:42, min:5, atem:true}
+  {datei:'../../sprite-schildkroete.png', emoji:'🐢', x:40.0, y:44.5, w:54, h:28, min:2, bob:true},
+  {datei:'../../sprite-flamingo.png',     emoji:'🦩', x:52.0, y:40.5, w:32, h:47, min:3, atem:true},
+  {datei:'../../sprite-reh.png',          emoji:'🦌', x:63.0, y:49.5, w:50, h:42, min:5, atem:true}
 ];
 
 /* Schatzpfad: Start unten links, über alle Buchten hinauf zum Capo Nord. */
@@ -4549,9 +4585,9 @@ function renderIsland(){
      tatsaechlich gelegentlich durch die Adria. */
   if(unlockedCount>=4){
     h+='<div class="isl-delfin" style="left:92.5%;top:28.0%">'
-     + '<img class="kringel" src="sprite-kringel.png" alt="" onerror="this.remove()">'
-     + '<img class="auf" src="sprite-delfin-auf.png" alt="" onerror="this.remove()">'
-     + '<img class="tauch" src="sprite-delfin-tauch.png" alt="" onerror="this.remove()">'
+     + '<img class="kringel" src="../../sprite-kringel.png" alt="" onerror="this.remove()">'
+     + '<img class="auf" src="../../sprite-delfin-auf.png" alt="" onerror="this.remove()">'
+     + '<img class="tauch" src="../../sprite-delfin-tauch.png" alt="" onerror="this.remove()">'
      + '</div>';
   }
   /* Zweites Boot: kommt vom offenen Meer zur Insel und faehrt wieder hinaus.
@@ -4589,9 +4625,9 @@ function renderIsland(){
   if(chestReady||found){
     h+='<div class="isl-chest ready'+(found?' gefunden':'')+'" id="islChestEl" style="left:'+CHEST_XY[0]+'%;top:'+CHEST_XY[1]+'%">'
      + '<div class="box kiste'+(found?' auf':' zu')+'" data-zustand="'+(found?'offen':'bereit')+'">'
-     + '<img src="sprite-schatzkiste.png" alt="'+(found?'Offene Schatzkiste':'Schatzkiste, noch verschlossen')+'" '
+     + '<img src="../../sprite-schatzkiste.png" alt="'+(found?'Offene Schatzkiste':'Schatzkiste, noch verschlossen')+'" '
      + 'onerror="this.replaceWith(Object.assign(document.createElement(\'em\'),{textContent:\''+(found?'🎁':'🔓')+'\'}))">'
-     + (found ? '<img class="funkeln" src="sprite-funkeln.png" alt="" onerror="this.remove()">'
+     + (found ? '<img class="funkeln" src="../../sprite-funkeln.png" alt="" onerror="this.remove()">'
               : '<em class="siegel">🔒</em>')
      + '</div></div>';
   }
@@ -4921,20 +4957,20 @@ async function newestPicFor(b){
 /* Fotos von Wikimedia Commons, frei lizenziert. Verkleinert und mitgeliefert,
    damit die Seite offline funktioniert. Urheber und Lizenz stehen an jedem Bild. */
 const FOTOS=[
-  {key:"albarella", datei:'foto-albarella.jpg', text:"Der Strand von Albarella", urheber:"Abxbay", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Albarella_seaside.JPG"},
-  {key:"podelta", datei:'foto-podelta.jpg', text:"Das Po-Delta: Lagunen, Schilf und flaches Wasser", urheber:"Nicola Quirico", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Boccasette,_parco_regionale_veneto_del_Delta_del_Po.jpg"},
-  {key:"flamingo", datei:'foto-flamingo.jpg', text:"Flamingos in den Lagunen bei Comacchio, gleich neben dem Po-Delta", urheber:"Ale Pollina", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Fenicotteri_nelle_valli_di_Comacchio.jpg"},
-  {key:"delfin", datei:'foto-delfin.jpg', text:"Große Tümmler in der Adria", urheber:"Rob Schleiffert from Holland", lizenz:"CC BY-SA 2.0", seite:"https://commons.wikimedia.org/wiki/File:Dolphins_Croatia_(20022107230)_(cropped).jpg"},
-  {key:"schildkroete", datei:'foto-schildkroete.jpg', text:"Europäische Sumpfschildkröte", urheber:"George Chernilevsky", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Emys_orbicularis_2009_G1.jpg"},
-  {key:"seestern", datei:'foto-seestern.jpg', text:"Roter Mittelmeer-Seestern", urheber:"Diego Delso", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Estrella_roja_del_Mediterr%C3%A1neo_(Echinaster_sepositus),_Cabo_de_Palos,_Espa%C3%B1a,_2022-07-15,_DD_37.jpg"},
-  {key:"muschel", datei:'foto-muschel.jpg', text:"Mittelmeer-Miesmuschel", urheber:"H. Zell", lizenz:"CC BY-SA 3.0", seite:"https://commons.wikimedia.org/wiki/File:Mytilus_galloprovincialis_0001.jpg"},
-  {key:"seepferdchen", datei:'foto-seepferdchen.jpg', text:"Langschnäuziges Seepferdchen", urheber:"jujurenoult", lizenz:"CC BY 4.0", seite:"https://commons.wikimedia.org/wiki/File:Hippocampus_guttulatus_France.jpg"},
-  {key:"pinie", datei:'foto-pinie.jpg', text:"Pinien – ihre Kerne kann man essen", urheber:"Livioandronico2013", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Pinus_pinea_and_ruins_on_Palatine_Hill.jpg"},
-  {key:"silberpappel", datei:'foto-silberpappel.jpg', text:"Silberpappel: unten silbrige Blätter. Sie gab Albarella den Namen", urheber:"Hans Hillewaert", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Populus_alba_(leaves).jpg"},
-  {key:"strandhafer", datei:'foto-strandhafer.jpg', text:"Strandhafer hält die Dünen zusammen", urheber:"Bj.schoenmakers", lizenz:"CC0", seite:"https://commons.wikimedia.org/wiki/File:Ammophila_arenaria_(Marram_grass)_on_dune,_Westenschouwen,_the_Netherlands.jpg"},
-  {key:"neptungras", datei:'foto-neptungras.jpg', text:"Neptungras-Wiese – macht Sauerstoff im Meer", urheber:"National Oceanic and Atmospheric Administration", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Posidonia_oceanica.jpg"},
-  {key:"moewe", datei:'foto-moewe.jpg', text:"Mittelmeermöwe", urheber:"Gzzz", lizenz:"CC BY-SA 3.0", seite:"https://commons.wikimedia.org/wiki/File:Larus_michahellis_Olbia.jpg"},
-  {key:"krabbe", datei:'foto-krabbe.jpg', text:"Mittelmeer-Strandkrabbe", urheber:"George Chernilevsky", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Carcinus_aestuarii_2009_G1.jpg"}
+  {key:"albarella", datei:'../../foto-albarella.jpg', text:"Der Strand von Albarella", urheber:"Abxbay", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Albarella_seaside.JPG"},
+  {key:"podelta", datei:'../../foto-podelta.jpg', text:"Das Po-Delta: Lagunen, Schilf und flaches Wasser", urheber:"Nicola Quirico", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Boccasette,_parco_regionale_veneto_del_Delta_del_Po.jpg"},
+  {key:"flamingo", datei:'../../foto-flamingo.jpg', text:"Flamingos in den Lagunen bei Comacchio, gleich neben dem Po-Delta", urheber:"Ale Pollina", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Fenicotteri_nelle_valli_di_Comacchio.jpg"},
+  {key:"delfin", datei:'../../foto-delfin.jpg', text:"Große Tümmler in der Adria", urheber:"Rob Schleiffert from Holland", lizenz:"CC BY-SA 2.0", seite:"https://commons.wikimedia.org/wiki/File:Dolphins_Croatia_(20022107230)_(cropped).jpg"},
+  {key:"schildkroete", datei:'../../foto-schildkroete.jpg', text:"Europäische Sumpfschildkröte", urheber:"George Chernilevsky", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Emys_orbicularis_2009_G1.jpg"},
+  {key:"seestern", datei:'../../foto-seestern.jpg', text:"Roter Mittelmeer-Seestern", urheber:"Diego Delso", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Estrella_roja_del_Mediterr%C3%A1neo_(Echinaster_sepositus),_Cabo_de_Palos,_Espa%C3%B1a,_2022-07-15,_DD_37.jpg"},
+  {key:"muschel", datei:'../../foto-muschel.jpg', text:"Mittelmeer-Miesmuschel", urheber:"H. Zell", lizenz:"CC BY-SA 3.0", seite:"https://commons.wikimedia.org/wiki/File:Mytilus_galloprovincialis_0001.jpg"},
+  {key:"seepferdchen", datei:'../../foto-seepferdchen.jpg', text:"Langschnäuziges Seepferdchen", urheber:"jujurenoult", lizenz:"CC BY 4.0", seite:"https://commons.wikimedia.org/wiki/File:Hippocampus_guttulatus_France.jpg"},
+  {key:"pinie", datei:'../../foto-pinie.jpg', text:"Pinien – ihre Kerne kann man essen", urheber:"Livioandronico2013", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Pinus_pinea_and_ruins_on_Palatine_Hill.jpg"},
+  {key:"silberpappel", datei:'../../foto-silberpappel.jpg', text:"Silberpappel: unten silbrige Blätter. Sie gab Albarella den Namen", urheber:"Hans Hillewaert", lizenz:"CC BY-SA 4.0", seite:"https://commons.wikimedia.org/wiki/File:Populus_alba_(leaves).jpg"},
+  {key:"strandhafer", datei:'../../foto-strandhafer.jpg', text:"Strandhafer hält die Dünen zusammen", urheber:"Bj.schoenmakers", lizenz:"CC0", seite:"https://commons.wikimedia.org/wiki/File:Ammophila_arenaria_(Marram_grass)_on_dune,_Westenschouwen,_the_Netherlands.jpg"},
+  {key:"neptungras", datei:'../../foto-neptungras.jpg', text:"Neptungras-Wiese – macht Sauerstoff im Meer", urheber:"National Oceanic and Atmospheric Administration", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Posidonia_oceanica.jpg"},
+  {key:"moewe", datei:'../../foto-moewe.jpg', text:"Mittelmeermöwe", urheber:"Gzzz", lizenz:"CC BY-SA 3.0", seite:"https://commons.wikimedia.org/wiki/File:Larus_michahellis_Olbia.jpg"},
+  {key:"krabbe", datei:'../../foto-krabbe.jpg', text:"Mittelmeer-Strandkrabbe", urheber:"George Chernilevsky", lizenz:"Public domain", seite:"https://commons.wikimedia.org/wiki/File:Carcinus_aestuarii_2009_G1.jpg"}
 ];
 function foto(key){ return FOTOS.find(f=>f.key===key); }
 
@@ -5311,6 +5347,17 @@ const Fassung = (function(){
 window.__fassung = Fassung;
 
 /* ===== FASSUNGSMELDUNG – ENDE ============================================= */
+
+/* Regalfassung: keine Fassungsmeldung. Siehe tools/einfrieren.js. */
+if (typeof Fassung !== 'undefined' && Fassung) {
+  Fassung.start   = function () {};
+  Fassung.sehen   = function () { return Promise.resolve(); };
+  Fassung.holen   = function () {};
+  Fassung.erlaubt = function () { return Promise.resolve(false); };
+  Fassung.still   = function () { return Promise.resolve(false); };
+  Fassung.schalten      = function () { return Promise.resolve(); };
+  Fassung.schaltenStill = function () { return Promise.resolve(); };
+}
 
 async function fassungFelderFuellen(){
   const ein = await Fassung.erlaubt(), still = await Fassung.still();

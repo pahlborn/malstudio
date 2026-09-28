@@ -8,6 +8,8 @@
     "einfrieren": "node tools/einfrieren.js",
     "fassungen": "node tools/fassungen.js",
     "test:regal": "node tools/test-regal.js",
+    "test:fassung": "node tools/test-fassungsmeldung.js",
+    "fassung-datei": "node tools/fassung-datei.js",
     "fonts": "node tools/gen-fonts.js"
   },
   "devDependencies": {
