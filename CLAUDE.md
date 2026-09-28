@@ -209,6 +209,17 @@ eingelöst wird, und fror damit den ganzen Startlauf ein. Lautlos, ohne Fehler
 in der Konsole, weil hier `await navigator.serviceWorker.register(...)` mitten
 im Start steht. Die Attrappe lehnt seither ab, statt zu hängen.
 
+## Pull Requests
+
+Entwickelt wird auf einem Zweig, und **Claude öffnet und merged den Pull
+Request selbst** — beides, nicht nur das Öffnen. So ausdrücklich gewünscht
+(September 2026). Grund: GitHub Pages liefert nur `main`; liegt die Fassung
+auf dem Zweig, kommt sie nie auf dem iPad an.
+
+Vor dem Merge gilt trotzdem: Prüfläufe grün, `mergeable_state` sauber, keine
+offenen Anmerkungen. Nach dem Merge wird der Zweig von `main` neu aufgesetzt —
+ein gemergter Pull Request ist fertig und trägt keine neue Arbeit mehr.
+
 ## Deployment
 
 - Getestet wird durch Öffnen von `index.html` im Browser.
