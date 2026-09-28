@@ -29,6 +29,20 @@ umgekehrt.* Am Ende sollen Eltern sagen: „Das hat mein Kind gemalt?"
   Analytics-Schnipsel, keine nachgeladene Schrift. Es bleibt genau eine
   Verbindung, und die ist gewollt: Haben Eltern einen Fundort für die
   Schatzsuche hinterlegt, öffnet ein Antippen Apple Karten.
+- **Eine zweite Verbindung, und sie ist ab Werk aus:** die Fassungsmeldung
+  (seit v7-53, zwei Schalter im Zahnrad unter „Nur für Eltern"). Angeschaltet
+  holt sie `fassung.json` von derselben Adresse, von der die App stammt, und
+  **sendet nichts** – keine Kennung, keinen Namen, kein Bild, kein Cookie;
+  verglichen wird auf dem iPad. `npm run test:fassung` misst nach, dass ohne
+  Zutun der Eltern kein Abruf hinausgeht. Wer daraus mehr macht – Zählung,
+  Analytics, Fehlermeldungen nach Hause –, bricht die Regel neu und braucht
+  Rücksprache.
+  *Anmerkung, keine Änderung: Der Satz „Es bleibt genau eine Verbindung" eine
+  Zeile höher stimmt damit nur noch ab Werk. Er ist so stehen geblieben, weil
+  er dir gehört – wenn du ihn anders haben willst, sag es.*
+  Stilles Aktualisieren greift **erst beim nächsten Start**, nie mitten im
+  Malen: Ein Neuladen während der Arbeit vernichtete das Bild, denn gemalt
+  wird auf einem Canvas ohne fortlaufende Sicherung.
 - **Kein `localStorage` in Artifact-Umgebungen** war eine frühere Einschränkung;
   hier als echte PWA ist `localStorage` erlaubt und wird über die `Store`-Abstraktion
   genutzt (siehe ARCHITEKTUR.md). Nicht auf ein bestimmtes Speicher-Backend
@@ -156,8 +170,13 @@ kaputt gemacht hat und die Kinder trotzdem weitermalen wollen.
 2. `npm run einfrieren` – stellt die Fassung nach `v/<nummer>/`.
 3. `npm run fassungen` – schreibt `fassungen.html` neu (aus der Git-Geschichte,
    nicht von Hand gepflegt).
-4. `npm run test:regal` – prüft das Regal im echten Browser, in Sekunden.
+4. `npm run test:regal` und `npm run test:fassung` – beide prüfen im echten
+   Browser, beide in Sekunden.
 5. Committen und pushen.
+6. **Danach** `npm run fassung-datei` und ein zweiter kleiner Commit. Der Satz
+   in `fassung.json` kommt aus dem Commit, der die Nummer eingeführt hat – den
+   gibt es vor Schritt 5 noch nicht. Zwei Commits sind hier richtig, nicht
+   unordentlich.
 
 **Zwei Dinge sind daran nicht verhandelbar**, sonst richtet das Regal Schaden
 an – beides ist nachgesehen, nicht vermutet:
@@ -167,6 +186,14 @@ an – beides ist nachgesehen, nicht vermutet:
   älteren (`sw.js`: `keys.filter(k => k !== CACHE)`). Eine eingefrorene
   Fassung mit eigenem Worker würde also den Offline-Vorrat der laufenden App
   vollständig löschen. Regalfassungen laufen nur online; das ist ihr Zweck.
+- **Keine Fassungsmeldung.** Eine Regalfassung ist mit Absicht alt und darf
+  nicht nach neueren sehen. Vor allem aber räumt ihr Knopf „Jetzt laden" den
+  Vorrat – aus dem Regal heraus träfe das den Vorrat der **laufenden** App:
+  dieselbe Adresse, dieselben Vorratsnamen, alle Bilder offline dahinter.
+  `tools/einfrieren.js` legt den Block deshalb still. Die Stelle wird ab dem
+  `<script>` gesucht, nicht ab Dateianfang – denselben Zaun tragen auch die
+  Stilregeln, und der erste Treffer lag im Stylesheet. Lautlos falsch: Die
+  Fassung lief, das Band kam trotzdem.
 - **Eigener Speicher.** Die Bilder der Kinder liegen unter
   `pic:<Profil>:<Nr>` im `localStorage`, dazu `profiles`, `motif:`,
   `motifpic:` – alle ohne Präfix, alle auf demselben Origin. Ohne Stempel

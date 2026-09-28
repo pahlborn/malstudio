@@ -156,6 +156,46 @@ function stempleSpeicher(html, nr, bericht) {
   return vorn + huelle + html.slice(nach);
 }
 
+/* Dritter Grundsatz: Eine Regalfassung sieht nicht nach neueren Fassungen.
+   Nicht, weil es unhöflich wäre - sondern weil ihr Knopf „Jetzt laden" den
+   Vorrat räumt, und zwar den unter DERSELBEN Adresse mit DENSELBEN
+   Vorratsnamen: den der laufenden App. Eine Fassung, die mit Absicht alt ist,
+   hat außerdem nichts danach zu fragen, was neu ist.
+
+   Angesetzt wird HINTER dem Modul, nicht statt seiner - so bleibt der Schnitt
+   an einer Stelle und der Text darin unverändert lesbar. */
+const MELDUNG_STILL =
+  '\n/* Regalfassung: keine Fassungsmeldung. Siehe tools/einfrieren.js. */\n' +
+  "if (typeof Fassung !== 'undefined' && Fassung) {\n" +
+  '  Fassung.start   = function () {};\n' +
+  '  Fassung.sehen   = function () { return Promise.resolve(); };\n' +
+  '  Fassung.holen   = function () {};\n' +
+  '  Fassung.erlaubt = function () { return Promise.resolve(false); };\n' +
+  '  Fassung.still   = function () { return Promise.resolve(false); };\n' +
+  '  Fassung.schalten      = function () { return Promise.resolve(); };\n' +
+  '  Fassung.schaltenStill = function () { return Promise.resolve(); };\n' +
+  '}\n';
+
+function legeMeldungStill(html) {
+  const marke = '/* ===== FASSUNGSMELDUNG – ENDE';
+  /* Erst ab dem Skript suchen. Denselben Zaun tragen auch die Stilregeln im
+     <style> weiter oben - der erste Treffer lag also im Stylesheet, und die
+     Stilllegung landete als CSS-Text im Nirgendwo. Lautlos: Die Fassung lief,
+     das Band kam trotzdem, und der Haken unten fand „erlaubt: true". */
+  const skript = html.indexOf('<script');
+  if (skript < 0) throw new Error('index.html: kein <script> gefunden');
+  const i = html.indexOf(marke, skript);
+  if (i < 0) {
+    throw new Error('index.html: die Fassungsmeldung ist nicht zu finden. ' +
+      'Wurde sie umbenannt oder ausgebaut? Ohne diese Stelle stünde im Regal ' +
+      'eine Fassung, deren Knopf „Jetzt laden" den Vorrat der laufenden App ' +
+      'räumt. Bitte hier nachziehen, nicht überspringen.');
+  }
+  const j = html.indexOf('\n', html.indexOf('*/', i));
+  if (j < 0) throw new Error('index.html: Ende der Fassungsmeldung nicht gefunden');
+  return html.slice(0, j + 1) + MELDUNG_STILL + html.slice(j + 1);
+}
+
 /* Ein Band oben, damit nach zwei Minuten noch klar ist, was da läuft. Genau
    diese Verwechslung war im Atelier der Anlass für das ganze Regal. */
 function stempleBand(html, nr) {
@@ -181,13 +221,15 @@ function einfrieren() {
   html = biegeVerweise(html, bericht);
   html = stempleSpeicher(html, nr, bericht);
   html = legeWorkerStill(html);
+  html = legeMeldungStill(html);
   html = stempleBand(html, nr);
 
   fs.mkdirSync(ziel, { recursive: true });
   fs.writeFileSync(path.join(ziel, 'index.html'), html);
   const kb = Math.round(Buffer.byteLength(html) / 1024);
   console.log('  ' + nr + ' → v/' + nr + '/index.html  (' + kb + ' kB, ' +
-              bericht.gebogen + ' Verweise umgebogen, Speicher gestempelt)');
+              bericht.gebogen + ' Verweise umgebogen, Speicher gestempelt, ' +
+              'Fassungsmeldung stillgelegt)');
   return { nr: nr, neu: true };
 }
 
